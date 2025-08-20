@@ -1,19 +1,24 @@
 const € = n => n.toLocaleString("fr-FR",{minimumFractionDigits:2, maximumFractionDigits:2})+" €";
 const el = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+document.getElementById("year").textContent = new Date().getFullYear();
 
 function renderProducts() {
   const wrap = el("#products");
   wrap.innerHTML = "";
   window.PRODUCTS.forEach(p => {
-    const card = document.createElement("div");
+    const card = document.createElement("article");
     card.className = "card";
     card.innerHTML = `
       <img src="${p.img}" alt="${p.name}">
-      <h3>${p.name}</h3>
-      <p class="desc">${p.desc}</p>
-      <div class="row">
-        <span class="price">${€(p.price)}</span>
-        <button data-id="${p.id}" class="add">Ajouter</button>
+      <div class="card-body">
+        <h3>${p.name}</h3>
+        <p class="muted">${p.desc}</p>
+        <div class="row">
+          <span class="price">${€(p.price)}</span>
+          <button data-id="${p.id}" class="btn-primary subtle add">Ajouter</button>
+        </div>
       </div>`;
     wrap.appendChild(card);
   });
@@ -26,21 +31,16 @@ function renderProducts() {
 
 let CART = JSON.parse(localStorage.getItem("gh_cart") || "[]");
 function saveCart(){ localStorage.setItem("gh_cart", JSON.stringify(CART)); }
+function updateBubble(){ el("#bubble").textContent = CART.reduce((n,i)=>n+i.qty,0); }
 
 function addToCart(id){
   const it = CART.find(i => i.id === id);
   if (it) it.qty += 1; else CART.push({ id, qty: 1 });
   saveCart(); renderCart();
+  document.location.hash = "#panier";
 }
-function removeFromCart(id){
-  CART = CART.filter(i => i.id !== id);
-  saveCart(); renderCart();
-}
-function setQty(id, q){
-  const it = CART.find(i=>i.id===id); if(!it) return;
-  it.qty = Math.max(1, q|0);
-  saveCart(); renderCart();
-}
+function removeFromCart(id){ CART = CART.filter(i => i.id !== id); saveCart(); renderCart(); }
+function setQty(id, q){ const it = CART.find(i=>i.id===id); if(!it) return; it.qty = Math.max(1, q|0); saveCart(); renderCart(); }
 
 function computeShipping(subtotal){
   if (subtotal >= window.SHIPPING.freeFrom) return 0;
@@ -49,6 +49,7 @@ function computeShipping(subtotal){
 }
 
 function renderCart(){
+  updateBubble();
   const list = el("#cart");
   const totalEl = el("#total");
   list.innerHTML = "";
@@ -68,23 +69,27 @@ function renderCart(){
       <div class="line">
         <span>${p.name}</span>
         <input type="number" min="1" value="${i.qty}" data-qty="${i.id}">
-        <span>${€(p.price * i.qty)}</span>
-        <button data-rm="${i.id}" title="Retirer">✕</button>
+        <span class="muted">${€(p.price)} /u</span>
+        <span><strong>${€(p.price * i.qty)}</strong></span>
+        <button data-rm="${i.id}" class="btn-ghost" title="Retirer">✕</button>
       </div>`;
     list.appendChild(li);
   });
 
   const shipping = computeShipping(subtotal);
   const total = subtotal + shipping;
-  totalEl.innerHTML = `Sous-total : ${€(subtotal)} — Livraison : ${shipping===0?"gratuite":€(shipping)}<br><strong>Total : ${€(total)}</strong>`;
+  totalEl.innerHTML =
+    `Sous-total : ${€(subtotal)} — Livraison : ${shipping===0?"gratuite":€(shipping)}<br>` +
+    `<strong>Total : ${€(total)}</strong><br>` +
+    `<span class="muted small">Barème : 5 € &lt; 20 € • 3 € dès 20 € • gratuit dès 40 €.</span>`;
 
+  // handlers (one-time)
   list.addEventListener("click", e=>{
     const rm = e.target.closest("[data-rm]");
     if (rm) removeFromCart(rm.dataset.rm);
   }, { once:true });
-
   list.addEventListener("input", e=>{
-    const inp = e.target.closest("[data-qty]");
+    const inp = e.target.closest("input[data-qty]");
     if (inp) setQty(inp.dataset.qty, parseInt(inp.value,10)||1);
   }, { once:true });
 }
@@ -109,6 +114,7 @@ function checkout(){
 function init(){
   renderProducts();
   renderCart();
-  document.getElementById("checkout").addEventListener("click", checkout);
+  el("#checkout").addEventListener("click", checkout);
+  el("#goCart").addEventListener("click", ()=>{ document.location.hash="#panier"; });
 }
 document.addEventListener("DOMContentLoaded", init);
