@@ -1,12 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GreenHousefood</title>
-  </head>
-  <body class="min-h-screen">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenHousefood 🌱</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>GreenHousefood 🌱</h1>
+    <nav>
+      <a href="#menu">Menu</a>
+      <a href="#panier">Panier</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="menu">
+      <h2>Nos plats</h2>
+      <div id="products"></div>
+    </section>
+
+    <section id="panier">
+      <h2>Votre panier</h2>
+      <ul id="cart"></ul>
+      <p id="total">Total : 0 €</p>
+      <button id="checkout">Commander</button>
+    </section>
+
+    <section id="livraison">
+      <h2>Zones de livraison 🚚</h2>
+      <p>Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim, Richwiller, Lutterbach, Pfaffstat, Illzach, Rixheim, Riedisheim, Habsheim, Echenzwiller, Brunstatt.</p>
+      <p><strong>Frais :</strong><br>
+        • 8,50€ → 5€ de frais<br>
+        • À partir de 20€ → 3€ de frais<br>
+        • À partir de 40€ → livraison gratuite 🎉
+      </p>
+      <p><strong>Point retrait :</strong> 151 rue de Kingersheim, Mulhouse</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Email : <a href="mailto:greenhouse.68@outlook.fr">greenhouse.68@outlook.fr</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 GreenHousefood - Pâtes artisanales, falafels, wraps et sauces maison.</p>
+  </footer>
+
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+</body>
 </html>
