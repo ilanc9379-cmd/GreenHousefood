@@ -1,53 +1,93 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GreenHousefood 🌱</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GreenHousefood • Traiteur artisanal – diète & gourmand</title>
+  <meta name="description" content="Traiteur artisanal sur Mulhouse & environs. Plats diététiques ou gourmands, pâtes, falafels, wraps, sauces maison. Produits locaux. Livraison dès 5 € – gratuite dès 40 €.">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="favicon.ico" />
 </head>
 <body>
-  <header>
-    <h1>GreenHousefood 🌱</h1>
-    <nav>
+  <!-- En-tête -->
+  <header class="container header">
+    <div class="brand">
+      <span class="leaf">🌱</span> <strong>GreenHousefood</strong>
+    </div>
+    <nav class="nav">
       <a href="#menu">Menu</a>
-      <a href="#panier">Panier</a>
+      <a href="#livraison">Livraison</a>
       <a href="#contact">Contact</a>
+      <a href="#panier" id="goCart" class="btn-outline">Panier <span id="bubble">0</span></a>
     </nav>
   </header>
 
-  <main>
-    <section id="menu">
-      <h2>Nos plats</h2>
-      <div id="products"></div>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <h1>Traiteur artisanal — <em>diète</em> & <em>gourmand</em></h1>
+        <p>Plats faits maison : pâtes artisanales, falafels, wraps, sauces maison. Ingrédients locaux au maximum. Option <strong>sur-mesure</strong> pour vos objectifs diététiques.</p>
+        <div class="hero-cta">
+          <a href="#menu" class="btn-primary">Voir le menu</a>
+          <a href="#livraison" class="btn-secondary">Infos livraison</a>
+        </div>
+        <p class="usp">
+          • Fait maison • Produits locaux • Click & collect ou livraison
+        </p>
+      </div>
+      <div class="hero-photo">
+        <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=1200&auto=format&fit=crop" alt="Assiette artisanale fraîche">
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <main class="container">
+    <section id="menu" class="section">
+      <div class="section-head">
+        <h2>Menu</h2>
+        <p class="muted">Prix TTC — photos non contractuelles</p>
+      </div>
+      <div id="products" class="grid"></div>
     </section>
 
-    <section id="panier">
+    <!-- Panier -->
+    <section id="panier" class="section">
       <h2>Votre panier</h2>
-      <ul id="cart"></ul>
-      <p id="total">Total : 0 €</p>
-      <button id="checkout">Commander</button>
+      <ul id="cart" class="cart-list"></ul>
+      <div class="totals">
+        <p id="total" class="total-line">Total : 0 €</p>
+        <button id="checkout" class="btn-primary">Commander</button>
+        <p class="muted small">Paiement à la livraison ou au retrait (intégration carte/Stripe possible ensuite).</p>
+      </div>
     </section>
 
-    <section id="livraison">
-      <h2>Zones de livraison 🚚</h2>
-      <p>Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim, Richwiller, Lutterbach, Pfaffstat, Illzach, Rixheim, Riedisheim, Habsheim, Echenzwiller, Brunstatt.</p>
-      <p><strong>Frais :</strong><br>
-        • 8,50€ → 5€ de frais<br>
-        • À partir de 20€ → 3€ de frais<br>
-        • À partir de 40€ → livraison gratuite 🎉
-      </p>
-      <p><strong>Point retrait :</strong> 151 rue de Kingersheim, Mulhouse</p>
+    <!-- Livraison -->
+    <section id="livraison" class="section card">
+      <h2>Retrait & Livraison</h2>
+      <p><strong>Point de retrait :</strong> 151 rue de Kingersheim, 68100 Mulhouse.</p>
+      <p><strong>Zones livrées :</strong> Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim, Richwiller, Lutterbach, Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim, Eschentzwiller, Brunstatt.</p>
+      <div class="pill-group">
+        <span class="pill">Livraison < 20 € : 5 €</span>
+        <span class="pill">20 € – 39,99 € : 3 €</span>
+        <span class="pill">≥ 40 € : <strong>Gratuite</strong></span>
+      </div>
+      <p class="muted">Les frais se calculent automatiquement dans le panier.</p>
     </section>
 
-    <section id="contact">
+    <!-- Contact -->
+    <section id="contact" class="section card">
       <h2>Contact</h2>
-      <p>Email : <a href="mailto:greenhouse.68@outlook.fr">greenhouse.68@outlook.fr</a></p>
+      <p>Email pro : <a href="mailto:greenhouse.68@outlook.fr">greenhouse.68@outlook.fr</a></p>
+      <p>Traiteur pour particuliers & entreprises — options diététiques (sur mesure) ou gourmandes.</p>
     </section>
   </main>
 
-  <footer>
-    <p>© 2025 GreenHousefood - Pâtes artisanales, falafels, wraps et sauces maison.</p>
+  <footer class="footer">
+    <div class="container">
+      © <span id="year"></span> GreenHousefood — Mulhouse & alentours
+    </div>
   </footer>
 
   <script src="products.js"></script>
