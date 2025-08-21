@@ -1,66 +1,169 @@
-<style>
-  :root{
-    /* Palette neutre + accents de gammes */
-    --bg:#ffffff; --text:#151717; --muted:#5f6b66;
-    --card:#ffffff; --line:#e9eceb; --shadow:0 6px 24px rgba(16,24,20,.06);
-    --radius:16px;
+/* ================================
+   GreenHouse – styles.css (COMPLET)
+   ================================ */
 
-    /* Gammes */
-    --diet:#0ea5e9;         /* Bleu : Diète */
-    --gourmand:#ef4444;     /* Rouge : Gourmand */
-    --fresh:#22c55e;        /* Vert : Frais */
-    --frozen:#6366f1;       /* Indigo : Surgelé */
-  }
+/* --- Reset simple & base --- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue",
+               Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  line-height: 1.6;
+  background: #0f172a; /* fallback si classe manquante */
+  color: #e5e7eb;
+}
 
-  *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--text);
-    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-  a{color:inherit;text-decoration:none}
+/* Liens */
+a { color: #93c5fd; text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-  .wrap{max-width:1080px;margin:0 auto;padding:24px}
+/* Titres */
+h1, h2, h3 { line-height: 1.25; margin: 0 0 .5rem; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.125rem; }
 
-  /* Header minimal */
-  header{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:8px 0}
-  .logoWrap{display:flex;align-items:center;gap:12px}
-  #logo{width:60px;height:60px}
-  .brand h1{margin:0;font-size:24px;font-weight:800;letter-spacing:.2px}
-  .brand small{color:var(--muted)}
+/* Images */
+img { display: block; max-width: 100%; height: auto; }
 
-  /* Cartes & layout */
-  .hero{margin:16px 0 8px;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow)}
-  .grid{display:grid;gap:14px}
-  @media(min-width:880px){.grid.cols-3{grid-template-columns:repeat(3,1fr)}.grid.cols-2{grid-template-columns:repeat(2,1fr)}}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
-  section{margin:24px 0}
-  h2,h3{margin:0 0 8px}
-  .muted{color:var(--muted)}
+/* ================================
+   “Utilitaires” compatibles Tailwind
+   ================================ */
 
-  /* Pills */
-  .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#f8faf9;font-weight:600;font-size:12px}
-  .pill-row{display:flex;flex-wrap:wrap;gap:8px}
+/* Couleurs de fond */
+.bg-gray-900 { background: #0f172a; }
+.bg-gray-800 { background: #1f2937; }
+.bg-gray-700 { background: #374151; }
 
-  /* Tags de gamme (couleurs) */
-  .tag{display:inline-block;font-size:12px;font-weight:700;padding:6px 10px;border-radius:999px;color:#fff}
-  .tag.diet{background:var(--diet)}
-  .tag.gourmand{background:var(--gourmand)}
-  .tag.fresh{background:var(--fresh)}
-  .tag.frozen{background:var(--frozen)}
+/* Couleurs de texte */
+.text-white { color: #ffffff; }
+.text-gray-200 { color: #e5e7eb; }
+.text-gray-300 { color: #d1d5db; }
+.text-gray-400 { color: #9ca3af; }
 
-  /* Badges de carte (fine barre colorée en haut) */
-  .card.is-diet{border-top:4px solid var(--diet)}
-  .card.is-gourmand{border-top:4px solid var(--gourmand)}
-  .card.is-fresh{border-top:4px solid var(--fresh)}
-  .card.is-frozen{border-top:4px solid var(--frozen)}
+/* Tailles de texte */
+.text-3xl { font-size: 2rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-xl  { font-size: 1.25rem; }
+.text-lg  { font-size: 1.125rem; }
 
-  /* Liste prix/éléments */
-  .list{display:flex;flex-direction:column;gap:8px;margin:8px 0 0;padding:0}
-  .list li{list-style:none;display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border:1px dashed var(--line);border-radius:12px;background:#f9fafb}
-  .price{font-weight:800}
+/* Poids */
+.font-bold      { font-weight: 700; }
+.font-semibold  { font-weight: 600; }
 
-  /* Table macros */
-  table{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
-  thead th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;background:#f5f7f6;color:#2c3330;border-bottom:1px solid var(--line);padding:10px;text-align:left}
-  tbody td{padding:10px;border-bottom:1px solid var(--line)}
-  .note{font-size:12px;color:var(--muted)}
-  .footer{margin:36px 0 60px;color:var(--muted);font-size:14px}
-</style>
+/* Espacements */
+.p-6  { padding: 1.5rem; }
+.py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+
+/* Layout largeur */
+.max-w-3xl { max-width: 56rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.text-center { text-align: center; }
+.items-center { align-items: center; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+
+/* Bords & ombres */
+.rounded-xl { border-radius: 0.75rem; }
+.shadow-lg {
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.3),
+    0 4px 6px -4px rgb(0 0 0 / 0.3);
+}
+
+/* Badges / Pills */
+.bg-green-600,
+.bg-blue-600 {
+  display: inline-block;
+  padding: .25rem .6rem;
+  border-radius: 9999px;
+  font-size: .85rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+.bg-green-600 { background: #16a34a; }
+.bg-blue-600  { background: #2563eb; }
+.bg-green-600.text-white,
+.bg-blue-600.text-white { color: #fff; }
+
+/* Listes dans les cartes */
+section ul { padding-left: 1.1rem; margin: .25rem 0 0; }
+section li { margin: .25rem 0; }
+
+/* Cartes génériques (tes sections avec fond) */
+section.card,
+section .card {
+  background: #1f2937;
+  border: 1px solid #111827;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+}
+
+/* Tableaux nutritionnels */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: .5rem;
+  overflow: hidden;
+}
+thead { background: #374151; color: #e5e7eb; }
+th, td {
+  padding: .6rem .5rem;
+  border-bottom: 1px solid #374151;
+  text-align: center;
+  white-space: nowrap;
+}
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Header logo */
+header img { filter: drop-shadow(0 2px 10px rgba(0,0,0,.4)); }
+
+/* Footer */
+footer { color: #9ca3af; }
+
+/* ================================
+   Composants “carte” utilisés
+   ================================ */
+
+.section {
+  background: #1f2937;
+  border-radius: .75rem;
+  padding: 1.5rem;
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.3),
+    0 4px 6px -4px rgb(0 0 0 / 0.3);
+}
+
+/* Petites puces (si besoin) */
+.pill {
+  display: inline-block;
+  padding: .35rem .7rem;
+  background: #111827;
+  color: #d1d5db;
+  border: 1px solid #374151;
+  border-radius: 9999px;
+  font-size: .9rem;
+  margin-right: .4rem;
+}
+
+/* ================================
+   Responsive
+   ================================ */
+@media (max-width: 640px) {
+  .p-6  { padding: 1rem; }
+  .py-6 { padding-top: 1rem; padding-bottom: 1rem; }
+  .mb-8 { margin-bottom: 1.25rem; }
+
+  .text-3xl { font-size: 1.6rem; }
+  .text-2xl { font-size: 1.25rem; }
+  .text-xl  { font-size: 1.1rem; }
+  .text-lg  { font-size: 1rem; }
+
+  th, td { font-size: .9rem; padding: .5rem .4rem; }
+}
