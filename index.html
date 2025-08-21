@@ -3,129 +3,75 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GreenHousefood • Traiteur artisanal – diète & gourmand</title>
-  <meta name="description" content="Traiteur artisanal à Mulhouse : plats diététiques ou gourmands, pâtes, wraps et falafels maison. Retrait et livraison locales. Produits locaux au maximum." />
+  <title>GreenHouse • Traiteur artisanal – diète & gourmand (Mulhouse)</title>
+  <meta name="description" content="GreenHouse — Traiteur artisanal à Mulhouse. Gamme diète surgelée (9,90 €), gamme gourmand frais (24h), pâtes fraîches maison (7 €/kg), falafels surgelés (10 €/kg). Livraison locale.">
   <link rel="icon" href="favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <style>
     :root{
-      --bg-1:#0d1f16;
-      --bg-2:#0f271b;
-      --card:#12261c;
-      --muted:#9bb2a4;
-      --text:#ecf6ef;
-      --brand:#45d08a;
-      --brand-2:#8be2b5;
-      --accent:#ffe38b;
-      --danger:#ff6b6b;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 18px;
+      --bg-1:#0d1f16; --bg-2:#0f271b; --card:#12261c;
+      --muted:#9bb2a4; --text:#ecf6ef;
+      --brand:#45d08a; --brand-2:#8be2b5; --accent:#ffe38b;
+      --border:rgba(255,255,255,.10); --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
     }
-
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;
-      color:var(--text);
+      margin:0;color:var(--text);
       font-family:Inter,system-ui,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
       background:
         radial-gradient(1200px 600px at 10% -10%, #173826 0%, transparent 60%),
         radial-gradient(900px 500px at 110% 10%, #103021 0%, transparent 60%),
         linear-gradient(180deg, var(--bg-1), var(--bg-2));
-      background-attachment: fixed;
+      background-attachment:fixed;
     }
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:28px}
-
-    /* header */
-    .nav{
-      display:flex;gap:16px;align-items:center;justify-content:space-between;
-      position:sticky;top:0;z-index:20;padding:14px 24px;margin:-14px -24px 20px;
-      background:rgba(10,22,16,.5);backdrop-filter: blur(8px);border-bottom:1px solid rgba(255,255,255,.06)
-    }
-    .brand{display:flex;gap:10px;align-items:center;font-weight:800;font-family:Poppins, sans-serif;letter-spacing:.2px}
-    .brand .logo{
-      display:grid;place-items:center;width:38px;height:38px;border-radius:12px;
-      background:linear-gradient(135deg,var(--brand),var(--brand-2)); color:#0b1a13; font-weight:900;
-      box-shadow:0 6px 18px rgba(69,208,138,.35)
-    }
-    .nav .cta{
-      background:linear-gradient(135deg,var(--brand),var(--brand-2));
-      color:#0b1a13;font-weight:700;border:none;padding:12px 18px;border-radius:14px;
-      box-shadow:0 8px 24px rgba(69,208,138,.35);cursor:pointer
-    }
-
-    /* hero */
-    .hero{
-      display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;margin-top:18px
-    }
-    .card{
-      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow)
-    }
-    .hero .copy{padding:34px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+      border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .muted{color:var(--muted)} .small{font-size:.92rem}
+    .pill{background:#173323;border:1px solid var(--border);padding:8px 12px;border-radius:999px;font-weight:600}
+    .pill-group{display:flex;flex-wrap:wrap;gap:10px}
+    .grid{display:grid;gap:18px}
+    @media(min-width:980px){.grid.cols-3{grid-template-columns:repeat(3,1fr)} .grid.cols-2{grid-template-columns:repeat(2,1fr)}}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:11px 14px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer}
+    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b1a13;border:none}
+    .price{font-weight:800;color:var(--accent)}
+    /* NAV */
+    .nav{display:flex;gap:16px;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;padding:14px 24px;margin:-14px -24px 20px;background:rgba(10,22,16,.5);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .brand{display:flex;gap:12px;align-items:center}
+    .brand img{height:42px;width:auto;border-radius:10px;display:block}
+    .brand .word{font-family:Poppins,sans-serif;font-weight:800;letter-spacing:.2px}
+    .cta{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b1a13;font-weight:700;border:none;padding:12px 18px;border-radius:14px;box-shadow:0 8px 24px rgba(69,208,138,.35)}
+    /* HERO */
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;margin-top:18px}
+    @media(max-width:980px){.hero{grid-template-columns:1fr}}
     .eyebrow{color:var(--brand-2);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.82rem}
-    h1{
-      margin:.4rem 0 1rem;font-size:clamp(28px,4.2vw,44px);line-height:1.08;
-      font-family:Poppins, sans-serif; font-weight:800
-    }
+    h1{margin:.4rem 0 1rem;font-size:clamp(28px,4.2vw,44px);line-height:1.08;font-family:Poppins,sans-serif;font-weight:800}
     .lead{color:var(--muted);font-size:1.05rem;line-height:1.6}
-    .badges{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
-    .badge{
-      background:#132a1e;border:1px solid rgba(255,255,255,.09);color:#d6f4e5;
-      padding:8px 12px;border-radius:999px;font-weight:600;font-size:.9rem
-    }
-    .hero .media{
-      overflow:hidden;position:relative
-    }
-    .hero .media img{
-      width:100%;height:100%;object-fit:cover;display:block;border-radius:var(--radius)
-    }
-    .media::after{
-      content:"";position:absolute;inset:0;border-radius:var(--radius);
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)
-    }
-
-    /* sections */
+    .media{overflow:hidden;position:relative}
+    .media img{width:100%;height:100%;object-fit:cover;border-radius:var(--radius);display:block}
+    .media::after{content:"";position:absolute;inset:0;border-radius:var(--radius);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
     .section{margin:36px 0}
-    .section .head{
-      display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:14px
-    }
-    .section h2{
-      font-family:Poppins,sans-serif;font-size:clamp(22px,3vw,30px);margin:0
-    }
-    .muted{color:var(--muted)}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    @media (max-width:980px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
-    .tile{
-      overflow:hidden;position:relative
-    }
+    .section .head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .section h2{font-family:Poppins,sans-serif;font-size:clamp(22px,3vw,30px);margin:0}
+    /* CARDS PRODUITS */
+    .tile{overflow:hidden}
     .tile img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
     .tile .info{padding:16px}
-    .pill-group{display:flex;flex-wrap:wrap;gap:10px}
-    .pill{
-      background:#173323;border:1px solid rgba(255,255,255,.08);padding:8px 12px;border-radius:999px;
-      font-weight:600
-    }
-    .price{font-weight:800;color:var(--accent)}
-    .btn{
-      display:inline-flex;align-items:center;gap:10px;padding:11px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);
-      background:transparent;color:var(--text);cursor:pointer
-    }
-    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b1a13;border:none}
-    .stack{display:grid;gap:12px}
-
-    /* footer */
-    footer{
-      margin-top:46px;padding:28px;border-top:1px solid rgba(255,255,255,.06);color:var(--muted)
-    }
+    .meta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+    .macro-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:10px}
+    .macro-grid div{padding:10px 8px;text-align:center;background:rgba(255,255,255,.03);border-right:1px solid var(--border)}
+    .macro-grid div:last-child{border-right:none}
+    .macro-grid b{display:block;font-family:Poppins,sans-serif}
+    /* FOOTER */
+    footer{margin-top:46px;padding:28px;border-top:1px solid rgba(255,255,255,.06);color:var(--muted)}
     .cols{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
-    @media (max-width:980px){.cols{grid-template-columns:1fr}}
-    .small{font-size:.92rem}
-    .ok{color:#b1f5cf}
+    @media(max-width:980px){.cols{grid-template-columns:1fr}}
   </style>
 </head>
 
@@ -134,81 +80,231 @@
     <!-- NAV -->
     <div class="nav card">
       <div class="brand">
-        <div class="logo">GH</div>
+        <img src="logo-greenhouse.png" alt="GreenHouse logo" onerror="this.style.display='none'">
         <div>
-          <div style="font-size:1.05rem">GreenHousefood</div>
+          <div class="word">GreenHouse</div>
           <div class="small" style="color:var(--muted)">Traiteur artisanal • diète & gourmand</div>
         </div>
       </div>
-      <a class="cta" href="#menu">Voir la carte</a>
+      <a class="cta" href="#gammes">Voir les gammes</a>
     </div>
 
     <!-- HERO -->
     <section class="hero">
-      <div class="copy card">
+      <div class="card" style="padding:34px">
         <div class="eyebrow">Cuisine maison • Produits locaux</div>
         <h1>Des plats <span style="color:var(--brand-2)">diététiques</span> ou <span style="color:var(--accent)">gourmands</span>, préparés sur mesure</h1>
         <p class="lead">Pâtes artisanales, wraps, falafels et sauces 100% maison. Commande en ligne, <strong>retrait</strong> ou <strong>livraison</strong> sur Mulhouse et alentours.</p>
-        <div class="badges">
-          <div class="badge">Traiteur artisanal</div>
-          <div class="badge">Option diète</div>
-          <div class="badge">Option gourmand</div>
-          <div class="badge">Produits locaux</div>
+        <div class="pill-group" style="margin:12px 0 2px">
+          <span class="pill">Moins de 20 € : 5 €</span>
+          <span class="pill">De 20 € à 39,99 € : 3 €</span>
+          <span class="pill">Dès 40 € : <strong>Gratuit</strong></span>
         </div>
-        <div class="pill-group">
-          <span class="pill">Moins de 20&nbsp;€ : 5&nbsp;€</span>
-          <span class="pill">De 20&nbsp;€ à 39,99&nbsp;€ : 3&nbsp;€</span>
-          <span class="pill">Dès 40&nbsp;€ : <strong>Gratuit</strong></span>
-        </div>
-        <div class="stack" style="margin-top:14px">
+        <div style="display:flex;gap:10px;margin-top:14px">
           <a class="btn primary" href="#commande">Commander</a>
           <a class="btn" href="#contact">Nous contacter</a>
         </div>
       </div>
-
       <div class="media card" aria-hidden="true">
-        <!-- Remplace les URLs d’images par tes propres photos -->
         <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop" alt="Assiette saine et gourmande" />
       </div>
     </section>
 
-    <!-- MENU / BEST-SELLERS -->
-    <section id="menu" class="section">
+    <!-- GAMMES -->
+    <section id="gammes" class="section">
       <div class="head">
-        <h2>Nos incontournables</h2>
-        <span class="muted small">Diète ou gourmand : à toi de choisir</span>
+        <h2>Nos gammes</h2>
+        <span class="muted small">Simple & clair</span>
       </div>
-      <div class="grid">
+      <div class="grid cols-2">
+        <div class="card" style="padding:18px">
+          <h3 style="margin:.2rem 0 .4rem">Diète — Surgelé</h3>
+          <p class="muted small">Plats équilibrés, prêts à réchauffer. <strong>9,90 € / plat</strong> (dès 10 plats : 9,00 €).</p>
+          <div class="pill-group" style="margin-top:8px">
+            <span class="pill">Four 20 min</span><span class="pill">Micro-ondes 8 min</span>
+          </div>
+        </div>
+        <div class="card" style="padding:18px">
+          <h3 style="margin:.2rem 0 .4rem">Gourmand — Frais</h3>
+          <p class="muted small">Recettes généreuses. <strong>Réservation 24 h</strong> à l’avance.</p>
+          <div class="pill-group" style="margin-top:8px">
+            <span class="pill">Four 8 min</span><span class="pill">Micro-ondes 2 min 30</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIÈTE SURGELÉ — LISTE DES PLATS -->
+    <section class="section">
+      <div class="head">
+        <h2>Diète • Surgelé (9,90 €)</h2>
+        <span class="muted small">Sur-mesure possible</span>
+      </div>
+      <div class="grid cols-3">
+        <!-- 1 -->
         <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1604908176997-431621b2c11b?q=80&w=1600&auto=format&fit=crop" alt="Pâtes artisanales" />
+          <img src="https://images.unsplash.com/photo-1604908176997-431621b2c11b?q=80&w=1600&auto=format&fit=crop" alt="Pâtes au seigle poulet & légumes" />
           <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Pâtes artisanales</h3>
-            <p class="muted small">Sauces maison • Option diète/gourmand</p>
-            <div class="pill-group" style="margin-top:10px"><span class="pill price">à partir de 9,90 €</span></div>
+            <h3 style="margin:.2rem 0 .4rem">Pâtes au seigle • poulet émincé • julienne de légumes</h3>
+            <p class="muted small">Sauce allégée. Cuisson : four 20 min • micro-ondes 8 min.</p>
+            <div class="meta"><span class="pill price">9,90 €</span><span class="pill">Surgelé</span></div>
+            <div class="macro-grid">
+              <div><b>Calories</b> —</div><div><b>Protéines</b> —</div>
+              <div><b>Glucides</b> —</div><div><b>Lipides</b> —</div>
+            </div>
           </div>
         </article>
-
+        <!-- 2 -->
         <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1606756790138-261d2b21cd31?q=80&w=1600&auto=format&fit=crop" alt="Wrap artisanal" />
+          <img src="https://images.unsplash.com/photo-1625944528070-50b78ea9b1f2?q=80&w=1600&auto=format&fit=crop" alt="Lasagnes viande hachée & légumes" />
           <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Wrap artisanal</h3>
-            <p class="muted small">Galette maison • Garniture au choix</p>
-            <div class="pill-group" style="margin-top:10px"><span class="pill price">à partir de 7,90 €</span></div>
+            <h3 style="margin:.2rem 0 .4rem">Lasagnes • viande hachée & légumes</h3>
+            <p class="muted small">Cuisson : four 20 min • micro-ondes 8 min.</p>
+            <div class="meta"><span class="pill price">9,90 €</span><span class="pill">Surgelé</span></div>
+            <div class="macro-grid">
+              <div><b>Calories</b> —</div><div><b>Protéines</b> —</div>
+              <div><b>Glucides</b> —</div><div><b>Lipides</b> —</div>
+            </div>
           </div>
         </article>
-
+        <!-- 3 -->
         <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1625944528070-50b78ea9b1f2?q=80&w=1600&auto=format&fit=crop" alt="Falafels maison" />
+          <img src="https://images.unsplash.com/photo-1521389508051-d7ffb5dc8bbf?q=80&w=1600&auto=format&fit=crop" alt="Pâtes complètes bolognaise & légumes" />
           <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Falafels maison</h3>
-            <p class="muted small">Croustillants, sauce tahini ou yaourt</p>
-            <div class="pill-group" style="margin-top:10px"><span class="pill price">à partir de 6,90 €</span></div>
+            <h3 style="margin:.2rem 0 .4rem">Pâtes complètes • bolognaise & légumes</h3>
+            <p class="muted small">Cuisson : four 20 min • micro-ondes 8 min.</p>
+            <div class="meta"><span class="pill price">9,90 €</span><span class="pill">Surgelé</span></div>
+            <div class="macro-grid">
+              <div><b>Calories</b> —</div><div><b>Protéines</b> —</div>
+              <div><b>Glucides</b> —</div><div><b>Lipides</b> —</div>
+            </div>
+          </div>
+        </article>
+        <!-- 4 -->
+        <article class="card tile">
+          <img src="https://images.unsplash.com/photo-1543352634-8730a9d2ae26?q=80&w=1600&auto=format&fit=crop" alt="Falafel patate douce & aubergine" />
+          <div class="info">
+            <h3 style="margin:.2rem 0 .4rem">Falafel • patate douce & aubergine</h3>
+            <p class="muted small">Sauce allégée. Cuisson : four 20 min • micro-ondes 8 min.</p>
+            <div class="meta"><span class="pill price">9,90 €</span><span class="pill">Surgelé</span></div>
+            <div class="macro-grid">
+              <div><b>Calories</b> —</div><div><b>Protéines</b> —</div>
+              <div><b>Glucides</b> —</div><div><b>Lipides</b> —</div>
+            </div>
+          </div>
+        </article>
+        <!-- 5 -->
+        <article class="card tile">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop" alt="Gratin de patates douces & viande hachée" />
+          <div class="info">
+            <h3 style="margin:.2rem 0 .4rem">Gratin • patates douces, viande hachée & légumes</h3>
+            <p class="muted small">Cuisson : four 20 min • micro-ondes 8 min.</p>
+            <div class="meta"><span class="pill price">9,90 €</span><span class="pill">Surgelé</span></div>
+            <div class="macro-grid">
+              <div><b>Calories</b> —</div><div><b>Protéines</b> —</div>
+              <div><b>Glucides</b> —</div><div><b>Lipides</b> —</div>
+            </div>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- LIVRAISON -->
+    <!-- GOURMAND FRAIS — EXEMPLES -->
+    <section class="section">
+      <div class="head">
+        <h2>Gourmand • Frais (réservation 24 h)</h2>
+        <span class="muted small">Cuisson conseillée : four 8 min • micro-ondes 2 min 30</span>
+      </div>
+      <div class="grid cols-3">
+        <article class="card tile">
+          <img src="https://images.unsplash.com/photo-1606756790138-261d2b21cd31?q=80&w=1600&auto=format&fit=crop" alt="Pâtes au seigle arrabbiata" />
+          <div class="info">
+            <h3 style="margin:.2rem 0 .4rem">Pâtes au seigle • arrabbiata</h3>
+            <div class="meta"><span class="pill price">7,00 €</span><span class="pill">Frais</span></div>
+            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
+          </div>
+        </article>
+
+        <article class="card tile">
+          <img src="https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1600&auto=format&fit=crop" alt="Pâtes complètes gorgonzola" />
+          <div class="info">
+            <h3 style="margin:.2rem 0 .4rem">Pâtes complètes • gorgonzola</h3>
+            <div class="meta"><span class="pill price">7,00 €</span><span class="pill">Frais</span></div>
+            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
+          </div>
+        </article>
+
+        <article class="card tile">
+          <img src="https://images.unsplash.com/photo-1625944528196-4604d851d7bb?q=80&w=1600&auto=format&fit=crop" alt="Pâtes au seigle crème & basilic" />
+          <div class="info">
+            <h3 style="margin:.2rem 0 .4rem">Pâtes au seigle • crème & basilic</h3>
+            <div class="meta"><span class="pill price">7,00 €</span><span class="pill">Frais</span></div>
+            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
+          </div>
+        </article>
+
+        <article class="card tile">
+          <img src="https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642?q=80&w=1600&auto=format&fit=crop" alt="Pâtes aromette crème" />
+          <div class="info">
+            <h3 style="margin:.2rem 0 .4rem">Pâtes aromette • crème</h3>
+            <div class="meta"><span class="pill price">7,00 €</span><span class="pill">Frais</span></div>
+            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
+          </div>
+        </article>
+
+        <article class="card tile">
+          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=1600&auto=format&fit=crop" alt="Pâtes complètes escalope à la crème" />
+          <div class="info">
+            <h3 style="margin:.2rem 0 .4rem">Pâtes complètes • escalope à la crème</h3>
+            <div class="meta"><span class="pill price">9,00 €</span><span class="pill">Frais</span></div>
+            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
+          </div>
+        </article>
+
+        <article class="card tile">
+          <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=1600&auto=format&fit=crop" alt="Pâtes complètes saumon crème" />
+          <div class="info">
+            <h3 style="margin:.2rem 0 .4rem">Pâtes complètes • saumon crème</h3>
+            <div class="meta"><span class="pill price">10,00 €</span><span class="pill">Frais</span></div>
+            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
+          </div>
+        </article>
+
+        <article class="card tile">
+          <img src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=1600&auto=format&fit=crop" alt="Lasagnes saumon" />
+          <div class="info">
+            <h3 style="margin:.2rem 0 .4rem">Lasagnes • saumon</h3>
+            <div class="meta"><span class="pill price">11,00 €</span><span class="pill">Frais</span></div>
+            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- PÂTES FRAÎCHES ARTISANALES -->
+    <section class="section card" style="padding:22px">
+      <h2 style="margin:0 0 .6rem">Pâtes fraîches artisanales</h2>
+      <p class="muted">Œufs plein air. Farines : complète, seigle, aromette.</p>
+      <div class="pill-group" style="margin:10px 0">
+        <span class="pill price">7,00 € / kg</span>
+        <span class="pill">Lundi & Jeudi (sur réservation)</span>
+        <span class="pill">Cuisson 1 min 30</span>
+      </div>
+    </section>
+
+    <!-- FALAFELS (SURGELÉS UNIQUEMENT) -->
+    <section class="section card" style="padding:22px">
+      <h2 style="margin:0 0 .6rem">Falafels artisanaux — Surgelés</h2>
+      <div class="pill-group" style="margin:10px 0">
+        <span class="pill price">10,00 € / kg</span>
+        <span class="pill">Friteuse 3 min</span>
+        <span class="pill">Airfryer 14 min</span>
+        <span class="pill">Four 20 min</span>
+        <span class="pill">Micro-ondes 8 min</span>
+      </div>
+    </section>
+
+    <!-- LIVRAISON & CONTACT -->
     <section id="livraison" class="section card" style="padding:22px">
       <h2 style="margin:0 0 .6rem">Retrait & Livraison</h2>
       <p class="muted">Retrait au point : <strong>151 rue de Kingersheim, 68200 Mulhouse</strong></p>
@@ -218,65 +314,39 @@
         <span class="pill">De 20 € à 39,99 € : 3 €</span>
         <span class="pill">Dès 40 € : <strong>Gratuit</strong></span>
       </div>
-      <p class="muted small">Les frais se calculent automatiquement selon le panier et l’adresse de livraison.</p>
+      <p class="muted small">Les frais se calculent automatiquement dans le panier (prochainement).</p>
     </section>
 
-    <!-- COMMANDE -->
     <section id="commande" class="section card" style="padding:22px">
-      <div class="head"><h2 style="margin:0">Commander</h2></div>
-      <p class="muted">Le panier/commande en ligne arrive. En attendant, passe ta commande par e-mail ou WhatsApp, on confirme rapidement.</p>
+      <h2 style="margin:0 0 .6rem">Commander</h2>
+      <p class="muted">Le module de commande en ligne arrive. En attendant, passe ta commande par e-mail, on confirme rapidement.</p>
       <div class="pill-group" style="margin-top:12px">
         <a class="btn primary" href="mailto:greenhouse.68@outlook.fr">📧 greenhouse.68@outlook.fr</a>
       </div>
-      <p class="muted small" style="margin-top:10px">Paiement possible à la livraison ou au retrait. Intégration Nayax/Stripe à venir.</p>
+      <p class="muted small" style="margin-top:10px">Paiement à la livraison ou au retrait. Intégration Nayax/Stripe à venir.</p>
     </section>
 
-    <!-- À PROPOS / QUALITÉ -->
-    <section class="section">
-      <div class="head"><h2>Notre promesse qualité</h2></div>
-      <div class="grid">
-        <div class="card" style="padding:18px">
-          <h3 style="margin:.2rem 0 .4rem">Traiteur artisanal</h3>
-          <p class="muted">Tout est préparé maison : pâtes, wraps, falafels, sauces. Une cuisine sincère et goûteuse.</p>
-        </div>
-        <div class="card" style="padding:18px">
-          <h3 style="margin:.2rem 0 .4rem">Diète & gourmand</h3>
-          <p class="muted">Choisis tes portions et tes sauces : version légère ou généreuse. <strong>Sur mesure possible</strong>.</p>
-        </div>
-        <div class="card" style="padding:18px">
-          <h3 style="margin:.2rem 0 .4rem">Local & frais</h3>
-          <p class="muted">Produits locaux au maximum, avec un vrai respect des saisons.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
     <section id="contact" class="section card" style="padding:22px">
       <h2 style="margin:0 0 .6rem">Contact</h2>
-      <div class="grid" style="grid-template-columns:1.3fr .7fr">
-        <div class="stack">
+      <div class="grid" style="gap:12px">
+        <div>
           <p class="muted">Adresse pro</p>
           <p><strong>151 rue de Kingersheim</strong><br/>68200 Mulhouse</p>
-          <p class="muted">E-mail</p>
-          <p><a class="ok" href="mailto:greenhouse.68@outlook.fr">greenhouse.68@outlook.fr</a></p>
-        </div>
-        <div class="card" style="padding:12px">
-          <img src="https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1200&auto=format&fit=crop" alt="Cuisine GreenHousefood" style="width:100%;border-radius:12px" />
+          <p class="muted">Email</p>
+          <p><a href="mailto:greenhouse.68@outlook.fr" style="color:#b1f5cf">greenhouse.68@outlook.fr</a></p>
         </div>
       </div>
     </section>
 
-    <footer class="container" style="padding-left:0;padding-right:0">
+    <footer>
       <div class="cols">
-        <div class="small">© <span id="y"></span> GreenHousefood — Mulhouse & alentours.</div>
-        <div class="small"><a href="#livraison" class="ok">Infos livraison</a></div>
-        <div class="small"><a href="#commande" class="ok">Commander</a></div>
+        <div class="small">© <span id="y"></span> GreenHouse — Mulhouse & alentours.</div>
+        <div class="small"><a href="#livraison" style="color:#b1f5cf">Infos livraison</a></div>
+        <div class="small"><a href="#commande" style="color:#b1f5cf">Commander</a></div>
       </div>
     </footer>
   </div>
 
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
