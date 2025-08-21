@@ -3,350 +3,375 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GreenHouse • Traiteur artisanal – diète & gourmand (Mulhouse)</title>
-  <meta name="description" content="GreenHouse — Traiteur artisanal à Mulhouse. Gamme diète surgelée (9,90 €), gamme gourmand frais (24h), pâtes fraîches maison (7 €/kg), falafels surgelés (10 €/kg). Livraison locale.">
-  <link rel="icon" href="favicon.ico" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-
+  <title>GreenHouse — Traiteur artisanal · Diététique & gourmand</title>
+  <meta name="description" content="GreenHouse — Traiteur artisanal à Mulhouse. Plats diététiques ou gourmands, frais ou surgelés. Livraison locale, pâte fraîche maison, falafels artisanaux.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg-1:#0d1f16; --bg-2:#0f271b; --card:#12261c;
-      --muted:#9bb2a4; --text:#ecf6ef;
-      --brand:#45d08a; --brand-2:#8be2b5; --accent:#ffe38b;
-      --border:rgba(255,255,255,.10); --shadow:0 10px 30px rgba(0,0,0,.35);
+      --bg:#0c0f0d; --card:#111415; --muted:#9fb5a8; --text:#ecf5ef; --brand:#33c27f; --brand2:#1b9f63; --accent:#ffd166;
+      --shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
       --radius:18px;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;color:var(--text);
-      font-family:Inter,system-ui,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
-      background:
-        radial-gradient(1200px 600px at 10% -10%, #173826 0%, transparent 60%),
-        radial-gradient(900px 500px at 110% 10%, #103021 0%, transparent 60%),
-        linear-gradient(180deg, var(--bg-1), var(--bg-2));
-      background-attachment:fixed;
-    }
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1100px;margin:0 auto;padding:28px}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
-      border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .muted{color:var(--muted)} .small{font-size:.92rem}
-    .pill{background:#173323;border:1px solid var(--border);padding:8px 12px;border-radius:999px;font-weight:600}
-    .pill-group{display:flex;flex-wrap:wrap;gap:10px}
-    .grid{display:grid;gap:18px}
-    @media(min-width:980px){.grid.cols-3{grid-template-columns:repeat(3,1fr)} .grid.cols-2{grid-template-columns:repeat(2,1fr)}}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:11px 14px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer}
-    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b1a13;border:none}
-    .price{font-weight:800;color:var(--accent)}
-    /* NAV */
-    .nav{display:flex;gap:16px;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;padding:14px 24px;margin:-14px -24px 20px;background:rgba(10,22,16,.5);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
-    .brand{display:flex;gap:12px;align-items:center}
-    .brand img{height:42px;width:auto;border-radius:10px;display:block}
-    .brand .word{font-family:Poppins,sans-serif;font-weight:800;letter-spacing:.2px}
-    .cta{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b1a13;font-weight:700;border:none;padding:12px 18px;border-radius:14px;box-shadow:0 8px 24px rgba(69,208,138,.35)}
-    /* HERO */
-    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;margin-top:18px}
-    @media(max-width:980px){.hero{grid-template-columns:1fr}}
-    .eyebrow{color:var(--brand-2);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.82rem}
-    h1{margin:.4rem 0 1rem;font-size:clamp(28px,4.2vw,44px);line-height:1.08;font-family:Poppins,sans-serif;font-weight:800}
-    .lead{color:var(--muted);font-size:1.05rem;line-height:1.6}
-    .media{overflow:hidden;position:relative}
-    .media img{width:100%;height:100%;object-fit:cover;border-radius:var(--radius);display:block}
-    .media::after{content:"";position:absolute;inset:0;border-radius:var(--radius);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
-    .section{margin:36px 0}
-    .section .head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:14px}
-    .section h2{font-family:Poppins,sans-serif;font-size:clamp(22px,3vw,30px);margin:0}
-    /* CARDS PRODUITS */
-    .tile{overflow:hidden}
-    .tile img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
-    .tile .info{padding:16px}
-    .meta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
-    .macro-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:10px}
-    .macro-grid div{padding:10px 8px;text-align:center;background:rgba(255,255,255,.03);border-right:1px solid var(--border)}
-    .macro-grid div:last-child{border-right:none}
-    .macro-grid b{display:block;font-family:Poppins,sans-serif}
-    /* FOOTER */
-    footer{margin-top:46px;padding:28px;border-top:1px solid rgba(255,255,255,.06);color:var(--muted)}
-    .cols{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
-    @media(max-width:980px){.cols{grid-template-columns:1fr}}
+    html,body{margin:0;background:radial-gradient(1200px 1200px at 80% -10%, #173126 0%, #0c0f0d 55%) fixed;color:var(--text);font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif}
+    a{color:var(--brand);text-decoration:none}
+    .wrap{max-width:1080px;margin:0 auto;padding:24px}
+    header{display:flex;gap:20px;align-items:center;justify-content:space-between;margin-top:8px}
+    .logoWrap{display:flex;align-items:center;gap:16px}
+    #logo{width:72px;height:72px;filter:drop-shadow(0 6px 22px rgba(16,185,129,.25))}
+    .brand h1{font-size:26px;line-height:1;margin:0}
+    .brand small{color:var(--muted)}
+    .hero{margin:28px 0 20px;padding:22px;border-radius:var(--radius);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));box-shadow:var(--shadow)}
+    .hero h2{margin:0 0 8px;font-size:28px}
+    .grid{display:grid;gap:16px}
+    @media(min-width:880px){.grid{grid-template-columns:repeat(3,1fr)}}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius);padding:18px 18px 16px;box-shadow:var(--shadow)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(51,194,127,.15);color:#d7ffee;border:1px solid rgba(51,194,127,.35);font-weight:600;font-size:12px;letter-spacing:.2px}
+    .muted{color:var(--muted);font-size:14px}
+    h3{margin:0 0 10px}
+    .list{display:flex;flex-direction:column;gap:8px;margin:8px 0 0;padding:0}
+    .list li{list-style:none;display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border:1px dashed rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.02)}
+    .price{font-weight:800}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .btn{padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(51,194,127,.18),rgba(51,194,127,.12));color:#eafff4;font-weight:800}
+    .btn.secondary{background:transparent}
+    section{margin:26px 0}
+    table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden}
+    thead th{background:rgba(51,194,127,.1);text-align:left;padding:12px;border-bottom:1px solid rgba(255,255,255,.07)}
+    tbody td{padding:10px;border-bottom:1px solid rgba(255,255,255,.05)}
+    tfoot td{padding:10px;font-weight:800}
+    .footer{margin:40px 0 60px;color:var(--muted);font-size:14px}
+    .note{font-size:12px;color:var(--muted)}
   </style>
 </head>
-
 <body>
-  <div class="container">
-    <!-- NAV -->
-    <div class="nav card">
-      <div class="brand">
-        <img src="logo-greenhouse.png" alt="GreenHouse logo" onerror="this.style.display='none'">
-        <div>
-          <div class="word">GreenHouse</div>
-          <div class="small" style="color:var(--muted)">Traiteur artisanal • diète & gourmand</div>
+  <div class="wrap">
+
+    <!-- ───────────────────  LOGO (SVG INLINE)  ─────────────────── -->
+    <header>
+      <div class="logoWrap">
+        <!-- Logo stylisé : roue (Mulhouse) + bretzel -->
+        <svg id="logo" viewBox="0 0 120 120" aria-label="GreenHouse logo">
+          <!-- disque principal -->
+          <circle cx="60" cy="60" r="52" fill="#1b9f63"/>
+          <!-- couronne externe -->
+          <circle cx="60" cy="60" r="52" fill="none" stroke="#33c27f" stroke-width="4"/>
+          <!-- roue : 6 rayons -->
+          <circle cx="60" cy="60" r="28" fill="none" stroke="#eafff4" stroke-width="4"/>
+          <g stroke="#eafff4" stroke-width="4" stroke-linecap="round">
+            <line x1="60" y1="32" x2="60" y2="88"/>
+            <line x1="32" y1="60" x2="88" y2="60"/>
+            <line x1="40" y1="40" x2="80" y2="80"/>
+            <line x1="80" y1="40" x2="40" y2="80"/>
+          </g>
+          <!-- bretzel simplifié -->
+          <g transform="translate(0,-2)">
+            <path d="M45,68
+                     c-10,-10 10,-18 15,-6
+                     c5,-12 25,-4 15,6
+                     c-9,9 -30,9 -30,0z"
+                  fill="none" stroke="#fff" stroke-width="4" />
+            <circle cx="53" cy="63" r="2" fill="#fff"/>
+            <circle cx="67" cy="63" r="2" fill="#fff"/>
+          </g>
+        </svg>
+        <div class="brand">
+          <h1>GreenHouse</h1>
+          <small>Traiteur artisanal · Diététique & gourmand</small>
         </div>
       </div>
-      <a class="cta" href="#gammes">Voir les gammes</a>
-    </div>
+    </header>
 
     <!-- HERO -->
-    <section class="hero">
-      <div class="card" style="padding:34px">
-        <div class="eyebrow">Cuisine maison • Produits locaux</div>
-        <h1>Des plats <span style="color:var(--brand-2)">diététiques</span> ou <span style="color:var(--accent)">gourmands</span>, préparés sur mesure</h1>
-        <p class="lead">Pâtes artisanales, wraps, falafels et sauces 100% maison. Commande en ligne, <strong>retrait</strong> ou <strong>livraison</strong> sur Mulhouse et alentours.</p>
-        <div class="pill-group" style="margin:12px 0 2px">
-          <span class="pill">Moins de 20 € : 5 €</span>
-          <span class="pill">De 20 € à 39,99 € : 3 €</span>
-          <span class="pill">Dès 40 € : <strong>Gratuit</strong></span>
-        </div>
-        <div style="display:flex;gap:10px;margin-top:14px">
-          <a class="btn primary" href="#commande">Commander</a>
-          <a class="btn" href="#contact">Nous contacter</a>
-        </div>
+    <div class="hero">
+      <h2>Le bon plat au bon prix</h2>
+      <p class="muted">Diète ou gourmand — à vous de choisir. Pâtes fraîches maison, gammes fraîches & surgelées, et falafels artisanaux.</p>
+      <div class="cta-row">
+        <a class="btn" href="#gammes">Voir les gammes</a>
+        <a class="btn secondary" href="#livraison">Livraison & zones</a>
       </div>
-      <div class="media card" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop" alt="Assiette saine et gourmande" />
-      </div>
-    </section>
+    </div>
 
     <!-- GAMMES -->
-    <section id="gammes" class="section">
-      <div class="head">
-        <h2>Nos gammes</h2>
-        <span class="muted small">Simple & clair</span>
-      </div>
-      <div class="grid cols-2">
-        <div class="card" style="padding:18px">
-          <h3 style="margin:.2rem 0 .4rem">Diète — Surgelé</h3>
-          <p class="muted small">Plats équilibrés, prêts à réchauffer. <strong>9,90 € / plat</strong> (dès 10 plats : 9,00 €).</p>
-          <div class="pill-group" style="margin-top:8px">
-            <span class="pill">Four 20 min</span><span class="pill">Micro-ondes 8 min</span>
-          </div>
+    <section id="gammes">
+      <h3>Nos gammes</h3>
+      <div class="grid">
+        <div class="card">
+          <span class="pill">Surgelé · Diète</span>
+          <ul class="list">
+            <li><span>Pâtes seigle + émincé de poulet · sauce allégée · julienne</span><span class="price">9,90 € (≥10 : 9 €)</span></li>
+            <li><span>Lasagnes viande hachée & légumes</span><span class="price">9,90 € (≥10 : 9 €)</span></li>
+            <li><span>Pâtes complètes bolognaise & légumes</span><span class="price">9,90 € (≥10 : 9 €)</span></li>
+            <li><span>Falafel + patate douce + caviar d’aubergine</span><span class="price">9,90 € (≥10 : 9 €)</span></li>
+            <li><span>Gratin patate douce + viande hachée + légumes</span><span class="price">9,90 € (≥10 : 9 €)</span></li>
+          </ul>
         </div>
-        <div class="card" style="padding:18px">
-          <h3 style="margin:.2rem 0 .4rem">Gourmand — Frais</h3>
-          <p class="muted small">Recettes généreuses. <strong>Réservation 24 h</strong> à l’avance.</p>
-          <div class="pill-group" style="margin-top:8px">
-            <span class="pill">Four 8 min</span><span class="pill">Micro-ondes 2 min 30</span>
-          </div>
+        <div class="card">
+          <span class="pill">Surgelé · Gourmand</span>
+          <ul class="list">
+            <li><span>Falafels artisanaux (vrac)</span><span class="price">10 €/kg</span></li>
+            <li><span>Pâtes maison (surgelées)</span><span class="price">7 €/kg</span></li>
+          </ul>
         </div>
-      </div>
-    </section>
-
-    <!-- DIÈTE SURGELÉ — LISTE DES PLATS -->
-    <section class="section">
-      <div class="head">
-        <h2>Diète • Surgelé (9,90 €)</h2>
-        <span class="muted small">Sur-mesure possible</span>
-      </div>
-      <div class="grid cols-3">
-        <!-- 1 -->
-        <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1604908176997-431621b2c11b?q=80&w=1600&auto=format&fit=crop" alt="Pâtes au seigle poulet & légumes" />
-          <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Pâtes au seigle • poulet émincé • julienne de légumes</h3>
-            <p class="muted small">Sauce allégée. Cuisson : four 20 min • micro-ondes 8 min.</p>
-            <div class="meta"><span class="pill price">9,90 €</span><span class="pill">Surgelé</span></div>
-            <div class="macro-grid">
-              <div><b>Calories</b> —</div><div><b>Protéines</b> —</div>
-              <div><b>Glucides</b> —</div><div><b>Lipides</b> —</div>
-            </div>
-          </div>
-        </article>
-        <!-- 2 -->
-        <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1625944528070-50b78ea9b1f2?q=80&w=1600&auto=format&fit=crop" alt="Lasagnes viande hachée & légumes" />
-          <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Lasagnes • viande hachée & légumes</h3>
-            <p class="muted small">Cuisson : four 20 min • micro-ondes 8 min.</p>
-            <div class="meta"><span class="pill price">9,90 €</span><span class="pill">Surgelé</span></div>
-            <div class="macro-grid">
-              <div><b>Calories</b> —</div><div><b>Protéines</b> —</div>
-              <div><b>Glucides</b> —</div><div><b>Lipides</b> —</div>
-            </div>
-          </div>
-        </article>
-        <!-- 3 -->
-        <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1521389508051-d7ffb5dc8bbf?q=80&w=1600&auto=format&fit=crop" alt="Pâtes complètes bolognaise & légumes" />
-          <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Pâtes complètes • bolognaise & légumes</h3>
-            <p class="muted small">Cuisson : four 20 min • micro-ondes 8 min.</p>
-            <div class="meta"><span class="pill price">9,90 €</span><span class="pill">Surgelé</span></div>
-            <div class="macro-grid">
-              <div><b>Calories</b> —</div><div><b>Protéines</b> —</div>
-              <div><b>Glucides</b> —</div><div><b>Lipides</b> —</div>
-            </div>
-          </div>
-        </article>
-        <!-- 4 -->
-        <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1543352634-8730a9d2ae26?q=80&w=1600&auto=format&fit=crop" alt="Falafel patate douce & aubergine" />
-          <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Falafel • patate douce & aubergine</h3>
-            <p class="muted small">Sauce allégée. Cuisson : four 20 min • micro-ondes 8 min.</p>
-            <div class="meta"><span class="pill price">9,90 €</span><span class="pill">Surgelé</span></div>
-            <div class="macro-grid">
-              <div><b>Calories</b> —</div><div><b>Protéines</b> —</div>
-              <div><b>Glucides</b> —</div><div><b>Lipides</b> —</div>
-            </div>
-          </div>
-        </article>
-        <!-- 5 -->
-        <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop" alt="Gratin de patates douces & viande hachée" />
-          <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Gratin • patates douces, viande hachée & légumes</h3>
-            <p class="muted small">Cuisson : four 20 min • micro-ondes 8 min.</p>
-            <div class="meta"><span class="pill price">9,90 €</span><span class="pill">Surgelé</span></div>
-            <div class="macro-grid">
-              <div><b>Calories</b> —</div><div><b>Protéines</b> —</div>
-              <div><b>Glucides</b> —</div><div><b>Lipides</b> —</div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- GOURMAND FRAIS — EXEMPLES -->
-    <section class="section">
-      <div class="head">
-        <h2>Gourmand • Frais (réservation 24 h)</h2>
-        <span class="muted small">Cuisson conseillée : four 8 min • micro-ondes 2 min 30</span>
-      </div>
-      <div class="grid cols-3">
-        <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1606756790138-261d2b21cd31?q=80&w=1600&auto=format&fit=crop" alt="Pâtes au seigle arrabbiata" />
-          <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Pâtes au seigle • arrabbiata</h3>
-            <div class="meta"><span class="pill price">7,00 €</span><span class="pill">Frais</span></div>
-            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
-          </div>
-        </article>
-
-        <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1600&auto=format&fit=crop" alt="Pâtes complètes gorgonzola" />
-          <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Pâtes complètes • gorgonzola</h3>
-            <div class="meta"><span class="pill price">7,00 €</span><span class="pill">Frais</span></div>
-            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
-          </div>
-        </article>
-
-        <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1625944528196-4604d851d7bb?q=80&w=1600&auto=format&fit=crop" alt="Pâtes au seigle crème & basilic" />
-          <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Pâtes au seigle • crème & basilic</h3>
-            <div class="meta"><span class="pill price">7,00 €</span><span class="pill">Frais</span></div>
-            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
-          </div>
-        </article>
-
-        <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642?q=80&w=1600&auto=format&fit=crop" alt="Pâtes aromette crème" />
-          <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Pâtes aromette • crème</h3>
-            <div class="meta"><span class="pill price">7,00 €</span><span class="pill">Frais</span></div>
-            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
-          </div>
-        </article>
-
-        <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=1600&auto=format&fit=crop" alt="Pâtes complètes escalope à la crème" />
-          <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Pâtes complètes • escalope à la crème</h3>
-            <div class="meta"><span class="pill price">9,00 €</span><span class="pill">Frais</span></div>
-            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
-          </div>
-        </article>
-
-        <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=1600&auto=format&fit=crop" alt="Pâtes complètes saumon crème" />
-          <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Pâtes complètes • saumon crème</h3>
-            <div class="meta"><span class="pill price">10,00 €</span><span class="pill">Frais</span></div>
-            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
-          </div>
-        </article>
-
-        <article class="card tile">
-          <img src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=1600&auto=format&fit=crop" alt="Lasagnes saumon" />
-          <div class="info">
-            <h3 style="margin:.2rem 0 .4rem">Lasagnes • saumon</h3>
-            <div class="meta"><span class="pill price">11,00 €</span><span class="pill">Frais</span></div>
-            <div class="macro-grid"><div><b>Calories</b> —</div><div><b>Protéines</b> —</div><div><b>Glucides</b> —</div><div><b>Lipides</b> —</div></div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- PÂTES FRAÎCHES ARTISANALES -->
-    <section class="section card" style="padding:22px">
-      <h2 style="margin:0 0 .6rem">Pâtes fraîches artisanales</h2>
-      <p class="muted">Œufs plein air. Farines : complète, seigle, aromette.</p>
-      <div class="pill-group" style="margin:10px 0">
-        <span class="pill price">7,00 € / kg</span>
-        <span class="pill">Lundi & Jeudi (sur réservation)</span>
-        <span class="pill">Cuisson 1 min 30</span>
-      </div>
-    </section>
-
-    <!-- FALAFELS (SURGELÉS UNIQUEMENT) -->
-    <section class="section card" style="padding:22px">
-      <h2 style="margin:0 0 .6rem">Falafels artisanaux — Surgelés</h2>
-      <div class="pill-group" style="margin:10px 0">
-        <span class="pill price">10,00 € / kg</span>
-        <span class="pill">Friteuse 3 min</span>
-        <span class="pill">Airfryer 14 min</span>
-        <span class="pill">Four 20 min</span>
-        <span class="pill">Micro-ondes 8 min</span>
-      </div>
-    </section>
-
-    <!-- LIVRAISON & CONTACT -->
-    <section id="livraison" class="section card" style="padding:22px">
-      <h2 style="margin:0 0 .6rem">Retrait & Livraison</h2>
-      <p class="muted">Retrait au point : <strong>151 rue de Kingersheim, 68200 Mulhouse</strong></p>
-      <p><strong>Zones livrées :</strong> Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim, Richwiller, Lutterbach, Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim, Eschentzwiller, Brunstatt.</p>
-      <div class="pill-group" style="margin:10px 0 8px">
-        <span class="pill">Moins de 20 € : 5 €</span>
-        <span class="pill">De 20 € à 39,99 € : 3 €</span>
-        <span class="pill">Dès 40 € : <strong>Gratuit</strong></span>
-      </div>
-      <p class="muted small">Les frais se calculent automatiquement dans le panier (prochainement).</p>
-    </section>
-
-    <section id="commande" class="section card" style="padding:22px">
-      <h2 style="margin:0 0 .6rem">Commander</h2>
-      <p class="muted">Le module de commande en ligne arrive. En attendant, passe ta commande par e-mail, on confirme rapidement.</p>
-      <div class="pill-group" style="margin-top:12px">
-        <a class="btn primary" href="mailto:greenhouse.68@outlook.fr">📧 greenhouse.68@outlook.fr</a>
-      </div>
-      <p class="muted small" style="margin-top:10px">Paiement à la livraison ou au retrait. Intégration Nayax/Stripe à venir.</p>
-    </section>
-
-    <section id="contact" class="section card" style="padding:22px">
-      <h2 style="margin:0 0 .6rem">Contact</h2>
-      <div class="grid" style="gap:12px">
-        <div>
-          <p class="muted">Adresse pro</p>
-          <p><strong>151 rue de Kingersheim</strong><br/>68200 Mulhouse</p>
-          <p class="muted">Email</p>
-          <p><a href="mailto:greenhouse.68@outlook.fr" style="color:#b1f5cf">greenhouse.68@outlook.fr</a></p>
+        <div class="card">
+          <span class="pill">Frais · Gourmand</span>
+          <ul class="list">
+            <li><span>Pâtes seigle arrabiata</span><span class="price">7 €</span></li>
+            <li><span>Pâtes complètes gorgonzola</span><span class="price">7 €</span></li>
+            <li><span>Pâtes seigle crème basilic</span><span class="price">7 €</span></li>
+            <li><span>Pâtes aromette crème</span><span class="price">7 €</span></li>
+            <li><span>Pâtes complètes escalope crème</span><span class="price">9 €</span></li>
+            <li><span>Pâtes complètes saumon crème</span><span class="price">10 €</span></li>
+            <li><span>Lasagnes saumon</span><span class="price">11 €</span></li>
+          </ul>
         </div>
       </div>
+
+      <div class="card" style="margin-top:16px">
+        <span class="pill">Frais · Réservation 24h</span>
+        <p class="muted" style="margin:8px 0 12px">
+          Pâte fraîche artisanale aux œufs (seigle, complète ou aromette) — <strong>7 €/kg</strong> · cuisson <strong>1 min 30</strong>.
+          Disponible sans réservation en version surgelée (toujours artisanale).
+        </p>
+        <p class="muted">Wrap falafel & légumes à la bibeleskäs (fromage blanc alsacien) — <strong>9 €</strong> (frais uniquement).</p>
+      </div>
     </section>
 
-    <footer>
-      <div class="cols">
-        <div class="small">© <span id="y"></span> GreenHouse — Mulhouse & alentours.</div>
-        <div class="small"><a href="#livraison" style="color:#b1f5cf">Infos livraison</a></div>
-        <div class="small"><a href="#commande" style="color:#b1f5cf">Commander</a></div>
+    <!-- LIVRAISON -->
+    <section id="livraison" class="card">
+      <h3>Livraison</h3>
+      <p class="muted">Gratuite <strong>à partir de 40 €</strong>.</p>
+      <div class="cta-row">
+        <span class="pill">Commande &lt; 20 € : 5 €</span>
+        <span class="pill">20 € – 39,99 € : 3 €</span>
       </div>
-    </footer>
+      <p class="muted" style="margin-top:10px">
+        <strong>Zones livrées :</strong> Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim, Richwiller, Lutterbach,
+        Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim, Eschentzwiller, Brunstatt.
+      </p>
+    </section>
+
+    <!-- MACROS (calculées) -->
+    <section id="macros">
+      <h3>Valeurs nutritionnelles (calcul automatique)</h3>
+      <p class="note">Les valeurs marquées “(estim.)” utilisent des moyennes standard en attendant tes chiffres exacts. Les falafels sont renseignés d’après ton étiquette.</p>
+      <div id="macroTables" class="grid" style="margin-top:12px"></div>
+    </section>
+
+    <!-- CTA -->
+    <section class="card">
+      <h3>Commander</h3>
+      <p class="muted">Réservation 24h à l’avance pour les produits frais. Les surgelés (pâtes & falafels) sont disponibles sans réservation.</p>
+      <div class="cta-row">
+        <a class="btn" href="mailto:greenhouse.68@outlook.fr?subject=Commande%20GreenHouse">Par e-mail</a>
+        <a class="btn secondary" href="https://wa.me/33600000000" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div>Fabriqué par GreenHouse — 151 rue de Kingersheim, 68200 Mulhouse</div>
+      <div class="note">Allergènes : gluten (pâtes), sésame (falafels). Infos détaillées sur demande.</div>
+    </div>
   </div>
 
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  <script>
+    /**
+     * ──────────────────────────────────────────────────────────────────────────────
+     *  MOTEUR DE MACROS
+     *  - Mets à jour NUTRITION_DB avec TES valeurs /100 g pour des calculs exacts.
+     *  - Les produits sont assemblés via ITEMS : nom + composants {ingrédient: grammes}.
+     *  - Les tableaux sont générés automatiquement.
+     * ──────────────────────────────────────────────────────────────────────────────
+     */
+
+    // Base de données nutrition (par 100 g)
+    // “estim.” = valeurs moyennes classiques (à remplacer par tes chiffres labo/fiche produit)
+    const NUTRITION_DB = {
+      // ton étiquette falafel, produit surgelé non cuit
+      "falafel": { kcal:184, prot:7.6, gluc:20.1, suc:1.1, lip:7.4, sat:0.8, fib:5.3, sel:1.1, source:"étiquette" },
+
+      // valeurs moyennes — à AJUSTER
+      "pates_cuites_maison": { kcal:150, prot:5.5, gluc:30, suc:1.2, lip:1.5, sat:0.4, fib:3.5, sel:0.02, source:"estim." },
+      "poulet_cuit":        { kcal:165, prot:31,  gluc:0,  suc:0,   lip:3.6, sat:1.0, fib:0,   sel:0.2,  source:"estim." },
+      "boeuf_hache_cuit":   { kcal:176, prot:26,  gluc:0,  suc:0,   lip:8,   sat:3.2, fib:0,   sel:0.25, source:"estim." }, // à préciser selon %MG
+      "saumon_cuit":        { kcal:208, prot:22,  gluc:0,  suc:0,   lip:13,  sat:3.1, fib:0,   sel:0.1,  source:"estim." },
+      "legumes_melanges":   { kcal:40,  prot:2,   gluc:8,  suc:4,   lip:0.5, sat:0.1, fib:3,   sel:0.05, source:"estim." },
+      "huile_olive":        { kcal:884,prot:0,   gluc:0,  suc:0,   lip:100, sat:14,  fib:0,   sel:0,    source:"estim." },
+
+      // sauces (approches) — à affiner si besoin
+      "sauce_allagee_poivron": { kcal:40, prot:1, gluc:8, suc:3, lip:0.8, sat:0.2, fib:1.5, sel:0.4, source:"estim." },
+      "bechamel":              { kcal:110, prot:4, gluc:9, suc:4, lip:6,  sat:3.8, fib:0,   sel:0.6, source:"estim." },
+      "creme18":               { kcal:190, prot:3, gluc:4, suc:3, lip:18, sat:11,  fib:0,   sel:0.1, source:"estim." },
+      "bibalakass":            { kcal:80,  prot:8, gluc:4, suc:4, lip:3,  sat:2,   fib:0,   sel:0.5, source:"estim." },
+      "wrap_complete":         { kcal:230, prot:7, gluc:36, suc:2, lip:6,  sat:1,   fib:6,   sel:0.6, source:"estim." },
+      "patate_douce":          { kcal:86,  prot:1.6,gluc:20,suc:4.2,lip:0.1,sat:0,  fib:3,   sel:0.1, source:"estim." },
+      "caviar_aubergine":      { kcal:95,  prot:2, gluc:8, suc:4,  lip:6,  sat:1,   fib:3,   sel:0.7, source:"estim." },
+      "fromage_rape":          { kcal:380, prot:27,gluc:3, suc:0.5,lip:30, sat:19,  fib:0,   sel:1.6, source:"estim." },
+      "epinards":              { kcal:23,  prot:3, gluc:3.6,suc:0.4,lip:0.4,sat:0.1,fib:2.4, sel:0.08,source:"estim." },
+      "courgette":             { kcal:16,  prot:1.2,gluc:3.1,suc:2.5,lip:0.2,sat:0.05,fib:1, sel:0.02,source:"estim." },
+      "pates_fraiches_lasagne":{ kcal:165, prot:6, gluc:32, suc:1.5, lip:2, sat:0.6, fib:2.5, sel:0.05, source:"estim." }
+    };
+
+    // Définition des portions standards de ton brief
+    const PORTIONS = {
+      pates_cuites: 200,
+      poulet_cuit: 150,
+      boeuf_hache_cuit: 150,
+      saumon_cuit: 100,
+      legumes: 150,
+      falafel: 200,
+      huile_olive_ml: 5, // ~4.5 g, on simplifie à 5 g pour arrondir
+      sauce_creme_dl: 1  // 10 cl = 100 g approx (densité ~1)
+    };
+
+    // Produits à afficher (nom + composants grammes)
+    const ITEMS = [
+      // SURGELÉ · DIÈTE
+      {
+        group:"Surgelé · Diète",
+        name:"Pâtes seigle + poulet (sauce allégée) + julienne",
+        comp:{
+          pates_cuites_maison: PORTIONS.pates_cuites,
+          poulet_cuit: PORTIONS.poulet_cuit,
+          sauce_allagee_poivron: 80, // approx.
+          legumes_melanges: PORTIONS.legumes
+        }
+      },
+      { group:"Surgelé · Diète", name:"Lasagnes viande hachée & légumes",
+        comp:{
+          pates_fraiches_lasagne: 200,
+          boeuf_hache_cuit: 100,
+          bechamel: 100,
+          courgette: 100,
+          fromage_rape: 30
+        }
+      },
+      { group:"Surgelé · Diète", name:"Pâtes complètes bolognaise & légumes",
+        comp:{
+          pates_cuites_maison: PORTIONS.pates_cuites,
+          boeuf_hache_cuit: PORTIONS.boeuf_hache_cuit,
+          legumes_melanges: 120,
+          huile_olive: 5
+        }
+      },
+      { group:"Surgelé · Diète", name:"Falafel + patate douce + caviar d’aubergine",
+        comp:{
+          falafel: PORTIONS.falafel,
+          patate_douce: 150,
+          caviar_aubergine: 150
+        }
+      },
+      { group:"Surgelé · Diète", name:"Gratin patate douce + viande hachée + légumes",
+        comp:{
+          patate_douce: 200,
+          boeuf_hache_cuit: 120,
+          courgette: 100
+        }
+      },
+
+      // FRAIS · GOURMAND (quelques exemples)
+      { group:"Frais · Gourmand", name:"Pâtes seigle arrabiata",
+        comp:{ pates_cuites_maison: PORTIONS.pates_cuites, huile_olive: 5, legumes_melanges: 120 }
+      },
+      { group:"Frais · Gourmand", name:"Pâtes complètes saumon crème",
+        comp:{ pates_cuites_maison: PORTIONS.pates_cuites, saumon_cuit: 100, creme18: 100 }
+      },
+      { group:"Frais · Gourmand", name:"Lasagnes saumon & épinards",
+        comp:{ pates_fraiches_lasagne: 200, saumon_cuit: 100, epinards: 100, bechamel: 50, fromage_rape: 50 }
+      },
+
+      // WRAP FRAIS
+      { group:"Frais · Gourmand", name:"Wrap falafel & légumes à la bibeleskäs",
+        comp:{ wrap_complete: 200, falafel: 150, legumes_melanges: 140, bibalakass: 100 }
+      },
+
+      // VRAC / UNITAIRES
+      { group:"Surgelé · Gourmand", name:"Falafels (par 100 g)", comp:{ falafel: 100 } }
+    ];
+
+    function round(x, d=1){ return Math.round(x * Math.pow(10,d))/Math.pow(10,d); }
+
+    function computeItem(item){
+      const acc = { kcal:0, prot:0, gluc:0, suc:0, lip:0, sat:0, fib:0, sel:0, weight:0, notes:new Set() };
+      for(const [k, grams] of Object.entries(item.comp)){
+        const n = NUTRITION_DB[k];
+        if(!n) continue;
+        const f = grams / 100;
+        acc.kcal += n.kcal * f;
+        acc.prot += n.prot * f;
+        acc.gluc += n.gluc * f;
+        acc.suc  += n.suc  * f;
+        acc.lip  += n.lip  * f;
+        acc.sat  += n.sat  * f;
+        acc.fib  += n.fib  * f;
+        acc.sel  += n.sel  * f;
+        acc.weight += grams;
+        if(n.source === "estim.") acc.notes.add("estim.");
+      }
+      for(const k of ["kcal","prot","gluc","suc","lip","sat","fib","sel"]) acc[k] = round(acc[k], 1);
+      acc.weight = round(acc.weight, 0);
+      return acc;
+    }
+
+    function renderTables(){
+      const root = document.getElementById("macroTables");
+      root.innerHTML = "";
+      const groups = [...new Set(ITEMS.map(x=>x.group))];
+      groups.forEach(g=>{
+        const card = document.createElement("div");
+        card.className = "card";
+        const h = document.createElement("h4");
+        h.textContent = g;
+        h.style.marginTop = "0";
+        card.appendChild(h);
+
+        const table = document.createElement("table");
+        table.innerHTML = `
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th>Poids (g)</th>
+              <th>Énergie (kcal)</th>
+              <th>Protéines (g)</th>
+              <th>Glucides (g)</th>
+              <th>dont sucres (g)</th>
+              <th>Lipides (g)</th>
+              <th>dont sat. (g)</th>
+              <th>Fibres (g)</th>
+              <th>Sel (g)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        `;
+        const tb = table.querySelector("tbody");
+
+        ITEMS.filter(x=>x.group===g).forEach(x=>{
+          const r = computeItem(x);
+          const tr = document.createElement("tr");
+          const note = r.notes.has("estim.") ? " <span class='note'>(estim.)</span>" : "";
+          tr.innerHTML = `
+            <td>${x.name}${note}</td>
+            <td>${r.weight}</td>
+            <td>${r.kcal}</td>
+            <td>${r.prot}</td>
+            <td>${r.gluc}</td>
+            <td>${r.suc}</td>
+            <td>${r.lip}</td>
+            <td>${r.sat}</td>
+            <td>${r.fib}</td>
+            <td>${r.sel}</td>
+          `;
+          tb.appendChild(tr);
+        });
+
+        card.appendChild(table);
+        root.appendChild(card);
+      });
+    }
+
+    renderTables();
+  </script>
 </body>
 </html>
