@@ -28,10 +28,8 @@
     .card{background:var(--paper);border:1px solid var(--ring);border-radius:var(--r);padding:16px 18px;box-shadow:var(--shadow)}
     .section-title{display:flex;align-items:center;gap:10px;margin:22px 0 12px}
     .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px;color:#fff}
-    .chip.diet{background:var(--diet)}
-    .chip.gour{background:var(--gour)}
-    .chip.fresh{background:var(--fresh)}
-    .chip.cold{background:var(--cold)}
+    .chip.diet{background:var(--diet)} .chip.gour{background:var(--gour)}
+    .chip.fresh{background:var(--fresh)} .chip.cold{background:var(--cold)}
     .chip.spice{background:#f59e0b}
     .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
     .pill{background:#eef2f7;border:1px solid var(--ring);padding:6px 10px;border-radius:999px}
@@ -44,29 +42,41 @@
     .dish{display:grid;grid-template-rows:auto auto auto 1fr auto;gap:10px}
     .dish .hdr{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
     .price{background:#0f172a;color:#fff;border-radius:10px;padding:6px 10px;font-weight:800}
-    .meta{display:flex;gap:8px;flex-wrap:wrap}
     .macros{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
     .mcell{background:#f6f9fc;border:1px solid var(--ring);border-radius:12px;padding:10px;text-align:center}
     .mcell span{display:block;color:#6b7280;font-size:12px;margin-bottom:4px}
     .mcell b{font-size:18px}
     .cook{color:#6b7280}
-    .img{width:100%;height:180px;border-radius:12px;object-fit:cover;border:1px solid var(--ring)}
     .note{font-size:13px;color:#6b7280}
 
-    /* Encarts */
+    /* Vignettes images (fallback intégré) */
+    .img{width:100%;height:180px;border-radius:12px;border:1px solid var(--ring);
+         background-size:cover;background-position:center;background-color:#eef2f7}
+    /* Placeholders encodés (s’affichent si la photo réelle manque) */
+    .ph-diet{--ph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop stop-color='%2322c55e'/%3E%3Cstop offset='1' stop-color='%230ea5e9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='800' fill='url(%23g)'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' font-size='44' fill='white' font-family='Inter' font-weight='700'%3EDi%C3%A8te%3C/text%3E%3C/svg%3E")}
+    .ph-gour{--ph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop stop-color='%23ef4444'/%3E%3Cstop offset='1' stop-color='%23f59e0b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='800' fill='url(%23g)'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' font-size='44' fill='white' font-family='Inter' font-weight='700'%3EGourmand%3C/text%3E%3C/svg%3E")}
+    /* Utilise deux backgrounds : d’abord ta photo /images/…, sinon le placeholder data-URI */
+    .bg-diet-seigle-poulet{background-image:url('/images/diet-seigle-poulet.jpg'),var(--ph)}
+    .bg-diet-lasagnes{background-image:url('/images/diet-lasagnes-viande-legumes.jpg'),var(--ph)}
+    .bg-diet-bolo{background-image:url('/images/diet-bolo-epicee.jpg'),var(--ph)}
+    .bg-diet-falafel{background-image:url('/images/diet-falafel-patate-aubergine.jpg'),var(--ph)}
+    .bg-diet-gratin{background-image:url('/images/diet-gratin-patate-douce.jpg'),var(--ph)}
+
+    .bg-gour-arrabbiata{background-image:url('/images/gour-arrabbiata.jpg'),var(--ph)}
+    .bg-gour-gorgonzola{background-image:url('/images/gour-gorgonzola.jpg'),var(--ph)}
+    .bg-gour-creme-basilic{background-image:url('/images/gour-creme-basilic.jpg'),var(--ph)}
+    .bg-gour-aromette-poulet{background-image:url('/images/gour-aromette-poulet-creme.jpg'),var(--ph)}
+    .bg-gour-saumon{background-image:url('/images/gour-saumon-creme.jpg'),var(--ph)}
+    .bg-gour-lasagnes-saumon{background-image:url('/images/gour-lasagnes-saumon.jpg'),var(--ph)}
+    .bg-gour-wrap{background-image:url('/images/gour-wrap-falafel.jpg'),var(--ph)}
+
     .info-card{background:linear-gradient(135deg,#e8fff1,#ffffff);border-color:#d7f3df}
     .cold-card{background:linear-gradient(135deg,#eeeaff,#ffffff);border-color:#e0dafe}
 
-    /* Responsive */
     @media(max-width:720px){
       .macros{grid-template-columns:repeat(2,1fr)}
       .hdr{flex-direction:column;gap:8px}
     }
-
-    /* Image placeholders (SVG data URIs, remplaçables par /images/*.jpg) */
-    .ph-diet{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop stop-color='%2322c55e'/%3E%3Cstop offset='1' stop-color='%230ea5e9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='800' fill='url(%23g)'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' font-size='46' fill='white' font-family='Inter' font-weight='700'%3EDi%C3%A8te%3C/text%3E%3C/svg%3E")}
-    .ph-gour{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop stop-color='%23ef4444'/%3E%3Cstop offset='1' stop-color='%23f59e0b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='800' fill='url(%23g)'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' font-size='46' fill='white' font-family='Inter' font-weight='700'%3EGourmand%3C/text%3E%3C/svg%3E")}
-    .ph{background-size:cover;background-position:center}
   </style>
 </head>
 <body>
@@ -130,17 +140,15 @@
     </div>
   </section>
 
-  <!-- NOS PLATS -->
+  <!-- REPAS DIÈTE (SURGELÉS) -->
   <section class="wrap" id="plats">
     <h2 class="section-title"><span class="chip diet">Repas diète</span></h2>
-
-    <!-- DIÈTE — SURGELÉ -->
     <div class="section-title" style="margin-top:6px"><span class="chip cold">Surgelé</span><span class="chip diet">Diète</span></div>
-    <div class="grid cols-2">
 
+    <div class="grid cols-2">
       <!-- Seigle poulet julienne sauce poivron -->
       <article class="card dish">
-        <img class="img ph ph-diet" alt="Pâtes seigle poulet" src="/images/diet-seigle-poulet.jpg">
+        <div class="img ph-diet bg-diet-seigle-poulet"></div>
         <div class="hdr">
           <h3>Pâtes au seigle, émincé de poulet, julienne de légumes, sauce poivron <span class="chip spice">Épices</span></h3>
           <span class="price">9,90 €</span>
@@ -156,7 +164,7 @@
 
       <!-- Lasagnes viande hachée & légumes -->
       <article class="card dish">
-        <img class="img ph ph-diet" alt="Lasagnes viande & légumes" src="/images/diet-lasagnes-viande-legumes.jpg">
+        <div class="img ph-diet bg-diet-lasagnes"></div>
         <div class="hdr">
           <h3>Lasagnes viande hachée &amp; légumes, sauce allégée</h3>
           <span class="price">9,90 €</span>
@@ -172,7 +180,7 @@
 
       <!-- Complètes bolo épicée basilic -->
       <article class="card dish">
-        <img class="img ph ph-diet" alt="Pâtes complètes bolo épicée" src="/images/diet-bolo-epicee.jpg">
+        <div class="img ph-diet bg-diet-bolo"></div>
         <div class="hdr">
           <h3>Pâtes complètes bolognaise &amp; légumes, sauce tomate &amp; basilic <span class="chip spice">Épices</span></h3>
           <span class="price">9,90 €</span>
@@ -188,7 +196,7 @@
 
       <!-- Falafel patate douce & caviar d’aubergine -->
       <article class="card dish">
-        <img class="img ph ph-diet" alt="Falafel patate douce aubergine" src="/images/diet-falafel-patate-aubergine.jpg">
+        <div class="img ph-diet bg-diet-falafel"></div>
         <div class="hdr">
           <h3>Falafel patate douce &amp; caviar d’aubergine <span class="chip spice">Épices</span></h3>
           <span class="price">9,90 €</span>
@@ -204,7 +212,7 @@
 
       <!-- Gratin patates douces diète -->
       <article class="card dish">
-        <img class="img ph ph-diet" alt="Gratin patates douces diète" src="/images/diet-gratin-patate-douce.jpg">
+        <div class="img ph-diet bg-diet-gratin"></div>
         <div class="hdr">
           <h3>Gratin de patates douces, viande hachée &amp; légumes</h3>
           <span class="price">9,90 €</span>
@@ -218,15 +226,17 @@
         <p class="cook">Cuisson : four 20 min · micro-ondes 8 min</p>
       </article>
     </div>
+  </section>
 
-    <!-- FRAIS — GOURMAND -->
-    <h2 class="section-title" style="margin-top:26px"><span class="chip gour">Frais gourmands</span></h2>
+  <!-- FRAIS GOURMANDS -->
+  <section class="wrap" id="gourmands">
+    <h2 class="section-title"><span class="chip gour">Frais gourmands</span></h2>
     <p style="margin:-4px 0 10px;color:#6b7280">Sur réservation 24 h à l’avance.</p>
 
     <div class="grid cols-3">
       <!-- Arrabbiata -->
       <article class="card dish">
-        <img class="img ph ph-gour" alt="Seigle Arrabbiata" src="/images/gour-arrabbiata.jpg">
+        <div class="img ph-gour bg-gour-arrabbiata"></div>
         <div class="hdr">
           <h3>Pâtes de seigle Arrabbiata <span class="chip spice">Épices</span></h3>
           <span class="price">7,00 €</span>
@@ -240,9 +250,9 @@
         </div>
       </article>
 
-      <!-- Complètes gorgonzola -->
+      <!-- Gorgonzola -->
       <article class="card dish">
-        <img class="img ph ph-gour" alt="Complètes gorgonzola" src="/images/gour-gorgonzola.jpg">
+        <div class="img ph-gour bg-gour-gorgonzola"></div>
         <div class="hdr">
           <h3>Pâtes complètes au gorgonzola</h3>
           <span class="price">7,00 €</span>
@@ -258,7 +268,7 @@
 
       <!-- Complètes crème basilic -->
       <article class="card dish">
-        <img class="img ph ph-gour" alt="Complètes crème basilic" src="/images/gour-creme-basilic.jpg">
+        <div class="img ph-gour bg-gour-creme-basilic"></div>
         <div class="hdr">
           <h3>Pâtes complètes crème basilic</h3>
           <span class="price">7,00 €</span>
@@ -274,7 +284,7 @@
 
       <!-- Aromette émincé de poulet à la crème -->
       <article class="card dish">
-        <img class="img ph ph-gour" alt="Aromette poulet crème" src="/images/gour-aromette-poulet-creme.jpg">
+        <div class="img ph-gour bg-gour-aromette-poulet"></div>
         <div class="hdr">
           <h3>Pâtes aromette émincé de poulet à la crème</h3>
           <span class="price">9,00 €</span>
@@ -288,9 +298,9 @@
         </div>
       </article>
 
-      <!-- Complètes saumon crème -->
+      <!-- Saumon crème -->
       <article class="card dish">
-        <img class="img ph ph-gour" alt="Complètes saumon crème" src="/images/gour-saumon-creme.jpg">
+        <div class="img ph-gour bg-gour-saumon"></div>
         <div class="hdr">
           <h3>Pâtes complètes saumon crème</h3>
           <span class="price">10,00 €</span>
@@ -304,9 +314,9 @@
         </div>
       </article>
 
-      <!-- Lasagnes saumon & épinards -->
+      <!-- Lasagnes saumon -->
       <article class="card dish">
-        <img class="img ph ph-gour" alt="Lasagnes saumon épinards" src="/images/gour-lasagnes-saumon.jpg">
+        <div class="img ph-gour bg-gour-lasagnes-saumon"></div>
         <div class="hdr">
           <h3>Lasagnes saumon &amp; épinards</h3>
           <span class="price">11,00 €</span>
@@ -320,14 +330,14 @@
         </div>
       </article>
 
-      <!-- Wrap -->
+      <!-- Wrap (galette 100 g) -->
       <article class="card dish">
-        <img class="img ph ph-gour" alt="Wrap falafel légumes" src="/images/gour-wrap-falafel.jpg">
+        <div class="img ph-gour bg-gour-wrap"></div>
         <div class="hdr">
           <h3>Wrap falafels &amp; légumes (Bibeleskäs) <span class="chip spice">Épices</span></h3>
           <span class="price">9,00 €</span>
         </div>
-        <p>Galette complète, falafels, fromage blanc alsacien, légumes</p>
+        <p>Galette complète 100 g, falafels, fromage blanc alsacien, légumes</p>
         <div class="macros">
           <div class="mcell"><span>CALORIES</span><b>710</b></div>
           <div class="mcell"><span>PROTÉINES</span><b>24 g</b></div>
@@ -340,7 +350,7 @@
 
   <!-- CONTACT -->
   <section class="wrap" id="contact">
-    <h2 class="section-title"><span class="chip accent" style="background:var(--accent)">Commander</span></h2>
+    <h2 class="section-title"><span class="chip" style="background:var(--accent)">Commander</span></h2>
     <div class="card">
       <p>Réservation 24 h à l’avance pour les produits frais. Les surgelés sont disponibles sans réservation.</p>
       <p><strong>E-mail :</strong> <a href="mailto:greenhouse.68@outlook.fr">greenhouse.68@outlook.fr</a></p>
