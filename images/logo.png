@@ -1,0 +1,7 @@
+<header>
+  <img src="images/logo.png" alt="Logo GreenHouse" class="logo" />
+  <div class="brand">
+    <h1>GreenHouse</h1>
+    <p>Traiteur artisanal — Diététique &amp; Gourmand</p>
+  </div>
+</header>
