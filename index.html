@@ -1,96 +1,282 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GreenHousefood • Traiteur artisanal – diète & gourmand</title>
-  <meta name="description" content="Traiteur artisanal sur Mulhouse & environs. Plats diététiques ou gourmands, pâtes, falafels, wraps, sauces maison. Produits locaux. Livraison dès 5 € – gratuite dès 40 €.">
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Traiteur artisanal à Mulhouse : plats diététiques ou gourmands, pâtes, wraps et falafels maison. Retrait et livraison locales. Produits locaux au maximum." />
   <link rel="icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg-1:#0d1f16;
+      --bg-2:#0f271b;
+      --card:#12261c;
+      --muted:#9bb2a4;
+      --text:#ecf6ef;
+      --brand:#45d08a;
+      --brand-2:#8be2b5;
+      --accent:#ffe38b;
+      --danger:#ff6b6b;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family:Inter,system-ui,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #173826 0%, transparent 60%),
+        radial-gradient(900px 500px at 110% 10%, #103021 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      background-attachment: fixed;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:28px}
+
+    /* header */
+    .nav{
+      display:flex;gap:16px;align-items:center;justify-content:space-between;
+      position:sticky;top:0;z-index:20;padding:14px 24px;margin:-14px -24px 20px;
+      background:rgba(10,22,16,.5);backdrop-filter: blur(8px);border-bottom:1px solid rgba(255,255,255,.06)
+    }
+    .brand{display:flex;gap:10px;align-items:center;font-weight:800;font-family:Poppins, sans-serif;letter-spacing:.2px}
+    .brand .logo{
+      display:grid;place-items:center;width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg,var(--brand),var(--brand-2)); color:#0b1a13; font-weight:900;
+      box-shadow:0 6px 18px rgba(69,208,138,.35)
+    }
+    .nav .cta{
+      background:linear-gradient(135deg,var(--brand),var(--brand-2));
+      color:#0b1a13;font-weight:700;border:none;padding:12px 18px;border-radius:14px;
+      box-shadow:0 8px 24px rgba(69,208,138,.35);cursor:pointer
+    }
+
+    /* hero */
+    .hero{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;margin-top:18px
+    }
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow)
+    }
+    .hero .copy{padding:34px}
+    .eyebrow{color:var(--brand-2);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.82rem}
+    h1{
+      margin:.4rem 0 1rem;font-size:clamp(28px,4.2vw,44px);line-height:1.08;
+      font-family:Poppins, sans-serif; font-weight:800
+    }
+    .lead{color:var(--muted);font-size:1.05rem;line-height:1.6}
+    .badges{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+    .badge{
+      background:#132a1e;border:1px solid rgba(255,255,255,.09);color:#d6f4e5;
+      padding:8px 12px;border-radius:999px;font-weight:600;font-size:.9rem
+    }
+    .hero .media{
+      overflow:hidden;position:relative
+    }
+    .hero .media img{
+      width:100%;height:100%;object-fit:cover;display:block;border-radius:var(--radius)
+    }
+    .media::after{
+      content:"";position:absolute;inset:0;border-radius:var(--radius);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)
+    }
+
+    /* sections */
+    .section{margin:36px 0}
+    .section .head{
+      display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:14px
+    }
+    .section h2{
+      font-family:Poppins,sans-serif;font-size:clamp(22px,3vw,30px);margin:0
+    }
+    .muted{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media (max-width:980px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
+    .tile{
+      overflow:hidden;position:relative
+    }
+    .tile img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+    .tile .info{padding:16px}
+    .pill-group{display:flex;flex-wrap:wrap;gap:10px}
+    .pill{
+      background:#173323;border:1px solid rgba(255,255,255,.08);padding:8px 12px;border-radius:999px;
+      font-weight:600
+    }
+    .price{font-weight:800;color:var(--accent)}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;padding:11px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);
+      background:transparent;color:var(--text);cursor:pointer
+    }
+    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b1a13;border:none}
+    .stack{display:grid;gap:12px}
+
+    /* footer */
+    footer{
+      margin-top:46px;padding:28px;border-top:1px solid rgba(255,255,255,.06);color:var(--muted)
+    }
+    .cols{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
+    @media (max-width:980px){.cols{grid-template-columns:1fr}}
+    .small{font-size:.92rem}
+    .ok{color:#b1f5cf}
+  </style>
 </head>
+
 <body>
-  <!-- En-tête -->
-  <header class="container header">
-    <div class="brand">
-      <span class="leaf">🌱</span> <strong>GreenHousefood</strong>
-    </div>
-    <nav class="nav">
-      <a href="#menu">Menu</a>
-      <a href="#livraison">Livraison</a>
-      <a href="#contact">Contact</a>
-      <a href="#panier" id="goCart" class="btn-outline">Panier <span id="bubble">0</span></a>
-    </nav>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container hero-inner">
-      <div class="hero-text">
-        <h1>Traiteur artisanal — <em>diète</em> & <em>gourmand</em></h1>
-        <p>Plats faits maison : pâtes artisanales, falafels, wraps, sauces maison. Ingrédients locaux au maximum. Option <strong>sur-mesure</strong> pour vos objectifs diététiques.</p>
-        <div class="hero-cta">
-          <a href="#menu" class="btn-primary">Voir le menu</a>
-          <a href="#livraison" class="btn-secondary">Infos livraison</a>
+  <div class="container">
+    <!-- NAV -->
+    <div class="nav card">
+      <div class="brand">
+        <div class="logo">GH</div>
+        <div>
+          <div style="font-size:1.05rem">GreenHousefood</div>
+          <div class="small" style="color:var(--muted)">Traiteur artisanal • diète & gourmand</div>
         </div>
-        <p class="usp">
-          • Fait maison • Produits locaux • Click & collect ou livraison
-        </p>
       </div>
-      <div class="hero-photo">
-        <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=1200&auto=format&fit=crop" alt="Assiette artisanale fraîche">
-      </div>
+      <a class="cta" href="#menu">Voir la carte</a>
     </div>
-  </section>
 
-  <!-- Menu -->
-  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="copy card">
+        <div class="eyebrow">Cuisine maison • Produits locaux</div>
+        <h1>Des plats <span style="color:var(--brand-2)">diététiques</span> ou <span style="color:var(--accent)">gourmands</span>, préparés sur mesure</h1>
+        <p class="lead">Pâtes artisanales, wraps, falafels et sauces 100% maison. Commande en ligne, <strong>retrait</strong> ou <strong>livraison</strong> sur Mulhouse et alentours.</p>
+        <div class="badges">
+          <div class="badge">Traiteur artisanal</div>
+          <div class="badge">Option diète</div>
+          <div class="badge">Option gourmand</div>
+          <div class="badge">Produits locaux</div>
+        </div>
+        <div class="pill-group">
+          <span class="pill">Moins de 20&nbsp;€ : 5&nbsp;€</span>
+          <span class="pill">De 20&nbsp;€ à 39,99&nbsp;€ : 3&nbsp;€</span>
+          <span class="pill">Dès 40&nbsp;€ : <strong>Gratuit</strong></span>
+        </div>
+        <div class="stack" style="margin-top:14px">
+          <a class="btn primary" href="#commande">Commander</a>
+          <a class="btn" href="#contact">Nous contacter</a>
+        </div>
+      </div>
+
+      <div class="media card" aria-hidden="true">
+        <!-- Remplace les URLs d’images par tes propres photos -->
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop" alt="Assiette saine et gourmande" />
+      </div>
+    </section>
+
+    <!-- MENU / BEST-SELLERS -->
     <section id="menu" class="section">
-      <div class="section-head">
-        <h2>Menu</h2>
-        <p class="muted">Prix TTC — photos non contractuelles</p>
+      <div class="head">
+        <h2>Nos incontournables</h2>
+        <span class="muted small">Diète ou gourmand : à toi de choisir</span>
       </div>
-      <div id="products" class="grid"></div>
+      <div class="grid">
+        <article class="card tile">
+          <img src="https://images.unsplash.com/photo-1604908176997-431621b2c11b?q=80&w=1600&auto=format&fit=crop" alt="Pâtes artisanales" />
+          <div class="info">
+            <h3 style="margin:.2rem 0 .4rem">Pâtes artisanales</h3>
+            <p class="muted small">Sauces maison • Option diète/gourmand</p>
+            <div class="pill-group" style="margin-top:10px"><span class="pill price">à partir de 9,90 €</span></div>
+          </div>
+        </article>
+
+        <article class="card tile">
+          <img src="https://images.unsplash.com/photo-1606756790138-261d2b21cd31?q=80&w=1600&auto=format&fit=crop" alt="Wrap artisanal" />
+          <div class="info">
+            <h3 style="margin:.2rem 0 .4rem">Wrap artisanal</h3>
+            <p class="muted small">Galette maison • Garniture au choix</p>
+            <div class="pill-group" style="margin-top:10px"><span class="pill price">à partir de 7,90 €</span></div>
+          </div>
+        </article>
+
+        <article class="card tile">
+          <img src="https://images.unsplash.com/photo-1625944528070-50b78ea9b1f2?q=80&w=1600&auto=format&fit=crop" alt="Falafels maison" />
+          <div class="info">
+            <h3 style="margin:.2rem 0 .4rem">Falafels maison</h3>
+            <p class="muted small">Croustillants, sauce tahini ou yaourt</p>
+            <div class="pill-group" style="margin-top:10px"><span class="pill price">à partir de 6,90 €</span></div>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <!-- Panier -->
-    <section id="panier" class="section">
-      <h2>Votre panier</h2>
-      <ul id="cart" class="cart-list"></ul>
-      <div class="totals">
-        <p id="total" class="total-line">Total : 0 €</p>
-        <button id="checkout" class="btn-primary">Commander</button>
-        <p class="muted small">Paiement à la livraison ou au retrait (intégration carte/Stripe possible ensuite).</p>
-      </div>
-    </section>
-
-    <!-- Livraison -->
-    <section id="livraison" class="section card">
-      <h2>Retrait & Livraison</h2>
-      <p><strong>Point de retrait :</strong> 151 rue de Kingersheim, 68100 Mulhouse.</p>
+    <!-- LIVRAISON -->
+    <section id="livraison" class="section card" style="padding:22px">
+      <h2 style="margin:0 0 .6rem">Retrait & Livraison</h2>
+      <p class="muted">Retrait au point : <strong>151 rue de Kingersheim, 68200 Mulhouse</strong></p>
       <p><strong>Zones livrées :</strong> Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim, Richwiller, Lutterbach, Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim, Eschentzwiller, Brunstatt.</p>
-      <div class="pill-group">
-        <span class="pill">Livraison &lt; 20 € : 5 €</span>
-        <span class="pill">20 € – 39,99 € : 3 €</span>
-        <span class="pill">≥ 40 € : <strong>Gratuite</strong></span>
+      <div class="pill-group" style="margin:10px 0 8px">
+        <span class="pill">Moins de 20 € : 5 €</span>
+        <span class="pill">De 20 € à 39,99 € : 3 €</span>
+        <span class="pill">Dès 40 € : <strong>Gratuit</strong></span>
       </div>
-      <p class="muted">Les frais se calculent automatiquement dans le panier.</p>
+      <p class="muted small">Les frais se calculent automatiquement selon le panier et l’adresse de livraison.</p>
     </section>
 
-    <!-- Contact -->
-    <section id="contact" class="section card">
-      <h2>Contact</h2>
-      <p>Email pro : <a href="mailto:greenhouse.68@outlook.fr">greenhouse.68@outlook.fr</a></p>
-      <p>Traiteur pour particuliers & entreprises — options diététiques (sur mesure) ou gourmandes.</p>
+    <!-- COMMANDE -->
+    <section id="commande" class="section card" style="padding:22px">
+      <div class="head"><h2 style="margin:0">Commander</h2></div>
+      <p class="muted">Le panier/commande en ligne arrive. En attendant, passe ta commande par e-mail ou WhatsApp, on confirme rapidement.</p>
+      <div class="pill-group" style="margin-top:12px">
+        <a class="btn primary" href="mailto:greenhouse.68@outlook.fr">📧 greenhouse.68@outlook.fr</a>
+      </div>
+      <p class="muted small" style="margin-top:10px">Paiement possible à la livraison ou au retrait. Intégration Nayax/Stripe à venir.</p>
     </section>
-  </main>
 
-  <footer class="footer">
-    <div class="container">
-      © <span id="year"></span> GreenHousefood — Mulhouse & alentours
-    </div>
-  </footer>
+    <!-- À PROPOS / QUALITÉ -->
+    <section class="section">
+      <div class="head"><h2>Notre promesse qualité</h2></div>
+      <div class="grid">
+        <div class="card" style="padding:18px">
+          <h3 style="margin:.2rem 0 .4rem">Traiteur artisanal</h3>
+          <p class="muted">Tout est préparé maison : pâtes, wraps, falafels, sauces. Une cuisine sincère et goûteuse.</p>
+        </div>
+        <div class="card" style="padding:18px">
+          <h3 style="margin:.2rem 0 .4rem">Diète & gourmand</h3>
+          <p class="muted">Choisis tes portions et tes sauces : version légère ou généreuse. <strong>Sur mesure possible</strong>.</p>
+        </div>
+        <div class="card" style="padding:18px">
+          <h3 style="margin:.2rem 0 .4rem">Local & frais</h3>
+          <p class="muted">Produits locaux au maximum, avec un vrai respect des saisons.</p>
+        </div>
+      </div>
+    </section>
 
-  <script src="products.js"></script>
-  <script src="app.js"></script>
+    <!-- CONTACT -->
+    <section id="contact" class="section card" style="padding:22px">
+      <h2 style="margin:0 0 .6rem">Contact</h2>
+      <div class="grid" style="grid-template-columns:1.3fr .7fr">
+        <div class="stack">
+          <p class="muted">Adresse pro</p>
+          <p><strong>151 rue de Kingersheim</strong><br/>68200 Mulhouse</p>
+          <p class="muted">E-mail</p>
+          <p><a class="ok" href="mailto:greenhouse.68@outlook.fr">greenhouse.68@outlook.fr</a></p>
+        </div>
+        <div class="card" style="padding:12px">
+          <img src="https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1200&auto=format&fit=crop" alt="Cuisine GreenHousefood" style="width:100%;border-radius:12px" />
+        </div>
+      </div>
+    </section>
+
+    <footer class="container" style="padding-left:0;padding-right:0">
+      <div class="cols">
+        <div class="small">© <span id="y"></span> GreenHousefood — Mulhouse & alentours.</div>
+        <div class="small"><a href="#livraison" class="ok">Infos livraison</a></div>
+        <div class="small"><a href="#commande" class="ok">Commander</a></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
