@@ -1,328 +1,136 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GreenHouse — Traiteur artisanal (Diététique & Gourmand)</title>
-  <meta name="description" content="GreenHouse · Traiteur artisanal diététique & gourmand à Mulhouse. Pâtes fraîches maison, gammes surgelées & fraîches, falafels artisanaux. Livraison locale." />
-  <link rel="icon" href="favicon.ico" />
-  <style>
-    :root{
-      --bg:#0b0c0e; --panel:#121417; --muted:#9fb0a8; --text:#e7f0ea; --brand:#58d69e;
-      --chip:#1a1f24; --chip2:#232a31; --ok:#20c997; --warn:#ffcc66; --accent:#7dc8ff;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
-    a{color:inherit}
-    .container{max-width:1024px;margin:auto;padding:24px}
-    header{display:flex;align-items:center;gap:16px;padding:20px 0}
-    header img.logo{width:84px;height:auto;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
-    header .brand h1{margin:0;font-size:clamp(22px,3.5vw,34px);letter-spacing:.2px}
-    header .brand p{margin:2px 0 0;color:var(--muted)}
-    .card{background:var(--panel);border:1px solid #20262c;border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
-    .section-title{font-size:clamp(20px,3vw,30px);margin:28px 0 12px}
-    .lede{font-size:18px;color:#cfe1d8;margin:6px 0 0}
-    .pill{display:inline-flex;align-items:center;gap:8px;background:var(--chip);border:1px solid #1f262c;padding:8px 12px;border-radius:999px;font-weight:600}
-    .pill .dot{width:8px;height:8px;border-radius:50%}
-    .pill-row{display:flex;flex-wrap:wrap;gap:10px}
-    .grid{display:grid;gap:16px}
-    @media(min-width:860px){.grid.cols-3{grid-template-columns:repeat(3,1fr)} .grid.cols-2{grid-template-columns:repeat(2,1fr)}}
-    .price{font-weight:800}
-    .note{color:var(--muted);font-size:14px}
-    /* tableaux nutr */
-    .tbl{width:100%;border:1px solid #23303a;border-radius:12px;overflow:hidden}
-    .tbl .thead,.tbl .trow{display:grid;grid-template-columns:repeat(9,1fr)}
-    .tbl .thead{background:#172029;color:#cfe1d8;font-weight:700}
-    .tbl .thead span,.tbl .trow span{padding:10px 12px;border-right:1px solid #23303a}
-    .tbl .trow:nth-child(even){background:#11161b}
-    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .kpis .k{background:var(--chip2);border:1px solid #26313a;border-radius:12px;padding:12px;text-align:center}
-    .k .v{font-size:20px;font-weight:800}
-    .badges{display:flex;flex-wrap:wrap;gap:8px}
-    .badge{background:#192027;border:1px solid #26313a;border-radius:10px;padding:6px 10px;font-size:13px;color:#cfe1d8}
-    /* cartes plats */
-    .meal{background:var(--panel);border:1px solid #20262c;border-radius:16px;overflow:hidden}
-    .meal .body{padding:18px}
-    .meal h3{margin:0 0 6px}
-    .flags{display:flex;gap:8px;margin-top:8px}
-    .flag{font-size:12px;padding:4px 8px;border-radius:999px;border:1px solid #26313a;background:#182027;color:#cfe1d8}
-    .flag.diete{background:#0f2a21;border-color:#204f42;color:#b7f7d8}
-    .flag.surg{background:#152236;border-color:#244064;color:#b9dbff}
-    .cols{display:grid;gap:14px}
-    @media(min-width:760px){.cols{grid-template-columns:2fr 1fr}}
-    .hero{background:linear-gradient(180deg,rgba(88,214,158,.08),transparent);border:1px solid #21312a}
-    footer{margin:40px 0 10px;color:var(--muted);font-size:14px}
-    .hidden{display:none}
-    /* images déco (optionnelles) */
-    .thumb{aspect-ratio:16/9;background:#0f1418 url('images/placeholder.jpg') center/cover no-repeat}
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenHouse - Traiteur artisanal</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
-  <div class="container">
+<body class="bg-gray-900 text-white font-sans">
 
-    <!-- HEADER avec logo -->
-    <header>
-      <img src="images/logo.png" alt="Logo GreenHouse" class="logo" />
-      <div class="brand">
-        <h1>GreenHouse</h1>
-        <p>Traiteur artisanal — Diététique &amp; Gourmand</p>
-      </div>
-    </header>
+  <!-- HEADER -->
+  <header class="flex flex-col items-center text-center py-6">
+    <img src="/logo.png" alt="GreenHouse" class="w-32 h-auto mb-4">
+    <h1 class="text-3xl font-bold">GreenHouse</h1>
+    <p class="text-lg text-gray-300">Traiteur artisanal — Diététique & Gourmand</p>
+  </header>
 
-    <!-- HERO -->
-    <section class="card hero">
-      <h2 class="section-title">Le bon plat au bon prix</h2>
-      <p class="lede">Diète ou gourmand — à vous de choisir. Pâtes fraîches maison, gammes fraîches &amp; surgelées, falafels artisanaux.</p>
-    </section>
+  <!-- SECTION INTRO -->
+  <section class="max-w-3xl mx-auto p-6 bg-gray-800 rounded-xl shadow-lg mb-8">
+    <h2 class="text-2xl font-semibold mb-2">Le bon plat au bon prix</h2>
+    <p class="text-gray-300">
+      Diète ou gourmand — à vous de choisir.<br>
+      Pâtes fraîches maison, gammes fraîches & surgelées, falafels artisanaux.
+    </p>
+  </section>
 
-    <!-- LIVRAISON -->
-    <h2 class="section-title">Livraison</h2>
-    <section class="card">
-      <div class="grid cols-2">
-        <div>
-          <p><strong>Zones :</strong> Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim, Richwiller, Lutterbach, Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim, Eschentzwiller, Brunstatt.</p>
-          <div class="pill-row" style="margin-top:10px">
-            <span class="pill"><span class="dot" style="background:var(--warn)"></span>Commande &lt; 20&nbsp;€ → 5&nbsp;€</span>
-            <span class="pill"><span class="dot" style="background:var(--accent)"></span>20&nbsp;€ – 39,99&nbsp;€ → 3&nbsp;€</span>
-            <span class="pill"><span class="dot" style="background:var(--ok)"></span>≥ 40&nbsp;€ → <strong>Gratuite</strong></span>
-          </div>
-        </div>
-        <div>
-          <p class="note">Produits frais : <strong>réservation 24 h à l’avance</strong>.<br/>Surgelés : disponibles <strong>sans réservation</strong>.</p>
-        </div>
-      </div>
-    </section>
+  <!-- LIVRAISON -->
+  <section class="max-w-3xl mx-auto p-6 bg-gray-800 rounded-xl shadow-lg mb-8">
+    <h2 class="text-xl font-semibold mb-4">Livraison</h2>
+    <p><strong>Zones :</strong> Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim, Richwiller, Lutterbach, Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim, Eschentzwiller, Brunstatt.</p>
+    <ul class="mt-4 space-y-2">
+      <li>Commande &lt; 20 € → 5 €</li>
+      <li>20 € – 39,99 € → 3 €</li>
+      <li>&ge; 40 € → <strong>Gratuite</strong></li>
+    </ul>
+    <p class="mt-3 text-gray-400">
+      Produits frais : réservation 24 h à l’avance.<br>
+      Surgelés : disponibles sans réservation.
+    </p>
+  </section>
 
-    <!-- INFOS PRODUITS -->
-    <h2 class="section-title">Infos produits</h2>
-    <section class="grid cols-2">
-      <div class="card">
-        <div class="pill-row" style="margin-bottom:8px"><span class="pill">Frais</span></div>
-        <h3>Pâtes fraîches artisanales</h3>
-        <p>Œufs plein air · seigle / complète / aromette · Lundi &amp; Jeudi (réservation)</p>
-        <div class="pill-row">
-          <span class="pill">7,00&nbsp;€ / kg</span>
-          <span class="pill">Cuisson 1&nbsp;min&nbsp;30</span>
-        </div>
-      </div>
+  <!-- INFOS PRODUITS -->
+  <section class="max-w-3xl mx-auto p-6 bg-gray-800 rounded-xl shadow-lg mb-8">
+    <h2 class="text-xl font-semibold mb-4">Infos produits</h2>
 
-      <div class="card">
-        <div class="pill-row" style="margin-bottom:8px"><span class="pill">Surgelé</span></div>
-        <h3>Falafels artisanaux (vrac)</h3>
-        <ul class="badges" style="margin:6px 0 12px">
-          <li class="badge">Friteuse : 3&nbsp;min</li>
-          <li class="badge">Airfryer : 14&nbsp;min</li>
-        </ul>
-        <div class="pill-row" style="margin-bottom:12px">
-          <span class="pill">10,00&nbsp;€ / kg</span>
-        </div>
-
-        <!-- tableau lisible -->
-        <div class="tbl" aria-label="Valeurs nutritionnelles falafels (100 g)">
-          <div class="thead">
-            <span>Base</span><span>Énergie</span><span>Prot.</span>
-            <span>Gluc.</span><span>Sucres</span><span>Lip.</span>
-            <span>Sat.</span><span>Fibres</span><span>Sel</span>
-          </div>
-          <div class="trow">
-            <span>100 g</span><span>184 kcal</span><span>7,6 g</span>
-            <span>20,1 g</span><span>1,1 g</span><span>7,4 g</span>
-            <span>0,8 g</span><span>5,3 g</span><span>1,1 g</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- GAMMES -->
-    <h2 class="section-title">Nos gammes</h2>
-    <section class="grid cols-2">
-      <div class="card">
-        <div class="pill-row"><span class="pill">Surgelé</span><span class="pill">Diète</span></div>
-        <p class="lede">Plats équilibrés prêts à réchauffer — <span class="price">9,90&nbsp;€</span>.</p>
-      </div>
-      <div class="card">
-        <div class="pill-row"><span class="pill">Frais</span><span class="pill">Gourmand</span></div>
-        <p class="lede">Plats gourmands du jour — réserver 24 h à l’avance.</p>
-      </div>
-    </section>
-
-    <!-- PLATS (Diète / Surgelé) -->
-    <h2 class="section-title" id="plats">Nos Plats</h2>
-
-    <div class="grid cols-2">
-
-      <!-- DIÈTE • SURGELÉ -->
-      <article class="meal">
-        <div class="thumb" style="background-image:url('images/diet-seigle-poulet.jpg')"></div>
-        <div class="body">
-          <div class="flags"><span class="flag diete">Diète</span><span class="flag surg">Surgelé</span></div>
-          <h3>Pâtes au seigle, émincé de poulet, julienne de légumes, sauce poivron</h3>
-          <p class="note">Base portion : 200 g pâtes cuites · 150 g poulet · 150 g légumes · huile d’olive 5 ml.</p>
-          <div class="kpis">
-            <div class="k"><div class="t">CALORIES</div><div class="v">~684</div></div>
-            <div class="k"><div class="t">PROTÉINES</div><div class="v">~61 g</div></div>
-            <div class="k"><div class="t">GLUCIDES</div><div class="v">~78 g</div></div>
-            <div class="k"><div class="t">LIPIDES</div><div class="v">~15 g</div></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="meal">
-        <div class="thumb" style="background-image:url('images/diet-lasagnes-bolo.jpg')"></div>
-        <div class="body">
-          <div class="flags"><span class="flag diete">Diète</span><span class="flag surg">Surgelé</span></div>
-          <h3>Lasagnes bolognaise &amp; légumes</h3>
-          <p class="note">200 g pâte fraîche · 100 g viande hachée · 100 g courgettes · 10 cl béchamel · 30 g fromage râpé.</p>
-          <div class="kpis">
-            <div class="k"><div class="t">CALORIES</div><div class="v">~716</div></div>
-            <div class="k"><div class="t">PROTÉINES</div><div class="v">~50 g</div></div>
-            <div class="k"><div class="t">GLUCIDES</div><div class="v">~73 g</div></div>
-            <div class="k"><div class="t">LIPIDES</div><div class="v">~26 g</div></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="meal">
-        <div class="thumb" style="background-image:url('images/diet-pates-bolo-basilic.jpg')"></div>
-        <div class="body">
-          <div class="flags"><span class="flag diete">Diète</span><span class="flag surg">Surgelé</span></div>
-          <h3>Pâtes complètes bolognaise épicée au basilic</h3>
-          <p class="note">200 g pâtes cuites · 150 g viande hachée · sauce tomate/basilic/épices · huile d’olive 5 ml.</p>
-          <div class="kpis">
-            <div class="k"><div class="t">CALORIES</div><div class="v">~690</div></div>
-            <div class="k"><div class="t">PROTÉINES</div><div class="v">~45 g</div></div>
-            <div class="k"><div class="t">GLUCIDES</div><div class="v">~80 g</div></div>
-            <div class="k"><div class="t">LIPIDES</div><div class="v">~18 g</div></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="meal">
-        <div class="thumb" style="background-image:url('images/diet-falafel-sweetpot-eggplant.jpg')"></div>
-        <div class="body">
-          <div class="flags"><span class="flag diete">Diète</span><span class="flag surg">Surgelé</span></div>
-          <h3>Falafels (200 g), patate douce (150 g), caviar d’aubergine (150 g)</h3>
-          <p class="note">Aubergine, ail, oignon nouveau, jus de citron, huile, tahini, cumin, paprika fumé, persil, sel.</p>
-          <div class="kpis">
-            <div class="k"><div class="t">CALORIES</div><div class="v">~680</div></div>
-            <div class="k"><div class="t">PROTÉINES</div><div class="v">~22 g</div></div>
-            <div class="k"><div class="t">GLUCIDES</div><div class="v">~86 g</div></div>
-            <div class="k"><div class="t">LIPIDES</div><div class="v">~28 g</div></div>
-          </div>
-        </div>
-      </article>
-
-      <!-- FRAIS • GOURMAND -->
-      <article class="meal">
-        <div class="thumb" style="background-image:url('images/gourm-creme-basilic.jpg')"></div>
-        <div class="body">
-          <div class="flags"><span class="flag">Frais</span><span class="flag">Gourmand</span></div>
-          <h3>Pâtes complètes crème basilic</h3>
-          <p class="note">200 g pâtes cuites · 10 cl crème basilic.</p>
-          <div class="kpis">
-            <div class="k"><div class="t">CALORIES</div><div class="v">~620</div></div>
-            <div class="k"><div class="t">PROTÉINES</div><div class="v">~20 g</div></div>
-            <div class="k"><div class="t">GLUCIDES</div><div class="v">~80 g</div></div>
-            <div class="k"><div class="t">LIPIDES</div><div class="v">~22 g</div></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="meal">
-        <div class="thumb" style="background-image:url('images/gourm-aromette-escalope.jpg')"></div>
-        <div class="body">
-          <div class="flags"><span class="flag">Frais</span><span class="flag">Gourmand</span></div>
-          <h3>Pâtes aromette, émincé de poulet à la crème</h3>
-          <p class="note">Portion standard, réservation 24 h.</p>
-          <div class="kpis">
-            <div class="k"><div class="t">CALORIES</div><div class="v">~750</div></div>
-            <div class="k"><div class="t">PROTÉINES</div><div class="v">~42 g</div></div>
-            <div class="k"><div class="t">GLUCIDES</div><div class="v">~80 g</div></div>
-            <div class="k"><div class="t">LIPIDES</div><div class="v">~28 g</div></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="meal">
-        <div class="thumb" style="background-image:url('images/gourm-gorgonzola.jpg')"></div>
-        <div class="body">
-          <div class="flags"><span class="flag">Frais</span><span class="flag">Gourmand</span></div>
-          <h3>Pâtes complètes au gorgonzola</h3>
-          <p class="note">Pâtes complètes · sauce gorgonzola.</p>
-          <div class="kpis">
-            <div class="k"><div class="t">CALORIES</div><div class="v">~720</div></div>
-            <div class="k"><div class="t">PROTÉINES</div><div class="v">~26 g</div></div>
-            <div class="k"><div class="t">GLUCIDES</div><div class="v">~78 g</div></div>
-            <div class="k"><div class="t">LIPIDES</div><div class="v">~32 g</div></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="meal">
-        <div class="thumb" style="background-image:url('images/gourm-wrap-falafel.jpg')"></div>
-        <div class="body">
-          <div class="flags"><span class="flag">Frais</span><span class="flag diete">Diète</span></div>
-          <h3>Wrap falafel &amp; légumes, sauce bibalakaas</h3>
-          <p class="note">Galette complète 100 g · falafels 150 g · légumes 140 g · fromage blanc alsacien 100 g.</p>
-          <div class="kpis">
-            <div class="k"><div class="t">CALORIES</div><div class="v">~730</div></div>
-            <div class="k"><div class="t">PROTÉINES</div><div class="v">~30 g</div></div>
-            <div class="k"><div class="t">GLUCIDES</div><div class="v">~86 g</div></div>
-            <div class="k"><div class="t">LIPIDES</div><div class="v">~28 g</div></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="meal">
-        <div class="thumb" style="background-image:url('images/gourm-saumon-creme.jpg')"></div>
-        <div class="body">
-          <div class="flags"><span class="flag">Frais</span><span class="flag">Gourmand</span></div>
-          <h3>Pâtes complètes saumon crème</h3>
-          <p class="note">200 g pâtes cuites · 100 g saumon · 10 cl crème · aneth, ail.</p>
-          <div class="kpis">
-            <div class="k"><div class="t">CALORIES</div><div class="v">~700</div></div>
-            <div class="k"><div class="t">PROTÉINES</div><div class="v">~34 g</div></div>
-            <div class="k"><div class="t">GLUCIDES</div><div class="v">~78 g</div></div>
-            <div class="k"><div class="t">LIPIDES</div><div class="v">~28 g</div></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="meal">
-        <div class="thumb" style="background-image:url('images/gourm-lasagnes-saumon.jpg')"></div>
-        <div class="body">
-          <div class="flags"><span class="flag">Frais</span><span class="flag">Gourmand</span></div>
-          <h3>Lasagnes saumon &amp; épinards</h3>
-          <p class="note">Saumon 100 g · épinards 100 g · béchamel 50 g · fromage râpé 50 g.</p>
-          <div class="kpis">
-            <div class="k"><div class="t">CALORIES</div><div class="v">~760</div></div>
-            <div class="k"><div class="t">PROTÉINES</div><div class="v">~40 g</div></div>
-            <div class="k"><div class="t">GLUCIDES</div><div class="v">~68 g</div></div>
-            <div class="k"><div class="t">LIPIDES</div><div class="v">~34 g</div></div>
-          </div>
-        </div>
-      </article>
-
+    <!-- Pâtes fraîches -->
+    <div class="mb-6">
+      <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Frais</span>
+      <h3 class="text-lg font-semibold mt-2">Pâtes fraîches artisanales</h3>
+      <p class="text-gray-300">Œufs plein air · seigle · complète · aromette</p>
+      <p class="text-gray-400">Disponibles Lundi & Jeudi (réservation)</p>
+      <p class="mt-2">7,00 € / kg — Cuisson 1 min 30</p>
     </div>
 
-    <!-- COMMANDE -->
-    <h2 class="section-title">Commander</h2>
-    <section class="card">
-      <p>Réservation <strong>24 h à l’avance</strong> pour les produits frais. Les surgelés sont disponibles <strong>sans réservation</strong>.</p>
-      <div class="pill-row" style="margin-top:8px">
-        <span class="pill"><strong>Adresse retrait</strong> : 151 rue de Kingersheim — 68200 Mulhouse</span>
-        <span class="pill"><strong>Contact</strong> : greenhouse.68@outlook.fr</span>
+    <!-- Escalope à la crème -->
+    <div class="mb-6">
+      <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Frais</span>
+      <h3 class="text-lg font-semibold mt-2">Escalope à la crème</h3>
+      <p class="text-gray-300">Poulet · crème légère · champignons · oignons</p>
+    </div>
+
+    <!-- Pâtes complètes au gorgonzola -->
+    <div class="mb-6">
+      <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Frais</span>
+      <h3 class="text-lg font-semibold mt-2">Pâtes complètes au gorgonzola</h3>
+      <p class="text-gray-300">Pâtes complètes maison · gorgonzola AOP · crème</p>
+    </div>
+
+    <!-- Gratin -->
+    <div class="mb-6">
+      <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Frais</span>
+      <h3 class="text-lg font-semibold mt-2">Gratin artisanal</h3>
+      <p class="text-gray-300">Pommes de terre · fromage · crème · herbes</p>
+    </div>
+
+    <!-- Lasagnes -->
+    <div class="mb-6">
+      <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Frais</span>
+      <h3 class="text-lg font-semibold mt-2">Lasagnes maison</h3>
+      <p class="text-gray-300">Pâtes fraîches · sauce tomate · viande sélectionnée · béchamel</p>
+    </div>
+
+    <!-- Wrap -->
+    <div class="mb-6">
+      <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Frais</span>
+      <h3 class="text-lg font-semibold mt-2">Wrap maison</h3>
+      <p class="text-gray-300">Tortilla · poulet mariné · crudités · sauce légère</p>
+    </div>
+
+    <!-- Falafels surgelés -->
+    <div>
+      <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">Surgelés</span>
+      <h3 class="text-lg font-semibold mt-2">Falafels artisanaux (vrac)</h3>
+      <p class="text-gray-300">Pois chiche · ail · oignon · coriandre · persil · épices</p>
+
+      <!-- TABLEAU DES MACROS -->
+      <div class="overflow-x-auto mt-4">
+        <table class="w-full border border-gray-700 text-sm text-center">
+          <thead class="bg-gray-700 text-gray-200">
+            <tr>
+              <th class="p-2">Base</th>
+              <th class="p-2">Énergie</th>
+              <th class="p-2">Prot.</th>
+              <th class="p-2">Gluc.</th>
+              <th class="p-2">Sucres</th>
+              <th class="p-2">Lip.</th>
+              <th class="p-2">Sat.</th>
+              <th class="p-2">Fibres</th>
+              <th class="p-2">Sel</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-2">100 g</td>
+              <td class="p-2">184 kcal</td>
+              <td class="p-2">7,6 g</td>
+              <td class="p-2">20,1 g</td>
+              <td class="p-2">1,1 g</td>
+              <td class="p-2">7,4 g</td>
+              <td class="p-2">0,8 g</td>
+              <td class="p-2">5,3 g</td>
+              <td class="p-2">1,1 g</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <footer>
-      © <span id="y"></span> GreenHouse — Tous droits réservés.
-    </footer>
-  </div>
+  <!-- FOOTER -->
+  <footer class="text-center py-6 text-gray-400 text-sm">
+    © 2025 GreenHouse — Traiteur artisanal
+  </footer>
 
-  <script>
-    // année footer
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
