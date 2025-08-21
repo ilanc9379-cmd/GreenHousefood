@@ -1,218 +1,90 @@
-/* ===========================
-   GreenHouse – Styles globaux
-   =========================== */
-
-/* ------ Variables de thème ------ */
+/* ====== Reset court & variables ====== */
+*{box-sizing:border-box}html,body{margin:0;padding:0}
 :root{
-  --bg: #f7f7f9;
-  --card: #ffffff;
-  --text: #101114;
-  --muted: #5b606a;
-  --primary: #0ea5a3;      /* teal */
-  --primary-ink: #064e4e;
-  --accent: #6d28d9;       /* violet */
-  --success: #16a34a;      /* vert */
-  --warning: #f59e0b;      /* orange */
-  --danger: #ef4444;       /* rouge */
-  --border: #e6e8ee;
-  --ring: rgba(14,165,163,.25);
-  --shadow: 0 6px 18px rgba(16,17,20,.08);
+  --bg:#0b0d10; --card:#11151a; --muted:#a8b0bb;
+  --txt:#e9eef3; --accent:#39d98a; --accent2:#5ec6ff;
+  --pink:#ff6ea8; --amber:#ffc857; --purple:#9c7bff; --cyan:#67e8f9; --green:#58d68d; --red:#ff6b6b;
+  --br:16px; --shadow:0 6px 24px rgba(0,0,0,.3);
+  --fw-700:700; --fw-600:600; --fw-500:500;
 }
 
-/* Dark mode auto si l'appareil est en sombre */
-@media (prefers-color-scheme: dark){
-  :root{
-    --bg: #0f1216;
-    --card: #171a20;
-    --text: #e9ecf3;
-    --muted: #a5adbb;
-    --primary: #22d3ee;
-    --primary-ink: #0ea5a3;
-    --accent: #a78bfa;
-    --success: #22c55e;
-    --warning: #fbbf24;
-    --danger: #f87171;
-    --border: #20242c;
-    --ring: rgba(34,211,238,.25);
-    --shadow: 0 10px 24px rgba(0,0,0,.35);
-  }
-}
+body{background:var(--bg);color:var(--txt);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Apple Color Emoji','Segoe UI Emoji'}
+img{max-width:100%;display:block}
 
-/* ------ Reset léger ------ */
-*{ box-sizing:border-box }
-html,body{ height:100% }
-body{
-  margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
-  color:var(--text);
-  background:linear-gradient(180deg,var(--bg) 0%, color-mix(in lab, var(--bg) 85%, var(--card)) 100%);
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
-}
+/* ====== Helpers ====== */
+.wrap{width:min(1120px,92vw);margin-inline:auto}
+.mt-8{margin-top:2rem}
+.mt-12{margin-top:3rem}
+.muted{color:var(--muted)}
+.sub{color:var(--muted);font-size:1.075rem}
 
-img{ max-width:100%; display:block }
+/* ====== Header ====== */
+.header{position:sticky;top:0;z-index:10;background:rgba(11,13,16,.72);backdrop-filter:saturate(150%) blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+.header__inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.brand{display:flex;gap:14px;align-items:center}
+.brand__logo{width:56px;height:56px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.1)}
+.brand__title{margin:0;font-size:1.6rem;font-weight:var(--fw-700)}
+.brand__tag{margin:2px 0 0 0;color:var(--muted)}
+.nav{display:flex;gap:18px}
+.nav a{color:var(--muted);text-decoration:none}
+.nav a:hover{color:#fff}
 
-/* ------ Layout ------ */
-.container{
-  width:min(1080px, 92vw);
-  margin-inline:auto;
-  padding: 28px 0;
-}
+/* ====== Hero ====== */
+.hero{padding:32px 0}
+.card--hero{padding:28px 24px;background:linear-gradient(180deg,#18202a,#12161c);border-radius:var(--br);box-shadow:var(--shadow)}
+.h-hero{margin:0 0 6px 0;font-size:2rem}
 
-section{ padding: 8px 0 18px }
+/* ====== Sections ====== */
+.sect{padding:24px 0}
+.h-sect{margin:0 0 16px 0;font-size:1.6rem}
 
-/* ------ Cartes & utilitaires ------ */
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
-  box-shadow:var(--shadow);
-}
+/* ====== Cards / badges / pills ====== */
+.card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:var(--br);padding:18px 20px;box-shadow:var(--shadow)}
+.card__title{margin:0 0 8px 0;font-weight:var(--fw-600);font-size:1.15rem}
+.badges{display:flex;gap:8px;margin-bottom:10px}
+.badge{display:inline-flex;align-items:center;gap:6px;font-weight:600;padding:.35rem .6rem;border-radius:999px;font-size:.8rem;border:1px solid rgba(255,255,255,.1)}
+.badge--green{background:rgba(88,214,141,.15);color:#8ef0b4}
+.badge--blue{background:rgba(94,198,255,.15);color:#a7e2ff}
+.badge--pink{background:rgba(255,110,168,.15);color:#ffc1db}
+.badge--purple{background:rgba(156,123,255,.15);color:#d4c8ff}
 
-.p-24{ padding:24px }
-.mt-12{ margin-top:12px }
-.mt-20{ margin-top:20px }
+.badge-edge--cyan{box-shadow:inset 0 0 0 1px rgba(103,232,249,.25)}
+.badge-edge--pink{box-shadow:inset 0 0 0 1px rgba(255,110,168,.25)}
+.badge-edge--green{box-shadow:inset 0 0 0 1px rgba(88,214,141,.25)}
+.badge-edge--amber{box-shadow:inset 0 0 0 1px rgba(255,200,87,.25)}
 
-/* ------ Header ------ */
-.header{
-  position:sticky; top:0; z-index:40;
-  background:linear-gradient(180deg, color-mix(in lab, var(--card) 80%, transparent) 0%, var(--card) 100%);
-  border-bottom:1px solid var(--border);
-  backdrop-filter:saturate(140%) blur(6px);
-}
-.header .container{ display:flex; align-items:center; gap:16px; padding-block:14px }
-.logo{
-  width:56px; height:56px; object-fit:contain;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background: var(--card);
-  box-shadow: var(--shadow);
-}
-.site-title{
-  font-size: clamp(1.4rem, 2.6vw, 2rem);
-  line-height:1.1; margin:0 0 2px;
-  letter-spacing:.2px;
-}
-.site-subtitle{
-  margin:0; color:var(--muted);
-  font-weight:500; letter-spacing:.2px
-}
+.pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.pill{background:#0f1318;border:1px solid rgba(255,255,255,.06);padding:.45rem .7rem;border-radius:999px;color:#cfd6de}
+.pill .dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:.45rem}
+.dot--red{background:var(--red)} .dot--amber{background:var(--amber)} .dot--green{background:var(--green)}
+.pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
 
-/* ------ Titres & typographie ------ */
-h1,h2,h3{ line-height:1.15; margin:0 0 .4em }
-h1{ font-size: clamp(2rem, 4vw, 2.6rem) }
-h2{ font-size: clamp(1.35rem, 2.6vw, 1.75rem) }
-h3{ font-size: clamp(1.15rem, 2vw, 1.25rem) }
-p{ margin:.5em 0 0; color:var(--text) }
-em{ color:var(--muted) }
+/* ====== Chips (rubriques) ====== */
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid rgba(255,255,255,.08);padding:.35rem .6rem;border-radius:8px;color:#dfe6ee;background:#0f1318}
+.chip--purple{border-color:rgba(156,123,255,.4)} .chip--blue{border-color:rgba(94,198,255,.4)}
+.chip--green{border-color:rgba(88,214,141,.4)} .chip--pink{border-color:rgba(255,110,168,.4)}
 
-/* ------ Intro ------ */
-.intro .container .card{
-  background: radial-gradient(140% 120% at 10% 10%, color-mix(in lab, var(--primary) 18%, var(--card)) 0%, var(--card) 45%, var(--card) 100%);
-}
+/* ====== Grids ====== */
+.grid{display:grid;gap:14px}
+.g-2{grid-template-columns:1fr}
+.g-md-4{grid-template-columns:1fr}
+@media (min-width:720px){.g-2{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:980px){.g-md-4{grid-template-columns:repeat(4,1fr)}}
 
-/* ------ Livraison ------ */
-.livraison .tarifs{
-  display:flex; flex-wrap:wrap; gap:12px; padding:0; margin:14px 0 8px; list-style:none;
-}
-.livraison .tarifs li{
-  padding:10px 14px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background: color-mix(in lab, var(--card) 90%, var(--primary) 10%);
-  box-shadow: var(--shadow);
-}
+/* ====== Macros ====== */
+.macros{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.macros div{background:#0f1318;border:1px solid rgba(255,255,255,.06);padding:.7rem;border-radius:12px;text-align:center}
+.macros span{display:block;color:var(--muted);font-size:.85rem;margin-bottom:4px}
+.macros strong{font-size:1rem}
 
-/* ------ Badges ------ */
-.badge{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:6px 10px; border-radius:999px;
-  font-size:.86rem; font-weight:600;
-  border:1px solid var(--border);
-  background: color-mix(in lab, var(--card) 85%, var(--primary) 15%);
-  color: var(--primary-ink);
-}
-.badge::before{
-  content:"";
-  width:8px; height:8px; border-radius:50%;
-  background:var(--success);
-  box-shadow: 0 0 0 4px var(--ring);
-}
+/* ====== Table (falafels) ====== */
+.tbl{margin-top:12px;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
+.tbl .thead,.tbl .trow{display:grid;grid-template-columns:repeat(9,1fr)}
+.tbl .thead{background:#0f1318;color:#cfe7ff;font-weight:600}
+.tbl span{padding:.55rem .6rem;border-right:1px solid rgba(255,255,255,.06)}
+.tbl .trow span{border-top:1px solid rgba(255,255,255,.06)}
+.tbl span:last-child{border-right:none}
 
-/* ------ Produits ------ */
-.produits .produit{
-  margin-top:18px;
-  padding:18px 18px 14px;
-  border:1px solid var(--border);
-  border-radius:16px;
-  background:var(--card);
-  box-shadow:var(--shadow);
-}
-.produits .produit h3{
-  margin:0 0 6px;
-}
-.produits .produit p{
-  margin:0 0 10px;
-  color:var(--muted);
-}
-
-/* ------ Tables simples (si besoin) ------ */
-.tbl{
-  border:1px solid var(--border);
-  border-radius:14px;
-  overflow:hidden;
-  background:var(--card);
-  box-shadow:var(--shadow);
-  margin-top:12px;
-}
-.tbl .thead, .tbl .trow{
-  display:grid;
-  grid-template-columns: repeat(9, minmax(64px, 1fr));
-  gap:0;
-}
-.tbl .thead{
-  background: color-mix(in lab, var(--card) 75%, var(--primary) 25%);
-  color: var(--primary-ink);
-  font-weight:700;
-}
-.tbl span{
-  padding:10px 12px;
-  border-bottom:1px solid var(--border);
-  font-size:.93rem;
-  white-space:nowrap;
-}
-
-/* ------ Footer ------ */
-.footer{
-  margin-top:28px;
-  border-top:1px solid var(--border);
-  background: var(--card);
-}
-.footer .container{
-  padding-block:18px;
-  color:var(--muted);
-}
-.footer p{ margin:.35em 0 }
-
-/* ------ Liens ------ */
-a{ color:var(--primary-ink); text-decoration:none }
-a:hover{ text-decoration:underline }
-
-/* ------ Accessibilité au focus ------ */
-:where(a, button, [tabindex]:not([tabindex="-1"])):focus-visible{
-  outline: 3px solid var(--ring);
-  outline-offset:3px;
-  border-radius:10px;
-}
-
-/* ------ Responsive ------ */
-@media (max-width: 640px){
-  .header .container{ gap:12px }
-  .logo{ width:48px; height:48px }
-  .livraison .tarifs{ gap:8px }
-  .tbl .thead, .tbl .trow{
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .tbl .thead span:nth-child(n+4),
-  .tbl .trow span:nth-child(n+4){ display:none } /* on masque des colonnes sur petit écran */
-}
+/* ====== Footer ====== */
+.footer{padding:28px 0;color:#a4adb7;border-top:1px solid rgba(255,255,255,.06);margin-top:24px;text-align:center}
