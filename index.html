@@ -3,133 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GreenHouse - Traiteur artisanal</title>
-  <link rel="stylesheet" href="/styles.css">
+  <title>GreenHouseFood - Traiteur artisanal</title>
+  <meta name="description" content="GreenHouse - Traiteur artisanal à Mulhouse. Pâtes fraîches, plats faits maison, gammes fraîches & surgelées. Livraison rapide.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
-<body class="bg-gray-900 text-white font-sans">
+<body>
 
-  <!-- HEADER -->
-  <header class="flex flex-col items-center text-center py-6">
-    <img src="/logo.png" alt="GreenHouse" class="w-32 h-auto mb-4">
-    <h1 class="text-3xl font-bold">GreenHouse</h1>
-    <p class="text-lg text-gray-300">Traiteur artisanal — Diététique & Gourmand</p>
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="container">
+      <img src="public/logo.png" alt="Logo GreenHouse" class="logo">
+      <h1 class="site-title">GreenHouse</h1>
+      <p class="site-subtitle">Traiteur artisanal — Diététique & Gourmand</p>
+    </div>
   </header>
 
-  <!-- SECTION INTRO -->
-  <section class="max-w-3xl mx-auto p-6 bg-gray-800 rounded-xl shadow-lg mb-8">
-    <h2 class="text-2xl font-semibold mb-2">Le bon plat au bon prix</h2>
-    <p class="text-gray-300">
-      Diète ou gourmand — à vous de choisir.<br>
-      Pâtes fraîches maison, gammes fraîches & surgelées, falafels artisanaux.
-    </p>
+  <!-- ===== PRESENTATION ===== -->
+  <section class="intro">
+    <div class="container">
+      <h2>Le bon plat au bon prix</h2>
+      <p>Diète ou gourmand — à vous de choisir.  
+      Pâtes fraîches maison, gammes fraîches & surgelées, falafels artisanaux.</p>
+    </div>
   </section>
 
-  <!-- LIVRAISON -->
-  <section class="max-w-3xl mx-auto p-6 bg-gray-800 rounded-xl shadow-lg mb-8">
-    <h2 class="text-xl font-semibold mb-4">Livraison</h2>
-    <p><strong>Zones :</strong> Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim, Richwiller, Lutterbach, Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim, Eschentzwiller, Brunstatt.</p>
-    <ul class="mt-4 space-y-2">
-      <li>Commande &lt; 20 € → 5 €</li>
-      <li>20 € – 39,99 € → 3 €</li>
-      <li>&ge; 40 € → <strong>Gratuite</strong></li>
-    </ul>
-    <p class="mt-3 text-gray-400">
-      Produits frais : réservation 24 h à l’avance.<br>
-      Surgelés : disponibles sans réservation.
-    </p>
+  <!-- ===== LIVRAISON ===== -->
+  <section class="livraison">
+    <div class="container">
+      <h2>Livraison</h2>
+      <p><strong>Zones :</strong> Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim,  
+      Richwiller, Lutterbach, Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim,  
+      Eschentzwiller, Brunstatt.</p>
+
+      <ul class="tarifs">
+        <li>Commande &lt; 20 € → <strong>5 €</strong></li>
+        <li>20 € – 39,99 € → <strong>3 €</strong></li>
+        <li>≥ 40 € → <strong>Gratuite</strong></li>
+      </ul>
+
+      <p><em>Produits frais :</em> réservation 24 h à l’avance.<br>
+      <em>Surgelés :</em> disponibles sans réservation.</p>
+    </div>
   </section>
 
-  <!-- INFOS PRODUITS -->
-  <section class="max-w-3xl mx-auto p-6 bg-gray-800 rounded-xl shadow-lg mb-8">
-    <h2 class="text-xl font-semibold mb-4">Infos produits</h2>
+  <!-- ===== PRODUITS ===== -->
+  <section class="produits">
+    <div class="container">
+      <h2>Infos produits</h2>
 
-    <!-- Pâtes fraîches -->
-    <div class="mb-6">
-      <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Frais</span>
-      <h3 class="text-lg font-semibold mt-2">Pâtes fraîches artisanales</h3>
-      <p class="text-gray-300">Œufs plein air · seigle · complète · aromette</p>
-      <p class="text-gray-400">Disponibles Lundi & Jeudi (réservation)</p>
-      <p class="mt-2">7,00 € / kg — Cuisson 1 min 30</p>
-    </div>
+      <!-- Produit 1 -->
+      <div class="produit">
+        <h3>Pâtes fraîches artisanales</h3>
+        <p>Œufs plein air · seigle · complète · aromette  
+        <br>Disponibles <strong>Lundi & Jeudi</strong> (réservation)  
+        <br><strong>7,00 € / kg</strong> — Cuisson 1 min 30</p>
+        <span class="badge">Frais</span>
+      </div>
 
-    <!-- Escalope à la crème -->
-    <div class="mb-6">
-      <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Frais</span>
-      <h3 class="text-lg font-semibold mt-2">Escalope à la crème</h3>
-      <p class="text-gray-300">Poulet · crème légère · champignons · oignons</p>
-    </div>
+      <!-- Produit 2 -->
+      <div class="produit">
+        <h3>Escalope à la crème</h3>
+        <p>Poulet · crème légère · champignons · oignons</p>
+        <span class="badge">Frais</span>
+      </div>
 
-    <!-- Pâtes complètes au gorgonzola -->
-    <div class="mb-6">
-      <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Frais</span>
-      <h3 class="text-lg font-semibold mt-2">Pâtes complètes au gorgonzola</h3>
-      <p class="text-gray-300">Pâtes complètes maison · gorgonzola AOP · crème</p>
-    </div>
+      <!-- Produit 3 -->
+      <div class="produit">
+        <h3>Pâtes complètes au gorgonzola</h3>
+        <p>Pâtes complètes maison · gorgonzola AOP · crème</p>
+        <span class="badge">Frais</span>
+      </div>
 
-    <!-- Gratin -->
-    <div class="mb-6">
-      <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Frais</span>
-      <h3 class="text-lg font-semibold mt-2">Gratin artisanal</h3>
-      <p class="text-gray-300">Pommes de terre · fromage · crème · herbes</p>
-    </div>
+      <!-- Produit 4 -->
+      <div class="produit">
+        <h3>Gratin artisanal</h3>
+        <p>Pommes de terre · fromage · crème · herbes</p>
+        <span class="badge">Frais</span>
+      </div>
 
-    <!-- Lasagnes -->
-    <div class="mb-6">
-      <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Frais</span>
-      <h3 class="text-lg font-semibold mt-2">Lasagnes maison</h3>
-      <p class="text-gray-300">Pâtes fraîches · sauce tomate · viande sélectionnée · béchamel</p>
-    </div>
+      <!-- Produit 5 -->
+      <div class="produit">
+        <h3>Lasagnes maison</h3>
+        <p>Pâtes fraîches · sauce tomate · viande sélectionnée · béchamel</p>
+        <span class="badge">Frais</span>
+      </div>
 
-    <!-- Wrap -->
-    <div class="mb-6">
-      <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Frais</span>
-      <h3 class="text-lg font-semibold mt-2">Wrap maison</h3>
-      <p class="text-gray-300">Tortilla · poulet mariné · crudités · sauce légère</p>
-    </div>
+      <!-- Produit 6 -->
+      <div class="produit">
+        <h3>Wrap maison</h3>
+        <p>Tortilla · poulet mariné · crudités · sauce légère</p>
+        <span class="badge">Surgelés</span>
+      </div>
 
-    <!-- Falafels surgelés -->
-    <div>
-      <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">Surgelés</span>
-      <h3 class="text-lg font-semibold mt-2">Falafels artisanaux (vrac)</h3>
-      <p class="text-gray-300">Pois chiche · ail · oignon · coriandre · persil · épices</p>
-
-      <!-- TABLEAU DES MACROS -->
-      <div class="overflow-x-auto mt-4">
-        <table class="w-full border border-gray-700 text-sm text-center">
-          <thead class="bg-gray-700 text-gray-200">
-            <tr>
-              <th class="p-2">Base</th>
-              <th class="p-2">Énergie</th>
-              <th class="p-2">Prot.</th>
-              <th class="p-2">Gluc.</th>
-              <th class="p-2">Sucres</th>
-              <th class="p-2">Lip.</th>
-              <th class="p-2">Sat.</th>
-              <th class="p-2">Fibres</th>
-              <th class="p-2">Sel</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="p-2">100 g</td>
-              <td class="p-2">184 kcal</td>
-              <td class="p-2">7,6 g</td>
-              <td class="p-2">20,1 g</td>
-              <td class="p-2">1,1 g</td>
-              <td class="p-2">7,4 g</td>
-              <td class="p-2">0,8 g</td>
-              <td class="p-2">5,3 g</td>
-              <td class="p-2">1,1 g</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Produit 7 -->
+      <div class="produit">
+        <h3>Falafels artisanaux (vrac)</h3>
+        <p>Pois chiche · ail · oignon · coriandre · persil · épices</p>
+        <span class="badge">Surgelés</span>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="text-center py-6 text-gray-400 text-sm">
-    © 2025 GreenHouse — Traiteur artisanal
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <p><strong>Base Énergie pour 100g :</strong> 184 kcal · 7,6 g protéines · 20,1 g glucides · 1,1 g sucres · 7,4 g lipides · 0,8 g saturés · 5,3 g fibres · 1,1 g sel</p>
+      <p>© 2025 GreenHouse — Traiteur artisanal</p>
+    </div>
   </footer>
 
 </body>
