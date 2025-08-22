@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GreenHouse - Traiteur Diététique & Gourmand</title>
+  <style>
+    /* ----------- Style global ----------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(-45deg, #00c853, #b2ff59, #69f0ae, #00e676);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      color: #fff;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    /* ----------- Header ----------- */
+    header {
+      padding: 40px 20px 20px;
+    }
+    header img {
+      width: 120px;
+      margin-bottom: 15px;
+    }
+    header h1 {
+      font-size: 3rem;
+      margin: 10px 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: -webkit-linear-gradient(#fff, #ffeb3b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    header p {
+      font-size: 1.3rem;
+      font-weight: 300;
+    }
+
+    /* ----------- Main ----------- */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+    .card {
+      background: rgba(0,0,0,0.4);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+    }
+    .card h2 {
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+    }
+    .card p {
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #ffeb3b;
+      color: #000;
+      font-weight: bold;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #ffc107;
+    }
+
+    /* ----------- Footer ----------- */
+    footer {
+      padding: 20px;
+      background: rgba(0,0,0,0.5);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- ----------- En-tête ----------- -->
+  <header>
+    <img src="logo.png" alt="Logo GreenHouse" />
+    <h1>GreenHouse</h1>
+    <p>Traiteur - Diététique & Gourmand</p>
+  </header>
+
+  <!-- ----------- Contenu principal ----------- -->
+  <main>
+    <div class="card">
+      <h2>Menus diététiques</h2>
+      <p>Des repas équilibrés, sains et savoureux préparés par nos chefs.</p>
+      <a href="#" class="btn">Découvrir</a>
+    </div>
+    <div class="card">
+      <h2>Menus gourmands</h2>
+      <p>Offrez-vous le plaisir d'une cuisine riche en saveurs et généreuse.</p>
+      <a href="#" class="btn">Explorer</a>
+    </div>
+    <div class="card">
+      <h2>Événements & traiteur</h2>
+      <p>Un service sur-mesure pour vos soirées, mariages et réceptions.</p>
+      <a href="#" class="btn">Réserver</a>
+    </div>
+  </main>
+
+  <!-- ----------- Pied de page ----------- -->
+  <footer>
+    © 2025 GreenHouse - Tous droits réservés
+  </footer>
+</body>
+</html>
