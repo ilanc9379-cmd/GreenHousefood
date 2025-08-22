@@ -2,256 +2,351 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GreenHouse — Traiteur artisanal</title>
-<meta name="theme-color" content="#0b1320" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Greenhouse — Traiteur • Diète ou gourmand</title>
+<meta name="description" content="Greenhouse — Traiteur. Des plats diètes ou gourmands, frais, colorés et délicieux." />
+
 <style>
   :root{
-    --bg:#0b0f16;
-    --panel:#0f1724;
-    --text:#e8edf6;
-    --muted:#9fb0c9;
-    --ring:#334155;
+    /* Palette principale */
+    --bg-1: #0b1020;        /* nuit violet/bleu */
+    --bg-2: #0f1a32;        /* couche profonde */
+    --card: #121b33;
+    --card-2:#0f162b;
+    --txt:  #ecf3ff;
+    --muted:#b7c5e6;
+    --shadow: 0 10px 25px rgba(7, 12, 30, .35);
 
-    /* couleurs catégories */
-    --diet1:#0b231c; --diet2:#123327;   /* diète/équilibré */
-    --gourm1:#2b1717; --gourm2:#3b1d1d; /* gourmand */
-    --veg1:#0f1f2e; --veg2:#0d2a40;     /* veggie/poisson */
-    --wrap1:#1e1630; --wrap2:#2a1f43;   /* wraps/sandwich */
+    /* Accents vifs */
+    --accent-1: #56ff9a;   /* vert menthe */
+    --accent-2: #2ecc71;   /* vert */
+    --accent-3: #00d4ff;   /* cyan */
+    --accent-4: #a855f7;   /* violet */
+    --accent-5: #ffb703;   /* miel/or */
+    --accent-6: #ff4d67;   /* framboise */
 
-    /* pastilles macros */
-    --kcal-bg:#122352; --kcal-fg:#cde1ff;
-    --prot-bg:#0f2e1f; --prot-fg:#c9f7df;
-    --carb-bg:#3a2205; --carb-fg:#fde9a6;
-    --fat-bg:#3a0c0c;  --fat-fg:#ffd3d3;
-
-    --brand:#3ddc97;
-    --brand-2:#38bdf8;
-    --brand-3:#f59e0b;
-    --danger:#ef4444;
+    /* Dégradés */
+    --grad-title: conic-gradient(from 200deg at 50% 50%, #00d4ff, #56ff9a, #ffb703, #a855f7, #00d4ff);
+    --grad-chip: linear-gradient(135deg, #00d4ff 0%, #56ff9a 50%, #a855f7 100%);
+    --grad-border: linear-gradient(135deg, rgba(86,255,154,.8), rgba(0,212,255,.8));
   }
-  *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue","Noto Sans","Apple Color Emoji","Segoe UI Emoji",sans-serif;}
-  a{color:inherit;text-decoration:none}
-  img{max-width:100%;display:block}
 
-  /* Header */
+  /* Fond vivant : superpose plusieurs dégradés + motif doux */
+  body{
+    margin:0;
+    color:var(--txt);
+    background:
+      radial-gradient(1200px 800px at -10% -20%, rgba(88, 101, 242,.25), transparent 60%),
+      radial-gradient(900px 700px at 110% -10%, rgba(0, 212, 255,.18), transparent 55%),
+      radial-gradient(900px 700px at 50% 120%, rgba(86, 255, 154,.20), transparent 60%),
+      linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Conteneur */
+  .container{
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: clamp(16px, 3vw, 32px);
+  }
+
   header{
-    position:sticky;top:0;z-index:50;
-    background:linear-gradient(180deg,rgba(11,15,22,.95),rgba(11,15,22,.75) 60%,transparent);
-    backdrop-filter:saturate(140%) blur(6px);
-    border-bottom:1px solid #111827;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    background: linear-gradient(180deg, rgba(15,22,43,.75), rgba(15,22,43,.35) 40%, transparent);
+    border-bottom: 1px solid rgba(255,255,255,.05);
   }
-  .container{max-width:1100px;margin:auto;padding:18px 14px}
+
+  /* HERO */
+  .hero{
+    display: grid;
+    gap: 16px;
+    padding: clamp(18px, 3vw, 28px) 0 6px;
+  }
+
   .brand{
-    display:flex;align-items:center;gap:14px;
+    display:flex;
+    align-items:center;
+    gap: 14px;
   }
-  .brand img{height:52px;width:auto;border-radius:10px;box-shadow:0 0 0 2px #111827;}
-  .brand h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.3px}
-  .brand small{display:block;color:var(--muted);font-weight:500;margin-top:2px}
+  .brand .dot{
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--grad-chip);
+    box-shadow: 0 0 0 6px rgba(255,255,255,.04), 0 6px 18px rgba(0,0,0,.4);
+  }
+
+  .title{
+    line-height: 1;
+    margin: 0;
+    font-weight: 900;
+    font-size: clamp(38px, 5vw, 68px);
+    background: var(--grad-title);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: .5px;
+    text-shadow: 0 10px 30px rgba(0,0,0,.35);
+  }
+
+  .subtitle{
+    margin: 2px 0 12px;
+    color: var(--muted);
+    font-size: clamp(15px, 1.6vw, 18px);
+  }
 
   /* Filtres */
-  .filters{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .filters{
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin: 8px 0 4px;
+  }
   .chip{
-    padding:8px 12px;border-radius:999px;border:1px solid var(--ring);
-    color:var(--muted);cursor:pointer;user-select:none;transition:.18s;
-    background:linear-gradient(180deg,#0e1420,#0c121c);
+    position: relative;
+    border: 1px solid rgba(255,255,255,.12);
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--txt);
+    background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,.04);
+    cursor: pointer;
+    transition: transform .15s ease, border-color .2s ease, box-shadow .2s ease;
   }
-  .chip.active{border-color:var(--brand);color:#d6ffe9;box-shadow:0 0 0 2px rgba(61,220,151,.15) inset}
-  .chip[data-tag="diet"].active{box-shadow:0 0 0 2px rgba(61,220,151,.25) inset}
-  .chip[data-tag="gourmand"].active{box-shadow:0 0 0 2px rgba(245,158,11,.25) inset}
-  .chip[data-tag="veggie"].active{box-shadow:0 0 0 2px rgba(56,189,248,.25) inset}
-  .chip[data-tag="wrap"].active{box-shadow:0 0 0 2px rgba(168,85,247,.25) inset}
+  .chip:hover{ transform: translateY(-1px); }
+  .chip.active{
+    border-color: transparent;
+    color: #0a1024;
+    background: var(--grad-chip);
+    box-shadow: 0 6px 18px rgba(0,212,255,.25);
+  }
 
-  /* Grille 2 colonnes */
+  /* Grille 2 colonnes (responsive) */
   .grid{
-    display:grid;gap:14px;margin-top:18px;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-  @media (max-width:360px){
-    .grid{grid-template-columns:1fr;}
+    display:grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    margin-top: 18px;
   }
 
-  /* Carte */
+  /* Carte plat */
   .card{
-    position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--ring);
-    background:linear-gradient(160deg,var(--panel),#0c1422);padding:14px 14px 12px;isolation:isolate;
-    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    position: relative;
+    border-radius: 18px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+      linear-gradient(180deg, var(--card), var(--card-2));
+    border: 1px solid rgba(255,255,255,.08);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
   }
-  .card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.35);border-color:#1f2a40}
-  .card h3{margin:0 0 6px;font-size:18px;line-height:1.3}
-  .desc{color:#c7d4e8;margin-bottom:10px}
+  .card::before{
+    /* border glow */
+    content:"";
+    position:absolute; inset:0; border-radius:18px;
+    padding:1px; background: var(--grad-border); opacity:.0;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    transition: opacity .25s ease;
+  }
+  .card:hover{ transform: translateY(-3px); box-shadow: 0 16px 38px rgba(0,0,0,.45); border-color: rgba(255,255,255,.14); }
+  .card:hover::before{ opacity:.55; }
+
+  .card-body{ padding: 16px 16px 14px; }
   .badge{
-    position:absolute;right:10px;top:10px;font-weight:700;font-size:13px;
-    padding:6px 10px;border-radius:999px;color:#111;z-index:2;
-    background:linear-gradient(180deg,#ffd379,#f7b64d);border:1px solid #c47a0b;box-shadow:inset 0 1px 0 rgba(255,255,255,.3);
+    display:inline-flex; align-items:center; gap:8px;
+    font-weight: 700; letter-spacing:.2px;
+    font-size: 12px; padding: 8px 12px; border-radius: 999px;
+    color:#081224; background: rgba(255,255,255,.96);
+    margin-bottom: 10px;
   }
-  .tag{
-    position:absolute;left:10px;top:10px;font-size:12px;padding:5px 9px;border-radius:999px;border:1px solid var(--ring);
-    color:var(--muted);background:#0d1422
+  .badge svg{ width:16px; height:16px }
+
+  .title-sm{
+    margin: 2px 0 6px; font-size: 18px; line-height:1.25; font-weight: 800;
+  }
+  .desc{ margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+
+  .row{
+    display:flex; align-items:center; justify-content: space-between; gap: 12px;
+    margin-top: 8px;
+  }
+  .price{ font-weight: 900; font-size: 18px; color: #eaf3ff; }
+
+  .btn{
+    border: 0; border-radius: 12px; padding: 10px 14px;
+    font-weight: 800; letter-spacing:.25px; cursor: pointer;
+    color:#081224; background: linear-gradient(135deg, var(--accent-5), var(--accent-6));
+    box-shadow: 0 8px 18px rgba(255,77,103,.25);
+    transition: transform .15s ease, filter .2s ease;
+  }
+  .btn:hover{ transform: translateY(-1px); filter: brightness(1.03); }
+
+  /* Couleurs par catégorie */
+  .diet   .badge{ background: linear-gradient(135deg, #56ff9a, #00d4ff); color:#041019; }
+  .gourmet .badge{ background: linear-gradient(135deg, #ffb703, #ff4d67); color:#2b0a12; }
+
+  /* Footer */
+  footer{
+    color: var(--muted);
+    font-size: 13px;
+    margin: 32px 0 12px;
+    text-align:center;
+    opacity:.85;
   }
 
-  /* fonds par catégorie (plus vivant) */
-  .card[data-type="diet"]{background:linear-gradient(180deg,var(--diet1),var(--diet2));}
-  .card[data-type="gourmand"]{background:linear-gradient(180deg,var(--gourm1),var(--gourm2));}
-  .card[data-type="veggie"]{background:linear-gradient(180deg,var(--veg1),var(--veg2));}
-  .card[data-type="wrap"]{background:linear-gradient(180deg,var(--wrap1),var(--wrap2));}
-
-  /* Accent température/stock */
-  .card[data-temp="frais"]{box-shadow:0 0 0 2px #3b82f640 inset;}
-  .card[data-temp="surgeles"]{box-shadow:0 0 0 2px #8b5cf680 inset;}
-  .card[data-stock="low"]::after{
-    content:"Derniers !";position:absolute;bottom:10px;right:10px;font-size:12px;padding:4px 8px;border-radius:8px;
-    background:#fde68a;color:#3b2f09;border:1px solid #b45309;opacity:.95
+  /* Petits écrans */
+  @media (max-width: 640px){
+    .grid{ gap: 14px; }
+    .title{ font-size: clamp(34px, 9vw, 56px); }
   }
-
-  /* Macros */
-  .macros{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
-  .macro{border-radius:10px;padding:6px 8px;text-align:center;border:1px solid #1f2b42}
-  .macro b{display:block;font-size:13px;margin-top:2px}
-  .macro small{font-size:11px;opacity:.9}
-  .macro.kcal{background:var(--kcal-bg);color:var(--kcal-fg)}
-  .macro.prot{background:var(--prot-bg);color:var(--prot-fg)}
-  .macro.carb{background:var(--carb-bg);color:var(--carb-fg)}
-  .macro.fat{background:var(--fat-bg);color:var(--fat-fg)}
-
-  footer{margin:40px 0 20px;color:var(--muted);text-align:center}
-  .foot{opacity:.9}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="container">
+  <div class="container hero">
     <div class="brand">
-      <!-- 🔁 Remplace PASTE_YOUR_BASE64_IMAGE_HERE par TON BASE64 -->
-      <img alt="Logo" src="data:image/png;base64,PASTE_YOUR_BASE64_IMAGE_HERE">
+      <span class="dot" aria-hidden="true"></span>
       <div>
-        <h1>GreenHouse</h1>
-        <small>Traiteur artisanal — frais, gourmand & équilibré</small>
+        <h1 class="title" aria-label="Greenhouse">Greenhouse</h1>
+        <p class="subtitle">Traiteur — <strong>Diète</strong> ou <strong>gourmand</strong>, à vous de choisir.</p>
       </div>
     </div>
 
-    <div class="filters" id="filters">
-      <span class="chip active" data-tag="all">Tout</span>
-      <span class="chip" data-tag="diet">Diète</span>
-      <span class="chip" data-tag="gourmand">Gourmand</span>
-      <span class="chip" data-tag="veggie">Poisson / Végé</span>
-      <span class="chip" data-tag="wrap">Wraps</span>
-      <span class="chip" data-tag="frais">Frais</span>
-      <span class="chip" data-tag="surgeles">Surgelés</span>
-    </div>
+    <nav class="filters" aria-label="Filtrer les plats">
+      <button class="chip active" data-filter="all">Tout</button>
+      <button class="chip" data-filter="diet">Diète</button>
+      <button class="chip" data-filter="gourmet">Gourmand</button>
+    </nav>
   </div>
 </header>
 
 <main class="container">
-  <section class="grid" id="grid">
-
-    <!-- EXEMPLES (2 par ligne, couleurs par catégorie) -->
-    <article class="card" data-type="diet" data-temp="frais">
-      <span class="tag">Diète • Frais</span>
-      <span class="badge">Prix : 7,00 €</span>
-      <h3>Poulet riz & légumes</h3>
-      <p class="desc">Blanc de poulet, riz basmati, poêlée de légumes & sauce légère.</p>
-      <div class="macros">
-        <div class="macro kcal"><small>Calories</small><b>~730</b></div>
-        <div class="macro prot"><small>Prot.</small><b>~22 g</b></div>
-        <div class="macro carb"><small>Gluc.</small><b>~86 g</b></div>
-        <div class="macro fat"><small>Lip.</small><b>~28 g</b></div>
+  <!-- Grille 2 colonnes -->
+  <section class="grid" id="menuGrid">
+    <!-- Exemples DIÈTE -->
+    <article class="card diet" data-category="diet">
+      <div class="card-body">
+        <span class="badge" title="Option diète">
+          <!-- leaf icon -->
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 20c8 0 12-8 16-16-8 0-16 4-16 16Z" stroke="#033" stroke-width="2" fill="currentColor" opacity=".9"/></svg>
+          Diète
+        </span>
+        <h3 class="title-sm">Bowl detox quinoa & légumes verts</h3>
+        <p class="desc">Quinoa, brocoli, edamame, concombre, herbes fraîches, citron vert.</p>
+        <div class="row">
+          <span class="price">12,90 €</span>
+          <button class="btn">Commander</button>
+        </div>
       </div>
     </article>
 
-    <article class="card" data-type="gourmand" data-temp="frais" data-stock="low">
-      <span class="tag">Gourmand • Frais</span>
-      <span class="badge">Prix : 9,00 €</span>
-      <h3>Pâtes poulet crème champignons</h3>
-      <p class="desc">Crème légère, champignons, oignons, herbes.</p>
-      <div class="macros">
-        <div class="macro kcal"><small>Calories</small><b>~780</b></div>
-        <div class="macro prot"><small>Prot.</small><b>~42 g</b></div>
-        <div class="macro carb"><small>Gluc.</small><b>~84 g</b></div>
-        <div class="macro fat"><small>Lip.</small><b>~28 g</b></div>
+    <article class="card diet" data-category="diet">
+      <div class="card-body">
+        <span class="badge">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 20c8 0 12-8 16-16-8 0-16 4-16 16Z" stroke="#033" stroke-width="2" fill="currentColor" opacity=".9"/></svg>
+          Diète
+        </span>
+        <h3 class="title-sm">Saumon rôti & salade croquante</h3>
+        <p class="desc">Saumon au four, chou rouge, graines, vinaigrette légère.</p>
+        <div class="row">
+          <span class="price">14,50 €</span>
+          <button class="btn">Commander</button>
+        </div>
       </div>
     </article>
 
-    <article class="card" data-type="veggie" data-temp="surgeles">
-      <span class="tag">Poisson • Surgelé</span>
-      <span class="badge">Prix : 10,00 €</span>
-      <h3>Pâtes complètes saumon crème</h3>
-      <p class="desc">Saumon, crème, aneth & ail.</p>
-      <div class="macros">
-        <div class="macro kcal"><small>Calories</small><b>~760</b></div>
-        <div class="macro prot"><small>Prot.</small><b>~35 g</b></div>
-        <div class="macro carb"><small>Gluc.</small><b>~82 g</b></div>
-        <div class="macro fat"><small>Lip.</small><b>~28 g</b></div>
+    <!-- Exemples GOURMAND -->
+    <article class="card gourmet" data-category="gourmet">
+      <div class="card-body">
+        <span class="badge" title="Option gourmande">
+          <!-- fire icon -->
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 14c0-5 5-6 4-11 4 2 6 5 6 9a6 6 0 1 1-12 2Z" stroke="#320" stroke-width="2" fill="currentColor" opacity=".9"/></svg>
+          Gourmand
+        </span>
+        <h3 class="title-sm">Burger brioche & cheddar affiné</h3>
+        <p class="desc">Bœuf français, cheddar, oignons confits, sauce maison.</p>
+        <div class="row">
+          <span class="price">13,90 €</span>
+          <button class="btn">Commander</button>
+        </div>
       </div>
     </article>
 
-    <article class="card" data-type="veggie" data-temp="frais">
-      <span class="tag">Poisson • Frais</span>
-      <span class="badge">Prix : 11,00 €</span>
-      <h3>Lasagnes saumon & épinards</h3>
-      <p class="desc">Saumon, épinards, béchamel & fromage râpé.</p>
-      <div class="macros">
-        <div class="macro kcal"><small>Calories</small><b>~820</b></div>
-        <div class="macro prot"><small>Prot.</small><b>~40 g</b></div>
-        <div class="macro carb"><small>Gluc.</small><b>~74 g</b></div>
-        <div class="macro fat"><small>Lip.</small><b>~40 g</b></div>
+    <article class="card gourmet" data-category="gourmet">
+      <div class="card-body">
+        <span class="badge">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 14c0-5 5-6 4-11 4 2 6 5 6 9a6 6 0 1 1-12 2Z" stroke="#320" stroke-width="2" fill="currentColor" opacity=".9"/></svg>
+          Gourmand
+        </span>
+        <h3 class="title-sm">Pâtes crémeuses truffe & champignons</h3>
+        <p class="desc">Tagliatelles, crème, truffe, pleurotes, parmesan.</p>
+        <div class="row">
+          <span class="price">15,50 €</span>
+          <button class="btn">Commander</button>
+        </div>
       </div>
     </article>
 
-    <article class="card" data-type="wrap" data-temp="frais">
-      <span class="tag">Wrap • Frais</span>
-      <span class="badge">Prix : 9,00 €</span>
-      <h3>Wrap falafel & crudités (sauce biblalaka)</h3>
-      <p class="desc">Galette complète, falafels 150 g, crudités & sauce au fromage blanc alsacien.</p>
-      <div class="macros">
-        <div class="macro kcal"><small>Calories</small><b>~680</b></div>
-        <div class="macro prot"><small>Prot.</small><b>~26 g</b></div>
-        <div class="macro carb"><small>Gluc.</small><b>~86 g</b></div>
-        <div class="macro fat"><small>Lip.</small><b>~22 g</b></div>
+    <!-- Tu peux dupliquer les cartes ci-dessus, elles se placeront automatiquement en 2 colonnes -->
+    <article class="card diet" data-category="diet">
+      <div class="card-body">
+        <span class="badge">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 20c8 0 12-8 16-16-8 0-16 4-16 16Z" stroke="#033" stroke-width="2" fill="currentColor" opacity=".9"/></svg>
+          Diète
+        </span>
+        <h3 class="title-sm">Poulet citron & asperges</h3>
+        <p class="desc">Poulet grillé, asperges, huile d’olive, herbes, riz complet.</p>
+        <div class="row">
+          <span class="price">13,20 €</span>
+          <button class="btn">Commander</button>
+        </div>
       </div>
     </article>
 
-    <article class="card" data-type="gourmand" data-temp="surgeles">
-      <span class="tag">Gourmand • Surgelé</span>
-      <span class="badge">Prix : 10,50 €</span>
-      <h3>Hachis parmentier du chef</h3>
-      <p class="desc">Bœuf mijoté, purée onctueuse & gratin léger.</p>
-      <div class="macros">
-        <div class="macro kcal"><small>Calories</small><b>~790</b></div>
-        <div class="macro prot"><small>Prot.</small><b>~36 g</b></div>
-        <div class="macro carb"><small>Gluc.</small><b>~70 g</b></div>
-        <div class="macro fat"><small>Lip.</small><b>~34 g</b></div>
+    <article class="card gourmet" data-category="gourmet">
+      <div class="card-body">
+        <span class="badge">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 14c0-5 5-6 4-11 4 2 6 5 6 9a6 6 0 1 1-12 2Z" stroke="#320" stroke-width="2" fill="currentColor" opacity=".9"/></svg>
+          Gourmand
+        </span>
+        <h3 class="title-sm">Croque fondant raclette</h3>
+        <p class="desc">Pain de campagne, fromage à raclette, jambon, beurre noisette.</p>
+        <div class="row">
+          <span class="price">9,90 €</span>
+          <button class="btn">Commander</button>
+        </div>
       </div>
     </article>
-
   </section>
+
+  <footer>
+    © <span id="year"></span> Greenhouse — Fait avec amour 💚
+  </footer>
 </main>
 
-<footer>
-  <div class="container foot">© 2025 GreenHouse — Traiteur artisanal</div>
-</footer>
-
 <script>
-  // Filtrage simple par tags/catégories (clique sur les chips)
+  // Année dynamique
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Filtre Diète / Gourmand / Tout
   const chips = document.querySelectorAll('.chip');
   const cards = document.querySelectorAll('.card');
 
-  chips.forEach(chip=>{
-    chip.addEventListener('click', ()=>{
-      chips.forEach(c=>c.classList.remove('active'));
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
+      const filter = chip.dataset.filter;
 
-      const tag = chip.dataset.tag;
-      cards.forEach(card=>{
-        // tags de type/temperature lisibles sur data-*
-        const match =
-          tag==='all' ||
-          card.dataset.type===tag ||
-          card.dataset.temp===tag;
-
-        card.style.display = match ? '' : 'none';
+      cards.forEach(card => {
+        const ok = (filter === 'all') || card.dataset.category === filter;
+        card.style.display = ok ? '' : 'none';
       });
     });
   });
