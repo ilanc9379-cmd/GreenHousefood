@@ -1,57 +1,142 @@
+import Head from "next/head";
+
 export default function Home() {
   return (
-    <div
-      style={{
-        fontFamily: "Arial, sans-serif",
-        background: "linear-gradient(135deg, #1b4332, #081c15)",
-        color: "#fff",
-        minHeight: "100vh",
-        margin: 0,
-        padding: "20px",
-      }}
-    >
-      <header style={{ textAlign: "center", padding: "40px 0" }}>
-        <h1 style={{ fontSize: "3rem", margin: "0", color: "#95d5b2" }}>
-          GreenHouse
-        </h1>
-        <p style={{ fontSize: "1.5rem", color: "#d8f3dc" }}>
-          Traiteur artisanal — Diététique & Gourmand
-        </p>
-      </header>
+    <>
+      <Head>
+        <title>GreenHouse — Traiteur artisanal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta httpEquiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-      <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
-        <div style={{ background: "#2d6a4f", borderRadius: "12px", padding: "20px" }}>
-          <h2>Pâtes complètes saumon crème</h2>
-          <p>Saumon · crème · aneth · ail.</p>
-          <p><strong>Prix : 10,00 €</strong></p>
-          <p>Calories : ~760 kcal · Protéines : ~35 g · Glucides : ~82 g · Lipides : ~28 g</p>
+      <main style={styles.page}>
+        <div style={styles.wrap}>
+          <header style={styles.hero}>
+            <h1 style={styles.brand}>GreenHouse</h1>
+            <p style={styles.subtitle}>Traiteur artisanal — Diététique &amp; Gourmand</p>
+
+            <div style={styles.chips}>
+              <span style={styles.chip}>Livraison</span>
+              <span style={styles.chip}>Pâtes fraîches</span>
+              <span style={styles.chip}>Falafels maison</span>
+              <span style={styles.chip}>Surgelés qualité</span>
+            </div>
+
+            <div style={styles.cta}>
+              <a href="#plats" style={{ ...styles.btn, ...styles.btnPrimary }}>Voir nos plats</a>
+              <a href="#infos" style={{ ...styles.btn, ...styles.btnGhost }}>Infos produits</a>
+            </div>
+          </header>
+
+          <section id="infos" style={styles.card}>
+            <h2 style={styles.h2}>Le bon plat au bon prix</h2>
+            <p style={styles.p}>
+              Diète ou gourmand — à vous de choisir. Pâtes fraîches maison, gammes fraîches et surgelées,
+              falafels artisanaux.
+            </p>
+          </section>
+
+          <section style={styles.card}>
+            <h2 style={styles.h2}>Livraison</h2>
+            <p style={styles.p}>
+              <strong>Zones :</strong> Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim,
+              Richwiller, Lutterbach, Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim, Eschentzwiller, Brunstatt.
+            </p>
+          </section>
+
+          <footer style={styles.footer}>
+            © {new Date().getFullYear()} GreenHouse — Traiteur artisanal
+          </footer>
         </div>
-
-        <div style={{ background: "#40916c", borderRadius: "12px", padding: "20px" }}>
-          <h2>Lasagnes saumon & épinards</h2>
-          <p>Saumon · épinards · béchamel · fromage râpé.</p>
-          <p><strong>Prix : 11,00 €</strong></p>
-          <p>Calories : ~820 kcal · Protéines : ~40 g · Glucides : ~74 g · Lipides : ~40 g</p>
-        </div>
-
-        <div style={{ background: "#2d6a4f", borderRadius: "12px", padding: "20px" }}>
-          <h2>Wrap falafel & crudités</h2>
-          <p>Galette complète 100 g · falafels 150 g · crudités · sauce au fromage blanc alsacien.</p>
-          <p><strong>Prix : 9,00 €</strong></p>
-          <p>Calories : ~680 kcal · Protéines : ~26 g · Glucides : ~86 g · Lipides : ~22 g</p>
-        </div>
-
-        <div style={{ background: "#40916c", borderRadius: "12px", padding: "20px" }}>
-          <h2>Pâtes poulet sauce légère</h2>
-          <p>Poulet · sauce légère · champignons · oignons.</p>
-          <p><strong>Prix : 9,00 €</strong></p>
-          <p>Calories : ~780 kcal · Protéines : ~42 g · Glucides : ~84 g · Lipides : ~28 g</p>
-        </div>
-      </section>
-
-      <footer style={{ textAlign: "center", padding: "40px 0", color: "#b7e4c7" }}>
-        <p>© 2025 GreenHouse — Le bon plat au bon prix</p>
-      </footer>
-    </div>
+      </main>
+    </>
   );
 }
+
+const styles = {
+  page: {
+    minHeight: "100vh",
+    margin: 0,
+    display: "grid",
+    placeItems: "center",
+    background:
+      "radial-gradient(1300px 700px at 10% -200px, rgba(56,189,248,.06), transparent 60%)," +
+      "radial-gradient(1000px 600px at 90% -150px, rgba(34,197,94,.07), transparent 55%)," +
+      "radial-gradient(900px 560px at 30% 110%, rgba(99,102,241,.07), transparent 60%)," +
+      "linear-gradient(180deg, #0b1020 0%, #111a2d 70%)",
+    color: "rgba(255,255,255,.92)",
+    fontFamily:
+      "Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji"
+  },
+  wrap: { width: "min(1100px, 92vw)", margin: "0 auto", padding: "24px" },
+  hero: {
+    padding: "32px",
+    borderRadius: "24px",
+    background:
+      "linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))",
+    boxShadow: "0 10px 30px rgba(0,0,0,.25)",
+    border: "1px solid rgba(255,255,255,.08)",
+    marginBottom: "24px"
+  },
+  brand: {
+    fontSize: "clamp(42px, 7vw, 86px)",
+    lineHeight: 1.05,
+    margin: 0,
+    letterSpacing: "-.02em",
+    background:
+      "linear-gradient(90deg, #34d399, #22d3ee, #a78bfa, #34d399)",
+    WebkitBackgroundClip: "text",
+    backgroundClip: "text",
+    color: "transparent"
+  },
+  subtitle: {
+    margin: "10px 0 18px",
+    fontSize: "clamp(16px, 2.6vw, 22px)",
+    opacity: .92
+  },
+  chips: { display: "flex", flexWrap: "wrap", gap: "10px", margin: "18px 0 6px" },
+  chip: {
+    padding: "8px 14px",
+    borderRadius: "999px",
+    background:
+      "linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04))",
+    border: "1px solid rgba(255,255,255,.10)",
+    fontSize: 14,
+    opacity: .95
+  },
+  cta: { display: "flex", gap: "12px", marginTop: 18, flexWrap: "wrap" },
+  btn: {
+    display: "inline-block",
+    padding: "12px 18px",
+    borderRadius: 14,
+    textDecoration: "none",
+    fontWeight: 600,
+    letterSpacing: ".2px",
+    transition: "transform .15s ease, opacity .15s ease",
+    border: "1px solid rgba(255,255,255,.12)"
+  },
+  btnPrimary: {
+    background:
+      "linear-gradient(90deg, #10b981, #06b6d4, #8b5cf6)",
+    boxShadow: "0 10px 20px rgba(0,0,0,.25)",
+    color: "white"
+  },
+  btnGhost: { background: "transparent", color: "rgba(255,255,255,.9)", opacity: .9 },
+  card: {
+    background:
+      "linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))",
+    border: "1px solid rgba(255,255,255,.08)",
+    borderRadius: 22,
+    padding: "24px",
+    marginBottom: "18px",
+    boxShadow: "0 10px 30px rgba(0,0,0,.25)"
+  },
+  h2: {
+    margin: "0 0 10px",
+    fontSize: "clamp(22px, 3.3vw, 34px)",
+    letterSpacing: "-.01em"
+  },
+  p: { margin: 0, opacity: .93, lineHeight: 1.6, fontSize: "clamp(15px, 2.5vw, 18px)" },
+  footer: { textAlign: "center", opacity: .7, padding: "24px 6px" }
+};
