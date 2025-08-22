@@ -1,153 +1,149 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GreenHouse — Traiteur artisanal • Diététique & Gourmand</title>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<style>
-/* ====== RESET + THEME ====== */
-*{box-sizing:border-box}
-:root{
-  --bg1:#071a16; --bg2:#0f2c2a; --bg3:#103b2a;
-  --card:#0b1320; --muted:#b6c2cf;
-  --green:#22c55e; --yellow:#facc15; --orange:#fb923c;
-  --blue:#60a5fa; --pink:#f472b6; --violet:#a78bfa;
-  --shadow:0 10px 30px rgba(0,0,0,.35);
-  --radius:16px;
-}
-html,body{height:100%}
-body{
-  margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
-  color:#e9eef3; line-height:1.5;
-  background:
-    radial-gradient(1200px 600px at 10% -10%,rgba(96,165,250,.15),transparent 60%),
-    radial-gradient(900px 480px at 110% 10%,rgba(244,114,182,.13),transparent 60%),
-    radial-gradient(800px 500px at 50% 120%,rgba(34,197,94,.14),transparent 60%),
-    linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
-  background-size:140% 140%;
-  animation:bgMove 24s ease-in-out infinite;
-}
-@keyframes bgMove{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-.wrap{max-width:1100px;margin:auto;padding:28px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenHouse - Traiteur Diététique & Gourmand</title>
+  <style>
+    /* Fond animé */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(-45deg, #74ebd5, #ACB6E5, #f9d423, #ff4e50);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      color: #333;
+    }
 
-/* ====== HERO ====== */
-.hero{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:12px}
-.hero img{width:80px;height:80px;border-radius:50%;box-shadow:var(--shadow)}
-.brand{
-  font-weight:800; line-height:1.05; margin:0;
-  font-size:clamp(42px,7vw,92px);
-  letter-spacing:.5px;
-  background:linear-gradient(90deg,#d1fae5,#86efac,#22c55e,#facc15,#fb923c);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 6px 24px rgba(34,197,94,.3));
-}
-.subtitle{margin:0;font-size:clamp(16px,2.4vw,22px);color:#e8f9ef;opacity:.95;width:100%}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;width:100%}
-.chip{padding:8px 14px;border-radius:999px;
-  background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));
-  border:1px solid rgba(255,255,255,.15); backdrop-filter:blur(6px);
-  font-weight:600; color:#f7fee7;}
-.quick{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;width:100%}
-.btn{appearance:none;border:0;cursor:pointer;border-radius:999px;
-  padding:12px 18px;font-weight:700;box-shadow:var(--shadow);
-  transition:transform .15s ease,opacity .15s ease}
-.btn-primary{background:linear-gradient(90deg,var(--green),var(--yellow));color:#06240f}
-.btn-ghost{background:transparent;color:#e6f7ee;border:1px solid rgba(255,255,255,.2)}
-.btn:hover{transform:translateY(-2px)}
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
 
-/* ====== SECTIONS ====== */
-.section{margin-top:32px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-.section-header{padding:18px 22px;font-weight:800;letter-spacing:.5px}
-.section-body{padding:22px}
-.section--concept{background:linear-gradient(180deg,rgba(34,197,94,.18),rgba(34,197,94,.07))}
-.section--concept .section-header{background:linear-gradient(90deg,#22c55e,#86efac);color:#082013}
-.section--plats{background:linear-gradient(180deg,rgba(96,165,250,.18),rgba(96,165,250,.07))}
-.section--plats .section-header{background:linear-gradient(90deg,#60a5fa,#a78bfa)}
-.section--livraison{background:linear-gradient(180deg,rgba(250,204,21,.20),rgba(250,204,21,.07))}
-.section--livraison .section-header{background:linear-gradient(90deg,#facc15,#fb923c);color:#221307}
+    header {
+      text-align: center;
+      padding: 40px 20px;
+    }
 
-/* ====== GRID CARDS ====== */
-.grid{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr))}
-@media (max-width:820px){.grid{grid-template-columns:1fr}}
-.card{border-radius:14px;background:#ffffff; color:#0b1220; padding:18px; box-shadow:0 10px 24px rgba(0,0,0,.25)}
-.card h3{margin:0 0 8px 0;font-size:20px}
-.badges{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}
-.badge{font-size:12px;padding:4px 8px;border-radius:999px;font-weight:700;background:#eef2ff;color:#1f2937;border:1px solid #c7d2fe}
-.price{font-weight:800;color:#14532d;font-size:18px}
-.kcal{font-size:12px;color:#64748b}
+    header img {
+      max-width: 150px;
+      margin-bottom: 20px;
+    }
 
-/* ====== FOOTER ====== */
-footer{margin:34px 0 12px;text-align:center;color:var(--muted);font-size:13px}
-small a{color:#86efac;text-decoration:none}
-</style>
+    header h1 {
+      font-size: 3.5em;
+      margin: 0;
+      color: #fff;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+    }
+
+    header p {
+      font-size: 1.3em;
+      margin: 10px 0 0;
+      color: #f7f7f7;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .section {
+      background: rgba(255,255,255,0.9);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .section h2 {
+      text-align: center;
+      color: #444;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .dish {
+      background: #fdfdfd;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .dish strong {
+      color: #2c3e50;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <!-- HERO -->
-    <section class="hero">
-      <img src="logo.png" alt="Logo GreenHouse">
-      <div>
-        <h1 class="brand">GreenHouse</h1>
-        <p class="subtitle">Traiteur artisanal — Diététique &amp; Gourmand</p>
-      </div>
-      <div class="chips">
-        <span class="chip">Pâtes fraîches maison</span>
-        <span class="chip">Gammes fraîches &amp; surgelées</span>
-        <span class="chip">Falafels artisanaux</span>
-        <span class="chip">Le bon plat au bon prix</span>
-      </div>
-      <div class="quick">
-        <button class="btn btn-primary">Découvrir nos plats</button>
-        <button class="btn btn-ghost">Zones de livraison</button>
-      </div>
+  <header>
+    <img src="logo.png" alt="Logo GreenHouse">
+    <h1>GreenHouse</h1>
+    <p>Traiteur artisanal – Diététique & Gourmand</p>
+    <p>🍴 Le bon plat au bon prix – Diète ou gourmand, à vous de choisir !</p>
+  </header>
+
+  <main>
+    <section class="section">
+      <h2>🥗 Gamme Diète – Surgelé</h2>
+      <div class="dish"><strong>Pâtes seigle émincé poulet, julienne légumes, sauce poivron</strong><span>9,90 €</span></div>
+      <div class="dish"><strong>Lasagnes viande hachée & légumes</strong><span>9,90 €</span></div>
+      <div class="dish"><strong>Pâtes complètes bolognaise & légumes</strong><span>9,90 €</span></div>
+      <div class="dish"><strong>Falafel patate douce & aubergine sauce allégée</strong><span>9,90 €</span></div>
+      <div class="dish"><strong>Gratin patates douces, viande hachée & légumes</strong><span>9,90 €</span></div>
     </section>
 
-    <!-- CONCEPT -->
-    <section class="section section--concept">
-      <div class="section-header">🌿 Notre concept</div>
-      <div class="section-body">
-        <p><strong>Diète ou gourmand</strong> — à vous de choisir. Portions justes, ingrédients simples,
-        recettes légères ou généreuses.</p>
-      </div>
+    <section class="section">
+      <h2>🥗 Gamme Diète – Frais</h2>
+      <div class="dish"><strong>Pâtes seigle émincé poulet, julienne légumes, sauce poivron</strong><span>9,90 €</span></div>
+      <div class="dish"><strong>Falafel patate douce poulet épicé & courgettes</strong><span>9,90 €</span></div>
+      <div class="dish"><strong>Gratin de patates douces</strong><span>9,90 €</span></div>
+      <p><em>⚠️ Réservation 24h avant</em></p>
     </section>
 
-    <!-- PLATS -->
-    <section class="section section--plats">
-      <div class="section-header">🍽️ Nos plats</div>
-      <div class="section-body">
-        <div class="grid">
-          <article class="card"><h3>Pâtes complètes saumon crème</h3>
-            <div class="badges"><span class="badge">Saumon</span><span class="badge">Crème</span></div>
-            <div class="price">10,00 €</div><div class="kcal">~760 kcal</div>
-          </article>
-          <article class="card"><h3>Lasagnes saumon &amp; épinards</h3>
-            <div class="badges"><span class="badge">Saumon</span><span class="badge">Épinards</span></div>
-            <div class="price">11,00 €</div><div class="kcal">~820 kcal</div>
-          </article>
-        </div>
-      </div>
+    <section class="section">
+      <h2>🍝 Gamme Gourmand – Frais</h2>
+      <div class="dish"><strong>Pâtes seigle arrabiata</strong><span>7 €</span></div>
+      <div class="dish"><strong>Pâtes complètes gorgonzola</strong><span>7 €</span></div>
+      <div class="dish"><strong>Pâtes complètes crème basilic</strong><span>7 €</span></div>
+      <div class="dish"><strong>Pâtes aromette émincé poulet à la crème</strong><span>9 €</span></div>
+      <div class="dish"><strong>Pâtes complètes saumon crème</strong><span>10 €</span></div>
+      <div class="dish"><strong>Lasagnes saumon</strong><span>11 €</span></div>
+      <div class="dish"><strong>Wrap falafel, légumes, sauce Bibeleskaes</strong><span>9 €</span></div>
     </section>
 
-    <!-- LIVRAISON -->
-    <section class="section section--livraison">
-      <div class="section-header">🚚 Livraison</div>
-      <div class="section-body">
-        <p><b>Zones :</b> Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim,
-        Richwiller, Lutterbach, Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim,
-        Eschentzwiller, Brunstatt.</p>
-      </div>
+    <section class="section">
+      <h2>🥬 Pâtes fraîches artisanales</h2>
+      <p>Disponible <strong>lundi et jeudi</strong> sur réservation – 7 €/kg</p>
+      <p>Farine de seigle, complète ou aromette, 100% œufs frais – cuisson 1 min 30</p>
     </section>
 
-    <footer>
-      © 2025 GreenHouse — Traiteur artisanal • <small>Diététique &amp; Gourmand</small>
-    </footer>
-  </div>
+    <section class="section">
+      <h2>🧆 Falafels artisanaux</h2>
+      <p>Disponible uniquement en surgelés</p>
+      <div class="dish"><strong>Falafels vrac – 10 €/kg</strong></div>
+      <p>Cuisson : 3 min friteuse · 14 min airfryer</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 GreenHouse – Traiteur artisanal diététique & gourmand</p>
+  </footer>
 </body>
 </html>
