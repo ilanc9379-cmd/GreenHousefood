@@ -1,376 +1,299 @@
 // pages/index.js
 import Head from "next/head";
+import Image from "next/image";
+import { useMemo, useState } from "react";
 
+/* ============
+   DONNÉES PLATS
+   ============ */
 const PLATS = [
+  // Ceux visibles sur tes captures
   {
-    id: 1,
-    nom: "Wrap Poulet César",
+    id: 101,
+    nom: "Pâtes complètes — crème légère, champignons & oignons",
     type: "Gourmand",
-    calories: 780,
-    proteines: 42,
-    glucides: 85,
-    lipides: 34,
-    prix: 12.5,
-    resume: "Poulet pané, romaine, parmesan, sauce césar.",
+    calories: 780, proteines: 42, glucides: 84, lipides: 28,
+    prix: 9.0,
+    resume: "Pâtes complètes, crème légère, champignons, oignons.",
   },
   {
-    id: 2,
-    nom: "Bowl Saumon & Quinoa",
+    id: 102,
+    nom: "Pâtes complètes — (base tomate)",
     type: "Diète",
-    calories: 520,
-    proteines: 34,
-    glucides: 47,
-    lipides: 18,
-    prix: 14.9,
-    resume: "Saumon grillé, quinoa, avocat, edamame, sauce citronnée.",
+    calories: 730, proteines: 22, glucides: 86, lipides: 28,
+    prix: 7.0,
+    resume: "Sauce tomate maison, herbes, profil plus léger.",
   },
+
+  // Ceux qu’on avait déjà nommés précisément
   {
-    id: 3,
-    nom: "Burger Signature",
+    id: 201,
+    nom: "Pâtes complètes saumon crème",
     type: "Gourmand",
-    calories: 980,
-    proteines: 45,
-    glucides: 87,
-    lipides: 49,
-    prix: 13.9,
-    resume: "Bœuf maturé, cheddar, oignons confits, sauce maison.",
+    calories: 760, proteines: 35, glucides: 82, lipides: 28,
+    prix: 10.0,
+    resume: "Saumon, crème, aneth, ail.",
   },
   {
-    id: 4,
-    nom: "Veggie Power Bowl",
-    type: "Diète",
-    calories: 610,
-    proteines: 28,
-    glucides: 64,
-    lipides: 22,
-    prix: 11.9,
-    resume: "Tofu croustillant, panais rôtis, fèves, curry doux, tahini.",
+    id: 202,
+    nom: "Lasagnes saumon & épinards",
+    type: "Gourmand",
+    calories: 820, proteines: 40, glucides: 74, lipides: 40,
+    prix: 11.0,
+    resume: "Saumon, épinards, béchamel, fromage râpé.",
   },
+  {
+    id: 203,
+    nom: "Wrap falafel & crudités (sauce bibalaka)",
+    type: "Diète",
+    calories: 680, proteines: 26, glucides: 86, lipides: 22,
+    prix: 9.0,
+    resume: "Galette complète 100 g, falafels 150 g, crudités, sauce au fromage blanc alsacien.",
+  },
+
+  /* =====
+     ASTUCE
+     =====
+     ➜ Ajoute ici tous tes autres plats en copiant un objet et en changeant nom/prix/macros/type.
+     type = 'Diète' ou 'Gourmand'
+  */
 ];
 
-const CHIP = ({ active, label, onClick }) => (
+/* Petites helpers */
+const euro = (n) => `${n.toFixed(2).replace(".", ",")} €`;
+const Chip = ({ active, onClick, children }) => (
   <button
-    className={`chip ${active ? "chip--active" : ""}`}
     onClick={onClick}
-    type="button"
+    className={`chip ${active ? "chip--on" : ""}`}
+    aria-pressed={active}
   >
-    {label}
-    <style jsx>{`
-      .chip {
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        background: rgba(255, 255, 255, 0.06);
-        border-radius: 999px;
-        padding: 8px 14px;
-        font-weight: 600;
-        letter-spacing: 0.2px;
-        backdrop-filter: blur(6px);
-        transition: transform 0.15s ease, background 0.15s ease,
-          border-color 0.15s ease;
-      }
-      .chip:hover {
-        transform: translateY(-1px);
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.35);
-      }
-      .chip--active {
-        border-color: transparent;
-        background: linear-gradient(135deg, #22c55e, #16a34a);
-        color: #04130d;
-      }
-    `}</style>
+    {children}
   </button>
 );
 
 export default function Home() {
-  // Filtre côté build/SSR-safe : uniquement des calculs JS simples
-  const [filtre, setFiltre] = React.useState("Tous");
+  const [filtre, setFiltre] = useState("Tous"); // Tous | Diète | Gourmand
+  const [q, setQ] = useState("");
 
-  const platsFiltres =
-    filtre === "Tous" ? PLATS : PLATS.filter((p) => p.type === filtre);
+  const platsFiltres = useMemo(() => {
+    return PLATS.filter((p) => {
+      const okType = filtre === "Tous" ? true : p.type === filtre;
+      const okTexte =
+        !q ||
+        p.nom.toLowerCase().includes(q.toLowerCase()) ||
+        p.resume.toLowerCase().includes(q.toLowerCase());
+      return okType && okTexte;
+    });
+  }, [filtre, q]);
 
   return (
     <>
       <Head>
-        <title>Greenhouse — Traiteur | Diète & Gourmand</title>
-        <meta
-          name="description"
-          content="Greenhouse — Traiteur artisanal. Diététique & Gourmand. Plats frais, équilibrés, faits maison."
-        />
+        <title>Greenhouse — Traiteur | Diète ou Gourmand</title>
+        <meta name="description" content="Greenhouse — Traiteur artisanal : Diététique & gourmand. Le bon plat au bon prix." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
 
       <main className="wrap">
+        {/* HERO */}
         <header className="hero">
-          <div className="hero__left">
-            <h1 className="brand">Greenhouse</h1>
-            <p className="subtitle">
-              Traiteur artisanal — <strong>Diététique &amp; Gourmand</strong>
-            </p>
-            <div className="chips">
-              {["Tous", "Diète", "Gourmand"].map((c) => (
-                <CHIP
-                  key={c}
-                  label={c}
-                  active={filtre === c}
-                  onClick={() => setFiltre(c)}
-                />
-              ))}
-            </div>
+          <div className="brand">
+            <Image
+              src="/favicon.png"
+              alt="Greenhouse logo"
+              width={56}
+              height={56}
+              className="logo"
+              priority
+            />
+            <h1>Greenhouse</h1>
           </div>
-          <div className="hero__right">
-            <div className="hero-card">
-              <h3>Le bon plat au bon prix</h3>
-              <p>
-                Diète ou gourmand — à vous de choisir.
-                <br />
-                Pâtes fraîches maison, gammes fraîches &amp; surgelées, falafels
-                artisanaux.
-              </p>
-            </div>
+          <p className="subtitle">
+            Traiteur artisanal — <strong>Diététique & gourmand</strong>
+          </p>
+
+          <div className="chips">
+            <Chip active={filtre === "Tous"} onClick={() => setFiltre("Tous")}>
+              Tous
+            </Chip>
+            <Chip active={filtre === "Diète"} onClick={() => setFiltre("Diète")}>
+              Diète
+            </Chip>
+            <Chip
+              active={filtre === "Gourmand"}
+              onClick={() => setFiltre("Gourmand")}
+            >
+              Gourmand
+            </Chip>
           </div>
+
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Rechercher un plat…"
+            className="search"
+            aria-label="Rechercher un plat"
+          />
         </header>
 
+        {/* LISTE */}
         <section className="grid">
           {platsFiltres.map((p) => (
-            <article className={`card card--${p.type.toLowerCase()}`} key={p.id}>
-              <div className="card__head">
-                <span className="badge">{p.type}</span>
-                <h3 className="card__title">{p.nom}</h3>
-                <p className="card__desc">{p.resume}</p>
+            <article key={p.id} className="card" role="article">
+              <div className="card-top">
+                <span className={`badge ${p.type === "Diète" ? "bd-diet" : "bd-gour"}`}>
+                  {p.type}
+                </span>
+                <h3 className="title">{p.nom}</h3>
+                <p className="resume">{p.resume}</p>
               </div>
 
               <div className="macros">
                 <div>
-                  <small>Calories</small>
-                  <strong>{p.calories}</strong>
+                  <small>kcal</small>
+                  <div className="num">{p.calories}</div>
                 </div>
                 <div>
                   <small>Prot.</small>
-                  <strong>{p.proteines} g</strong>
+                  <div className="num">{p.proteines} g</div>
                 </div>
                 <div>
                   <small>Gluc.</small>
-                  <strong>{p.glucides} g</strong>
+                  <div className="num">{p.glucides} g</div>
                 </div>
                 <div>
                   <small>Lip.</small>
-                  <strong>{p.lipides} g</strong>
+                  <div className="num">{p.lipides} g</div>
                 </div>
               </div>
 
-              <div className="card__foot">
-                <div className="price">
-                  <span className="amount">{p.prix.toFixed(2)} €</span>
-                </div>
-                <button className="cta">Commander</button>
+              <div className="cta">
+                <div className="price">{euro(p.prix)}</div>
+                <button className="btn">Commander</button>
               </div>
             </article>
           ))}
+          {platsFiltres.length === 0 && (
+            <p className="empty">Aucun plat ne correspond à votre recherche.</p>
+          )}
         </section>
 
+        {/* FOOTER */}
         <footer className="foot">
-          © {new Date().getFullYear()} Greenhouse — Traiteur artisanal
+          <p>© {new Date().getFullYear()} Greenhouse — Traiteur artisanal</p>
         </footer>
       </main>
 
-      {/* Styles globaux + composants via styled-jsx */}
-      <style jsx global>{`
+      <style jsx>{`
         :root {
-          --bg1: #021a10;
-          --bg2: #032017;
-          --bg3: #04261d;
-          --card: #0b1f2a;
-          --muted: rgba(255, 255, 255, 0.7);
-          --soft: rgba(255, 255, 255, 0.1);
-          --ring: 0 10px 35px rgba(0, 0, 0, 0.35);
-          --green: #22c55e;
-          --green-deep: #16a34a;
-          --amber: #f59e0b;
-          --rose: #f43f5e;
+          --bg1: #e8f7ff;
+          --bg2: #dff8ee;
+          --ink: #0b1020;
+          --muted: #485060;
+          --card: #ffffff;
+          --ring: rgba(10, 140, 120, 0.22);
+          --diet: #1aa87b;
+          --gour: #e85b37;
+          --brand1: #0aa64c;
+          --brand2: #2d7ae6;
         }
-        *,
-        *::before,
-        *::after {
-          box-sizing: border-box;
-        }
-        html,
-        body,
-        #__next {
-          height: 100%;
-        }
-        body {
-          margin: 0;
-          color: #e6f2ec;
-          background:
-            radial-gradient(900px 560px at 30% 10%, rgba(34, 197, 94, 0.065), transparent 60%),
-            radial-gradient(1000px 650px at 85% 0%, rgba(15, 118, 110, 0.08), transparent 65%),
-            linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 40%, var(--bg3) 100%);
-          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-            Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji',
-            'Segoe UI Emoji', 'Segoe UI Symbol';
-        }
+        html, body, #__next { height: 100%; }
+        body { margin: 0; color: var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; }
+
         .wrap {
-          max-width: 1180px;
-          margin: 0 auto;
-          padding: 32px 18px 64px;
+          min-height: 100%;
+          background: radial-gradient(1000px 700px at -10% -10%, var(--bg2), transparent 60%),
+                      radial-gradient(900px 600px at 110% -20%, var(--bg1), transparent 65%),
+                      linear-gradient(180deg, #f5fbff 0%, #f7fff9 60%, #fdfefe 100%);
         }
 
-        /* HERO */
         .hero {
-          display: grid;
-          grid-template-columns: 1.3fr 0.9fr;
-          gap: 16px;
-          align-items: stretch;
-          margin-bottom: 28px;
+          max-width: 1100px; margin: 0 auto; padding: 48px 20px 12px;
         }
-        @media (max-width: 980px) {
-          .hero {
-            grid-template-columns: 1fr;
-          }
-        }
-        .brand {
+        .brand { display: flex; align-items: center; gap: 14px; }
+        .brand h1 {
+          font-size: clamp(40px, 6vw, 80px);
+          line-height: 0.95;
           margin: 0;
-          font-size: clamp(42px, 7vw, 100px);
-          line-height: 1;
+          background: linear-gradient(90deg, var(--brand1), var(--brand2));
+          -webkit-background-clip: text; background-clip: text; color: transparent;
           letter-spacing: 0.5px;
-          background: linear-gradient(135deg, #2dd4bf, #22c55e 45%, #86efac 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-          text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
         }
-        .subtitle {
-          margin: 10px 0 18px;
-          color: var(--muted);
-          font-size: clamp(16px, 2.6vw, 22px);
-        }
-        .chips {
-          display: flex;
-          gap: 10px;
-          flex-wrap: wrap;
-        }
-        .hero__right {
-          display: grid;
-          align-items: end;
-        }
-        .hero-card {
-          background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.06));
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 18px;
-          padding: 22px 20px;
-          box-shadow: var(--ring);
-        }
-        .hero-card h3 {
-          margin: 0 0 6px;
-          font-size: clamp(22px, 3vw, 26px);
-        }
-        .hero-card p {
-          margin: 0;
-          color: var(--muted);
-        }
+        .logo { border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
 
-        /* GRID */
+        .subtitle { margin: 8px 0 18px; color: var(--muted); font-size: clamp(16px, 2.5vw, 22px); }
+        .subtitle strong { color: #0d6b57; }
+
+        .chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 16px; }
+        .chip {
+          border: 1px solid rgba(0,0,0,0.08);
+          background: white;
+          padding: 8px 14px; border-radius: 999px;
+          font-weight: 600; cursor: pointer;
+          transition: transform .12s ease, box-shadow .12s ease;
+        }
+        .chip--on {
+          border-color: transparent;
+          background: linear-gradient(90deg, rgba(13,171,110,.12), rgba(45,122,230,.12));
+          box-shadow: 0 0 0 3px var(--ring) inset;
+        }
+        .chip:active { transform: translateY(1px) scale(.99); }
+
+        .search {
+          width: 100%; max-width: 580px;
+          border: 1px solid rgba(0,0,0,.08);
+          background: white; height: 44px; border-radius: 14px;
+          padding: 0 14px; font-size: 16px;
+          outline: none; box-shadow: 0 10px 30px rgba(0,0,0,.05);
+        }
+        .search:focus { box-shadow: 0 0 0 4px var(--ring), 0 10px 30px rgba(0,0,0,.06); }
+
         .grid {
-          display: grid;
+          max-width: 1100px; margin: 16px auto 40px; padding: 0 20px;
+          display: grid; gap: 18px;
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 14px;
         }
-        @media (max-width: 820px) {
-          .grid {
-            grid-template-columns: 1fr;
-          }
-        }
+        @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
 
-        /* CARD */
         .card {
-          background: rgba(7, 19, 26, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 18px;
-          padding: 18px;
-          display: grid;
-          grid-template-rows: auto auto auto;
-          gap: 12px;
-          box-shadow: var(--ring);
+          background: var(--card); border-radius: 18px; padding: 18px;
+          box-shadow: 0 10px 30px rgba(0,0,0,.06), 0 1px 0 rgba(255,255,255,.7) inset;
+          display: grid; gap: 14px;
         }
-        .card--diète {
-          border-color: rgba(34, 197, 94, 0.25);
+        .card-top { display: grid; gap: 8px; }
+        .badge {
+          display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px;
+          font-weight: 700; font-size: 12px; letter-spacing: .3px; color: #0b1020;
+          background: #eef5ff; border: 1px solid rgba(0,0,0,.06);
         }
-        .card--gourmand {
-          border-color: rgba(245, 158, 11, 0.25);
-        }
-        .card__head .badge {
-          display: inline-block;
-          font-size: 12px;
-          font-weight: 700;
-          padding: 6px 10px;
-          border-radius: 999px;
-          background: rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          margin-bottom: 6px;
-        }
-        .card__title {
-          margin: 0 0 6px;
-          font-size: clamp(22px, 2.8vw, 26px);
-        }
-        .card__desc {
-          margin: 0;
-          color: var(--muted);
-        }
-        .macros {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 8px;
-        }
-        .macros > div {
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid rgba(255, 255, 255, 0.14);
-          border-radius: 12px;
-          padding: 10px;
-          text-align: center;
-        }
-        .macros small {
-          display: block;
-          opacity: 0.75;
-        }
-        .macros strong {
-          font-size: 16px;
-        }
-        .card__foot {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-        }
-        .amount {
-          font-weight: 800;
-          font-size: 20px;
-        }
-        .cta {
-          appearance: none;
-          border: 0;
-          cursor: pointer;
-          padding: 10px 14px;
-          border-radius: 12px;
-          background: linear-gradient(135deg, var(--green), var(--green-deep));
-          color: #06150e;
-          font-weight: 800;
-          transition: transform 0.15s ease, filter 0.15s ease;
-        }
-        .cta:hover {
-          transform: translateY(-1px);
-          filter: brightness(1.05);
-        }
+        .bd-diet { background: rgba(26,168,123,.12); border-color: rgba(26,168,123,.25); }
+        .bd-gour { background: rgba(232,91,55,.12); border-color: rgba(232,91,55,.25); }
 
-        .foot {
-          margin-top: 36px;
-          color: rgba(255, 255, 255, 0.7);
-          font-size: 14px;
-          text-align: center;
+        .title { margin: 0; font-size: clamp(18px, 2.4vw, 24px); line-height: 1.2; }
+        .resume { margin: 0; color: var(--muted); }
+
+        .macros {
+          display: grid; grid-template-columns: repeat(4,1fr); gap: 8px;
+          background: linear-gradient(180deg,#fafcff,#f3f7ff);
+          border: 1px solid rgba(0,0,0,.05); border-radius: 12px; padding: 10px;
         }
+        .macros small { color: var(--muted); }
+        .num { font-weight: 800; font-size: 15px; }
+
+        .cta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .price { font-size: 22px; font-weight: 800; }
+        .btn {
+          padding: 10px 16px; border-radius: 12px; border: none; color: white; font-weight: 700; cursor: pointer;
+          background: linear-gradient(90deg, var(--brand1), var(--brand2));
+          box-shadow: 0 10px 25px rgba(45,122,230,.22);
+        }
+        .btn:active { transform: translateY(1px); }
+
+        .empty { grid-column: 1/-1; color: var(--muted); text-align: center; padding: 30px 0; }
+
+        .foot { text-align: center; color: var(--muted); padding: 28px 16px 40px; }
       `}</style>
     </>
   );
 }
-
-// Important : React doit être importé quand on utilise JSX sans framework plugin automatique
-import * as React from "react";
