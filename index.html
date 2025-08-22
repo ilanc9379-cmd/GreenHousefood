@@ -1,4 +1,4 @@
-<!doctype html>
+    <!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
@@ -13,23 +13,24 @@
       --card:linear-gradient(180deg,#121a23 0%,#0f151c 100%);
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,'Helvetica Neue',Arial}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
     a{color:var(--accent);text-decoration:none}
     .wrap{max-width:980px;margin:0 auto;padding:24px}
     header{display:flex;gap:16px;align-items:center;margin-bottom:8px}
     .logo{width:64px;height:64px;border-radius:14px;object-fit:cover;background:#0e141b;border:1px solid #223042}
     h1{font-size:44px;line-height:1.1;margin:0}
-    .sub{color:var(--muted);margin:6px 0 18px 0;font-weight:500}
-    nav{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:26px}
+    .sub{color:var(--muted);margin:6px 0 8px;font-weight:500}
+    #logoErr{color:#fca5a5;font-size:12px;margin-top:4px;display:none}
+    nav{display:flex;flex-wrap:wrap;gap:14px;margin:18px 0 26px}
     .chip{background:var(--pill);padding:10px 16px;border-radius:999px;border:1px solid #223042;color:#cdd7e5}
     section{margin:28px 0}
     .card{background:var(--card);border:1px solid #1e2a38;border-radius:18px;padding:22px}
-    h2{font-size:30px;margin:0 0 12px 0}
+    h2{font-size:30px;margin:0 0 12px}
     h3{font-size:22px;margin:18px 0 8px}
     .pillrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
     .pill{background:var(--pill);border:1px solid #223042;padding:8px 12px;border-radius:999px;display:inline-flex;gap:8px;align-items:center}
     .dot{width:8px;height:8px;border-radius:50%}
-    .dot.ok{background:var(--ok)} .dot.warn{background:var(--warn)} .dot.neu{background:#60a5fa}
+    .dot.ok{background:#34d399} .dot.warn{background:#fbbf24} .dot.neu{background:#60a5fa}
     .muted{color:var(--muted)}
     .grid{display:grid;gap:16px}
     @media (min-width:760px){ .grid.cols-2{grid-template-columns:1fr 1fr} }
@@ -45,12 +46,11 @@
 
     <!-- ENTÊTE -->
     <header>
-      <!-- IMPORTANT : URL RAW GITHUB pour garantir l’affichage -->
-      <img class="logo" alt="Logo GreenHouse"
-        src="https://raw.githubusercontent.com/ilanc9379-cmd/GreenHousefood/main/public/logo.png">
+      <img id="gh-logo" class="logo" alt="Logo GreenHouse">
       <div>
         <h1>GreenHouse</h1>
         <div class="sub">Traiteur artisanal — Diététique &amp; Gourmand</div>
+        <div id="logoErr"></div>
       </div>
     </header>
 
@@ -138,7 +138,6 @@
         <p class="muted">Sans décongélation • Friteuse 3 min • Airfryer 14 min</p>
         <div class="pillrow"><span class="pill">10,00 € / kg</span></div>
 
-        <!-- tableau lisible -->
         <div class="tbl" aria-label="Valeurs nutritionnelles falafels (100 g)">
           <div class="th">Base</div><div class="th">Énergie</div><div class="th">Prot.</div><div class="th">Gluc.</div>
           <div class="cell">100 g</div><div class="cell">184 kcal</div><div class="cell">7,6 g</div><div class="cell">20,1 g</div>
@@ -241,5 +240,43 @@
 
     <footer>© 2025 GreenHouse — Traiteur artisanal</footer>
   </div>
+
+  <!-- LOADER ROBUSTE POUR LE LOGO -->
+  <script>
+    (function () {
+      const imgEl = document.getElementById('gh-logo');
+      const errEl = document.getElementById('logoErr');
+      const bust = () => '?v=' + Date.now();
+
+      // ⚠️ Mets bien ton user/repo si jamais il diffère :
+      const owner = 'ilanc9379-cmd';
+      const repo  = 'GreenHousefood';
+
+      const candidates = [
+        '/logo.png',                 // public/logo.png (Vercel)
+        'logo.png',                  // racine
+        '/public/logo.png',          // au cas où
+        `https://raw.githubusercontent.com/${owner}/${repo}/main/public/logo.png`,
+        `https://raw.githubusercontent.com/${owner}/${repo}/principal/public/logo.png`
+      ];
+
+      let idx = 0, lastErr = '';
+
+      function tryNext() {
+        if (idx >= candidates.length) {
+          errEl.style.display = 'block';
+          errEl.textContent = 'Logo introuvable. Dernier essai : ' + lastErr;
+          return;
+        }
+        const url = candidates[idx] + bust();
+        const probe = new Image();
+        probe.onload = () => { imgEl.src = url; errEl.style.display = 'none'; };
+        probe.onerror = () => { lastErr = candidates[idx]; idx++; tryNext(); };
+        probe.src = url;
+      }
+
+      tryNext();
+    })();
+  </script>
 </body>
-</html>
+</html>  
