@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GreenHouse — Traiteur artisanal</title>
+<meta name="description" content="GreenHouse — Traiteur artisanal. Diététique & Gourmand. Pâtes fraîches, gammes fraîches & surgelées, falafels maison. Livraison Mulhouse & environs.">
+<style>
+:root{--bg1:#0b1020;--bg2:#111a2d;--panel:#0f172a;--panel-2:#111827;--ink:#e6f1ff;--muted:#9fb2cc;--ring:#2b3b56;--card:#0b1426cc;--green:#22c55e;--sky:#60a5fa;--violet:#a78bfa;--rose:#fb7185;--amber:#f59e0b}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;background:
+radial-gradient(1300px 700px at 10% -10%,#1b2a3f55 0,transparent 60%),
+radial-gradient(1000px 600px at 90% 0,#0c3b2f55 0,transparent 60%),
+radial-gradient(900px 560px at 30% 100%,#2b1a3f55 0,transparent 60%),
+linear-gradient(180deg,var(--bg1),var(--bg2))}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 18px 80px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center;padding:28px 0 10px}
+@media(max-width:900px){.hero{grid-template-columns:1fr}}
+.brand{font-weight:900;line-height:1.05;font-size:clamp(42px,7vw,84px);letter-spacing:.5px;margin:0 0 10px;background:linear-gradient(90deg,var(--green),var(--sky));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 8px 40px rgba(34,197,94,.25)}
+.subtitle{margin:0 0 22px;color:var(--muted);font-size:clamp(16px,2.6vw,22px)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 18px}
+.chip{padding:8px 14px;border-radius:999px;background:#13203388;border:1px solid #233146;color:#c7d7f0;font-weight:600;font-size:14px;display:inline-flex;gap:8px;transition:.2s transform}
+.chip:hover{transform:translateY(-1px)}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+.btn{appearance:none;border:0;cursor:pointer;font-weight:800;letter-spacing:.2px;padding:13px 18px;border-radius:14px;font-size:15px;display:inline-flex;gap:10px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.btn-primary{background:linear-gradient(90deg,var(--green),var(--sky));color:#04121a}
+.btn-ghost{background:transparent;color:#cfe6ff;border:1px solid var(--ring)}
+.panel{background:linear-gradient(180deg,var(--card),transparent);border:1px solid var(--ring);border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.35);padding:22px;margin:18px 0}
+.panel h2{margin:0 0 14px;font-size:clamp(22px,4.6vw,36px)}
+.grid2{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--ring);border-radius:20px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.35);position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;inset:-1px;border-radius:20px;background:conic-gradient(from 220deg at 120% -10%,transparent 0 70%,#fff2 70% 100%);pointer-events:none;mix-blend:screen}
+.card h3{margin:0 0 6px;font-size:22px}.card p{margin:0;color:var(--muted);line-height:1.6}
+.badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.3px;padding:4px 10px;border-radius:999px;margin-bottom:10px;color:#04121a}
+.badge.green{background:#22c55e}.badge.violet{background:#a78bfa}.badge.rose{background:#fb7185}.badge.amber{background:#f59e0b}
+.price{margin-top:10px;font-weight:900;font-size:20px;color:#d7ffea;text-shadow:0 6px 24px rgba(34,197,94,.3)}
+.nutri{margin-top:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.nutri div{background:#0c1324;border:1px solid #1c2a44;border-radius:10px;padding:8px;text-align:center;font-size:12px;color:#b7c9e6}
+.nutri b{display:block;color:#eaf3ff;font-size:13px}
+footer{opacity:.8;color:#b7c9e6;text-align:center;padding:26px 0 0}
+.small{opacity:.6;font-size:12px;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero" id="accueil">
+    <div>
+      <h1 class="brand">GreenHouse</h1>
+      <p class="subtitle">Traiteur artisanal — <b>Diététique</b> & <b>Gourmand</b></p>
+      <div class="chips">
+        <a class="chip" href="#accueil">🏠 Accueil</a>
+        <a class="chip" href="#livraison">🚚 Livraison</a>
+        <a class="chip" href="#gammes">🧺 Nos gammes</a>
+        <a class="chip" href="#infos">ℹ️ Infos produits</a>
+        <a class="chip" href="#plats">🍝 Nos plats</a>
+      </div>
+      <div class="cta">
+        <a class="btn btn-primary" href="#plats">Voir les plats</a>
+        <a class="btn btn-ghost" href="#livraison">Zones & horaires</a>
+      </div>
+      <div class="small">v2.1</div>
+    </div>
+    <div>
+      <div class="panel">
+        <h2>Le bon plat au bon prix</h2>
+        <p>Diète ou gourmand — à vous de choisir.</p>
+        <p>Pâtes fraîches maison, gammes fraîches & surgelées, falafels artisanaux.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="livraison" class="panel">
+    <h2>Livraison</h2>
+    <p><b>Zones</b> : Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittenheim, Richwiller, Lutterbach, Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim, Eschentzwiller, Brunstatt.</p>
+    <p><b>Horaires</b> : du lundi au samedi, 11:30–14:00 et 18:30–21:00.</p>
+  </section>
+
+  <section id="gammes" class="panel">
+    <h2>Nos gammes</h2>
+    <div class="grid2">
+      <div class="card"><span class="badge green">Frais</span><h3>Pâtes & préparations du jour</h3><p>Pâtes complètes, sauces maison, légumes de saison.</p></div>
+      <div class="card"><span class="badge violet">Surgelé</span><h3>Prêt à réchauffer</h3><p>Batch cooking, plats équilibrés, conservation parfaite.</p></div>
+      <div class="card"><span class="badge amber">Événement</span><h3>Traiteur</h3><p>Buffets, plateaux, options végétariennes & véganes.</p></div>
+      <div class="card"><span class="badge rose">Formules</span><h3>Diète ou Gourmand</h3><p>Choisissez votre portion & vos macros, sans compromis sur le goût.</p></div>
+    </div>
+  </section>
+
+  <section id="infos" class="panel">
+    <h2>Infos produits</h2>
+    <div class="grid2">
+      <div class="card"><h3>Allergènes</h3><p>Gluten, œufs, produits laitiers, fruits à coque : précisés plat par plat.</p></div>
+      <div class="card"><h3>Conservation</h3><p>Frais : ≤ 3 jours au réfrigérateur. Surgelé : ≤ 3 mois à -18°C.</p></div>
+    </div>
+  </section>
+
+  <section id="plats" class="panel">
+    <h2>Nos plats</h2>
+    <div class="grid2">
+      <article class="card"><span class="badge green">Pâtes</span><h3>Pâtes complètes sauce légère</h3><p>Légumes de saison, champignons, oignons.</p><div class="price">Prix : 7,00 €</div><div class="nutri"><div><b>~730</b> kcal</div><div><b>~22</b> g prot.</div><div><b>~86</b> g gluc.</div><div><b>~28</b> g lip.</div></div></article>
+      <article class="card"><span class="badge violet">Pâtes</span><h3>Pâtes complètes saumon crème</h3><p>Saumon · crème · aneth · ail.</p><div class="price">Prix : 10,00 €</div><div class="nutri"><div><b>~760</b> kcal</div><div><b>~35</b> g prot.</div><div><b>~82</b> g gluc.</div><div><b>~28</b> g lip.</div></div></article>
+      <article class="card"><span class="badge rose">Lasagnes</span><h3>Lasagnes saumon & épinards</h3><p>Saumon · épinards · béchamel · fromage râpé.</p><div class="price">Prix : 11,00 €</div><div class="nutri"><div><b>~820</b> kcal</div><div><b>~40</b> g prot.</div><div><b>~74</b> g gluc.</div><div><b>~28</b> g lip.</div></div></article>
+      <article class="card"><span class="badge amber">Wrap</span><h3>Wrap falafel & crudités (sauce bibalaka)</h3><p>Galette complète, falafels 150 g, crudités, sauce au fromage blanc alsacien.</p><div class="price">Prix : 9,00 €</div><div class="nutri"><div><b>~680</b> kcal</div><div><b>~26</b> g prot.</div><div><b>~86</b> g gluc.</div><div><b>~22</b> g lip.</div></div></article>
+      <article class="card"><span class="badge green">Veggie</span><h3>Bowl quinoa & légumes rôtis</h3><p>Quinoa, patate douce, brocoli, pois chiches, tahini citronné.</p><div class="price">Prix : 9,50 €</div><div class="nutri"><div><b>~610</b> kcal</div><div><b>~24</b> g prot.</div><div><b>~72</b> g gluc.</div><div><b>~18</b> g lip.</div></div></article>
+      <article class="card"><span class="badge violet">Classique</span><h3>Pesto poulet complet</h3><p>Pâtes complètes, poulet mariné, pesto basilic, tomates cerise.</p><div class="price">Prix : 9,50 €</div><div class="nutri"><div><b>~750</b> kcal</div><div><b>~44</b> g prot.</div><div><b>~78</b> g gluc.</div><div><b>~26</b> g lip.</div></div></article>
+    </div>
+  </section>
+
+  <footer>© 2025 GreenHouse — Traiteur artisanal</footer>
+</div>
+
+<script>
+/* Tente de désactiver un ancien service worker + vider caches (si l’ancienne version était PWA) */
+if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister()));}
+if('caches' in window){caches.keys().then(keys=>keys.forEach(k=>caches.delete(k)));}
+/* Forcer une première URL unique pour casser un cache agressif côté CDN */
+if(!location.search.includes('v=')){history.replaceState({},'',location.pathname+'?v=2');}
+</script>
+</body></html>
