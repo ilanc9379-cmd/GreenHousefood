@@ -15,7 +15,7 @@ export default function Home() {
           GreenHouse
         </h1>
         <p style={{ fontSize: "1.5rem", color: "#d8f3dc" }}>
-          Traiteur artisanal – Diététique & Gourmand
+          Traiteur artisanal — Diététique & Gourmand
         </p>
       </header>
 
