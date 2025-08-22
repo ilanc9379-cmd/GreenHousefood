@@ -1,263 +1,397 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>GreenHouse — Traiteur artisanal</title>
-<meta name="color-scheme" content="dark light">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Anti-cache fort pour écraser les anciennes versions -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
 
-<style>
-/* ======= Variables & thèmes ======= */
-:root{
-  --bg1:#0f2027;--bg2:#203a43;--bg3:#2c5364;
-  --text:#eef2f3;--muted:#b9c4ca;--card:rgba(255,255,255,.10);
-  --card-hover:rgba(255,255,255,.18);--shadow:0 8px 26px rgba(0,0,0,.35);
-  --accent:#00ff88;--accent-2:#00c3ff;--accent-3:#38fbd7;
-  --chip-bg:rgba(255,255,255,.08);--chip-br:rgba(255,255,255,.18);
-}
-.theme-gourmand{
-  --accent:#ff8a00;--accent-2:#ff3cac;--accent-3:#fb6d6d;
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-  color:var(--text);line-height:1.55;overflow-x:hidden;
-  background:linear-gradient(130deg,var(--bg1),var(--bg2),var(--bg3));
-  background-size:400% 400%;animation:bg 20s ease infinite;
-}
-@keyframes bg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-/* halo doux */
-body::before{
-  content:"";position:fixed;inset:-20vmax;pointer-events:none;z-index:-1;
-  background:
-    radial-gradient(35vmax 35vmax at 15% 20%, color-mix(in oklab,var(--accent) 60%, transparent), transparent 60%),
-    radial-gradient(30vmax 30vmax at 85% 15%, color-mix(in oklab,var(--accent-2) 60%, transparent), transparent 60%),
-    radial-gradient(40vmax 40vmax at 60% 90%, color-mix(in oklab,var(--accent-3) 55%, transparent), transparent 60%);
-  filter:blur(38px) saturate(120%) opacity(.45);
-}
+  <title>GreenHouse – Traiteur | Diète ou Gourmand</title>
+  <meta name="description" content="GreenHouse – Traiteur. Saveurs du monde, diète ou gourmand. Frais, sain, fait maison." />
 
-/* ======= Layout générique ======= */
-.container{max-width:1160px;margin:auto;padding:24px}
-.section{padding:28px 0}
-h1,h2,h3{margin:0 0 .4rem 0}
-h2{font-size:clamp(1.4rem,1rem + 1.5vw,2rem)}
-p{margin:.25rem 0 .75rem}
+  <style>
+    :root{
+      --bg1: #0f172a;   /* ardoise très sombre */
+      --bg2: #1e293b;   /* ardoise */
+      --acc1:#22c55e;   /* vert vif */
+      --acc2:#06b6d4;   /* cyan */
+      --acc3:#a78bfa;   /* violet clair */
+      --txt:#e2e8f0;    /* gris clair */
+      --txt-dim:#cbd5e1;
+      --chip:#0b1222;
+      --card:#111827;
+      --card2:#0b1222;
+      --shadow: 0 20px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius-lg: 28px;
+    }
 
-/* ======= Hero ======= */
-header.hero{padding:64px 20px 24px;text-align:left}
-.brand{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
-.title{
-  font-size:clamp(2.3rem,3.6rem + 1vw,5rem);font-weight:800;line-height:1.05;margin:0;
-  background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent-3));
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  letter-spacing:.5px;filter:drop-shadow(0 2px 10px rgba(0,0,0,.25));
-}
-.subtitle{font-size:1.15rem;color:#ffdd57;margin-top:.35rem}
-.slogan{font-size:1.1rem;font-style:italic;color:#e9eef0;margin-top:.25rem}
+    /* Fond : grand dégradé + motif radial “bokeh” */
+    body{
+      margin:0;
+      color:var(--txt);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(34,197,94,.25), transparent 60%),
+        radial-gradient(900px 500px at 90% 0%, rgba(6,182,212,.25), transparent 60%),
+        radial-gradient(800px 500px at 30% 100%, rgba(167,139,250,.22), transparent 60%),
+        linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+      min-height:100dvh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-/* ======= Nav pills ======= */
-.nav{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
-.nav a,.chip{
-  display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:18px;
-  background:var(--chip-bg);border:1px solid var(--chip-br);color:var(--text);
-  text-decoration:none;backdrop-filter:saturate(120%) blur(6px);transition:.25s ease;
-}
-.nav a:hover,.chip:hover{transform:translateY(-2px);background:var(--card-hover);border-color:transparent}
+    .wrap{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(16px, 4vw, 40px);
+    }
 
-/* ======= Cartes ======= */
-.grid{
-  display:grid;gap:20px;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-}
-.card{
-  background:var(--card);padding:18px 18px 16px;border-radius:16px;
-  box-shadow:var(--shadow);transition:.28s ease;border:1px solid rgba(255,255,255,.12);
-}
-.card:hover{transform:translateY(-4px) scale(1.02);background:var(--card-hover)}
-.card h3{color:#ffdd57;margin-bottom:.35rem}
-.badges{display:flex;flex-wrap:wrap;gap:8px;margin:.25rem 0 .75rem}
-.badge{font-size:.8rem;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.18)}
-.price{font-weight:800;color:var(--accent);font-size:1.25rem}
+    /* HERO */
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: clamp(16px, 3vw, 32px);
+      align-items:center;
+      margin-top: clamp(16px, 4vw, 40px);
+    }
+    @media (max-width: 880px){
+      .hero{ grid-template-columns: 1fr; }
+    }
 
-/* gammes accentuées */
-.card[data-type="diet"]{border-color:color-mix(in oklab,var(--accent) 40%, transparent)}
-.card[data-type="gourmand"]{border-color:color-mix(in oklab,var(--accent-2) 45%, transparent)}
+    .hero-card{
+      background: linear-gradient(180deg, rgba(17,24,39,.75), rgba(11,18,34,.75));
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius-lg);
+      padding: clamp(20px, 4vw, 40px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
 
-/* ======= Encadrés ======= */
-.callout{
-  background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.06));
-  border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:22px 22px;
-  box-shadow:var(--shadow)
-}
+    .hero-card::after{
+      /* lueur décorative */
+      content:"";
+      position:absolute; inset:-40% -10% auto -10%;
+      height: 80%;
+      background: radial-gradient(closest-side, rgba(34,197,94,.15), transparent 70%);
+      filter: blur(30px);
+      z-index:-1;
+    }
 
-/* ======= Footer & misc ======= */
-footer{margin-top:30px;padding:22px 18px;text-align:center;background:rgba(0,0,0,.35);color:#cfd8dc}
-.hr{height:1px;background:rgba(255,255,255,.12);margin:22px 0;border-radius:1px}
+    .brand{
+      font-size: clamp(36px, 6vw, 80px);
+      line-height: .95;
+      margin: 0 0 14px 0;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(92deg, var(--acc1) 10%, var(--acc2) 50%, var(--acc3) 90%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 6px 30px rgba(34,197,94,.15);
+    }
 
-/* flottant top */
-#toTop{
-  position:fixed;right:16px;bottom:16px;border:0;border-radius:999px;
-  padding:10px 12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));
-  color:#001018;cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,.35);display:none
-}
-#toTop:active{transform:translateY(1px)}
-</style>
+    .subtitle{
+      margin: 0 0 20px 0;
+      font-size: clamp(18px, 2.2vw, 22px);
+      color: var(--txt-dim);
+    }
+
+    .chips{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-bottom: 14px;
+    }
+    .chip{
+      padding: 8px 14px;
+      background: linear-gradient(180deg, var(--chip), #080d1a);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 999px;
+      font-size: 14px;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .chip svg{ width:16px; height:16px; }
+
+    .cta{
+      display:flex; flex-wrap:wrap; gap:12px;
+      margin-top: 8px;
+    }
+    .btn{
+      appearance:none; border:0; cursor:pointer;
+      padding: 12px 18px; border-radius: 14px;
+      font-weight: 700;
+      transition: transform .12s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+    .btn-primary{
+      background: linear-gradient(92deg, var(--acc1), var(--acc2));
+      color:#061016;
+      box-shadow: 0 12px 30px rgba(34,197,94,.25);
+    }
+    .btn-primary:hover{ transform: translateY(-1px); }
+    .btn-ghost{
+      background: transparent; color: var(--txt);
+      border: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(2px);
+    }
+    .btn-ghost:hover{ opacity: .9; }
+
+    .hero-side{
+      display:grid; gap:12px;
+    }
+    .info-card{
+      background: linear-gradient(180deg, rgba(15,23,42,.8), rgba(11,18,34,.85));
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .info-card h3{
+      margin:0 0 6px 0; font-size: 18px;
+    }
+    .info-card p{
+      margin:0; color: var(--txt-dim); font-size: 14px;
+    }
+
+    /* SECTION MENUS (cartes par deux) */
+    .section{
+      margin-top: clamp(24px, 5vw, 50px);
+    }
+    .section h2{
+      margin: 0 0 14px 0;
+      font-size: clamp(22px, 3vw, 28px);
+      letter-spacing: .2px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(12px, 2.2vw, 20px);
+    }
+    @media (max-width: 700px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      position:relative;
+      background: linear-gradient(180deg, var(--card), var(--card2));
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      display:grid; grid-template-columns: 120px 1fr;
+    }
+    @media (max-width: 520px){
+      .card{ grid-template-columns: 1fr; }
+    }
+
+    .card-illu{
+      background:
+        radial-gradient(180px 80px at 50% 10%, rgba(34,197,94,.3), transparent 60%),
+        linear-gradient(180deg, #0f172a, #0b1222);
+      display:flex; align-items:center; justify-content:center;
+      padding: 16px;
+    }
+    .circle{
+      width: 84px; height:84px; border-radius:50%;
+      background:
+        conic-gradient(from 180deg at 50% 50%, var(--acc1), var(--acc2), var(--acc3), var(--acc1));
+      filter: blur(.2px);
+      border: 6px solid rgba(255,255,255,.08);
+      box-shadow: inset 0 0 40px rgba(0,0,0,.35), 0 0 40px rgba(34,197,94,.2);
+    }
+
+    .card-body{ padding: 16px 16px 18px 16px; }
+    .card-body h3{
+      margin:0 0 6px 0; font-size: 18px;
+      background: linear-gradient(90deg, #e5f7ee, #c8fbff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .badges{
+      display:flex; flex-wrap:wrap; gap:8px; margin: 8px 0 10px;
+    }
+    .badge{
+      font-size: 12px; padding:6px 10px; border-radius:999px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--txt);
+    }
+    .card-body p{
+      margin:0; color: var(--txt-dim); font-size: 14px; line-height: 1.5;
+    }
+
+    /* FOOTER */
+    footer{
+      margin: clamp(32px, 6vw, 64px) 0 10px 0;
+      color: var(--txt-dim);
+      font-size: 13px;
+      text-align:center;
+      opacity:.9;
+    }
+
+    /* micro-anim d’apparition */
+    .fade-in{ animation: fade .6s ease both; }
+    .fade-in:nth-child(1){ animation-delay:.05s;}
+    .fade-in:nth-child(2){ animation-delay:.12s;}
+    .fade-in:nth-child(3){ animation-delay:.18s;}
+    .fade-in:nth-child(4){ animation-delay:.24s;}
+    @keyframes fade{
+      from{opacity:0; transform: translateY(8px);}
+      to{opacity:1; transform: translateY(0);}
+    }
+  </style>
 </head>
+<body>
+  <div class="wrap">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-card fade-in">
+        <h1 class="brand">GreenHouse</h1>
+        <h2 class="subtitle">Traiteur — Saveurs du monde, <strong>diète</strong> ou <strong>gourmand</strong>, toujours frais &amp; fait maison.</h2>
 
-<body class="theme-diet">
-  <!-- ======= HERO ======= -->
-  <header class="hero">
-    <div class="container">
-      <div class="brand">
-        <h1 class="title">GreenHouse</h1>
+        <div class="chips">
+          <span class="chip" title="Option diète">
+            <!-- leaf icon -->
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 20c8 0 12-4 12-12 2 2 4 4 4 8 0 5-4 8-8 8-4 0-6-2-8-4Z" stroke="rgba(34,197,94,1)" stroke-width="2" /></svg>
+            Diète
+          </span>
+          <span class="chip" title="Option gourmand">
+            <!-- sparkles -->
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 3.6L18 8.4l-3.6 1.8L12 14l-1.8-3.8L6 8.4l4.2-1.8L12 3Z" stroke="rgba(6,182,212,1)" stroke-width="1.6"/></svg>
+            Gourmand
+          </span>
+          <span class="chip">Événements • Entreprises • Particuliers</span>
+        </div>
+
+        <div class="cta">
+          <a class="btn btn-primary" href="#menus">Voir les menus</a>
+          <a class="btn btn-ghost" href="#contact">Devis &amp; contact</a>
+        </div>
       </div>
-      <div class="subtitle">Traiteur artisanal — Diététique &amp; Gourmand</div>
-      <div class="slogan">Le bon plat au bon prix — Diète ou gourmand, à vous de choisir.</div>
 
-      <nav class="nav" aria-label="Navigation principale">
-        <a href="#accueil">Accueil</a>
-        <a href="#livraison">Livraison</a>
-        <a href="#gammes">Nos gammes</a>
-        <a href="#infos">Infos produits</a>
-        <a href="#plats">Nos plats</a>
-        <span class="chip" id="toggleTheme" title="Basculer Diète / Gourmand">🎨 Changer de palette</span>
-      </nav>
-    </div>
-  </header>
+      <div class="hero-side">
+        <div class="info-card fade-in">
+          <h3>Notre slogan</h3>
+          <p>« Saveurs du monde, diète ou gourmand, toujours frais &amp; fait maison. »</p>
+        </div>
+        <div class="info-card fade-in">
+          <h3>Engagements</h3>
+          <p>Produits de saison, circuits courts, menus personnalisés (végétarien, sans gluten, sain ou généreux).</p>
+        </div>
+      </div>
+    </section>
 
-  <!-- ======= ACCUEIL ======= -->
-  <main id="accueil" class="container section">
-    <div class="callout">
-      <h2>Le bon plat au bon prix</h2>
-      <p>Ingrédients soigneusement sourcés, pâtes fraîches maison, falafels artisanaux, gammes fraîches &amp; surgelées. Choisissez votre envie : <strong>Diète</strong> pour le léger &amp; équilibré, <strong>Gourmand</strong> pour le réconfort.</p>
-    </div>
-
-    <!-- ======= GAMMES ======= -->
-    <section id="gammes" class="section">
-      <h2>Nos gammes</h2>
-      <div class="grid" style="margin-top:12px">
-        <article class="card" data-type="diet">
-          <h3>Gamme Diète</h3>
-          <div class="badges">
-            <span class="badge">~500–750 kcal</span>
-            <span class="badge">Riche en protéines</span>
-            <span class="badge">Sauces légères</span>
+    <!-- MENUS : cartes par deux -->
+    <section class="section" id="menus">
+      <h2>Nos propositions</h2>
+      <div class="grid">
+        <!-- Carte 1 -->
+        <article class="card fade-in">
+          <div class="card-illu"><div class="circle"></div></div>
+          <div class="card-body">
+            <h3>Menu Diète — Vitalité</h3>
+            <div class="badges">
+              <span class="badge">400–600 kcal</span>
+              <span class="badge">Protéiné</span>
+              <span class="badge">Saisonnier</span>
+            </div>
+            <p>Bols équilibrés, légumes rôtis, céréales complètes, sauces légères et saveurs inspirées (méditerranéen, asiatique…).</p>
           </div>
-          <p>Des plats équilibrés et savoureux, pensés pour l’énergie sans lourdeur : céréales complètes, légumes de saison, cuissons douces.</p>
         </article>
 
-        <article class="card" data-type="gourmand">
-          <h3>Gamme Gourmand</h3>
-          <div class="badges">
-            <span class="badge">Généreux</span>
-            <span class="badge">Sauces maison</span>
-            <span class="badge">Confort food</span>
+        <!-- Carte 2 -->
+        <article class="card fade-in">
+          <div class="card-illu"><div class="circle"></div></div>
+          <div class="card-body">
+            <h3>Menu Gourmand — Signature</h3>
+            <div class="badges">
+              <span class="badge">Convivial</span>
+              <span class="badge">Fait maison</span>
+              <span class="badge">Généreux</span>
+            </div>
+            <p>Plats réconfortants, pièces à partager, desserts maison; cuisine du monde revisitée avec une touche GreenHouse.</p>
           </div>
-          <p>Plaisir assumé : gratins, lasagnes, crèmes onctueuses. Toujours avec de vrais ingrédients et une cuisson maîtrisée.</p>
+        </article>
+
+        <!-- Carte 3 -->
+        <article class="card fade-in">
+          <div class="card-illu"><div class="circle"></div></div>
+          <div class="card-body">
+            <h3>Cocktails &amp; Finger Food</h3>
+            <div class="badges">
+              <span class="badge">Apéritif dînatoire</span>
+              <span class="badge">Végétarien possible</span>
+            </div>
+            <p>Bouchées créatives, mini-bowls, pièces chaudes &amp; froides, stations thématiques colorées.</p>
+          </div>
+        </article>
+
+        <!-- Carte 4 -->
+        <article class="card fade-in">
+          <div class="card-illu"><div class="circle"></div></div>
+          <div class="card-body">
+            <h3>Buffets &amp; Brunch</h3>
+            <div class="badges">
+              <span class="badge">Week-end</span>
+              <span class="badge">Large choix</span>
+            </div>
+            <p>Buffets modulables : diète, gourmand, ou mix; parfaits pour événements d’entreprise et fêtes familiales.</p>
+          </div>
         </article>
       </div>
     </section>
 
-    <!-- ======= INFOS ======= -->
-    <section id="infos" class="section">
-      <h2>Infos produits</h2>
-      <div class="grid" style="margin-top:12px">
-        <article class="card">
-          <h3>Allergènes & traçabilité</h3>
-          <p>Gluten, lait, œufs, sésame… les allergènes sont indiqués plat par plat. Traçabilité complète et étiquetage clair.</p>
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <h2>Contact &amp; devis</h2>
+      <div class="grid">
+        <article class="card fade-in">
+          <div class="card-illu"><div class="circle"></div></div>
+          <div class="card-body">
+            <h3>Nous écrire</h3>
+            <div class="badges"><span class="badge">Réponse sous 24h</span></div>
+            <p>Explique-nous ton événement (date, lieu, convives, envies diète/gourmand) et on te propose un menu sur mesure.</p>
+          </div>
         </article>
-        <article class="card">
-          <h3>Valeurs nutritionnelles</h3>
-          <p>Indications énergétiques et macro-nutriments à titre informatif (portion standard) : calories, protéines, glucides, lipides.</p>
+
+        <article class="card fade-in">
+          <div class="card-illu"><div class="circle"></div></div>
+          <div class="card-body">
+            <h3>Devis rapide</h3>
+            <div class="badges"><span class="badge">Sans engagement</span></div>
+            <p>Un estimatif clair et transparent, adaptable à ton budget et aux régimes souhaités.</p>
+          </div>
         </article>
       </div>
     </section>
 
-    <!-- ======= PLATS ======= -->
-    <section id="plats" class="section">
-      <h2>Nos plats</h2>
-      <div class="grid" style="margin-top:12px">
-        <article class="card" data-type="diet">
-          <h3>Pâtes complètes saumon crème</h3>
-          <p>Saumon • crème légère • aneth • ail</p>
-          <div class="badges">
-            <span class="badge">~760 kcal</span><span class="badge">~35 g prot.</span>
-            <span class="badge">~82 g gluc.</span><span class="badge">~28 g lip.</span>
-          </div>
-          <div class="price">Prix : 10,00 €</div>
-        </article>
+    <footer>
+      © <span id="year"></span> GreenHouse — Traiteur • Tous droits réservés.
+    </footer>
+  </div>
 
-        <article class="card" data-type="gourmand">
-          <h3>Lasagnes saumon &amp; épinards</h3>
-          <p>Saumon • épinards • béchamel • fromage râpé</p>
-          <div class="badges">
-            <span class="badge">~820 kcal</span><span class="badge">~40 g prot.</span>
-            <span class="badge">~74 g gluc.</span><span class="badge">~40 g lip.</span>
-          </div>
-          <div class="price">Prix : 11,00 €</div>
-        </article>
+  <script>
+    // Année dynamique
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-        <article class="card" data-type="diet">
-          <h3>Pâtes aux champignons</h3>
-          <p>Pâtes fraîches • sauce légère • champignons • oignons</p>
-          <div class="badges">
-            <span class="badge">~780 kcal</span><span class="badge">~42 g prot.</span>
-            <span class="badge">~84 g gluc.</span><span class="badge">~28 g lip.</span>
-          </div>
-          <div class="price">Prix : 9,00 €</div>
-        </article>
-
-        <article class="card" data-type="diet">
-          <h3>Wrap falafel &amp; crudités (sauce biblalaka)</h3>
-          <p>Galette complète 100 g • falafels 150 g • crudités • sauce au fromage blanc alsacien</p>
-          <div class="badges">
-            <span class="badge">~680 kcal</span><span class="badge">~26 g prot.</span>
-            <span class="badge">~86 g gluc.</span><span class="badge">~22 g lip.</span>
-          </div>
-          <div class="price">Prix : 9,00 €</div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ======= LIVRAISON ======= -->
-    <section id="livraison" class="section">
-      <h2>Livraison</h2>
-      <div class="callout" style="margin-top:12px">
-        <p><strong>Zones :</strong> Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim, Richwiller, Lutterbach, Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim, Eschentzwiller, Brunstatt.</p>
-      </div>
-    </section>
-
-    <div class="hr"></div>
-    <footer>© 2025 GreenHouse — Traiteur artisanal</footer>
-  </main>
-
-  <!-- bouton top -->
-  <button id="toTop" aria-label="Retour haut">▲</button>
-
-<script>
-/* Toggle palette Diète/Gourmand */
-const body = document.body;
-const key = "gh-theme";
-const btn = document.getElementById('toggleTheme');
-function applySaved(){
-  const saved = localStorage.getItem(key) || "diet";
-  body.classList.toggle('theme-gourmand', saved==="gourmand");
-  body.classList.toggle('theme-diet', saved!=="gourmand");
-}
-applySaved();
-btn.addEventListener('click', () => {
-  const next = body.classList.contains('theme-gourmand') ? "diet" : "gourmand";
-  localStorage.setItem(key, next);
-  applySaved();
-});
-
-/* Bouton haut de page */
-const toTop = document.getElementById('toTop');
-window.addEventListener('scroll', () => {
-  toTop.style.display = window.scrollY > 600 ? 'block' : 'none';
-});
-toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
-</script>
+    // >>> Anti-cache “dur” : on nettoie d’anciens Service Workers + caches si l’ancienne version en utilisait.
+    (async function nukeOldCaches(){
+      try{
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const reg of regs) {
+            try { await reg.unregister(); } catch(e){}
+          }
+        }
+        if (window.caches && caches.keys) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map(k => caches.delete(k)));
+        }
+      }catch(e){ /* silencieux */ }
+    })();
+  </script>
 </body>
 </html>
