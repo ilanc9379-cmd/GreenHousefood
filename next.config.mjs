@@ -1,7 +1,8 @@
+// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    optimizePackageImports: []
-  }
+  // AUCUN output: 'export' ici
+  experimental: { appDir: false }, // force le Pages Router
+  images: { unoptimized: true },   // pour éviter toute friction côté images
 };
-export default nextConfig;
+module.exports = nextConfig;
