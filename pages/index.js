@@ -7,7 +7,7 @@ import { useMemo, useState } from "react";
    DONNÉES PLATS
    ============ */
 const PLATS = [
-  // Ceux visibles sur tes captures
+  // ---- Pâtes & lasagnes
   {
     id: 101,
     nom: "Pâtes complètes — crème légère, champignons & oignons",
@@ -18,14 +18,12 @@ const PLATS = [
   },
   {
     id: 102,
-    nom: "Pâtes complètes — (base tomate)",
+    nom: "Pâtes complètes — base tomate",
     type: "Diète",
     calories: 730, proteines: 22, glucides: 86, lipides: 28,
     prix: 7.0,
     resume: "Sauce tomate maison, herbes, profil plus léger.",
   },
-
-  // Ceux qu’on avait déjà nommés précisément
   {
     id: 201,
     nom: "Pâtes complètes saumon crème",
@@ -42,31 +40,82 @@ const PLATS = [
     prix: 11.0,
     resume: "Saumon, épinards, béchamel, fromage râpé.",
   },
+
+  // ---- Wraps & burgers
   {
-    id: 203,
+    id: 301,
+    nom: "Wrap Poulet César",
+    type: "Gourmand",
+    calories: 780, proteines: 42, glucides: 58, lipides: 34,
+    prix: 12.5,
+    resume: "Poulet, parmesan, sauce césar, crudités.",
+  },
+  {
+    id: 302,
     nom: "Wrap falafel & crudités (sauce bibalaka)",
     type: "Diète",
     calories: 680, proteines: 26, glucides: 86, lipides: 22,
     prix: 9.0,
     resume: "Galette complète 100 g, falafels 150 g, crudités, sauce au fromage blanc alsacien.",
   },
+  {
+    id: 303,
+    nom: "Burger Signature",
+    type: "Gourmand",
+    calories: 950, proteines: 45, glucides: 90, lipides: 39,
+    prix: 12.9,
+    resume: "Bœuf, cheddar, oignons confits, sauce maison.",
+  },
 
-  /* =====
-     ASTUCE
-     =====
-     ➜ Ajoute ici tous tes autres plats en copiant un objet et en changeant nom/prix/macros/type.
-     type = 'Diète' ou 'Gourmand'
-  */
+  // ---- Bowls
+  {
+    id: 401,
+    nom: "Bowl Saumon & Quinoa",
+    type: "Diète",
+    calories: 520, proteines: 34, glucides: 47, lipides: 18,
+    prix: 14.9,
+    resume: "Saumon grillé, quinoa, avocat, edamame, sauce citronnée.",
+  },
+  {
+    id: 402,
+    nom: "Veggie Power Bowl",
+    type: "Diète",
+    calories: 560, proteines: 25, glucides: 62, lipides: 18,
+    prix: 12.9,
+    resume: "Tofu croustillant, patate douce, légumineuses, crème tahini-citron.",
+  },
+
+  // ---- Plats cuisinés
+  {
+    id: 501,
+    nom: "Poulet rôti & légumes du marché",
+    type: "Diète",
+    calories: 610, proteines: 40, glucides: 36, lipides: 28,
+    prix: 10.9,
+    resume: "Filet de poulet, carottes, brocoli, huile d’olive.",
+  },
+  {
+    id: 502,
+    nom: "Curry de lentilles coco",
+    type: "Diète",
+    calories: 640, proteines: 23, glucides: 78, lipides: 20,
+    prix: 9.9,
+    resume: "Lentilles corail, lait de coco, épices douces, riz basmati.",
+  },
+  {
+    id: 503,
+    nom: "Chili con carne",
+    type: "Gourmand",
+    calories: 790, proteines: 38, glucides: 70, lipides: 30,
+    prix: 10.5,
+    resume: "Bœuf mijoté, haricots rouges, maïs, riz parfumé.",
+  },
 ];
 
-/* Petites helpers */
+/* Helpers UI */
 const euro = (n) => `${n.toFixed(2).replace(".", ",")} €`;
 const Chip = ({ active, onClick, children }) => (
-  <button
-    onClick={onClick}
-    className={`chip ${active ? "chip--on" : ""}`}
-    aria-pressed={active}
-  >
+  <button onClick={onClick} className={`chip ${active ? "chip--on" : ""}`} aria-pressed={active}>
     {children}
   </button>
 );
@@ -91,6 +140,7 @@ export default function Home() {
       <Head>
         <title>Greenhouse — Traiteur | Diète ou Gourmand</title>
         <meta name="description" content="Greenhouse — Traiteur artisanal : Diététique & gourmand. Le bon plat au bon prix." />
+        <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
@@ -99,14 +149,7 @@ export default function Home() {
         {/* HERO */}
         <header className="hero">
           <div className="brand">
-            <Image
-              src="/favicon.png"
-              alt="Greenhouse logo"
-              width={56}
-              height={56}
-              className="logo"
-              priority
-            />
+            <Image src="/favicon.png" alt="Greenhouse logo" width={56} height={56} className="logo" priority />
             <h1>Greenhouse</h1>
           </div>
           <p className="subtitle">
@@ -114,18 +157,9 @@ export default function Home() {
           </p>
 
           <div className="chips">
-            <Chip active={filtre === "Tous"} onClick={() => setFiltre("Tous")}>
-              Tous
-            </Chip>
-            <Chip active={filtre === "Diète"} onClick={() => setFiltre("Diète")}>
-              Diète
-            </Chip>
-            <Chip
-              active={filtre === "Gourmand"}
-              onClick={() => setFiltre("Gourmand")}
-            >
-              Gourmand
-            </Chip>
+            <Chip active={filtre === "Tous"} onClick={() => setFiltre("Tous")}>Tous</Chip>
+            <Chip active={filtre === "Diète"} onClick={() => setFiltre("Diète")}>Diète</Chip>
+            <Chip active={filtre === "Gourmand"} onClick={() => setFiltre("Gourmand")}>Gourmand</Chip>
           </div>
 
           <input
@@ -142,30 +176,16 @@ export default function Home() {
           {platsFiltres.map((p) => (
             <article key={p.id} className="card" role="article">
               <div className="card-top">
-                <span className={`badge ${p.type === "Diète" ? "bd-diet" : "bd-gour"}`}>
-                  {p.type}
-                </span>
+                <span className={`badge ${p.type === "Diète" ? "bd-diet" : "bd-gour"}`}>{p.type}</span>
                 <h3 className="title">{p.nom}</h3>
                 <p className="resume">{p.resume}</p>
               </div>
 
               <div className="macros">
-                <div>
-                  <small>kcal</small>
-                  <div className="num">{p.calories}</div>
-                </div>
-                <div>
-                  <small>Prot.</small>
-                  <div className="num">{p.proteines} g</div>
-                </div>
-                <div>
-                  <small>Gluc.</small>
-                  <div className="num">{p.glucides} g</div>
-                </div>
-                <div>
-                  <small>Lip.</small>
-                  <div className="num">{p.lipides} g</div>
-                </div>
+                <div><small>kcal</small><div className="num">{p.calories}</div></div>
+                <div><small>Prot.</small><div className="num">{p.proteines} g</div></div>
+                <div><small>Gluc.</small><div className="num">{p.glucides} g</div></div>
+                <div><small>Lip.</small><div className="num">{p.lipides} g</div></div>
               </div>
 
               <div className="cta">
@@ -203,14 +223,13 @@ export default function Home() {
 
         .wrap {
           min-height: 100%;
-          background: radial-gradient(1000px 700px at -10% -10%, var(--bg2), transparent 60%),
-                      radial-gradient(900px 600px at 110% -20%, var(--bg1), transparent 65%),
-                      linear-gradient(180deg, #f5fbff 0%, #f7fff9 60%, #fdfefe 100%);
+          background:
+            radial-gradient(1000px 700px at -10% -10%, var(--bg2), transparent 60%),
+            radial-gradient(900px 600px at 110% -20%, var(--bg1), transparent 65%),
+            linear-gradient(180deg, #f5fbff 0%, #f7fff9 60%, #fdfefe 100%);
         }
 
-        .hero {
-          max-width: 1100px; margin: 0 auto; padding: 48px 20px 12px;
-        }
+        .hero { max-width: 1100px; margin: 0 auto; padding: 48px 20px 12px; }
         .brand { display: flex; align-items: center; gap: 14px; }
         .brand h1 {
           font-size: clamp(40px, 6vw, 80px);
@@ -218,16 +237,16 @@ export default function Home() {
           margin: 0;
           background: linear-gradient(90deg, var(--brand1), var(--brand2));
           -webkit-background-clip: text; background-clip: text; color: transparent;
-          letter-spacing: 0.5px;
+          letter-spacing: .5px;
         }
-        .logo { border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+        .logo { border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,.12); }
 
         .subtitle { margin: 8px 0 18px; color: var(--muted); font-size: clamp(16px, 2.5vw, 22px); }
         .subtitle strong { color: #0d6b57; }
 
         .chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 16px; }
         .chip {
-          border: 1px solid rgba(0,0,0,0.08);
+          border: 1px solid rgba(0,0,0,.08);
           background: white;
           padding: 8px 14px; border-radius: 999px;
           font-weight: 600; cursor: pointer;
