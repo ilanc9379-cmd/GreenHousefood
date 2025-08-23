@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-/* ===== Données plats "frais" ===== */
 const PLATS = [
   {
     id: 101,
@@ -41,6 +40,7 @@ const PLATS = [
 ];
 
 const euro = (n) => `${n.toFixed(2).replace(".", ",")} €`;
+
 const Chip = ({ active, onClick, children }) => (
   <button onClick={onClick} className={`chip ${active ? "chip--on" : ""}`} aria-pressed={active}>
     {children}
@@ -71,11 +71,14 @@ export default function Home() {
       </Head>
 
       <main className="wrap">
-        <header className="hero">
-          <div className="brand">
-            <Image src="/favicon.png" alt="Logo GreenHouse" width={72} height={72} className="logo" priority />
-            <h1>GreenHouse</h1>
-          </div>
+        {/* HEADER FIXE */}
+        <header className="header">
+          <Image src="/favicon.png" alt="Logo GreenHouse" width={40} height={40} className="logo" />
+          <h1 className="brand-name">GreenHouse</h1>
+        </header>
+
+        {/* HERO */}
+        <section className="hero">
           <p className="subtitle">
             Traiteur artisanal — <strong>Diététique & Gourmand</strong>
           </p>
@@ -93,9 +96,9 @@ export default function Home() {
             className="search"
             aria-label="Rechercher un plat"
           />
-        </header>
+        </section>
 
-        {/* Plats frais */}
+        {/* PLATS FRAIS */}
         <section className="grid">
           {platsFiltres.map((p) => (
             <article key={p.id} className="card">
@@ -116,18 +119,17 @@ export default function Home() {
               </div>
             </article>
           ))}
-          {platsFiltres.length === 0 && <p className="empty">Aucun plat ne correspond à votre recherche.</p>}
         </section>
 
-        {/* Section surgelés */}
+        {/* SURGELÉS */}
         <section className="sect-freeze">
           <div className="freeze-head">
-            <h2>Nos plats surgelés</h2>
+            <h2>Nos plats surgelés ❄️</h2>
             <span className="badge badge-freeze">Surgelé</span>
           </div>
 
           <div className="grid">
-            <article className="card">
+            <article className="card card-freeze">
               <div className="card-top">
                 <span className="badge badge-freeze">Surgelé</span>
                 <h3 className="title">Pâtes bolognaise maison</h3>
@@ -135,12 +137,13 @@ export default function Home() {
               </div>
               <div className="cta">
                 <div className="price">9,90 €</div>
-                <Link href="/plats/bolo" className="btn">Voir la fiche</Link>
+                <Link href="/plats/bolo" className="btn btn-freeze">Voir la fiche</Link>
               </div>
             </article>
           </div>
         </section>
 
+        {/* FOOTER */}
         <footer className="foot">
           <p>© {new Date().getFullYear()} GreenHouse — Traiteur artisanal</p>
         </footer>
@@ -155,66 +158,56 @@ export default function Home() {
           --brand1: #0aa64c; --brand2: #2d7ae6;
           --freeze:#3aa3ff;
         }
-        html, body, #__next { height: 100%; }
-        body { margin: 0; color: var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; }
+        body { margin: 0; color: var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto; }
 
-        .wrap {
-          min-height: 100%;
-          background: radial-gradient(1000px 700px at -10% -10%, var(--bg2), transparent 60%),
-                      radial-gradient(900px 600px at 110% -20%, var(--bg1), transparent 65%),
-                      linear-gradient(180deg, #f5fbff 0%, #f7fff9 60%, #fdfefe 100%);
+        .wrap { min-height: 100%; background: linear-gradient(180deg, #f5fbff, #f7fff9 60%, #fdfefe 100%); }
+
+        /* HEADER */
+        .header {
+          position: sticky; top: 0; z-index: 100;
+          background: white; display: flex; align-items: center; gap: 12px;
+          padding: 10px 20px; box-shadow: 0 4px 15px rgba(0,0,0,.08);
         }
-
-        .hero { max-width: 1100px; margin: 0 auto; padding: 48px 20px 12px; }
-        .brand { display: flex; align-items: center; gap: 14px; }
-        .brand h1 {
-          font-size: clamp(40px, 6vw, 80px);
-          line-height: 0.95; margin: 0;
+        .brand-name {
+          font-size: 28px; font-weight: 900; margin: 0;
           background: linear-gradient(90deg, var(--brand1), var(--brand2));
           -webkit-background-clip: text; background-clip: text; color: transparent;
-          letter-spacing: 0.5px;
         }
-        .logo { border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+        .logo { border-radius: 6px; }
 
-        .subtitle { margin: 8px 0 18px; color: var(--muted); font-size: clamp(16px, 2.5vw, 22px); }
-        .subtitle strong { color: #0d6b57; }
-        .chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 16px; }
-        .chip {
-          border: 1px solid rgba(0,0,0,0.08);
-          background: white; padding: 8px 14px; border-radius: 999px;
-          font-weight: 600; cursor: pointer; transition: transform .12s ease, box-shadow .12s ease;
-        }
-        .chip--on { border-color: transparent; background: linear-gradient(90deg, rgba(13,171,110,.12), rgba(45,122,230,.12)); box-shadow: 0 0 0 3px var(--ring) inset; }
-        .chip:active { transform: translateY(1px) scale(.99); }
-        .search { width: 100%; max-width: 580px; border: 1px solid rgba(0,0,0,.08); background: white; height: 44px; border-radius: 14px; padding: 0 14px; font-size: 16px; outline: none; box-shadow: 0 10px 30px rgba(0,0,0,.05); }
-        .search:focus { box-shadow: 0 0 0 4px var(--ring), 0 10px 30px rgba(0,0,0,.06); }
+        .hero { max-width: 1100px; margin: 20px auto; padding: 20px; text-align: center; }
+        .subtitle { color: var(--muted); font-size: 18px; }
 
-        .grid { max-width: 1100px; margin: 16px auto 40px; padding: 0 20px; display: grid; gap: 18px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+        .chips { display: flex; justify-content: center; gap: 10px; margin: 16px 0; }
+        .chip { border: 1px solid rgba(0,0,0,0.08); background: white; padding: 8px 14px; border-radius: 999px; font-weight: 600; cursor: pointer; }
+        .chip--on { background: linear-gradient(90deg, rgba(13,171,110,.12), rgba(45,122,230,.12)); box-shadow: 0 0 0 3px var(--ring) inset; }
+        .search { width: 100%; max-width: 500px; border: 1px solid rgba(0,0,0,.08); background: white; height: 44px; border-radius: 14px; padding: 0 14px; font-size: 16px; box-shadow: 0 6px 15px rgba(0,0,0,.05); }
 
-        .card { background: var(--card); border-radius: 18px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.06), 0 1px 0 rgba(255,255,255,.7) inset; display: grid; gap: 14px; }
+        .grid { max-width: 1100px; margin: 20px auto; padding: 0 20px; display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+        .card { background: var(--card); border-radius: 18px; padding: 18px; box-shadow: 0 6px 18px rgba(0,0,0,.08); display: grid; gap: 14px; }
         .card-top { display: grid; gap: 8px; }
-        .badge { display:inline-flex; align-items:center; padding:4px 10px; border-radius:999px; font-weight:700; font-size:12px; letter-spacing:.3px; color:#0b1020; background:#eef5ff; border:1px solid rgba(0,0,0,.06); }
-        .bd-diet { background: rgba(26,168,123,.12); border-color: rgba(26,168,123,.25); }
-        .bd-gour { background: rgba(232,91,55,.12); border-color: rgba(232,91,55,.25); }
-        .badge-freeze{ background:rgba(58,163,255,.12); border-color:rgba(58,163,255,.3); color:#065ea8; }
+        .badge { display:inline-flex; align-items:center; padding:4px 10px; border-radius:999px; font-weight:700; font-size:12px; }
+        .bd-diet { background: rgba(26,168,123,.12); color:#0c6d50; }
+        .bd-gour { background: rgba(232,91,55,.12); color:#9c2d10; }
+        .badge-freeze { background: rgba(58,163,255,.15); color:#065ea8; }
 
-        .title { margin: 0; font-size: clamp(18px, 2.4vw, 24px); line-height: 1.2; }
+        .card-freeze { border: 2px solid var(--freeze); background: linear-gradient(180deg,#f0f8ff,#ffffff); }
+
+        .title { margin: 0; font-size: 20px; }
         .resume { margin: 0; color: var(--muted); }
-        .macros { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; background: linear-gradient(180deg,#fafcff,#f3f7ff); border: 1px solid rgba(0,0,0,.05); border-radius: 12px; padding: 10px; }
-        .macros small { color: var(--muted); }
-        .num { font-weight: 800; font-size: 15px; }
+        .macros { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; border-radius: 12px; padding: 10px; background:#f7fbff; }
+        .num { font-weight: 700; }
+
         .cta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-        .price { font-size: 22px; font-weight: 800; }
-        .btn { padding: 10px 16px; border-radius: 12px; border: none; color: white; font-weight: 700; cursor: pointer; background: linear-gradient(90deg, var(--brand1), var(--brand2)); box-shadow: 0 10px 25px rgba(45,122,230,.22); }
-        .btn:active { transform: translateY(1px); }
-        .empty { grid-column: 1/-1; color: var(--muted); text-align: center; padding: 30px 0; }
+        .price { font-size: 20px; font-weight: 800; }
+        .btn { padding: 8px 14px; border-radius: 12px; border: none; color: white; font-weight: 700; cursor: pointer; background: linear-gradient(90deg, var(--brand1), var(--brand2)); }
+        .btn-freeze { background: linear-gradient(90deg,#3aa3ff,#0066cc); }
 
-        .sect-freeze{max-width:1100px;margin:0 auto 30px;padding:0 20px}
-        .freeze-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-        .freeze-head h2{margin:0}
+        .sect-freeze { background: linear-gradient(180deg,#e6f4ff,#ffffff); padding: 30px 20px; margin-top: 30px; }
+        .freeze-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 
-        .foot { text-align: center; color: var(--muted); padding: 28px 16px 40px; }
+        .foot { text-align: center; color: var(--muted); padding: 30px; }
       `}</style>
     </>
   );
