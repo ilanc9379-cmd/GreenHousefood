@@ -1,81 +1,90 @@
 // pages/index.js
 import Head from "next/head";
-import Image from "next/image";
 import { useMemo, useState } from "react";
 
 /* ============
-   DONNÉES PLATS — uniquement TES plats
-   (tu peux en ajouter en copiant un objet)
+   DONNÉES — PLATS
    ============ */
 const PLATS = [
   {
     id: 101,
     nom: "Pâtes complètes — crème légère, champignons & oignons",
     type: "Gourmand",
-    calories: 780,
-    proteines: 42,
-    glucides: 84,
-    lipides: 28,
+    calories: 780, proteines: 42, glucides: 84, lipides: 28,
     prix: 9.0,
-    resume: "Pâtes complètes, crème légère, champignons, oignons."
+    resume: "Pâtes complètes, crème légère, champignons, oignons.",
+    surgele: false,
   },
   {
     id: 102,
     nom: "Pâtes complètes — base tomate (profil léger)",
     type: "Diète",
-    calories: 730,
-    proteines: 22,
-    glucides: 86,
-    lipides: 28,
+    calories: 730, proteines: 22, glucides: 86, lipides: 28,
     prix: 7.0,
-    resume: "Sauce tomate maison, herbes. Idéal pour un repas plus léger."
+    resume: "Sauce tomate maison, herbes. Idéal pour un repas plus léger.",
+    surgele: false,
   },
   {
     id: 201,
     nom: "Pâtes complètes saumon crème",
     type: "Gourmand",
-    calories: 760,
-    proteines: 35,
-    glucides: 82,
-    lipides: 28,
+    calories: 760, proteines: 35, glucides: 82, lipides: 28,
     prix: 10.0,
-    resume: "Saumon, crème, aneth, ail."
+    resume: "Saumon, crème, aneth, ail.",
+    surgele: false,
   },
   {
     id: 202,
     nom: "Lasagnes saumon & épinards",
     type: "Gourmand",
-    calories: 820,
-    proteines: 40,
-    glucides: 74,
-    lipides: 40,
+    calories: 820, proteines: 40, glucides: 74, lipides: 40,
     prix: 11.0,
-    resume: "Saumon, épinards, béchamel, fromage râpé."
+    resume: "Saumon, épinards, béchamel, fromage râpé.",
+    surgele: false,
   },
   {
     id: 203,
     nom: "Wrap falafel & crudités (sauce bibalaka)",
     type: "Diète",
-    calories: 680,
-    proteines: 26,
-    glucides: 86,
-    lipides: 22,
+    calories: 680, proteines: 26, glucides: 86, lipides: 22,
     prix: 9.0,
-    resume:
-      "Galette complète 100 g, falafels 150 g, crudités, sauce au fromage blanc alsacien."
-  }
+    resume: "Galette complète 100 g, falafels 150 g, crudités, sauce au fromage blanc alsacien.",
+    surgele: true, // version surgelée
+  },
+
+  // Nouveaux (Diète surgelé)
+  {
+    id: 301,
+    nom: "Gratin de patates douces (Diète, surgelé)",
+    type: "Diète",
+    calories: 520, proteines: 18, glucides: 62, lipides: 18,
+    prix: 8.5,
+    resume: "Patates douces rôties, légumes & gratiné léger — prêt à réchauffer.",
+    surgele: true,
+  },
+  {
+    id: 302,
+    nom: "Pâtes complètes — émincé de poulet, sauce aubergine (Diète, surgelé)",
+    type: "Diète",
+    calories: 640, proteines: 36, glucides: 70, lipides: 18,
+    prix: 9.5,
+    resume: "Émincé de poulet, sauce d’aubergine rôtie, herbes.",
+    surgele: true,
+  },
+
+  // 👉 Ajoute ici les autres plats manquants (copie un objet).
 ];
 
-// format €
-const euro = (n) => `${n.toFixed(2).replace(".", ",")} €`;
+/* ============
+   SPÉCIAUX
+   ============ */
+const FALAFEL_100G = { kcal: 240, prot: 9, gluc: 22, lip: 12 }; // macros /100g
+const FARINES = ["Seigle", "Aromette", "Complète"]; // pâtes fraîches
 
-// petit composant de filtre
+/* Helpers */
+const euro = (n) => `${n.toFixed(2).replace(".", ",")} €`;
 const Chip = ({ active, onClick, children }) => (
-  <button
-    onClick={onClick}
-    className={`chip ${active ? "chip--on" : ""}`}
-    aria-pressed={active}
-  >
+  <button onClick={onClick} className={`chip ${active ? "chip--on" : ""}`} aria-pressed={active}>
     {children}
   </button>
 );
@@ -87,67 +96,37 @@ export default function Home() {
   const platsFiltres = useMemo(() => {
     return PLATS.filter((p) => {
       const okType = filtre === "Tous" ? true : p.type === filtre;
-      const okTexte =
-        !q ||
-        p.nom.toLowerCase().includes(q.toLowerCase()) ||
-        p.resume.toLowerCase().includes(q.toLowerCase());
-      return okType && okTexte;
+      const txt = (p.nom + " " + p.resume).toLowerCase();
+      return okType && (!q || txt.includes(q.toLowerCase()));
     });
   }, [filtre, q]);
 
   return (
     <>
       <Head>
-        <title>Greenhouse — Traiteur | Diète ou Gourmand</title>
-        <meta
-          name="description"
-          content="Greenhouse — Traiteur artisanal : Diététique & gourmand. Le bon plat au bon prix."
-        />
+        <title>GreenHouse — Traiteur | Diète ou Gourmand</title>
+        <meta name="description" content="Traiteur artisanal — Diététique & Gourmand. Le bon plat au bon prix." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* Favicon / logo */}
         <link rel="icon" href="/favicon.png" />
       </Head>
 
       <main className="wrap">
         {/* HERO */}
         <header className="hero">
-          <div className="brand">
-            <Image
-              src="/favicon.png"
-              alt="Logo Greenhouse"
-              width={96}
-              height={96}
-              className="logo"
-              priority
-            />
-            <div>
-              <h1>Greenhouse</h1>
-              <p className="subtitle">
-                Traiteur artisanal — <strong>Diététique & gourmand</strong>
-              </p>
-            </div>
-          </div>
+          <h1 className="brand">GreenHouse</h1>
+          <p className="subtitle">Traiteur — <strong>Diététique & Gourmand</strong></p>
 
-          {/* Bannière infos fraîches + vrac */}
+          {/* Bandeau infos */}
           <div className="info-banner">
-            <div>🍝 Pâtes fraîches <b>uniquement les lundis & jeudis</b>.</div>
-            <div>🧆 Falafels maison disponibles <b>en vrac (au poids)</b> — sur commande.</div>
+            <div>🍝 <b>Pâtes fraîches</b> (7 €/kg) — disponibles les <b>lundis</b> & <b>jeudis</b>. Farines&nbsp;:
+              {" "}{FARINES.join(" · ")}.</div>
+            <div>🧆 <b>Falafels en vrac — surgelés</b> (au poids). Macros indiquées pour 100 g.</div>
           </div>
 
-          {/* Filtres & recherche */}
           <div className="chips">
-            <Chip active={filtre === "Tous"} onClick={() => setFiltre("Tous")}>
-              Tous
-            </Chip>
-            <Chip active={filtre === "Diète"} onClick={() => setFiltre("Diète")}>
-              Diète
-            </Chip>
-            <Chip
-              active={filtre === "Gourmand"}
-              onClick={() => setFiltre("Gourmand")}
-            >
-              Gourmand
-            </Chip>
+            <Chip active={filtre === "Tous"} onClick={() => setFiltre("Tous")}>Tous</Chip>
+            <Chip active={filtre === "Diète"} onClick={() => setFiltre("Diète")}>Diète</Chip>
+            <Chip active={filtre === "Gourmand"} onClick={() => setFiltre("Gourmand")}>Gourmand</Chip>
           </div>
 
           <input
@@ -159,37 +138,55 @@ export default function Home() {
           />
         </header>
 
+        {/* SPÉCIAUX */}
+        <section className="specials">
+          <article className="special-card">
+            <div className="special-head">
+              <h3>Falafels en vrac</h3>
+              <span className="pill pill-red">Surgelé</span>
+            </div>
+            <p className="muted">Préparation maison, pratique à la demande (au poids).</p>
+            <div className="macros">
+              <div><small>kcal/100g</small><div className="num">{FALAFEL_100G.kcal}</div></div>
+              <div><small>Prot./100g</small><div className="num">{FALAFEL_100G.prot} g</div></div>
+              <div><small>Gluc./100g</small><div className="num">{FALAFEL_100G.gluc} g</div></div>
+              <div><small>Lip./100g</small><div className="num">{FALAFEL_100G.lip} g</div></div>
+            </div>
+            <div className="cta">
+              <div className="price">—</div>
+              <button className="btn">Commander au poids</button>
+            </div>
+          </article>
+
+          <article className="special-card">
+            <h3>Pâtes fraîches maison</h3>
+            <p className="muted">Au kilo — 7 €/kg. Disponibles <b>lundi & jeudi</b>.</p>
+            <div className="tags">{FARINES.map((f) => <span key={f} className="tag">{f}</span>)}</div>
+            <div className="cta">
+              <div className="price">7,00 € <span className="muted">/ kg</span></div>
+              <button className="btn btn-ghost">Voir disponibilités</button>
+            </div>
+          </article>
+        </section>
+
         {/* LISTE DES PLATS */}
         <section className="grid">
           {platsFiltres.map((p) => (
             <article key={p.id} className="card" role="article">
               <div className="card-top">
-                <span
-                  className={`badge ${p.type === "Diète" ? "bd-diet" : "bd-gour"}`}
-                >
-                  {p.type}
-                </span>
+                <div className="badges">
+                  <span className={`badge ${p.type === "Diète" ? "bd-diet" : "bd-gour"}`}>{p.type}</span>
+                  {p.surgele && <span className="badge bd-freeze">Surgelé</span>}
+                </div>
                 <h3 className="title">{p.nom}</h3>
                 <p className="resume">{p.resume}</p>
               </div>
 
               <div className="macros">
-                <div>
-                  <small>kcal</small>
-                  <div className="num">{p.calories}</div>
-                </div>
-                <div>
-                  <small>Prot.</small>
-                  <div className="num">{p.proteines} g</div>
-                </div>
-                <div>
-                  <small>Gluc.</small>
-                  <div className="num">{p.glucides} g</div>
-                </div>
-                <div>
-                  <small>Lip.</small>
-                  <div className="num">{p.lipides} g</div>
-                </div>
+                <div><small>kcal</small><div className="num">{p.calories}</div></div>
+                <div><small>Prot.</small><div className="num">{p.proteines} g</div></div>
+                <div><small>Gluc.</small><div className="num">{p.glucides} g</div></div>
+                <div><small>Lip.</small><div className="num">{p.lipides} g</div></div>
               </div>
 
               <div className="cta">
@@ -203,280 +200,117 @@ export default function Home() {
           )}
         </section>
 
-        {/* INFOS LIVRAISON */}
+        {/* LIVRAISON */}
         <section className="info">
           <h2>Livraison</h2>
           <p>
-            <b>Zones :</b> Mulhouse, Kingersheim, Wittenheim, Pulversheim,
-            Wittelsheim, Richwiller, Lutterbach, Pfastatt, Illzach, Rixheim,
-            Riedisheim, Habsheim, Eschentzwiller, Brunstatt.
+            <b>Zones :</b> Mulhouse, Kingersheim, Wittenheim, Pulversheim, Wittelsheim, Richwiller,
+            Lutterbach, Pfastatt, Illzach, Rixheim, Riedisheim, Habsheim, Eschentzwiller, Brunstatt.
           </p>
-          <p className="muted">
-            Livraison le jour même selon disponibilité. Nous contacter pour les
-            communes limitrophes.
-          </p>
+          <p className="muted">Le jour même selon disponibilité — nous contacter pour les communes limitrophes.</p>
         </section>
 
         {/* FOOTER */}
         <footer className="foot">
-          <p>© {new Date().getFullYear()} Greenhouse — Traiteur artisanal</p>
+          <p>© {new Date().getFullYear()} GreenHouse — Traiteur artisanal</p>
         </footer>
       </main>
 
       {/* ====== STYLES ====== */}
       <style jsx>{`
-        :root {
-          --bg1: #e8f7ff;
-          --bg2: #dff8ee;
-          --ink: #0b1020;
-          --muted: #485060;
-          --card: #ffffff;
-          --ring: rgba(10, 140, 120, 0.22);
-          --diet: #1aa87b;
-          --gour: #e85b37;
-          --brand1: #0aa64c;
-          --brand2: #2d7ae6;
+        :root{
+          --ink:#0b1020; --muted:#5a6376; --card:#fff;
+          --diet:#1aa87b; --gour:#e85b37; --freeze:#6b7cff;
+          --brand1:#0aa64c; --brand2:#2d7ae6; --ring:rgba(45,122,230,.18);
         }
-        html,
-        body,
-        #__next {
-          height: 100%;
+        html,body,#__next{height:100%}
+        body{margin:0;color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+
+        /* Fond vivant (dégradé animé) */
+        .wrap{
+          min-height:100%;
+          background:
+            radial-gradient(1100px 700px at 10% -10%, rgba(13,171,110,.15), transparent 60%),
+            radial-gradient(900px 600px at 110% 0%, rgba(45,122,230,.18), transparent 60%),
+            linear-gradient(180deg,#f7fbff 0%, #f6fff7 60%, #ffffff 100%);
+          position:relative; overflow-x:hidden;
         }
-        body {
-          margin: 0;
-          color: var(--ink);
-          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-            "Helvetica Neue", Arial;
-          background: #f6fbff;
+        .wrap::before{
+          content:"";
+          position:absolute; inset:-20% -10%;
+          background:conic-gradient(from 0deg, rgba(45,122,230,.10), rgba(13,171,110,.10), rgba(45,122,230,.10));
+          filter:blur(80px); animation:float 12s linear infinite; pointer-events:none;
+        }
+        @keyframes float{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+        .hero{max-width:1100px;margin:0 auto;padding:56px 20px 18px;text-align:left}
+        .brand{
+          margin:0; font-size:clamp(64px, 10vw, 120px); line-height:.9;
+          background:linear-gradient(90deg, var(--brand1), #16b36e, #24a0ff, var(--brand2));
+          background-size:200% 100%;
+          -webkit-background-clip:text;background-clip:text;color:transparent;
+          animation:shine 6s ease-in-out infinite alternate; letter-spacing:.5px;
+        }
+        @keyframes shine{to{background-position:100% 0}}
+
+        .subtitle{margin:8px 0 16px;color:var(--muted);font-size:clamp(18px,2.6vw,26px)}
+        .subtitle strong{color:#0d6b57}
+
+        .info-banner{
+          display:grid;gap:6px;margin:14px 0 10px;padding:12px 14px;border-radius:14px;
+          background:#ffffffaa; backdrop-filter:blur(8px);
+          border:1px solid rgba(0,0,0,.06); box-shadow:0 8px 24px rgba(0,0,0,.06)
         }
 
-        .wrap {
-          min-height: 100%;
-          background: radial-gradient(
-              1000px 700px at -10% -10%,
-              var(--bg2),
-              transparent 60%
-            ),
-            radial-gradient(
-              900px 600px at 110% -20%,
-              var(--bg1),
-              transparent 65%
-            ),
-            linear-gradient(180deg, #f5fbff 0%, #f7fff9 60%, #fdfefe 100%);
-        }
+        .chips{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 16px}
+        .chip{border:1px solid rgba(0,0,0,.08);background:#fff;padding:8px 14px;border-radius:999px;font-weight:600;cursor:pointer;transition:transform .12s, box-shadow .12s}
+        .chip--on{border-color:transparent;background:linear-gradient(90deg, rgba(13,171,110,.10), rgba(45,122,230,.10)); box-shadow:0 0 0 3px var(--ring) inset}
+        .chip:active{transform:translateY(1px) scale(.99)}
 
-        .hero {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 48px 20px 12px;
-        }
-        .brand {
-          display: flex;
-          align-items: center;
-          gap: 18px;
-        }
-        .logo {
-          border-radius: 14px;
-          box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
-        }
-        .brand h1 {
-          font-size: clamp(48px, 7vw, 96px);
-          line-height: 0.95;
-          margin: 0;
-          background: linear-gradient(90deg, var(--brand1), var(--brand2));
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-          letter-spacing: 0.5px;
-        }
-        .subtitle {
-          margin: 6px 0 0;
-          color: var(--muted);
-          font-size: clamp(16px, 2.5vw, 22px);
-        }
-        .subtitle strong {
-          color: #0d6b57;
-        }
+        .search{width:100%;max-width:600px;border:1px solid rgba(0,0,0,.08);background:#fff;height:46px;border-radius:14px;padding:0 14px;font-size:16px;outline:none; box-shadow:0 10px 30px rgba(0,0,0,.05)}
+        .search:focus{box-shadow:0 0 0 4px var(--ring),0 10px 30px rgba(0,0,0,.06)}
 
-        .info-banner {
-          display: grid;
-          gap: 6px;
-          margin: 18px 0 12px;
-          padding: 12px 14px;
-          border-radius: 14px;
-          background: #ffffffaa;
-          backdrop-filter: blur(8px);
-          border: 1px solid rgba(0, 0, 0, 0.06);
-          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-        }
+        .specials{max-width:1100px;margin:0 auto 10px;padding:0 20px;display:grid;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr))}
+        @media(max-width:860px){.specials{grid-template-columns:1fr}}
+        .special-card{background:var(--card);border-radius:18px;padding:18px;box-shadow:0 10px 26px rgba(0,0,0,.06)}
+        .special-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+        .pill{font-weight:800;font-size:12px;padding:4px 10px;border-radius:999px;background:#eef2ff;border:1px solid rgba(0,0,0,.06)}
+        .pill-red{background:#f3f5ff;border-color:#cfd6ff;color:#3b49b6}
 
-        .chips {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 10px;
-          margin: 14px 0 16px;
-        }
-        .chip {
-          border: 1px solid rgba(0, 0, 0, 0.08);
-          background: white;
-          padding: 8px 14px;
-          border-radius: 999px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: transform 0.12s ease, box-shadow 0.12s ease;
-        }
-        .chip--on {
-          border-color: transparent;
-          background: linear-gradient(
-            90deg,
-            rgba(13, 171, 110, 0.12),
-            rgba(45, 122, 230, 0.12)
-          );
-          box-shadow: 0 0 0 3px var(--ring) inset;
-        }
-        .chip:active {
-          transform: translateY(1px) scale(0.99);
-        }
+        .tags{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+        .tag{padding:6px 10px;border-radius:999px;background:#f1f7ff;border:1px solid rgba(0,0,0,.06);font-weight:600;font-size:13px}
+        .muted{color:var(--muted)}
 
-        .search {
-          width: 100%;
-          max-width: 580px;
-          border: 1px solid rgba(0, 0, 0, 0.08);
-          background: white;
-          height: 44px;
-          border-radius: 14px;
-          padding: 0 14px;
-          font-size: 16px;
-          outline: none;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        }
-        .search:focus {
-          box-shadow: 0 0 0 4px var(--ring), 0 10px 30px rgba(0, 0, 0, 0.06);
-        }
+        .grid{max-width:1100px;margin:16px auto 40px;padding:0 20px;display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr))}
+        @media(max-width:820px){.grid{grid-template-columns:1fr}}
 
-        .grid {
-          max-width: 1100px;
-          margin: 16px auto 40px;
-          padding: 0 20px;
-          display: grid;
-          gap: 18px;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-        @media (max-width: 820px) {
-          .grid {
-            grid-template-columns: 1fr;
-          }
-        }
+        .card{background:var(--card);border-radius:18px;padding:18px;box-shadow:0 10px 26px rgba(0,0,0,.06);display:grid;gap:14px;transition:transform .15s ease, box-shadow .15s ease}
+        .card:hover{transform:translateY(-2px); box-shadow:0 16px 40px rgba(0,0,0,.08)}
+        .card-top{display:grid;gap:8px}
+        .badges{display:flex;gap:8px;align-items:center}
+        .badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-weight:700;font-size:12px;letter-spacing:.3px;color:#0b1020;background:#eef5ff;border:1px solid rgba(0,0,0,.06)}
+        .bd-diet{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
+        .bd-gour{background:rgba(232,91,55,.12);border-color:rgba(232,91,55,.25)}
+        .bd-freeze{background:rgba(107,124,255,.14);border-color:rgba(107,124,255,.28)}
+        .title{margin:0;font-size:clamp(18px,2.3vw,24px);line-height:1.2}
+        .resume{margin:0;color:var(--muted)}
 
-        .card {
-          background: var(--card);
-          border-radius: 18px;
-          padding: 18px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06),
-            0 1px 0 rgba(255, 255, 255, 0.7) inset;
-          display: grid;
-          gap: 14px;
-        }
-        .card-top {
-          display: grid;
-          gap: 8px;
-        }
-        .badge {
-          display: inline-flex;
-          align-items: center;
-          padding: 4px 10px;
-          border-radius: 999px;
-          font-weight: 700;
-          font-size: 12px;
-          letter-spacing: 0.3px;
-          color: #0b1020;
-          background: #eef5ff;
-          border: 1px solid rgba(0, 0, 0, 0.06);
-        }
-        .bd-diet {
-          background: rgba(26, 168, 123, 0.12);
-          border-color: rgba(26, 168, 123, 0.25);
-        }
-        .bd-gour {
-          background: rgba(232, 91, 55, 0.12);
-          border-color: rgba(232, 91, 55, 0.25);
-        }
+        .macros{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:linear-gradient(180deg,#fafcff,#f3f7ff);border:1px solid rgba(0,0,0,.05);border-radius:12px;padding:10px}
+        .macros small{color:var(--muted)}
+        .num{font-weight:800;font-size:15px}
 
-        .title {
-          margin: 0;
-          font-size: clamp(18px, 2.4vw, 24px);
-          line-height: 1.2;
-        }
-        .resume {
-          margin: 0;
-          color: var(--muted);
-        }
+        .cta{display:flex;align-items:center;justify-content:space-between;gap:12px}
+        .price{font-size:22px;font-weight:800}
+        .btn{padding:10px 16px;border-radius:12px;border:none;color:#fff;font-weight:700;cursor:pointer;background:linear-gradient(90deg, var(--brand1), var(--brand2));box-shadow:0 10px 25px rgba(45,122,230,.22)}
+        .btn:active{transform:translateY(1px)}
+        .btn-ghost{background:transparent;color:#1b5ec8;border:1px solid rgba(27,94,200,.28);box-shadow:none}
 
-        .macros {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 8px;
-          background: linear-gradient(180deg, #fafcff, #f3f7ff);
-          border: 1px solid rgba(0, 0, 0, 0.05);
-          border-radius: 12px;
-          padding: 10px;
-        }
-        .macros small {
-          color: var(--muted);
-        }
-        .num {
-          font-weight: 800;
-          font-size: 15px;
-        }
+        .empty{grid-column:1/-1;color:var(--muted);text-align:center;padding:28px 0}
 
-        .cta {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 12px;
-        }
-        .price {
-          font-size: 22px;
-          font-weight: 800;
-        }
-        .btn {
-          padding: 10px 16px;
-          border-radius: 12px;
-          border: none;
-          color: white;
-          font-weight: 700;
-          cursor: pointer;
-          background: linear-gradient(90deg, var(--brand1), var(--brand2));
-          box-shadow: 0 10px 25px rgba(45, 122, 230, 0.22);
-        }
-        .btn:active {
-          transform: translateY(1px);
-        }
+        .info{max-width:1100px;margin:0 auto 30px;padding:0 20px}
+        .info h2{margin:0 0 8px}
 
-        .empty {
-          grid-column: 1 / -1;
-          color: var(--muted);
-          text-align: center;
-          padding: 30px 0;
-        }
-
-        .info {
-          max-width: 1100px;
-          margin: 0 auto 30px;
-          padding: 0 20px;
-        }
-        .info h2 {
-          margin: 0 0 8px 0;
-        }
-        .info .muted {
-          color: var(--muted);
-        }
-
-        .foot {
-          text-align: center;
-          color: var(--muted);
-          padding: 28px 16px 40px;
-        }
+        .foot{text-align:center;color:var(--muted);padding:28px 16px 40px}
       `}</style>
     </>
   );
