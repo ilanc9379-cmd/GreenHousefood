@@ -4,28 +4,28 @@ import { useMemo, useState } from "react";
 
 export default function Bolo() {
   // Données plat
-  const portionGrams = 600; // 200 pâtes + 150 bœuf + 150 carottes + 100 sauce
+  const portionGrams = 600;
   const basePrice = 9.9;
 
-  // Valeurs par portion (ton cahier)
+  // Valeurs par portion
   const kcalPortion = 700;
   const lipidesPortion = 15.8;
   const glucidesPortion = 89;
   const proteinesPortion = 54.3;
   const selPortion = 3;
-  const agsPortion = +(lipidesPortion * 0.34).toFixed(1); // ~1/3
+  const agsPortion = +(lipidesPortion * 0.34).toFixed(1);
   const sucrePortion = 11;
 
-  // Dérivés par 100 g
-  const kcal100 = +(kcalPortion / (portionGrams / 100)).toFixed(1); // 116.7
-  const lipides100 = +(lipidesPortion / (portionGrams / 100)).toFixed(1); // 2.6
-  const glucides100 = +(glucidesPortion / (portionGrams / 100)).toFixed(1); // 14.8
-  const proteines100 = +(proteinesPortion / (portionGrams / 100)).toFixed(1); // 9.1
-  const sel100 = +(selPortion / (portionGrams / 100)).toFixed(1); // 0.5
-  const ags100 = +(agsPortion / (portionGrams / 100)).toFixed(1); // 0.9
-  const sucre100 = +(sucrePortion / (portionGrams / 100)).toFixed(1); // 1.8
+  // Par 100 g
+  const kcal100 = +(kcalPortion / (portionGrams / 100)).toFixed(1);
+  const lipides100 = +(lipidesPortion / (portionGrams / 100)).toFixed(1);
+  const glucides100 = +(glucidesPortion / (portionGrams / 100)).toFixed(1);
+  const proteines100 = +(proteinesPortion / (portionGrams / 100)).toFixed(1);
+  const sel100 = +(selPortion / (portionGrams / 100)).toFixed(1);
+  const ags100 = +(agsPortion / (portionGrams / 100)).toFixed(1);
+  const sucre100 = +(sucrePortion / (portionGrams / 100)).toFixed(1);
 
-  // Ingrédients (sans “au goût”, et sans ligne “sel 3 g” séparée)
+  // Ingrédients (sans “au goût”, et sans ligne “sel 3 g”)
   const ingredients = [
     { name: "Pâtes artisanales au seigle (œufs plein air)", qty: "200 g" },
     { name: "Bœuf haché 5% MG", qty: "150 g" },
@@ -34,7 +34,7 @@ export default function Bolo() {
     { name: "Herbes/aromates (ail, poivre, basilic)", qty: "—" },
   ];
 
-  // Sélecteur quantité
+  // Quantité & prix
   const [qty, setQty] = useState(1);
   const nf = useMemo(
     () => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }),
@@ -51,19 +51,17 @@ export default function Bolo() {
 
   return (
     <>
-      {/* HERO */}
-      <section className="hero">
-        <div className="hero-bg" aria-hidden="true" />
-        <div className="hero-inner">
+      {/* BANNIÈRE AVEC GREENHOUSE EN GRAND */}
+      <section className="heroBar">
+        <div className="heroGradient" aria-hidden="true" />
+        <div className="heroInner">
           <h1 className="brand">GreenHouse</h1>
           <p className="sub">Traiteur — Diététique & Gourmand</p>
           <p className="pitch">
             Des plats maison bons et équilibrés, cuisinés en Alsace, prêts à être
             dégustés. Diète ou gourmand : à vous de choisir.
           </p>
-          <Link href="/" className="homeLink">
-            ← Retour au menu
-          </Link>
+          <Link href="/" className="homeLink">← Retour au menu</Link>
         </div>
       </section>
 
@@ -215,7 +213,7 @@ export default function Bolo() {
               </table>
             </div>
 
-            {/* Macros cards */}
+            {/* Macros */}
             <div className="macros">
               <div className="macroCard">
                 <div className="label">Protéines</div>
@@ -246,32 +244,34 @@ export default function Bolo() {
           --freeze:#c9f1e6;--prot:#e9eefc;
         }
         html,body{margin:0;color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}
-        /* HERO */
-        .hero{position:relative;overflow:hidden}
-        .hero-bg{
-          position:absolute;inset:0;
+
+        /* HERO BAR — GreenHouse en grand */
+        .heroBar{position:relative;overflow:hidden}
+        .heroGradient{
+          position:absolute;inset:0;z-index:0;
           background:
-            radial-gradient(1200px 800px at -10% -10%, var(--bg2), transparent 60%),
-            radial-gradient(1100px 700px at 110% -20%, var(--bg1), transparent 65%),
+            radial-gradient(1100px 700px at -10% -20%, var(--bg2), transparent 60%),
+            radial-gradient(1000px 650px at 120% -10%, var(--bg1), transparent 65%),
             linear-gradient(180deg,#f5fbff 0%, #f7fff9 60%, #fdfefe 100%);
-          z-index:0;
         }
-        .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:42px 16px 24px}
+        .heroInner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:40px 16px 28px}
         .brand{
           margin:0;
-          font-size:clamp(54px,9vw,120px);
-          line-height:.92;letter-spacing:.4px;
+          font-size:clamp(56px,10vw,130px);
+          line-height:.9;
           background:linear-gradient(90deg,var(--grad1),var(--grad2));
-          -webkit-background-clip:text;background-clip:text;color:transparent;
-          text-shadow:0 12px 40px rgba(45,122,230,.2);
+          -webkit-background-clip:text;background-clip:text;
+          color:transparent; -webkit-text-fill-color: transparent; /* iOS/Android */
+          text-shadow:0 14px 40px rgba(45,122,230,.22);
+          font-weight:900; letter-spacing:.5px;
         }
-        .sub{margin:6px 0 8px;font-size:clamp(16px,2.3vw,22px);color:#0c6b56;font-weight:700}
+        .sub{margin:6px 0 10px;font-size:clamp(16px,2.5vw,22px);color:#0c6b56;font-weight:800}
         .pitch{margin:0 0 10px;color:var(--muted)}
         .homeLink{display:inline-block;margin-top:4px;color:#2553d8;text-decoration:none}
         .homeLink:hover{text-decoration:underline}
 
-        /* LAYOUT */
-        .wrap{background:linear-gradient(180deg,#fdfefe,#f5fbff);padding:10px 0 60px}
+        /* PAGE */
+        .wrap{background:linear-gradient(180deg,#fdfefe,#f5fbff);padding:12px 0 60px}
         .card{max-width:1100px;margin:0 auto;background:var(--card);border-radius:24px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.06)}
         .cardHead{padding:10px 6px 4px}
         .title{margin:0 0 8px;font-size:clamp(28px,4.5vw,44px)}
