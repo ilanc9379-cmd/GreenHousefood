@@ -1,213 +1,225 @@
-// pages/index.js
+// pages/plats/pates-poulet-poivron.jsx
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-const PLATS = [
-  {
-    id: 101,
-    nom: "Pâtes complètes — crème légère, champignons & oignons",
-    type: "Gourmand",
-    calories: 780, proteines: 42, glucides: 84, lipides: 28,
-    prix: 9.0,
-    resume: "Pâtes complètes, crème légère, champignons, oignons.",
-  },
-  {
-    id: 201,
-    nom: "Pâtes complètes saumon crème",
-    type: "Gourmand",
-    calories: 760, proteines: 35, glucides: 82, lipides: 28,
-    prix: 10.0,
-    resume: "Saumon, crème, aneth, ail.",
-  },
-  {
-    id: 202,
-    nom: "Lasagnes saumon & épinards",
-    type: "Gourmand",
-    calories: 820, proteines: 40, glucides: 74, lipides: 40,
-    prix: 11.0,
-    resume: "Saumon, épinards, béchamel, fromage râpé.",
-  },
-  {
-    id: 203,
-    nom: "Wrap falafel & crudités (sauce bibalaka)",
-    type: "Diète",
-    calories: 680, proteines: 26, glucides: 86, lipides: 22,
-    prix: 9.0,
-    resume: "Falafels maison, crudités, sauce au fromage blanc alsacien.",
-  },
-];
+export default function PlatPouletPoivron() {
+  // --- Données plat ---
+  const portionGrams = 600;
+  const price = 9.9;
+  const kcalPortion = 689;
+  const protPortion = 62;
+  const glucPortion = 86;
+  const lipPortion  = 10;
 
-const euro = (n) => `${n.toFixed(2).replace(".", ",")} €`;
+  // Dérivés /100 g
+  const kcal100 = +(kcalPortion / (portionGrams/100)).toFixed(1);
+  const prot100 = +(protPortion / (portionGrams/100)).toFixed(1);
+  const gluc100 = +(glucPortion / (portionGrams/100)).toFixed(1);
+  const lip100  = +(lipPortion  / (portionGrams/100)).toFixed(1);
 
-const Chip = ({ active, onClick, children }) => (
-  <button onClick={onClick} className={`chip ${active ? "chip--on" : ""}`} aria-pressed={active}>
-    {children}
-  </button>
-);
+  const ingredients = [
+    { name: "Pâtes de seigle artisanales (œufs plein air)", qty: "200 g" },
+    { name: "Poulet émincé (cuit)", qty: "150 g" },
+    { name: "Poivron", qty: "100 g" },
+    { name: "Julienne de légumes (carotte/courgette/poireau…)", qty: "150 g" },
+    { name: "Sauce poivron (poivron, ail, oignon, herbes)", qty: "—" },
+    { name: "Sel, poivre", qty: "—" },
+  ];
 
-export default function Home() {
-  const [filtre, setFiltre] = useState("Tous");
-  const [q, setQ] = useState("");
-
-  const platsFiltres = useMemo(() => {
-    return PLATS.filter((p) => {
-      const okType = filtre === "Tous" ? true : p.type === filtre;
-      const okTexte =
-        !q ||
-        p.nom.toLowerCase().includes(q.toLowerCase()) ||
-        p.resume.toLowerCase().includes(q.toLowerCase());
-      return okType && okTexte;
-    });
-  }, [filtre, q]);
+  // Prix × quantité
+  const [qty, setQty] = useState(1);
+  const nf = useMemo(
+    () => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }),
+    []
+  );
 
   return (
     <>
       <Head>
-        <title>GreenHouse — Traiteur | Diététique & Gourmand</title>
-        <meta name="description" content="GreenHouse — Traiteur artisanal : Diététique & Gourmand. Le bon plat au bon prix." />
-        <link rel="icon" href="/favicon.png" />
+        <title>GreenHouse — Pâtes poulet & poivron</title>
+        <meta
+          name="description"
+          content="Pâtes de seigle, poulet émincé, julienne de légumes et sauce poivron maison. Portion 600 g. Surgelé. 9,90 €."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <main className="wrap">
-        {/* HEADER FIXE */}
-        <header className="header">
-          <Image src="/favicon.png" alt="Logo GreenHouse" width={40} height={40} className="logo" />
-          <h1 className="brand-name">GreenHouse</h1>
+      <main className="page">
+        {/* Bandeau / marque */}
+        <header className="hero">
+          <div className="brand">GreenHouse</div>
+          <p className="slogan">Traiteur — Diététique & Gourmand</p>
+          <p className="lead">
+            Des plats maison bons et équilibrés, cuisinés en Alsace, prêts à être dégustés.
+          </p>
+          <Link href="/" className="back">← Retour au menu</Link>
         </header>
 
-        {/* HERO */}
-        <section className="hero">
-          <p className="subtitle">
-            Traiteur artisanal — <strong>Diététique & Gourmand</strong>
+        {/* Titre */}
+        <section className="container">
+          <h1 className="title">Pâtes émincé de poulet, julienne de légumes, sauce poivron</h1>
+
+          <div className="badges">
+            <span className="badge frozen">Surgelé</span>
+            <span className="badge prot">Riche en protéines</span>
+          </div>
+
+          <p className="meta">
+            <strong>Portion :</strong> {portionGrams} g · <strong>prêt en</strong> 20 min <em>au four</em> ·
+            8 min <em>au micro-ondes</em> · 10 min <em>à la poêle</em>
           </p>
 
-          <div className="chips">
-            <Chip active={filtre === "Tous"} onClick={() => setFiltre("Tous")}>Tous</Chip>
-            <Chip active={filtre === "Diète"} onClick={() => setFiltre("Diète")}>Diète</Chip>
-            <Chip active={filtre === "Gourmand"} onClick={() => setFiltre("Gourmand")}>Gourmand</Chip>
+          <p className="desc">
+            Pâtes de seigle artisanales, poulet émincé, julienne de légumes et
+            sauce poivron maison (poivron, ail, oignon, herbes). Un plat
+            généreux, équilibré et parfumé pour le quotidien.
+          </p>
+
+          {/* Bloc prix */}
+          <div className="priceCard">
+            <div className="priceHead">Prix unitaire</div>
+            <div className="price">{nf.format(price)}</div>
+            <div className="qtyRow">
+              <button aria-label="Diminuer" onClick={() => setQty(q => Math.max(1, q-1))}>−</button>
+              <input
+                type="number"
+                min={1}
+                value={qty}
+                onChange={(e)=>setQty(Math.max(1, parseInt(e.target.value||"1",10)))}
+              />
+              <button aria-label="Augmenter" onClick={() => setQty(q => q+1)}>+</button>
+            </div>
+            <div className="totalLabel">Total ({qty} plat{qty>1?"s":""})</div>
+            <div className="total">{nf.format((price*qty).toFixed(2))}</div>
+            <button className="cta">Commander</button>
           </div>
 
-          <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Rechercher un plat…"
-            className="search"
-            aria-label="Rechercher un plat"
-          />
-        </section>
+          {/* 2 colonnes : Ingrédients / Valeurs */}
+          <div className="twoCols">
+            <section className="card">
+              <h2>Ingrédients</h2>
+              <ul className="ingList">
+                {ingredients.map((it) => (
+                  <li key={it.name}>
+                    <span>{it.name}</span>
+                    <strong>{it.qty}</strong>
+                  </li>
+                ))}
+              </ul>
+              <p className="allergenes">Allergènes : gluten (seigle, blé), œufs.</p>
+            </section>
 
-        {/* PLATS FRAIS */}
-        <section className="grid">
-          {platsFiltres.map((p) => (
-            <article key={p.id} className="card">
-              <div className="card-top">
-                <span className={`badge ${p.type === "Diète" ? "bd-diet" : "bd-gour"}`}>{p.type}</span>
-                <h3 className="title">{p.nom}</h3>
-                <p className="resume">{p.resume}</p>
+            <section className="card">
+              <h2>Valeurs nutritionnelles</h2>
+              <div className="nutri">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Valeurs</th>
+                      <th>Pour 100 g</th>
+                      <th>Par portion ({portionGrams} g)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Énergie</td><td>{kcal100} kcal</td><td>{kcalPortion} kcal</td></tr>
+                    <tr><td>Protéines</td><td>{prot100} g</td><td>{protPortion} g</td></tr>
+                    <tr><td>Glucides</td><td>{gluc100} g</td><td>{glucPortion} g</td></tr>
+                    <tr><td>Lipides</td><td>{lip100} g</td><td>{lipPortion} g</td></tr>
+                  </tbody>
+                </table>
               </div>
-              <div className="macros">
-                <div><small>kcal</small><div className="num">{p.calories}</div></div>
-                <div><small>Prot.</small><div className="num">{p.proteines} g</div></div>
-                <div><small>Gluc.</small><div className="num">{p.glucides} g</div></div>
-                <div><small>Lip.</small><div className="num">{p.lipides} g</div></div>
-              </div>
-              <div className="cta">
-                <div className="price">{euro(p.prix)}</div>
-                <button className="btn">Commander</button>
-              </div>
-            </article>
-          ))}
-        </section>
-
-        {/* SURGELÉS */}
-        <section className="sect-freeze">
-          <div className="freeze-head">
-            <h2>Nos plats surgelés ❄️</h2>
-            <span className="badge badge-freeze">Surgelé</span>
+            </section>
           </div>
 
-          <div className="grid">
-            <article className="card card-freeze">
-              <div className="card-top">
-                <span className="badge badge-freeze">Surgelé</span>
-                <h3 className="title">Pâtes bolognaise maison</h3>
-                <p className="resume">Barquette 600 g — prêt en 20 mn au four (ou 8 mn micro-ondes).</p>
-              </div>
-              <div className="cta">
-                <div className="price">9,90 €</div>
-                <Link href="/plats/bolo" className="btn btn-freeze">Voir la fiche</Link>
-              </div>
-            </article>
-          </div>
-        </section>
+          {/* Conservation */}
+          <section className="card">
+            <h2>Conservation</h2>
+            <ul className="cons">
+              <li>Conserver <strong>au congélateur</strong> : maximum 4 mois.</li>
+              <li>Après décongélation : <strong>48h au réfrigérateur</strong>.</li>
+              <li><strong>Ne pas recongeler</strong> un produit décongelé.</li>
+            </ul>
+            <p className="note">
+              La surgélation est une méthode naturelle qui permet de préserver la fraîcheur,
+              la texture et les qualités nutritionnelles des aliments, sans ajout de conservateurs.
+            </p>
+          </section>
 
-        {/* FOOTER */}
-        <footer className="foot">
-          <p>© {new Date().getFullYear()} GreenHouse — Traiteur artisanal</p>
-        </footer>
+          <footer className="foot">
+            © {new Date().getFullYear()} GreenHouse — Traiteur artisanal
+          </footer>
+        </section>
       </main>
 
       <style jsx>{`
-        :root {
-          --bg1: #e8f7ff; --bg2: #dff8ee;
-          --ink: #0b1020; --muted: #485060; --card: #ffffff;
-          --ring: rgba(10, 140, 120, 0.22);
-          --diet: #1aa87b; --gour: #e85b37;
-          --brand1: #0aa64c; --brand2: #2d7ae6;
-          --freeze:#3aa3ff;
+        :root{
+          --ink:#0b1020;--muted:#586071;--card:#ffffff;
+          --diet:#1aa87b;--prot:#2d7ae6;--frozen:#3bb6c4;
+          --brand1:#00c26e;--brand2:#2d7ae6;
+          --bg1:#dff8ee;--bg2:#e9f2ff;
         }
-        body { margin: 0; color: var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto; }
+        html,body,#__next{height:100%}
+        body{margin:0;color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
 
-        .wrap { min-height: 100%; background: linear-gradient(180deg, #f5fbff, #f7fff9 60%, #fdfefe 100%); }
-
-        /* HEADER */
-        .header {
-          position: sticky; top: 0; z-index: 100;
-          background: white; display: flex; align-items: center; gap: 12px;
-          padding: 10px 20px; box-shadow: 0 4px 15px rgba(0,0,0,.08);
+        .page{
+          min-height:100%;
+          background:
+            radial-gradient(1000px 700px at -10% -10%, var(--bg2), transparent 60%),
+            radial-gradient(900px 600px at 110% -20%, var(--bg1), transparent 65%),
+            linear-gradient(180deg,#f6fffb 0%,#f6fbff 60%,#fbfeff 100%);
         }
-        .brand-name {
-          font-size: 28px; font-weight: 900; margin: 0;
-          background: linear-gradient(90deg, var(--brand1), var(--brand2));
-          -webkit-background-clip: text; background-clip: text; color: transparent;
+
+        .hero{padding:40px 18px 10px; text-align:left}
+        .brand{
+          font-weight:900; letter-spacing:.5px;
+          font-size:clamp(44px, 8vw, 84px);
+          background:linear-gradient(90deg,var(--brand1),var(--brand2));
+          -webkit-background-clip:text; background-clip:text; color:transparent;
         }
-        .logo { border-radius: 6px; }
+        .slogan{margin:6px 0 6px; color:var(--muted); font-size:18px;}
+        .lead{margin:0 0 12px; color:var(--muted);}
+        .back{display:inline-block; margin-top:6px; color:#2056d6;}
 
-        .hero { max-width: 1100px; margin: 20px auto; padding: 20px; text-align: center; }
-        .subtitle { color: var(--muted); font-size: 18px; }
+        .container{max-width:1100px; margin:0 auto; padding:6px 18px 40px;}
+        .title{font-size:clamp(26px, 4.5vw, 44px); margin:8px 0 6px;}
+        .badges{display:flex; gap:8px; margin:6px 0 10px;}
+        .badge{padding:6px 12px; border-radius:999px; font-weight:700;}
+        .badge.frozen{background:rgba(59,182,196,.15); color:#046b74;}
+        .badge.prot{background:rgba(45,122,230,.12); color:#124a9c;}
+        .meta{color:var(--muted); margin:0 0 10px;}
+        .desc{margin:0 0 18px; color:#243048;}
 
-        .chips { display: flex; justify-content: center; gap: 10px; margin: 16px 0; }
-        .chip { border: 1px solid rgba(0,0,0,0.08); background: white; padding: 8px 14px; border-radius: 999px; font-weight: 600; cursor: pointer; }
-        .chip--on { background: linear-gradient(90deg, rgba(13,171,110,.12), rgba(45,122,230,.12)); box-shadow: 0 0 0 3px var(--ring) inset; }
-        .search { width: 100%; max-width: 500px; border: 1px solid rgba(0,0,0,.08); background: white; height: 44px; border-radius: 14px; padding: 0 14px; font-size: 16px; box-shadow: 0 6px 15px rgba(0,0,0,.05); }
+        .priceCard{
+          margin:14px 0 20px; width:100%; max-width:320px;
+          background:var(--card); border-radius:18px; padding:16px;
+          box-shadow:0 10px 30px rgba(0,0,0,.06);
+        }
+        .priceHead{font-size:12px; color:var(--muted); text-transform:uppercase;}
+        .price{font-size:34px; font-weight:800; margin-top:2px;}
+        .qtyRow{display:flex; align-items:center; gap:10px; margin-top:12px;}
+        .qtyRow button{height:40px; width:40px; border-radius:12px; border:1px solid rgba(0,0,0,.15);}
+        .qtyRow input{height:40px; width:70px; text-align:center; border-radius:12px; border:1px solid rgba(0,0,0,.15);}
+        .totalLabel{margin-top:8px; color:var(--muted);}
+        .total{font-size:22px; font-weight:700;}
+        .cta{
+          margin-top:12px; width:100%; border:none; color:#fff; font-weight:700; padding:12px 16px; border-radius:14px; cursor:pointer;
+          background:linear-gradient(90deg,var(--brand1),var(--brand2));
+        }
 
-        .grid { max-width: 1100px; margin: 20px auto; padding: 0 20px; display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .twoCols{display:grid; grid-template-columns:1fr; gap:16px; margin-top:8px;}
+        @media(min-width:900px){ .twoCols{grid-template-columns:1fr 1fr;} }
 
-        .card { background: var(--card); border-radius: 18px; padding: 18px; box-shadow: 0 6px 18px rgba(0,0,0,.08); display: grid; gap: 14px; }
-        .card-top { display: grid; gap: 8px; }
-        .badge { display:inline-flex; align-items:center; padding:4px 10px; border-radius:999px; font-weight:700; font-size:12px; }
-        .bd-diet { background: rgba(26,168,123,.12); color:#0c6d50; }
-        .bd-gour { background: rgba(232,91,55,.12); color:#9c2d10; }
-        .badge-freeze { background: rgba(58,163,255,.15); color:#065ea8; }
-
-        .card-freeze { border: 2px solid var(--freeze); background: linear-gradient(180deg,#f0f8ff,#ffffff); }
-
-        .title { margin: 0; font-size: 20px; }
-        .resume { margin: 0; color: var(--muted); }
-        .macros { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; border-radius: 12px; padding: 10px; background:#f7fbff; }
-        .num { font-weight: 700; }
-
-        .cta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-        .price { font-size: 20px; font-weight: 800; }
-        .btn { padding: 8px 14px; border-radius: 12px; border: none; color: white; font-weight: 700; cursor: pointer; background: linear-gradient(90deg, var(--brand1), var(--brand2)); }
-        .btn-freeze { background: linear-gradient(90deg,#3aa3ff,#0066cc); }
-
-        .sect-freeze { background: linear-gradient(180deg,#e6f4ff,#ffffff); padding: 30px 20px; margin-top: 30px; }
-        .freeze-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
-
-        .foot { text-align: center; color: var(--muted); padding: 30px; }
+        .card{background:var(--card); border-radius:18px; padding:16px; box-shadow:0 10px 30px rgba(0,0,0,.06);}
+        .ingList{list-style:none; padding:0; margin:0; display:grid; gap:8px;}
+        .ingList li{display:flex; justify-content:space-between; border-bottom:1px solid rgba(0,0,0,.06); padding:6px 0;}
+        .allergenes{margin-top:10px; color:var(--muted);}
+        .nutri table{width:100%; border-collapse:collapse; font-size:15px;}
+        .nutri thead th{background:#f2f6ff; text-align:left; padding:10px;}
+        .nutri tbody td{padding:10px; border-top:1px solid rgba(0,0,0,.06);}
+        .cons{margin:0; padding-left:18px;}
+        .note{margin-top:10px; font-size:14px; color:var(--muted);}
+        .foot{margin-top:24px; text-align:center; color:var(--muted);}
       `}</style>
     </>
   );
