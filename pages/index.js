@@ -1,11 +1,14 @@
 // pages/index.js
 import Head from "next/head";
+import Link from "next/link";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 /* ============
    DONNÉES — PLATS
    ============ */
 const PLATS = [
+  // existants
   {
     id: 101,
     nom: "Pâtes complètes — crème légère, champignons & oignons",
@@ -49,17 +52,17 @@ const PLATS = [
     calories: 680, proteines: 26, glucides: 86, lipides: 22,
     prix: 9.0,
     resume: "Galette complète 100 g, falafels 150 g, crudités, sauce au fromage blanc alsacien.",
-    surgele: true, // version surgelée
+    surgele: true,
   },
 
-  // Nouveaux (Diète surgelé)
+  // DIÈTE surgelé ajoutés
   {
     id: 301,
     nom: "Gratin de patates douces (Diète, surgelé)",
     type: "Diète",
     calories: 520, proteines: 18, glucides: 62, lipides: 18,
     prix: 8.5,
-    resume: "Patates douces rôties, légumes & gratiné léger — prêt à réchauffer.",
+    resume: "Patates douces rôties & gratiné léger — prêt à réchauffer.",
     surgele: true,
   },
   {
@@ -72,13 +75,37 @@ const PLATS = [
     surgele: true,
   },
 
-  // 👉 Ajoute ici les autres plats manquants (copie un objet).
+  // NOUVEAU — d’après tes captures
+  {
+    id: 401,
+    nom: "Lasagne — potiron & fromage Gouda",
+    type: "Gourmand",
+    // par portion 440 g : 603 kcal / 44 g prot / 44 g gluc / 29 g lip
+    calories: 603, proteines: 44, glucides: 44, lipides: 29,
+    prix: 12.9,
+    resume:
+      "Bœuf, potiron, carottes, sauce bolognaise savoureuse et plaques de lasagnes fraîches. Fromage Gouda.",
+    surgele: true,
+  },
+
+  // NOUVEAU — fiche dédiée
+  {
+    id: 501,
+    nom: "Pâtes bolognaise maison (fiche détaillée)",
+    type: "Gourmand",
+    calories: 700, proteines: 54.3, glucides: 89, lipides: 15.8,
+    prix: 9.9,
+    resume:
+      "200 g pâtes seigle, 150 g bœuf 5% MG, 150 g carottes, 100 g sauce tomate.",
+    surgele: false,
+    lien: "/plats/bolo",
+  },
 ];
 
 /* ============
    SPÉCIAUX
    ============ */
-const FALAFEL_100G = { kcal: 240, prot: 9, gluc: 22, lip: 12 }; // macros /100g
+const FALAFEL_100G = { kcal: 240, prot: 9, gluc: 22, lip: 12 }; // macros /100 g
 const FARINES = ["Seigle", "Aromette", "Complète"]; // pâtes fraîches
 
 /* Helpers */
@@ -90,7 +117,7 @@ const Chip = ({ active, onClick, children }) => (
 );
 
 export default function Home() {
-  const [filtre, setFiltre] = useState("Tous"); // Tous | Diète | Gourmand
+  const [filtre, setFiltre] = useState("Tous");
   const [q, setQ] = useState("");
 
   const platsFiltres = useMemo(() => {
@@ -113,14 +140,15 @@ export default function Home() {
       <main className="wrap">
         {/* HERO */}
         <header className="hero">
-          <h1 className="brand">GreenHouse</h1>
+          <div className="brandline">
+            <Image src="/favicon.png" alt="GreenHouse" width={96} height={96} className="logo-big" priority />
+            <h1 className="brand">GreenHouse</h1>
+          </div>
           <p className="subtitle">Traiteur — <strong>Diététique & Gourmand</strong></p>
 
-          {/* Bandeau infos */}
           <div className="info-banner">
-            <div>🍝 <b>Pâtes fraîches</b> (7 €/kg) — disponibles les <b>lundis</b> & <b>jeudis</b>. Farines&nbsp;:
-              {" "}{FARINES.join(" · ")}.</div>
-            <div>🧆 <b>Falafels en vrac — surgelés</b> (au poids). Macros indiquées pour 100 g.</div>
+            <div>🍝 <b>Pâtes fraîches</b> (7 €/kg) — disponibles <b>lundi & jeudi</b>. Farines : {FARINES.join(" · ")}.</div>
+            <div>🧆 <b>Falafels en vrac — surgelés</b> (au poids). Macros ci-dessous pour 100 g.</div>
           </div>
 
           <div className="chips">
@@ -191,7 +219,11 @@ export default function Home() {
 
               <div className="cta">
                 <div className="price">{euro(p.prix)}</div>
-                <button className="btn">Commander</button>
+                {p.lien ? (
+                  <Link href={p.lien} className="btn btn-ghost">Voir la fiche</Link>
+                ) : (
+                  <button className="btn">Commander</button>
+                )}
               </div>
             </article>
           ))}
@@ -226,7 +258,7 @@ export default function Home() {
         html,body,#__next{height:100%}
         body{margin:0;color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
 
-        /* Fond vivant (dégradé animé) */
+        /* Fond vivant */
         .wrap{
           min-height:100%;
           background:
@@ -243,7 +275,9 @@ export default function Home() {
         }
         @keyframes float{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
-        .hero{max-width:1100px;margin:0 auto;padding:56px 20px 18px;text-align:left}
+        .hero{max-width:1100px;margin:0 auto;padding:56px 20px 18px}
+        .brandline{display:flex;align-items:center;gap:14px}
+        .logo-big{border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
         .brand{
           margin:0; font-size:clamp(64px, 10vw, 120px); line-height:.9;
           background:linear-gradient(90deg, var(--brand1), #16b36e, #24a0ff, var(--brand2));
@@ -252,13 +286,12 @@ export default function Home() {
           animation:shine 6s ease-in-out infinite alternate; letter-spacing:.5px;
         }
         @keyframes shine{to{background-position:100% 0}}
-
         .subtitle{margin:8px 0 16px;color:var(--muted);font-size:clamp(18px,2.6vw,26px)}
         .subtitle strong{color:#0d6b57}
 
         .info-banner{
           display:grid;gap:6px;margin:14px 0 10px;padding:12px 14px;border-radius:14px;
-          background:#ffffffaa; backdrop-filter:blur(8px);
+          background:#ffffffcc; backdrop-filter:blur(8px);
           border:1px solid rgba(0,0,0,.06); box-shadow:0 8px 24px rgba(0,0,0,.06)
         }
 
@@ -303,7 +336,7 @@ export default function Home() {
         .price{font-size:22px;font-weight:800}
         .btn{padding:10px 16px;border-radius:12px;border:none;color:#fff;font-weight:700;cursor:pointer;background:linear-gradient(90deg, var(--brand1), var(--brand2));box-shadow:0 10px 25px rgba(45,122,230,.22)}
         .btn:active{transform:translateY(1px)}
-        .btn-ghost{background:transparent;color:#1b5ec8;border:1px solid rgba(27,94,200,.28);box-shadow:none}
+        .btn-ghost{background:transparent;color:#1b5ec8;border:1px solid rgba(27,94,200,.28);box-shadow:none;border-radius:12px;padding:10px 16px;text-decoration:none}
 
         .empty{grid-column:1/-1;color:var(--muted);text-align:center;padding:28px 0}
 
