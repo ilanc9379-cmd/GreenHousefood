@@ -4,391 +4,424 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 
 /* =========================
-   DONNÉES — PLATS (DIÈTE)
+   DONNÉES — À PERSONNALISER
    ========================= */
-const PLATS = [
+const FALAFEL_NUTR_100 = [
+  { k: "Énergie", v: "250 kcal" },
+  { k: "Protéines", v: "8 g" },
+  { k: "Glucides", v: "26 g" },
+  { k: "Lipides", v: "13 g" },
+  { k: "Sel", v: "1.1 g" },
+];
+
+const PASTA_VARIANTS = [
+  {
+    id: "seigle",
+    nom: "Pâtes artisanales surgelées — Seigle",
+    resume:
+      "Œufs frais plein air & farines locales. Texture rustique, goût gourmand.",
+    nutr100: [
+      { k: "Énergie", v: "280 kcal" },
+      { k: "Protéines", v: "11 g" },
+      { k: "Glucides", v: "50 g" },
+      { k: "Lipides", v: "3.5 g" },
+      { k: "Sel", v: "0.05 g" },
+    ],
+  },
+  {
+    id: "complete",
+    nom: "Pâtes artisanales surgelées — Complètes",
+    resume:
+      "Œufs frais plein air & farines locales. Riche en fibres, satiétantes.",
+    nutr100: [
+      { k: "Énergie", v: "275 kcal" },
+      { k: "Protéines", v: "11 g" },
+      { k: "Glucides", v: "53 g" },
+      { k: "Lipides", v: "2.5 g" },
+      { k: "Sel", v: "0.05 g" },
+    ],
+  },
+  {
+    id: "aromette",
+    nom: "Pâtes artisanales surgelées — Aromette",
+    resume:
+      "Œufs frais plein air & farines locales. Parfumées, idéales pour sauces légères.",
+    nutr100: [
+      { k: "Énergie", v: "280 kcal" },
+      { k: "Protéines", v: "11 g" },
+      { k: "Glucides", v: "52 g" },
+      { k: "Lipides", v: "3 g" },
+      { k: "Sel", v: "0.05 g" },
+    ],
+  },
+];
+
+const PLATS_SURGELES = [
   {
     id: "bolo",
-    nom: "Pâtes bolognaise maison",
-    type: "Diète",
-    surgele: true,
-    prix: 9.9,
+    titre: "Pâtes Bolognaise maison",
     resume:
-      "Pâtes au seigle artisanales, bœuf 5% MG, carottes, sauce tomate.",
+      "200 g pâtes au seigle, 150 g bœuf 5% MG, 150 g carottes, 100 g sauce tomate.",
     kcal: 700,
     prot: 54.3,
     gluc: 89,
     lip: 15.8,
-    href: "/plats/bolo",
+    prix: 9.9,
+    badge: "Diète",
   },
   {
-    id: "pates-poulet-poivron",
-    nom: "Pâtes complètes, émincé de poulet & sauce poivron",
-    type: "Diète",
-    surgele: true,
-    prix: 9.9,
+    id: "poulet-poivron",
+    titre: "Pâtes complètes — émincé de poulet, julienne de légumes, sauce poivron (maison)",
     resume:
-      "Pâtes complètes, poulet tendre, julienne de légumes, sauce poivron/ail/oignon.",
-    kcal: 689,
-    prot: 62,
-    gluc: 86,
-    lip: 10,
-    href: "/plats/pates-poulet-poivron",
-  },
-  {
-    id: "boeuf-carottes-puree",
-    nom: "Bœuf carottes & purée maison",
-    type: "Diète",
-    surgele: true,
-    prix: 9.9,
-    resume:
-      "Bourguignon maigre, carottes fondantes, purée légère de pommes de terre.",
-    kcal: 700, // valeur indicative, la fiche dédiée donne le détail
+      "Sauce poivron maison (poivron, aromates, ail, oignon, sel, poivre).",
+    kcal: 680,
     prot: 45,
-    gluc: 75,
+    gluc: 80,
     lip: 18,
-    href: "/plats/boeuf",
-  },
-  {
-    id: "pdt-poulet-haricots",
-    nom: "Pomme de terre rôtie, cuisse de poulet & haricots verts",
-    type: "Diète",
-    surgele: true,
     prix: 9.9,
-    resume:
-      "Pommes de terre rôties, cuisse de poulet (marinade paprika/moutarde), haricots verts à l’ail.",
-    kcal: 720, // estimatif propre, fiche détaillée à venir si tu veux
-    prot: 44,
-    gluc: 67,
-    lip: 26,
-    href: "#", // si tu crées la fiche, remplace par /plats/xxx
+    badge: "Diète",
   },
+  // ➜ On pourra ajouter d’autres plats ici plus tard
 ];
 
-/* ===========================================
-   FALAFELS EN VRAC — SURGELÉS (ARTISANAUX)
-   =========================================== */
-const FALAFEL_NUTR_100 = {
-  kcal: 184,
-  lipides: 7.4,
-  ags: 0.8,
-  glucides: 20.1,
-  sucres: 1.1,
-  fibres: 5.3,
-  proteines: 7.6,
-  sel: 1.1,
-};
-const FALAFEL_PRIX_KG = 10.0;
-
-/* ===========================================
-   PÂTES FRAÎCHES — CALCULS POUR 100 g (cru)
-   Recette : 4 kg farine + 1 kg semoule blé dur
-             + 1,4 kg œufs plein air + 0,4 kg eau
-   =========================================== */
-// Références nutrition (pour 100 g ingrédient)
-const REF = {
-  seigle: { kcal: 335, P: 9.0, G: 76.0, L: 2.2 },
-  complete: { kcal: 340, P: 13.2, G: 72.0, L: 2.5 },
-  aromette: { kcal: 360, P: 10.0, G: 76.0, L: 1.3 }, // proxys farine blanche/aromatisée
-  semoule: { kcal: 360, P: 12.5, G: 72.0, L: 1.5 },
-  oeufs: { kcal: 143, P: 12.6, G: 1.1, L: 9.9 },
-};
-function mix100(flourKey) {
-  const w = { flour: 4000, semoule: 1000, oeufs: 1400, eau: 400 }; // grammes
-  const total = w.flour + w.semoule + w.oeufs + w.eau; // 6800 g
-  const sum = (k) =>
-    (REF[flourKey][k] * w.flour +
-      REF.semolue?.[k] * 0 + // sécurité
-      REF.semoule[k] * w.semoule +
-      REF.oeufs[k] * w.oeufs) /
-    (total / 100);
-  return {
-    kcal: Math.round(sum("kcal") * 10) / 10,
-    P: Math.round(sum("P") * 10) / 10,
-    G: Math.round(sum("G") * 10) / 10,
-    L: Math.round(sum("L") * 10) / 10,
-  };
-}
-const PATES_100 = {
-  seigle: mix100("seigle"), // ≈ 279 kcal; P 9.7; G 55.5; L 3.6
-  complete: mix100("complete"), // ≈ 292 kcal; P 11.9; G 53.7; L 3.8
-  aromette: mix100("aromette"), // ≈ 294 kcal; P 10.3; G 55.5; L 3.0
-};
-
-/* ==============
-   PETITES HELPERS
-   ============== */
+/* ====== UI utils ====== */
 const euro = (n) => `${n.toFixed(2).replace(".", ",")} €`;
-const MailButton = ({ label = "Commander", subject = "Commande GreenHouse" }) => (
-  <a
-    className="btn"
-    href={`mailto:greenhouse.68@outlook.fr?subject=${encodeURIComponent(
-      subject
-    )}`}
-  >
-    {label}
-  </a>
+const Stat = ({ label, value }) => (
+  <div className="stat">
+    <div className="stat-k">{label}</div>
+    <div className="stat-v">{value}</div>
+  </div>
 );
 
 export default function Home() {
-  const [filtre, setFiltre] = useState("Tous"); // Tous | Diète | Surgelé
-  const [q, setQ] = useState("");
-
+  const [filtre, setFiltre] = useState("Tous"); // Tous | Diète | Gourmand
   const platsFiltres = useMemo(() => {
-    return PLATS.filter((p) => {
-      const okType =
-        filtre === "Tous"
-          ? true
-          : filtre === "Surgelé"
-          ? p.surgele
-          : p.type === filtre;
-      const okTexte =
-        !q ||
-        p.nom.toLowerCase().includes(q.toLowerCase()) ||
-        p.resume.toLowerCase().includes(q.toLowerCase());
-      return okType && okTexte;
-    });
-  }, [filtre, q]);
+    return PLATS_SURGELES.filter((p) =>
+      filtre === "Tous" ? true : p.badge === filtre
+    );
+  }, [filtre]);
 
   return (
     <>
       <Head>
-        <title>GreenHouse — Traiteur | Diète & Gourmand</title>
+        <title>GreenHouse — Traiteur · Diète & Gourmand</title>
         <meta
           name="description"
-          content="GreenHouse — Traiteur artisanal : diététique & gourmand. Plats maison surgelés, falafels artisanaux, pâtes fraîches. Mulhouse & alentours."
+          content="Des plats diététiques & gourmands cuisinés avec amour. Une gamme surgelée pour préserver au mieux les nutriments, et une gamme fraîche sous atmosphère modifiée pour une conservation optimale."
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <main className="wrap">
-        {/* HERO */}
-        <header className="hero">
-          <div className="brandline">
-            <h1 className="brand">GreenHouse</h1>
-            <p className="tag">
-              Traiteur — <strong>Diététique & Gourmand</strong>
-            </p>
-            <p className="slogan">
-              Des plats maison équilibrés, cuisinés avec soin et{" "}
-              <strong>surgelez</strong> pour préserver toutes leurs qualités.
-            </p>
-          </div>
-
-          <div className="toolbar">
-            <div className="chips">
-              {["Tous", "Diète", "Surgelé"].map((k) => (
-                <button
-                  key={k}
-                  className={`chip ${filtre === k ? "chip--on" : ""}`}
-                  onClick={() => setFiltre(k)}
-                >
-                  {k}
-                </button>
-              ))}
+      <main className="page">
+        {/* ---- HERO ---- */}
+        <section className="hero">
+          <div className="hero-bg" aria-hidden />
+          <div className="hero-inner">
+            <div className="brandline">
+              <Image
+                src="/favicon.png"
+                alt="Logo GreenHouse"
+                width={64}
+                height={64}
+                className="logo"
+                priority
+              />
+              <h1 className="title-3d">
+                <span className="gh">GreenHouse</span>
+              </h1>
             </div>
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Rechercher un plat…"
-              className="search"
-              aria-label="Rechercher un plat"
-            />
-          </div>
-        </header>
 
-        {/* LISTE PLATS */}
-        <section className="section">
-          <h2 className="h2">Nos plats (Diète · Surgelés)</h2>
+            <p className="slogan">
+              Des plats diététiques & gourmands cuisinés avec amour.{" "}
+              <strong>Gamme surgelée</strong> : préservation optimale des nutriments.{" "}
+              <strong>Gamme fraîche</strong> : conservation soignée sous atmosphère modifiée.
+            </p>
+
+            <div className="chips">
+              <button
+                className={`chip ${filtre === "Tous" ? "on" : ""}`}
+                onClick={() => setFiltre("Tous")}
+              >
+                Tous
+              </button>
+              <button
+                className={`chip ${filtre === "Diète" ? "on" : ""}`}
+                onClick={() => setFiltre("Diète")}
+              >
+                Diète
+              </button>
+              <button
+                className={`chip ${filtre === "Gourmand" ? "on" : ""}`}
+                onClick={() => setFiltre("Gourmand")}
+              >
+                Gourmand
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* ---- FALAFELS ---- */}
+        <section className="block">
+          <header className="block-head">
+            <h2 className="block-title">Falafels artisanaux — Surgelés</h2>
+            <span className="badge b-surg">Surgelés</span>
+          </header>
+
+          <div className="card big">
+            <div className="card-col">
+              <p className="lead">
+                Sans prix à l’unité — <strong>10,00 € / kg</strong>.  
+                À conserver au congélateur (max <strong>4 mois</strong>).
+              </p>
+              <p className="muted">
+                Cuisson&nbsp;: <strong>friteuse 3 min</strong> · <strong>Airfryer 15 min</strong>.
+              </p>
+              <p className="muted">Fabrication 100% artisanale.</p>
+
+              <div className="cta-row">
+                <button className="btn">Commander</button>
+              </div>
+            </div>
+
+            <div className="card-col">
+              <div className="nutr">
+                <div className="nutr-head">Valeurs nutritionnelles (pour 100 g)</div>
+                <div className="nutr-grid">
+                  {FALAFEL_NUTR_100.map((it) => (
+                    <Stat key={it.k} label={it.k} value={it.v} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ---- PÂTES SURGELÉES ---- */}
+        <section className="block">
+          <header className="block-head">
+            <h2 className="block-title">Pâtes artisanales — Surgelées</h2>
+            <span className="badge b-surg">Surgelés</span>
+          </header>
+
+          <p className="muted mb8">
+            Œufs frais <strong>plein air</strong> & farines locales.  
+            Cuisson&nbsp;: <strong>1 min 30</strong> dans l’eau bouillante.  
+            À conserver au congélateur.
+          </p>
+
+          <div className="grid">
+            {PASTA_VARIANTS.map((p) => (
+              <article key={p.id} className="card">
+                <h3 className="title">{p.nom}</h3>
+                <p className="resume">{p.resume}</p>
+                <div className="nutr">
+                  <div className="nutr-head">Valeurs nutritionnelles (100 g)</div>
+                  <div className="nutr-grid">
+                    {p.nutr100.map((n) => (
+                      <Stat key={n.k} label={n.k} value={n.v} />
+                    ))}
+                  </div>
+                </div>
+                <div className="cta-row">
+                  <button className="btn">Commander</button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* ---- PLATS SURGELÉS ---- */}
+        <section className="block">
+          <header className="block-head">
+            <h2 className="block-title">Plats surgelés</h2>
+            <span className="badge b-surg">Surgelés</span>
+          </header>
+
           <div className="grid">
             {platsFiltres.map((p) => (
               <article key={p.id} className="card">
                 <div className="card-top">
-                  <div className="badges">
-                    {p.surgele && <span className="badge bd-ice">Surgelé</span>}
-                    <span className="badge bd-diet">{p.type}</span>
-                  </div>
-                  <h3 className="title">{p.nom}</h3>
+                  <span className={`pill ${p.badge === "Diète" ? "diet" : "gour"}`}>
+                    {p.badge}
+                  </span>
+                  <h3 className="title">{p.titre}</h3>
                   <p className="resume">{p.resume}</p>
                 </div>
-
                 <div className="macros">
-                  <div>
-                    <small>kcal</small>
-                    <div className="num">{p.kcal}</div>
-                  </div>
-                  <div>
-                    <small>Prot.</small>
-                    <div className="num">{p.prot} g</div>
-                  </div>
-                  <div>
-                    <small>Gluc.</small>
-                    <div className="num">{p.gluc} g</div>
-                  </div>
-                  <div>
-                    <small>Lip.</small>
-                    <div className="num">{p.lip} g</div>
-                  </div>
+                  <Stat label="kcal" value={`${p.kcal}`} />
+                  <Stat label="Prot." value={`${p.prot} g`} />
+                  <Stat label="Gluc." value={`${p.gluc} g`} />
+                  <Stat label="Lip." value={`${p.lip} g`} />
                 </div>
-
-                <div className="cta">
+                <div className="cta-row">
                   <div className="price">{euro(p.prix)}</div>
-                  <a className="btn ghost" href={p.href}>
-                    Voir la fiche
-                  </a>
-                  <MailButton subject={`Commande plat — ${p.nom}`} />
+                  <button className="btn">Commander</button>
                 </div>
+                <p className="storage">
+                  À conserver au congélateur (max <strong>4 mois</strong>) — après
+                  décongélation, <strong>48 h au réfrigérateur</strong>.
+                </p>
               </article>
             ))}
           </div>
         </section>
 
-        {/* FALAFELS EN VRAC */}
-        <section className="section">
-          <h2 className="h2">Falafels en vrac — <span className="ice">surgelés</span></h2>
-          <div className="falafel">
-            <div className="f-left">
-              <p className="lead">
-                Falafels <strong>artisanaux</strong> (pois chiches, persil, coriandre, sésame…).
-                Idéal pour vos salades & bowls. Indication <em>surgelé</em> affichée — à conserver au congélateur.
-              </p>
-              <ul className="bul">
-                <li>Prix : <strong>{euro(FALAFEL_PRIX_KG)}/kg</strong></li>
-                <li>Origine : fabrication maison à Mulhouse</li>
-              </ul>
-              <MailButton subject="Commande — Falafels en vrac" />
-            </div>
-            <div className="f-right">
-              <table className="nutri">
-                <thead>
-                  <tr>
-                    <th colSpan={2}>Valeurs nutritionnelles (pour 100 g)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>Énergie</td><td>{FALAFEL_NUTR_100.kcal} kcal</td></tr>
-                  <tr><td>Matières grasses</td><td>{FALAFEL_NUTR_100.lipides} g (AGS {FALAFEL_NUTR_100.ags} g)</td></tr>
-                  <tr><td>Glucides</td><td>{FALAFEL_NUTR_100.glucides} g (sucres {FALAFEL_NUTR_100.sucres} g)</td></tr>
-                  <tr><td>Fibres</td><td>{FALAFEL_NUTR_100.fibres} g</td></tr>
-                  <tr><td>Protéines</td><td>{FALAFEL_NUTR_100.proteines} g</td></tr>
-                  <tr><td>Sel</td><td>{FALAFEL_NUTR_100.sel} g</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        {/* PÂTES FRAÎCHES */}
-        <section className="section">
-          <h2 className="h2">Pâtes fraîches — 7,00 €/kg</h2>
-          <p className="muted">
-            Disponibles <strong>lundi & jeudi</strong>. Farines : <strong>seigle</strong>, <strong>aromette</strong>, <strong>complète</strong> — production artisanale, œufs plein air.
-          </p>
-          <div className="grid pasta">
-            {[
-              { key: "seigle", label: "Seigle" },
-              { key: "aromette", label: "Aromette" },
-              { key: "complete", label: "Complète" },
-            ].map((x) => (
-              <article className="card" key={x.key}>
-                <div className="card-top">
-                  <h3 className="title">Pâtes {x.label}</h3>
-                  <p className="resume">Valeurs nutritionnelles pour 100 g (pâte crue).</p>
-                </div>
-                <div className="macros">
-                  <div><small>kcal</small><div className="num">{PATES_100[x.key].kcal}</div></div>
-                  <div><small>Prot.</small><div className="num">{PATES_100[x.key].P} g</div></div>
-                  <div><small>Gluc.</small><div className="num">{PATES_100[x.key].G} g</div></div>
-                  <div><small>Lip.</small><div className="num">{PATES_100[x.key].L} g</div></div>
-                </div>
-                <div className="cta">
-                  <div className="price">7,00 € / kg</div>
-                  <MailButton subject={`Commande — Pâtes fraîches ${x.label}`} />
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* FOOTER */}
+        {/* ---- FOOTER ---- */}
         <footer className="foot">
-          <p>© {new Date().getFullYear()} GreenHouse — Traiteur artisanal · Mulhouse</p>
+          <p>© {new Date().getFullYear()} GreenHouse — Traiteur · Diète & Gourmand</p>
         </footer>
       </main>
 
+      {/* ====================
+          STYLES (styled-jsx)
+          ==================== */}
       <style jsx>{`
         :root{
-          --ink:#0b1020; --muted:#475569; --card:#fff;
-          --ring:rgba(10,140,120,.22);
-          --diet:#10b981; --ice:#22d3ee;
-          --grad1:#10b981; --grad2:#2563eb;
+          --ink:#0b1020;
+          --muted:#5a6475;
+          --card:#ffffff;
+          --ring:rgba(45,122,230,.22);
+          --diet:#1aa87b;
+          --gour:#e85b37;
+          --grad1:#0aa64c;
+          --grad2:#2d7ae6;
+          --grad3:#9a3fde;
+          --bg1:#e8f7ff;
+          --bg2:#dff8ee;
         }
         html,body,#__next{height:100%}
-        body{margin:0;color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-        .wrap{
+        body{margin:0;color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+
+        /* PAGE WRAP */
+        .page{
           min-height:100%;
           background:
-            radial-gradient(1000px 700px at -10% -10%, rgba(16,185,129,.15), transparent 60%),
-            radial-gradient(900px 600px at 110% -20%, rgba(37,99,235,.12), transparent 65%),
-            linear-gradient(180deg, #f6fffb 0%, #f7fbff 45%, #ffffff 100%);
-          animation: float 20s linear infinite;
-        }
-        @keyframes float {
-          0% { background-position: 0 0, 0 0, 0 0; }
-          50% { background-position: 10px -8px, -12px 8px, 0 0; }
-          100% { background-position: 0 0, 0 0, 0 0; }
+            radial-gradient(1200px 700px at -10% -20%, var(--bg2), transparent 60%),
+            radial-gradient(1000px 600px at 110% -10%, var(--bg1), transparent 65%),
+            linear-gradient(180deg,#f7fbff 0%, #f6fff8 55%, #ffffff 100%);
         }
 
         /* HERO */
-        .hero{max-width:1200px;margin:0 auto;padding:32px 18px 12px}
-        .brand{margin:0;font-size: clamp(42px, 8vw, 96px);line-height:.95;
-          background: linear-gradient(90deg, var(--grad1), var(--grad2));
-          -webkit-background-clip:text;background-clip:text;color:transparent}
-        .tag{margin:6px 0 2px;color:var(--ink);font-size:clamp(16px,2.4vw,22px)}
-        .slogan{margin:0;color:var(--muted)}
-        .toolbar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:18px}
-        .chips{display:flex;gap:8px;flex-wrap:wrap}
-        .chip{border:1px solid rgba(0,0,0,.08);background:#fff;padding:8px 14px;border-radius:999px;font-weight:600;cursor:pointer}
-        .chip--on{border-color:transparent;background:linear-gradient(90deg, rgba(16,185,129,.14), rgba(37,99,235,.14));box-shadow:0 0 0 3px var(--ring) inset}
-        .search{flex:1;min-width:240px;height:44px;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:0 12px;outline:none;background:#fff}
-        .search:focus{box-shadow:0 0 0 4px var(--ring)}
+        .hero{position:relative;overflow:hidden}
+        .hero-inner{
+          max-width:1150px;margin:0 auto;padding:54px 20px 28px;position:relative;z-index:1;
+        }
+        .hero-bg{
+          position:absolute;inset:-20px;z-index:0;filter:saturate(1.05);
+          background:
+            radial-gradient(600px 400px at 20% 10%, rgba(10,166,76,.18), transparent 60%),
+            radial-gradient(600px 400px at 80% 0%, rgba(45,122,230,.18), transparent 60%),
+            radial-gradient(900px 600px at 50% -20%, rgba(154,63,222,.15), transparent 65%);
+          animation:bgFloat 12s ease-in-out infinite alternate;
+        }
+        @keyframes bgFloat{
+          0%{transform:translateY(-6px)}
+          100%{transform:translateY(6px)}
+        }
 
-        .section{max-width:1200px;margin:18px auto;padding:0 18px}
-        .h2{margin:6px 0 12px;font-size:clamp(22px,3vw,28px)}
-        .grid{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr))}
-        @media (max-width:860px){.grid{grid-template-columns:1fr}}
+        .brandline{display:flex;align-items:center;gap:18px}
+        .logo{border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.12)}
+        .gh{
+          display:inline-block;
+          font-size:clamp(42px,7vw,96px);
+          line-height:.95;
+          letter-spacing:.5px;
+          background:conic-gradient(from 120deg, var(--grad1), var(--grad2), var(--grad3), var(--grad1));
+          -webkit-background-clip:text;background-clip:text;color:transparent;
+          animation:hue 8s linear infinite;
+          text-shadow:0 1px 0 rgba(255,255,255,.4);
+        }
+        @keyframes hue{
+          0%{filter:hue-rotate(0deg)}
+          100%{filter:hue-rotate(360deg)}
+        }
+        .slogan{
+          margin:10px 0 18px;color:var(--muted);
+          font-size:clamp(16px,2.2vw,20px);
+        }
 
-        .card{background:var(--card);border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
-        .card-top{display:grid;gap:6px}
-        .title{margin:0;font-size:clamp(18px,2.2vw,22px)}
+        .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 4px}
+        .chip{
+          border:1px solid rgba(0,0,0,.08);background:white;
+          padding:8px 14px;border-radius:999px;font-weight:700;cursor:pointer;
+          transition:box-shadow .12s ease, transform .12s ease
+        }
+        .chip.on{
+          background:linear-gradient(90deg, rgba(10,166,76,.12), rgba(45,122,230,.12));
+          box-shadow:0 0 0 3px var(--ring) inset;border-color:transparent
+        }
+        .chip:active{transform:translateY(1px) scale(.99)}
+
+        /* SECTIONS */
+        .block{max-width:1150px;margin:18px auto;padding:0 20px}
+        .block-head{display:flex;align-items:center;gap:12px;margin:10px 0 12px}
+        .block-title{margin:0;font-size:clamp(22px,3.2vw,32px)}
+        .badge{
+          font-weight:800;font-size:12px;letter-spacing:.3px;border-radius:999px;
+          padding:6px 10px;display:inline-flex;align-items:center;gap:6px;
+          border:1px solid rgba(0,0,0,.06);background:#eef5ff;color:#0b1020;
+        }
+        .b-surg{background:rgba(154,63,222,.12);border-color:rgba(154,63,222,.25)}
+
+        /* CARDS & GRID */
+        .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+        @media (max-width:860px){ .grid{grid-template-columns:1fr} }
+
+        .card{
+          background:var(--card);border-radius:18px;padding:18px;
+          box-shadow:0 14px 35px rgba(0,0,0,.06), 0 1px 0 rgba(255,255,255,.65) inset;
+          display:grid;gap:14px
+        }
+        .big{grid-template-columns:1.2fr .8fr}
+        @media (max-width:920px){ .big{grid-template-columns:1fr} }
+
+        .title{margin:0;font-size:clamp(18px,2.4vw,24px);line-height:1.2}
         .resume{margin:0;color:var(--muted)}
-        .badges{display:flex;gap:8px}
-        .badge{padding:4px 10px;border-radius:999px;font-weight:700;font-size:12px;border:1px solid rgba(0,0,0,.06);background:#eef5ff}
-        .bd-diet{background:rgba(16,185,129,.14);border-color:rgba(16,185,129,.25)}
-        .bd-ice{background:rgba(34,211,238,.16);border-color:rgba(34,211,238,.28)}
-        .ice{color:#0b8ea4}
-        .macros{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:linear-gradient(180deg,#f9fbff,#f2f7ff);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:10px}
-        .macros small{color:var(--muted)}
-        .num{font-weight:800}
-        .cta{display:flex;gap:10px;align-items:center;justify-content:flex-end;margin-top:6px}
-        .price{margin-right:auto;font-size:20px;font-weight:800}
-        .btn{padding:10px 14px;border-radius:12px;border:none;color:#fff;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;background:linear-gradient(90deg,var(--grad1),var(--grad2));box-shadow:0 10px 25px rgba(37,99,235,.18)}
-        .btn.ghost{background:#fff;color:var(--ink);border:1px solid rgba(0,0,0,.12);box-shadow:none}
+        .lead{margin:.2rem 0 .4rem;font-size:18px}
+        .muted{color:var(--muted)}
+        .mb8{margin-bottom:8px}
 
-        /* Falafel bloc */
-        .falafel{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
-        @media (max-width:860px){.falafel{grid-template-columns:1fr}}
-        .lead{margin-top:0}
-        .bul{margin:10px 0 16px}
-        .bul li{margin:4px 0}
-        .nutri{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:14px;border:1px solid rgba(0,0,0,.08);background:#fff}
-        .nutri th{background:#f1f5ff;padding:10px;text-align:left}
-        .nutri td{padding:8px;border-top:1px solid rgba(0,0,0,.06)}
+        .pill{
+          display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;
+          font-weight:800;font-size:12px;letter-spacing:.3px;color:#0b1020;
+          background:#eef5ff;border:1px solid rgba(0,0,0,.06)
+        }
+        .diet{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
+        .gour{background:rgba(232,91,55,.12);border-color:rgba(232,91,55,.25)}
 
-        .pasta .price{font-size:18px}
+        .card-top{display:grid;gap:8px}
 
-        .foot{margin:26px 0 40px;text-align:center;color:var(--muted)}
+        .macros{
+          display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+          background:linear-gradient(180deg,#fafcff,#f3f7ff);
+          border:1px solid rgba(0,0,0,.05);border-radius:12px;padding:10px
+        }
+
+        .nutr{border:1px dashed rgba(0,0,0,.12);border-radius:14px;padding:12px}
+        .nutr-head{font-weight:700;margin-bottom:8px}
+        .nutr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+        @media (min-width:560px){ .nutr-grid{grid-template-columns:repeat(3,1fr)} }
+
+        .stat{
+          background:linear-gradient(180deg,#ffffff,#f8fbff);
+          border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:10px
+        }
+        .stat-k{font-size:12px;color:var(--muted)}
+        .stat-v{font-weight:800}
+
+        .cta-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+        .price{font-size:22px;font-weight:800}
+        .btn{
+          padding:10px 16px;border-radius:12px;border:none;color:white;font-weight:800;cursor:pointer;
+          background:linear-gradient(90deg, var(--grad1), var(--grad2));
+          box-shadow:0 12px 28px rgba(45,122,230,.22);transition:transform .12s ease
+        }
+        .btn:active{transform:translateY(1px)}
+
+        .storage{margin:0;color:var(--muted);font-size:13px}
+
+        .foot{text-align:center;color:var(--muted);padding:32px 16px 48px}
       `}</style>
     </>
   );
