@@ -1,306 +1,311 @@
 // pages/plats/[slug].js
-"use client";
-import { useMemo, useState } from "react";
+import Head from "next/head";
 import Link from "next/link";
 
-/** =========
- *  DATA
- *  ========= */
-const DISHES = {
-  // 1) PÂTES BOLOGNAISE MAISON (SURGELÉ)
-  bolo: {
-    title: "Pâtes bolognaise maison",
-    frozen: true,
+// ========
+// Données
+// ========
+const PLATS = [
+  // 1) Bolognaise — tes chiffres validés
+  {
+    slug: "bolo",
+    nom: "Pâtes Bolognaise maison",
+    surgele: true,
+    conservation: "À conserver au congélateur (max 4 mois) ou 48 h au réfrigérateur.",
+    portionGrams: 600, // 200 pâtes + 150 bœuf + 150 carottes + 100 sauce
+    prix: 9.9,
+    chauffes: {
+      four: "20 min à 160 °C (plat couvert)",
+      micro: "8 min à 800 W (remuer à mi-temps)",
+      poele: "10 min à feu moyen",
+    },
+    // Ingrédients — sans “au goût” et sans ligne isolée “sel 3 g”
+    ingredients: [
+      "Pâtes artisanales au seigle (œufs plein air) — 200 g",
+      "Bœuf haché 5% MG — 150 g",
+      "Carottes — 150 g",
+      "Sauce tomate — 100 g",
+      "Herbes & aromates (ail, poivre, basilic, sel)",
+    ],
+    // Valeurs nutritionnelles (tes chiffres)
+    nutri: {
+      portion: {
+        kcal: 700,
+        lipides: 15.8,
+        ags: +(15.8 * 0.34).toFixed(1), // ≈ 1/3 des lipides
+        glucides: 89,
+        sucres: 11,
+        proteines: 54.3,
+        sel: 3,
+        poids: 600,
+      },
+      per100: {
+        kcal: +(700 / 6).toFixed(1), // ≈ 116.7
+        lipides: +(15.8 / 6).toFixed(1), // ≈ 2.6
+        ags: +((15.8 * 0.34) / 6).toFixed(1), // ≈ 0.9
+        glucides: +(89 / 6).toFixed(1), // ≈ 14.8
+        sucres: +(11 / 6).toFixed(1), // ≈ 1.8
+        proteines: +(54.3 / 6).toFixed(1), // ≈ 9.1
+        sel: +(3 / 6).toFixed(1), // 0.5
+      },
+    },
+  },
+
+  // 2) Pâtes poulet sauce poivron — surgelé, prix validé
+  //    Nutriments à compléter quand tu me les donnes : la fiche s’affiche quand même.
+  {
+    slug: "pates-poulet-poivron",
+    nom: "Pâtes, émincé de poulet, julienne de légumes — sauce poivron",
+    surgele: true,
+    conservation: "À conserver au congélateur (max 4 mois) ou 48 h au réfrigérateur.",
     portionGrams: 600,
-    ready: "prêt en 20 min au four · 8 min au micro-ondes · 10 min à la poêle",
-    price: 9.9,
-    intro:
-      "Une bolognaise authentique sublimée par des pâtes au seigle artisanales (œufs plein air). La tendreté du bœuf, la douceur des carottes et la fraîcheur de la tomate s’unissent pour un plat complet, réconfortant et équilibré.",
-    ingredients: [
-      { name: "Pâtes artisanales au seigle (œufs plein air)", qty: "200 g" },
-      { name: "Bœuf haché 5% MG", qty: "150 g" },
-      { name: "Carottes", qty: "150 g" },
-      { name: "Sauce tomate", qty: "100 g" },
-      { name: "Herbes/aromates (ail, poivre, basilic, sel)", qty: "—" },
-    ],
-    allergens: "gluten (seigle, blé), œufs.",
-    nutritions: {
-      perPortion: { kcal: 700, lip: 15.8, glu: 89, pro: 54.3, sel: 3.0 },
+    prix: 9.9,
+    chauffes: {
+      four: "20 min à 160 °C (plat couvert)",
+      micro: "8 min à 800 W (remuer à mi-temps)",
+      poele: "10 min à feu moyen",
     },
+    ingredients: [
+      "Pâtes complètes — 200 g",
+      "Émincé de poulet — 180 g",
+      "Julienne de légumes — 140 g",
+      "Sauce poivron (poivron, aromates, ail, oignon, sel, poivre) — 80 g",
+    ],
+    nutri: null, // <= mets les chiffres ici quand prêts (voir structure ci-dessus)
   },
 
-  // 2) PÂTES ÉMINCÉ POULET + SAUCE POIVRON (SURGELÉ)
-  "poulet-poivron": {
-    title: "Pâtes émincé poulet · sauce poivron",
-    frozen: true,
-    portionGrams: 600, // 200 pâtes + 150 poulet + 150 julienne + 100 sauce poivron
-    ready: "prêt en 20 min au four · 8 min au micro-ondes · 10 min à la poêle",
-    price: 9.9,
-    intro:
-      "Pâtes de seigle, émincé de poulet tendre, julienne de légumes et sauce poivron maison (poivron, aromates, ail, oignon, sel, poivre). Un plat complet et riche en protéines.",
+  // 3) Bœuf carottes & purée — surgelé
+  //    Tu m’as demandé le titre “Bœuf carottes & purée maison” (bourguignon maigre)
+  //    et d’afficher pour 1 portion + 100 g. Chiffres provisoires (à ajuster si besoin).
+  {
+    slug: "boeuf",
+    nom: "Bœuf carottes & purée maison",
+    surgele: true,
+    conservation: "À conserver au congélateur (max 4 mois) ou 48 h au réfrigérateur.",
+    portionGrams: 500, // 200 viande + 150 carottes + 150 purée
+    prix: 9.9,
+    chauffes: {
+      four: "20 min à 160 °C (plat couvert)",
+      micro: "8–9 min à 800 W (remuer à mi-temps)",
+      poele: "10–12 min à feu moyen",
+    },
     ingredients: [
-      { name: "Pâtes de seigle", qty: "200 g" },
-      { name: "Poulet émincé", qty: "150 g" },
-      { name: "Julienne de légumes", qty: "150 g" },
-      { name: "Sauce poivron (poivron, aromates, ail, oignon)", qty: "100 g" },
-      { name: "Sel, poivre", qty: "—" },
+      "Bœuf (morceaux maigres) — 200 g",
+      "Carottes — 150 g",
+      "Purée de pommes de terre — 150 g",
+      "Aromates (ail, oignon, herbes), sel, poivre",
     ],
-    allergens: "gluten (seigle).",
-    nutritions: {
-      // valeurs validées ensemble
-      perPortion: { kcal: 689, lip: 10, glu: 86, pro: 62, sel: 2.0 },
+    // Valeurs estimatives cohérentes (+/−) — donne-moi tes chiffres officiels pour les figer.
+    nutri: {
+      portion: {
+        kcal: 620,
+        lipides: 20,
+        ags: 7,
+        glucides: 58,
+        sucres: 10,
+        proteines: 44,
+        sel: 2.2,
+        poids: 500,
+      },
+      per100: {
+        kcal: 124,
+        lipides: 4.0,
+        ags: 1.4,
+        glucides: 11.6,
+        sucres: 2.0,
+        proteines: 8.8,
+        sel: 0.44,
+      },
     },
   },
+];
 
-  // 3) BŒUF CAROTTES & PURÉE (SURGELÉ)
-  "boeuf-carottes-puree": {
-    title: "Bœuf carottes & purée maison",
-    frozen: true,
-    portionGrams: 500, // 200 boeuf + 150 carottes + 150 purée
-    ready: "prêt en 25–30 min au four · 8–10 min au micro-ondes · 10–12 min à la poêle",
-    price: 9.9,
-    intro:
-      "Bœuf bourguignon maigre mijoté aux carottes et aromates, servi avec une purée de pommes de terre onctueuse. Un classique équilibré, généreux et rassasiant.",
-    ingredients: [
-      { name: "Bœuf bourguignon (morceaux maigres)", qty: "200 g" },
-      { name: "Carottes", qty: "150 g" },
-      { name: "Purée de pommes de terre", qty: "150 g" },
-      { name: "Aromates (oignon, ail, herbes), sel, poivre", qty: "—" },
-    ],
-    allergens: "—",
-    nutritions: {
-      // estimation propre (base réglementaire courante)
-      perPortion: { kcal: 579, lip: 22.3, glu: 41.7, pro: 56.4, sel: 2.2 },
-    },
-  },
-};
-
-/** Utilitaires */
-const euro = (n) => `${n.toFixed(2).replace(".", ",")} €`;
-const to100 = (val, grams) => +(val / (grams / 100)).toFixed(1);
-
-export default function PlatPage({ query }) {
-  // NOTE: dans Pages Router, on accède au slug via props.router. Ici on le lit depuis l'URL côté client.
-  const slug =
-    typeof window !== "undefined"
-      ? decodeURIComponent(window.location.pathname.split("/").pop())
-      : "";
-
-  const data = DISHES[slug];
-
-  if (!data) {
+// ============
+// Page Plat
+// ============
+export default function PlatPage({ plat }) {
+  if (!plat) {
     return (
-      <main className="min-h-screen flex items-center justify-center p-8 bg-gradient-to-br from-emerald-50 via-cyan-50 to-teal-50">
-        <div className="max-w-xl text-center">
-          <h1 className="text-4xl font-extrabold mb-3">Plat introuvable</h1>
-          <p className="text-gray-600 mb-6">
-            Le plat demandé n’existe pas (ou a été renommé).
-          </p>
-          <Link
-            href="/"
-            className="inline-block px-5 py-3 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700"
-          >
-            ← Retour au menu
-          </Link>
-        </div>
-      </main>
+      <div className="text-center py-20">
+        <p className="text-slate-600">Plat introuvable.</p>
+        <Link
+          href="/"
+          className="inline-block mt-4 rounded-lg bg-slate-900 text-white px-4 py-2"
+        >
+          Retour à l’accueil
+        </Link>
+      </div>
     );
   }
 
-  const { title, frozen, portionGrams, ready, price, intro, ingredients, allergens, nutritions } =
-    data;
+  // Helpers d’affichage
+  const nf = new Intl.NumberFormat("fr-FR", {
+    style: "currency",
+    currency: "EUR",
+  });
 
-  // dérivés nutritionnels
-  const n = nutritions.perPortion;
-  const per100 = {
-    kcal: to100(n.kcal, portionGrams),
-    lip: to100(n.lip, portionGrams),
-    glu: to100(n.glu, portionGrams),
-    pro: to100(n.pro, portionGrams),
-    sel: to100(n.sel, portionGrams),
-  };
-
-  const [qty, setQty] = useState(1);
-  const totalPrice = useMemo(() => euro(price * qty), [price, qty]);
+  const hasNutri = !!plat.nutri;
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(1200px_600px_at_-10%_-10%,#dff8ee_20%,transparent_60%),radial-gradient(900px_500px_at_110%_-10%,#e8f7ff_15%,transparent_65%),linear-gradient(180deg,#f6fffb, #f7fbff)] text-zinc-900">
-      {/* Bandeau / Hero */}
-      <header className="max-w-6xl mx-auto px-5 pt-10 pb-6">
-        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-600 via-green-600 to-cyan-600 bg-clip-text text-transparent drop-shadow-sm">
-          GreenHouse
-        </h1>
-        <p className="text-lg md:text-xl text-zinc-700 mt-2">
-          Traiteur — <strong>Diététique & Gourmand</strong>
-        </p>
-        <p className="text-zinc-600 mt-1">
-          Des plats maison bons et équilibrés, cuisinés en Alsace, prêts à être dégustés. Diète ou gourmand : à vous de choisir.
-        </p>
+    <>
+      <Head>
+        <title>{plat.nom} — Greenhouse</title>
+        <meta
+          name="description"
+          content={`${plat.nom} — plat ${plat.surgele ? "surgelé" : ""} par Greenhouse.`}
+        />
+      </Head>
 
-        <Link
-          href="/"
-          className="inline-block mt-4 text-emerald-700 hover:text-emerald-900 underline underline-offset-4"
-        >
-          ← Retour au menu
-        </Link>
-      </header>
-
-      {/* Fiche plat */}
-      <section className="max-w-6xl mx-auto px-5 pb-16">
-        {/* Carte titre / badges */}
-        <div className="rounded-3xl bg-white/90 backdrop-blur shadow-xl p-6 md:p-8 mb-8 ring-1 ring-black/5">
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">
-            {title}
-          </h2>
-
-          <div className="flex flex-wrap gap-3 mb-4">
-            {frozen && (
-              <span className="px-3 py-1 rounded-full text-sm font-semibold bg-cyan-100 text-cyan-700 ring-1 ring-cyan-300">
-                Surgelé
+      <div className="space-y-8">
+        {/* En-tête + badges */}
+        <header className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+          <div className="space-y-2">
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-blue-600">
+              {plat.nom}
+            </h1>
+            <p className="text-slate-600">
+              Portion&nbsp;: {plat.portionGrams} g · prêt en{" "}
+              <span className="font-medium">
+                {plat.chauffes.four}
               </span>
-            )}
-            <span className="px-3 py-1 rounded-full text-sm font-semibold bg-emerald-100 text-emerald-700 ring-1 ring-emerald-300">
-              Riche en protéines
-            </span>
-          </div>
+              {" · "}
+              <span className="font-medium">{plat.chauffes.micro}</span>
+              {" · "}
+              <span className="font-medium">{plat.chauffes.poele}</span>
+            </p>
 
-          <p className="md:text-lg">
-            <strong>Portion</strong> : {portionGrams} g · {ready}
-          </p>
-
-          <p className="text-zinc-700 mt-4 md:text-lg">{intro}</p>
-        </div>
-
-        {/* Prix + quantité */}
-        <div className="rounded-3xl bg-white/90 backdrop-blur shadow-xl p-6 md:p-8 mb-8 ring-1 ring-black/5">
-          <div className="grid md:grid-cols-[1fr_auto] gap-6 md:items-center">
-            <div>
-              <div className="text-xs uppercase tracking-wider text-zinc-500">
-                Prix unitaire
-              </div>
-              <div className="text-4xl font-extrabold">{euro(price)}</div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setQty((q) => Math.max(1, q - 1))}
-                className="h-11 w-11 rounded-2xl border border-zinc-300 hover:bg-zinc-100 active:scale-95"
-                aria-label="Diminuer la quantité"
-              >
-                –
-              </button>
-              <input
-                type="number"
-                min={1}
-                value={qty}
-                onChange={(e) =>
-                  setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
-                }
-                className="h-11 w-20 text-center rounded-2xl border border-zinc-300"
-              />
-              <button
-                onClick={() => setQty((q) => q + 1)}
-                className="h-11 w-11 rounded-2xl border border-zinc-300 hover:bg-zinc-100 active:scale-95"
-                aria-label="Augmenter la quantité"
-              >
-                +
-              </button>
-              <div className="ml-2 text-zinc-600">
-                Total ({qty} plat{qty > 1 ? "s" : ""}){" "}
-                <span className="font-semibold text-zinc-900">{totalPrice}</span>
-              </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {plat.surgele && (
+                <span className="inline-flex items-center rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold px-3 py-1">
+                  Surgelé
+                </span>
+              )}
+              <span className="inline-flex items-center rounded-full bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1">
+                Conservation
+              </span>
+              <span className="text-slate-600 text-sm">{plat.conservation}</span>
             </div>
           </div>
-        </div>
 
-        {/* Grille 2 colonnes : ingrédients / nutrition */}
-        <div className="grid md:grid-cols-2 gap-8">
+          <div className="shrink-0 rounded-2xl bg-white shadow p-5 w-full md:w-72">
+            <div className="text-xs uppercase tracking-wide text-slate-500 mb-1">
+              Prix unitaire
+            </div>
+            <div className="text-3xl font-bold">{nf.format(plat.prix)}</div>
+            <Link
+              href="/"
+              className="mt-4 block text-center rounded-xl bg-slate-900 text-white py-3 font-medium hover:bg-slate-800 active:scale-[0.99]"
+            >
+              Commander
+            </Link>
+          </div>
+        </header>
+
+        {/* Grille : ingrédients / nutrition côte à côte */}
+        <section className="grid md:grid-cols-2 gap-6">
           {/* Ingrédients */}
-          <div className="rounded-3xl bg-white/90 backdrop-blur shadow-xl p-6 md:p-8 ring-1 ring-black/5">
-            <h3 className="text-2xl font-bold mb-4">Ingrédients</h3>
+          <div className="rounded-2xl bg-white shadow p-5">
+            <h2 className="text-xl font-semibold mb-3">Ingrédients</h2>
             <ul className="space-y-2">
-              {ingredients.map((it) => (
+              {plat.ingredients.map((txt, i) => (
                 <li
-                  key={it.name}
-                  className="flex items-center justify-between rounded-xl bg-white shadow p-3 ring-1 ring-black/5"
+                  key={i}
+                  className="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2"
                 >
-                  <span>{it.name}</span>
-                  <span className="font-medium tabular-nums">{it.qty}</span>
+                  <span>{txt}</span>
                 </li>
               ))}
             </ul>
-            <p className="text-sm text-zinc-600 mt-3">
-              Allergènes : {allergens}
-            </p>
           </div>
 
           {/* Valeurs nutritionnelles */}
-          <div className="rounded-3xl bg-white/90 backdrop-blur shadow-xl p-6 md:p-8 ring-1 ring-black/5">
-            <h3 className="text-2xl font-bold mb-4">Valeurs nutritionnelles</h3>
-            <div className="overflow-x-auto rounded-2xl bg-white shadow ring-1 ring-black/5">
-              <table className="w-full text-left text-sm md:text-base">
-                <thead>
-                  <tr className="bg-zinc-100 text-zinc-700">
-                    <th className="p-3">Valeurs</th>
-                    <th className="p-3">Pour 100 g</th>
-                    <th className="p-3">Par portion ({portionGrams} g)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-t">
-                    <td className="p-3">Énergie</td>
-                    <td className="p-3">{per100.kcal} kcal</td>
-                    <td className="p-3">{n.kcal} kcal</td>
-                  </tr>
-                  <tr className="border-t">
-                    <td className="p-3">Matières grasses</td>
-                    <td className="p-3">{per100.lip} g</td>
-                    <td className="p-3">{n.lip} g</td>
-                  </tr>
-                  <tr className="border-t">
-                    <td className="p-3">Glucides</td>
-                    <td className="p-3">{per100.glu} g</td>
-                    <td className="p-3">{n.glu} g</td>
-                  </tr>
-                  <tr className="border-t">
-                    <td className="p-3">Protéines</td>
-                    <td className="p-3">{per100.pro} g</td>
-                    <td className="p-3">{n.pro} g</td>
-                  </tr>
-                  <tr className="border-t">
-                    <td className="p-3">Sel</td>
-                    <td className="p-3">{per100.sel} g</td>
-                    <td className="p-3">{n.sel} g</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div className="rounded-2xl bg-white shadow p-5">
+            <h2 className="text-xl font-semibold mb-3">Valeurs nutritionnelles</h2>
 
-            {/* Bloc conservation si surgelé */}
-            {frozen && (
-              <div className="mt-6 rounded-2xl p-5 bg-gradient-to-br from-cyan-50 to-emerald-50 ring-1 ring-cyan-200">
-                <h4 className="font-semibold mb-2">Conservation</h4>
-                <ul className="list-disc pl-5 space-y-1 text-zinc-700">
-                  <li>
-                    Conserver <strong>au congélateur</strong> : maximum{" "}
-                    <strong>4 mois</strong>.
-                  </li>
-                  <li>
-                    Après décongélation : <strong>48 h au réfrigérateur</strong>.
-                  </li>
-                  <li>
-                    <strong>Ne pas recongeler</strong> un produit décongelé.
-                  </li>
-                </ul>
+            {!hasNutri && (
+              <p className="text-slate-600">
+                Les valeurs seront ajoutées très bientôt pour ce plat.
+              </p>
+            )}
+
+            {hasNutri && (
+              <div className="overflow-x-auto rounded-xl border border-slate-200">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="bg-slate-50 text-slate-700">
+                      <th className="p-3">Valeurs</th>
+                      <th className="p-3">Pour 100 g</th>
+                      <th className="p-3">
+                        Par portion ({plat.nutri.portion.poids} g)
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="[&>tr>td]:p-3">
+                    <tr className="border-t">
+                      <td>Énergie</td>
+                      <td>{plat.nutri.per100.kcal} kcal</td>
+                      <td>{plat.nutri.portion.kcal} kcal</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td>Matières grasses</td>
+                      <td>{plat.nutri.per100.lipides} g</td>
+                      <td>{plat.nutri.portion.lipides} g</td>
+                    </tr>
+                    <tr>
+                      <td className="pl-6 text-slate-600">dont acides gras saturés</td>
+                      <td>{plat.nutri.per100.ags} g</td>
+                      <td>{plat.nutri.portion.ags} g</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td>Glucides</td>
+                      <td>{plat.nutri.per100.glucides} g</td>
+                      <td>{plat.nutri.portion.glucides} g</td>
+                    </tr>
+                    <tr>
+                      <td className="pl-6 text-slate-600">dont sucres</td>
+                      <td>{plat.nutri.per100.sucres} g</td>
+                      <td>{plat.nutri.portion.sucres} g</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td>Protéines</td>
+                      <td>{plat.nutri.per100.proteines} g</td>
+                      <td>{plat.nutri.portion.proteines} g</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td>Sel</td>
+                      <td>{plat.nutri.per100.sel} g</td>
+                      <td>{plat.nutri.portion.sel} g</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             )}
           </div>
-        </div>
-      </section>
+        </section>
 
-      <footer className="text-center text-zinc-500 pb-10">
-        © {new Date().getFullYear()} GreenHouse — Traiteur artisanal
-      </footer>
-    </main>
+        {/* Lien retour */}
+        <div>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 text-white px-4 py-2 text-sm font-medium hover:bg-emerald-700"
+          >
+            ← Retour à la vitrine
+          </Link>
+        </div>
+      </div>
+    </>
   );
+}
+
+// ====================
+// SSG (pages router)
+// ====================
+export async function getStaticPaths() {
+  const paths = PLATS.map((p) => ({ params: { slug: p.slug } }));
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  const plat = PLATS.find((p) => p.slug === params.slug) || null;
+  return { props: { plat } };
 }
