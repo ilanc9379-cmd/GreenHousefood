@@ -1,91 +1,132 @@
 // pages/plats-surgeles/index.js
 import Link from "next/link";
 
-export default function ListeSurgeles() {
+export default function PlatsSurgeles() {
+  const plats = [
+    {
+      slug: "bolo",
+      nom: "Pâtes bolognaise maison",
+      resume: "Pâtes au seigle artisanales, bœuf 5% MG, carottes, sauce tomate maison.",
+      kcal: 700, prot: 54.3, gluc: 89, lip: 15.8, prix: 9.9,
+    },
+    {
+      slug: "poulet-poivron",
+      nom: "Pâtes complètes • émincé de poulet • sauce poivron",
+      resume: "Pâtes complètes artisanales, poulet tendre, julienne de légumes et sauce poivron maison.",
+      kcal: 689, prot: 62, gluc: 86, lip: 10, prix: 9.9,
+    },
+    {
+      slug: "boeuf",
+      nom: "Bœuf carottes & purée",
+      resume: "Bourguignon maigre, carottes fondantes, purée de pomme de terre.",
+      kcal: 710, prot: 42, gluc: 86, lip: 22, prix: 9.9,
+    },
+    {
+      slug: "poulet-pommes-haricots",
+      nom: "Poulet, pommes de terre rôties & haricots verts",
+      resume: "Cuisse de poulet marinée, pommes de terre au four, haricots verts.",
+      kcal: 720, prot: 48, gluc: 68, lip: 22, prix: 9.9,
+    },
+  ];
+
+  const euro = (n) => `${n.toFixed(2).replace(".", ",")} €`;
+
   return (
     <main className="wrap">
       <header className="hero">
-        <h1 className="brand">Greenhouse</h1>
-        <p className="tagline">Traiteur — Diététique & Gourmand</p>
-        <p className="note">Plats <strong>surgelés</strong> — à conserver 4 mois au congélateur (48h au réfrigérateur après décongélation).</p>
+        <h1 className="brand">GreenHouse</h1>
+        <p className="subtitle">Traiteur — <strong>Diététique & Gourmand</strong></p>
+        <p className="intro">
+          Des plats maison **surgelés** pour préserver la fraîcheur et les nutriments.  
+          Réchauffage rapide : four 20&nbsp;min à 150&nbsp;°C · micro-ondes 8&nbsp;min · poêle 10&nbsp;min.
+        </p>
+        <Link href="/" className="back">← Retour à l’accueil</Link>
       </header>
 
       <section className="grid">
-        <Link href="/plats-surgeles/bolo" className="card">
-          <div className="badge">Surgelé</div>
-          <h3 className="title">Pâtes bolognaise maison</h3>
-          <p className="desc">200 g pâtes complètes, bœuf 5% MG, carottes, sauce tomate maison.</p>
-          <div className="foot">
-            <span className="price">9,90 €</span>
-            <span className="cta">Voir la fiche →</span>
-          </div>
-        </Link>
+        {plats.map((p) => (
+          <article key={p.slug} className="card">
+            <div className="card-top">
+              <div className="badges">
+                <span className="badge bd-freeze">Surgelé</span>
+                <span className="badge bd-diet">Diète</span>
+              </div>
+              <h3 className="title">{p.nom}</h3>
+              <p className="resume">{p.resume}</p>
+            </div>
 
-        <Link href="/plats-surgeles/poulet-poivron" className="card">
-          <div className="badge">Surgelé</div>
-          <h3 className="title">Pâtes complètes · émincé de poulet · julienne · sauce poivron maison</h3>
-          <p className="desc">Sauce poivron (poivron, aromates, ail, oignon, sel, poivre). </p>
-          <div className="foot">
-            <span className="price">9,90 €</span>
-            <span className="cta">Voir la fiche →</span>
-          </div>
-        </Link>
+            <div className="macros">
+              <div><small>kcal</small><div className="num">{p.kcal}</div></div>
+              <div><small>Prot.</small><div className="num">{p.prot} g</div></div>
+              <div><small>Gluc.</small><div className="num">{p.gluc} g</div></div>
+              <div><small>Lip.</small><div className="num">{p.lip} g</div></div>
+            </div>
+
+            <div className="cta">
+              <div className="price">{euro(p.prix)}</div>
+              <Link href={`/plats-surgeles/${p.slug}`} className="btn">Voir la fiche</Link>
+            </div>
+          </article>
+        ))}
       </section>
 
       <style jsx>{`
         :root{
-          --ink:#0b1020; --muted:#5a6475; --card:#fff;
-          --grad1:#0aa64c; --grad2:#2d7ae6; --ring:rgba(10,140,120,.25);
-          --bg1:#e8f7ff; --bg2:#dff8ee;
+          --ink:#0b1020; --muted:#485060; --card:#fff; --ring:rgba(10,140,120,.22);
+          --diet:#1aa87b; --freeze:#1b9fe6; --brand1:#0aa64c; --brand2:#2d7ae6;
         }
-        *{box-sizing:border-box}
-        body,html,#__next{height:100%}
         .wrap{
           min-height:100vh;
           background:
-            radial-gradient(1000px 700px at -10% -10%, var(--bg2), transparent 60%),
-            radial-gradient(900px 600px at 110% -20%, var(--bg1), transparent 65%),
-            linear-gradient(180deg,#f5fbff 0%, #f7fff9 60%, #fdfefe 100%);
+            radial-gradient(900px 600px at 110% -20%, #e8f7ff, transparent 65%),
+            radial-gradient(1000px 700px at -10% -10%, #dff8ee, transparent 60%),
+            linear-gradient(180deg, #f5fbff 0%, #f7fff9 60%, #fdfefe 100%);
           color:var(--ink);
-          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
         }
-        .hero{max-width:1100px;margin:0 auto;padding:42px 20px 14px;text-align:center}
+        .hero{max-width:1100px;margin:0 auto;padding:40px 20px 10px;}
         .brand{
-          margin:0;
-          font-size:clamp(48px,7vw,90px);
-          line-height:.95; letter-spacing:.5px;
-          background:linear-gradient(90deg,var(--grad1),var(--grad2));
-          -webkit-background-clip:text; background-clip:text; color:transparent;
-          text-shadow:0 10px 40px rgba(45,122,230,.15);
+          margin:0;font-size:clamp(44px,7vw,84px);line-height:.95;
+          background:linear-gradient(90deg,var(--brand1),var(--brand2));
+          -webkit-background-clip:text;background-clip:text;color:transparent;
+          letter-spacing:.5px;
         }
-        .tagline{margin:.3rem 0 0; font-size:clamp(16px,2.2vw,22px); color:var(--muted)}
-        .note{margin:.4rem 0 0; color:#0f6b58; font-weight:600}
-
+        .subtitle{margin:8px 0 6px;color:var(--muted);font-size:clamp(16px,2.5vw,22px)}
+        .subtitle strong{color:#0d6b57}
+        .intro{margin:6px 0 14px;color:var(--muted)}
+        .back{display:inline-block;margin-top:6px;color:#2d7ae6;text-decoration:none}
         .grid{
-          max-width:1100px;margin:16px auto 60px;padding:0 20px;
-          display:grid; gap:18px; grid-template-columns:repeat(2,minmax(0,1fr));
+          max-width:1100px;margin:12px auto 40px;padding:0 20px;
+          display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr));
         }
-        @media (max-width:820px){ .grid{grid-template-columns:1fr} }
-
+        @media (max-width:820px){.grid{grid-template-columns:1fr}}
         .card{
-          display:grid; gap:10px; text-decoration:none; color:inherit;
-          background:var(--card); padding:18px; border-radius:18px;
-          box-shadow:0 10px 30px rgba(0,0,0,.06), 0 1px 0 rgba(255,255,255,.7) inset;
-          border:1px solid rgba(0,0,0,.04);
-          transition: transform .12s ease, box-shadow .12s ease;
+          background:var(--card);border-radius:18px;padding:18px;
+          box-shadow:0 10px 30px rgba(0,0,0,.06),0 1px 0 rgba(255,255,255,.7) inset;
+          display:grid;gap:14px
         }
-        .card:hover{ transform:translateY(-2px); box-shadow:0 14px 36px rgba(0,0,0,.08) }
+        .badges{display:flex;gap:8px;flex-wrap:wrap}
         .badge{
-          display:inline-flex; align-items:center; padding:4px 10px; border-radius:999px;
-          font-weight:800; font-size:12px; letter-spacing:.3px; color:#0b1020;
-          background:rgba(45,122,230,.12); border:1px solid rgba(45,122,230,.25);
-          width:max-content;
+          display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;
+          font-weight:700;font-size:12px;letter-spacing:.3px;color:#0b1020;
+          background:#eef5ff;border:1px solid rgba(0,0,0,.06)
         }
-        .title{margin:0; font-size:18px; line-height:1.2}
-        .desc{margin:0; color:var(--muted)}
-        .foot{display:flex; align-items:center; justify-content:space-between; margin-top:6px}
-        .price{font-weight:900; font-size:20px}
-        .cta{font-weight:700; color:#1a6be0}
+        .bd-diet{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
+        .bd-freeze{background:rgba(27,159,230,.12);border-color:rgba(27,159,230,.25)}
+        .title{margin:0;font-size:clamp(18px,2.4vw,24px);line-height:1.2}
+        .resume{margin:0;color:var(--muted)}
+        .macros{
+          display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+          background:linear-gradient(180deg,#fafcff,#f3f7ff);
+          border:1px solid rgba(0,0,0,.05);border-radius:12px;padding:10px
+        }
+        .macros small{color:var(--muted)} .num{font-weight:800;font-size:15px}
+        .cta{display:flex;align-items:center;justify-content:space-between;gap:12px}
+        .price{font-size:22px;font-weight:800}
+        .btn{
+          padding:10px 16px;border-radius:12px;border:none;color:#fff;font-weight:700;
+          background:linear-gradient(90deg,var(--brand1),var(--brand2));
+          box-shadow:0 10px 25px rgba(45,122,230,.22);text-decoration:none
+        }
       `}</style>
     </main>
   );
