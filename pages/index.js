@@ -1,67 +1,57 @@
-"use client";
 import Link from "next/link";
 
 export default function Home() {
+  const plats = [
+    {
+      slug: "bolo",
+      nom: "Pâtes Bolognaise maison",
+      desc: "Une bolognaise authentique avec pâtes au seigle artisanales.",
+    },
+    {
+      slug: "pates-poulet-poivron",
+      nom: "Pâtes émincé poulet & sauce poivron",
+      desc: "Poulet tendre, sauce poivron maison et julienne de légumes.",
+    },
+    {
+      slug: "boeuf",
+      nom: "Bœuf carottes & purée maison",
+      desc: "Bœuf bourguignon maigre, carottes fondantes et purée légère.",
+    },
+  ];
+
   return (
-    <main className="min-h-screen bg-gradient-to-br from-green-200 via-emerald-100 to-cyan-200 p-8">
-      {/* Titre principal */}
-      <h1 className="text-5xl md:text-7xl font-extrabold text-center mb-6 bg-gradient-to-r from-green-600 via-emerald-500 to-cyan-500 text-transparent bg-clip-text drop-shadow-lg">
-        GreenHouse
-      </h1>
-      <p className="text-center text-xl text-gray-700 mb-12">
-        Traiteur — Diététique & Gourmand <br />
-        Des plats maison équilibrés, cuisinés avec soin et surgelés pour
-        préserver toutes leurs qualités.
-      </p>
-
-      {/* Section vitrine plats */}
-      <section className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {/* Plat Bolognaise */}
-        <div className="rounded-2xl shadow-lg bg-white p-6 hover:scale-105 transition-transform">
-          <h2 className="text-2xl font-bold mb-2">Pâtes Bolognaise maison</h2>
-          <p className="text-gray-600 mb-4">
-            Une bolognaise authentique avec pâtes au seigle artisanales.
-          </p>
-          <Link
-            href="/plats/bolo"
-            className="inline-block px-4 py-2 rounded-xl bg-green-500 text-white font-medium hover:bg-green-600"
-          >
-            Voir le plat
-          </Link>
-        </div>
-
-        {/* Plat Poulet poivron */}
-        <div className="rounded-2xl shadow-lg bg-white p-6 hover:scale-105 transition-transform">
-          <h2 className="text-2xl font-bold mb-2">
-            Pâtes émincé poulet & sauce poivron
-          </h2>
-          <p className="text-gray-600 mb-4">
-            Poulet tendre, sauce poivron maison et julienne de légumes.
-          </p>
-          <Link
-            href="/plats/poulet-poivron"
-            className="inline-block px-4 py-2 rounded-xl bg-green-500 text-white font-medium hover:bg-green-600"
-          >
-            Voir le plat
-          </Link>
-        </div>
-
-        {/* Plat Bœuf carottes purée */}
-        <div className="rounded-2xl shadow-lg bg-white p-6 hover:scale-105 transition-transform">
-          <h2 className="text-2xl font-bold mb-2">
-            Bœuf carottes & purée maison
-          </h2>
-          <p className="text-gray-600 mb-4">
-            Bœuf bourguignon maigre, carottes fondantes et purée légère.
-          </p>
-          <Link
-            href="/plats/boeuf-carottes-puree"
-            className="inline-block px-4 py-2 rounded-xl bg-green-500 text-white font-medium hover:bg-green-600"
-          >
-            Voir le plat
-          </Link>
-        </div>
+    <div className="space-y-10">
+      {/* Introduction */}
+      <section className="text-center space-y-3">
+        <h2 className="text-3xl font-bold text-slate-700">
+          Nos plats maison surgelés
+        </h2>
+        <p className="text-slate-600 max-w-2xl mx-auto">
+          Des plats cuisinés avec soin en Alsace, prêts à déguster. Surgelés
+          pour préserver toutes leurs qualités, livrés directement chez vous.
+        </p>
       </section>
-    </main>
+
+      {/* Liste des plats */}
+      <section className="grid md:grid-cols-3 gap-6">
+        {plats.map((plat) => (
+          <div
+            key={plat.slug}
+            className="rounded-2xl bg-white shadow hover:shadow-lg transition overflow-hidden"
+          >
+            <div className="p-6 space-y-3">
+              <h3 className="text-xl font-semibold">{plat.nom}</h3>
+              <p className="text-slate-600 text-sm">{plat.desc}</p>
+              <Link
+                href={`/plats/${plat.slug}`}
+                className="inline-block mt-2 rounded-lg bg-green-600 text-white px-4 py-2 text-sm font-medium hover:bg-green-700"
+              >
+                Voir le plat
+              </Link>
+            </div>
+          </div>
+        ))}
+      </section>
+    </div>
   );
 }
