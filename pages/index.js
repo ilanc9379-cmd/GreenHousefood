@@ -1,179 +1,129 @@
 // pages/index.js
-import Head from "next/head";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <>
-      <Head>
-        <title>GreenHouse — Traiteur | Diététique & Gourmand</title>
-        <meta
-          name="description"
-          content="Des plats maison équilibrés, cuisinés avec soin et surgelés pour préserver toutes leurs qualités."
-        />
-        <link rel="icon" href="/favicon.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+    <div className="wrap">
+      <header className="hero">
+        <h1 className="brand">GreenHouse</h1>
+        <p className="tagline">Traiteur — Diététique &amp; Gourmand</p>
+        <p className="intro">
+          Des plats maison équilibrés, cuisinés en Alsace et surgelés pour préserver toutes leurs qualités.
+        </p>
+      </header>
 
-      <main className="wrap">
-        {/* HERO */}
-        <header className="hero">
-          <h1 className="brand">GreenHouse</h1>
-          <p className="tag">Traiteur — Diététique & Gourmand</p>
-          <p className="intro">
-            Des plats maison équilibrés, cuisinés avec soin et{" "}
-            <strong>surgelés</strong> pour préserver toutes leurs qualités.
-            Diète ou gourmand : à vous de choisir.
-          </p>
-        </header>
+      <main className="container">
+        <h2>Nos plats surgelés</h2>
+        <ul className="list">
+          <li className="card">
+            <h3>Pâtes bolognaise maison</h3>
+            <p>Une bolognaise authentique sublimée par des pâtes au seigle artisanales.</p>
+            <span className="badge bd-frozen">Surgelé</span>
+            <Link href="/plats/bolo">Voir le plat</Link>
+          </li>
 
-        {/* LISTE DES PLATS */}
-        <section className="list">
-          <article className="card">
-            <h2 className="title">Pâtes Bolognaise maison</h2>
-            <p className="resume">
-              Une bolognaise authentique avec pâtes au seigle artisanales.
-            </p>
-            <Link href="/plats/bolo" className="btn">
-              Voir le plat
-            </Link>
-          </article>
+          <li className="card">
+            <h3>Pâtes émincé poulet &amp; sauce poivron</h3>
+            <p>Poulet tendre, sauce poivron maison et julienne de légumes.</p>
+            <span className="badge bd-frozen">Surgelé</span>
+            <Link href="/plats/pates-poulet-poivron">Voir le plat</Link>
+          </li>
 
-          <article className="card">
-            <h2 className="title">Pâtes émincé poulet & sauce poivron</h2>
-            <p className="resume">
-              Poulet tendre, sauce poivron maison et julienne de légumes.
-            </p>
-            <Link href="/plats/pates-poulet-poivron" className="btn">
-              Voir le plat
-            </Link>
-          </article>
+          <li className="card">
+            <h3>Bœuf carottes &amp; purée maison</h3>
+            <p>Bœuf bourguignon maigre, carottes fondantes et purée légère.</p>
+            <span className="badge bd-frozen">Surgelé</span>
+            <Link href="/plats/boeuf">Voir le plat</Link>
+          </li>
 
-          <article className="card">
-            <h2 className="title">Bœuf carottes & purée maison</h2>
-            <p className="resume">
-              Bœuf bourguignon maigre, carottes fondantes et purée légère.
-            </p>
-            <Link href="/plats/boeuf" className="btn">
-              Voir le plat
-            </Link>
-          </article>
-        </section>
-
-        <footer className="foot">
-          © {new Date().getFullYear()} GreenHouse — Traiteur artisanal
-        </footer>
+          <li className="card">
+            <h3>Cuisse de poulet rôtie · pommes de terre &amp; haricots verts</h3>
+            <p>Cuisse rôtie aux aromates, pommes de terre rôties et haricots verts.</p>
+            <span className="badge bd-frozen">Surgelé</span>
+            <Link href="/plats/poulet-pommes-haricots">Voir le plat</Link>
+          </li>
+        </ul>
       </main>
+
+      <footer className="foot">
+        © {new Date().getFullYear()} GreenHouse — Traiteur artisanal
+      </footer>
 
       <style jsx>{`
         :root {
-          --ink: #0b1020;
-          --muted: #556070;
+          --bg1: #e6fff7;
+          --bg2: #e8f2ff;
+          --ink: #0e1420;
+          --muted: #5b667a;
+          --brand1: #10b981;
+          --brand2: #3b82f6;
           --card: #ffffff;
-          --ring: rgba(27, 165, 120, 0.2);
-          --brand1: #0aa64c;
-          --brand2: #2d7ae6;
-          --bg1: #e8f7ff;
-          --bg2: #e6fff4;
+          --frozen: #0ea5e9;
         }
-        html,
-        body,
-        #__next {
-          height: 100%;
-        }
-        body {
-          margin: 0;
-          color: var(--ink);
-          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-            "Helvetica Neue", Arial;
-        }
-
+        body, html, #__next { margin: 0; padding: 0; height: 100%; }
         .wrap {
           min-height: 100%;
-          background: radial-gradient(
-              1200px 800px at -10% -10%,
-              var(--bg2),
-              transparent 60%
-            ),
-            radial-gradient(
-              1100px 700px at 110% -20%,
-              var(--bg1),
-              transparent 65%
-            ),
-            linear-gradient(180deg, #f7fffb 0%, #f5fbff 60%, #ffffff 100%);
+          background: linear-gradient(180deg, #f8fffb 0%, #f6fbff 60%, #ffffff 100%);
+          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+          color: var(--ink);
         }
-
         .hero {
           max-width: 1000px;
           margin: 0 auto;
-          padding: 46px 20px 10px;
+          padding: 36px 16px 16px;
+          text-align: center;
         }
         .brand {
-          margin: 0;
-          font-weight: 900;
-          letter-spacing: 0.5px;
-          font-size: clamp(42px, 9vw, 92px);
-          line-height: 0.95;
+          font-size: clamp(42px, 7vw, 76px);
+          font-weight: 800;
           background: linear-gradient(90deg, var(--brand1), var(--brand2));
           -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-          text-shadow: 0 8px 40px rgba(45, 122, 230, 0.25);
-        }
-        .tag {
-          margin: 10px 0 6px;
-          font-weight: 700;
-        }
-        .intro {
+          -webkit-text-fill-color: transparent;
           margin: 0;
-          max-width: 800px;
-          color: var(--muted);
-          font-size: clamp(16px, 2.5vw, 20px);
         }
+        .tagline { font-weight: 600; margin: 6px 0; }
+        .intro { color: var(--muted); margin: 0 auto; max-width: 600px; }
 
-        .list {
-          max-width: 1000px;
-          margin: 18px auto 40px;
-          padding: 0 20px;
-          display: grid;
-          gap: 16px;
-        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px 16px 40px; }
+        h2 { margin-bottom: 16px; }
 
+        .list { list-style: none; padding: 0; display: grid; gap: 16px; }
         .card {
           background: var(--card);
-          border-radius: 18px;
           padding: 18px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06),
-            0 1px 0 rgba(255, 255, 255, 0.7) inset;
+          border-radius: 14px;
+          box-shadow: 0 6px 18px rgba(0,0,0,0.06);
         }
-        .title {
-          margin: 0 0 6px;
-          font-size: 22px;
-        }
-        .resume {
-          margin: 0 0 12px;
-          color: var(--muted);
-        }
-        .btn {
+        .card h3 { margin: 0 0 6px; }
+        .card p { margin: 0 0 10px; color: var(--muted); }
+        .badge {
           display: inline-block;
-          padding: 10px 16px;
-          border-radius: 12px;
-          color: #fff;
+          padding: 4px 10px;
+          border-radius: 999px;
+          font-size: 12px;
+          font-weight: 600;
+          margin-right: 8px;
+        }
+        .bd-frozen {
+          background: rgba(14,165,233,.14);
+          color: var(--frozen);
+        }
+        a {
+          display: inline-block;
+          margin-top: 4px;
+          color: var(--brand2);
+          font-weight: 600;
           text-decoration: none;
-          font-weight: 700;
-          background: linear-gradient(90deg, var(--brand1), var(--brand2));
-          box-shadow: 0 10px 25px rgba(45, 122, 230, 0.22);
         }
-        .btn:active {
-          transform: translateY(1px);
-        }
+        a:hover { text-decoration: underline; }
 
         .foot {
           text-align: center;
           color: var(--muted);
-          padding: 28px 16px 40px;
+          padding: 26px 16px;
+          font-size: 14px;
         }
       `}</style>
-    </>
+    </div>
   );
 }
