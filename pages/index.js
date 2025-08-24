@@ -1,70 +1,46 @@
 // pages/index.js
 import Head from "next/head";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import Image from "next/image";
 
 const PLATS = [
   {
-    id: "bolo",
+    slug: "bolo",
     nom: "Pâtes bolognaise maison",
-    type: "Surgelé", // Diète | Gourmand | Surgelé
+    resume: "Pâtes au seigle, bœuf 5% MG, carottes, sauce tomate.",
     prix: 9.9,
-    resume:
-      "Pâtes au seigle artisanales, bœuf 5% MG, carottes, sauce tomate.",
-    kcal: 700,
-    macros: { P: 54.3, G: 89, L: 15.8 },
-    tags: ["Riche en protéines"],
-    href: "/plats/bolo",
+    surgele: true,
+    visuel: "/favicon.png", // remplace par une vraie image si tu veux
+    badges: ["Riche en protéines", "Portion 600 g"],
   },
   {
-    id: "poulet-poivron",
-    nom: "Pâtes complètes · émincé de poulet · sauce poivron",
-    type: "Surgelé",
+    slug: "poulet-poivron",
+    nom: "Pâtes – émincé de poulet, julienne de légumes, sauce poivron",
+    resume: "Poivron, aromates, ail, oignon, sel, poivre.",
     prix: 9.9,
-    resume:
-      "Pâtes complètes, poulet, julienne de légumes, sauce poivron/ail/oignon.",
-    kcal: 690,
-    macros: { P: 62, G: 86, L: 10 },
-    tags: ["Équilibré"],
-    href: "/plats/pates-poulet-poivron",
+    surgele: true,
+    visuel: "/favicon.png",
+    badges: ["Equilibré", "Gourmand"],
   },
-  // ➜ Ajoute ici tes autres plats (même structure)
+  {
+    slug: "boeuf-carottes-puree",
+    nom: "Bœuf mijoté aux carottes & purée maison",
+    resume: "Morceaux maigres, carottes, purée de pommes de terre.",
+    // prix: 10.9, // décommente si tu veux afficher un prix
+    surgele: true,
+    visuel: "/favicon.png",
+    badges: ["Confort food", "Cuisson lente"],
+  },
 ];
 
-const euro = (n) => `${n.toFixed(2).replace(".", ",")} €`;
-
-const Chip = ({ active, onClick, children }) => (
-  <button
-    onClick={onClick}
-    className={`chip ${active ? "on" : ""}`}
-    aria-pressed={active}
-  >
-    {children}
-  </button>
-);
-
 export default function Home() {
-  const [filtre, setFiltre] = useState("Tous"); // Tous | Diète | Gourmand | Surgelé
-  const [q, setQ] = useState("");
-
-  const platsAffiches = useMemo(() => {
-    return PLATS.filter((p) => {
-      const okType = filtre === "Tous" ? true : p.type === filtre;
-      const okTexte =
-        !q ||
-        p.nom.toLowerCase().includes(q.toLowerCase()) ||
-        p.resume.toLowerCase().includes(q.toLowerCase());
-      return okType && okTexte;
-    });
-  }, [filtre, q]);
-
   return (
     <>
       <Head>
-        <title>GreenHouse — Traiteur · Diététique & Gourmand</title>
+        <title>GreenHouse — Traiteur | Diététique & Gourmand</title>
         <meta
           name="description"
-          content="Des plats maison bons & équilibrés, cuisinés en Alsace. Diète ou gourmand, à vous de choisir. Surgelés de qualité."
+          content="GreenHouse : traiteur diététique & gourmand. Plats surgelés artisanaux, pratiques et savoureux."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
@@ -73,444 +49,238 @@ export default function Home() {
       <main className="page">
         {/* HERO */}
         <header className="hero">
-          <h1 className="brand">GreenHouse</h1>
-          <p className="slogan">
-            <strong>Traiteur</strong> — Diététique & Gourmand
-          </p>
-          <p className="intro">
-            Des plats maison bons et équilibrés, cuisinés en Alsace. Diète ou
-            gourmand&nbsp;: à vous de choisir.
-          </p>
-
-          <div className="controls">
-            <div className="chips">
-              {["Tous", "Diète", "Gourmand", "Surgelé"].map((lab) => (
-                <Chip
-                  key={lab}
-                  active={filtre === lab}
-                  onClick={() => setFiltre(lab)}
-                >
-                  {lab}
-                </Chip>
-              ))}
-            </div>
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              className="search"
-              placeholder="Rechercher un plat…"
-              aria-label="Rechercher un plat"
+          <div className="brand">
+            <Image
+              src="/favicon.png"
+              alt="Logo GreenHouse"
+              width={72}
+              height={72}
+              className="logo"
+              priority
             />
+            <h1 className="title">
+              <span>GreenHouse</span>
+            </h1>
           </div>
+          <p className="slogan">Traiteur diététique & gourmand</p>
         </header>
 
-        {/* ENCARtS INFO */}
-        <section className="infos">
-          <article className="info-card pasta">
-            <h3>🍝 Pâtes fraîches — 7,00 €/kg</h3>
-            <p>
-              Disponibles <strong>lundi</strong> & <strong>jeudi</strong>.
-              Farines : <strong>seigle</strong>, <strong>aromette</strong>,
-              <strong> complète</strong>. Production artisanale, œufs plein air.
+        {/* BLOC SURGELÉS (pédagogie) */}
+        <section className="surgele">
+          <div className="surgele-card">
+            <div className="surgele-head">
+              <span className="pill pill-surg">Surgelés</span>
+              <h2>La qualité, préservée par le froid ❄️</h2>
+            </div>
+            <p className="lead">
+              La surgélation fige la fraîcheur au plus près de la cuisson :
+              elle aide à préserver les nutriments, la texture et le goût —
+              <strong> sans conservateurs</strong>. C’est pratique (portionnable),
+              anti-gaspi et parfait pour s’organiser.
             </p>
-          </article>
-          <article className="info-card frozen">
-            <h3>❄️ Falafels en vrac (surgelés)</h3>
-            <p>
-              Idéals pour vos salades & bowls. Indication{" "}
-              <strong>surgelé</strong> affichée – à conserver au congélateur.
-            </p>
-          </article>
+            <ul className="bullets">
+              <li>🧊 Conservation conseillée : <strong>jusqu’à 4 mois au congélateur</strong>.</li>
+              <li>🥶 Après décongélation : <strong>48 h max au réfrigérateur</strong>.</li>
+              <li>🔥 Réchauffage : four, micro-ondes ou poêle selon le plat.</li>
+            </ul>
+          </div>
         </section>
 
-        {/* LISTE DES PLATS */}
-        <section className="grid">
-          {platsAffiches.map((p) => (
-            <article key={p.id} className="card">
-              <div className="top">
-                <div className="badges">
-                  <span
-                    className={`badge ${
-                      p.type === "Diète"
-                        ? "bd-diet"
-                        : p.type === "Gourmand"
-                        ? "bd-gour"
-                        : "bd-frozen"
-                    }`}
-                  >
-                    {p.type}
-                  </span>
-                  {p.tags?.map((t) => (
-                    <span className="badge soft" key={t}>
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <h3 className="title">{p.nom}</h3>
-                <p className="resume">{p.resume}</p>
-              </div>
+        {/* GRILLE DE PLATS */}
+        <section className="grid-wrap">
+          <div className="grid-head">
+            <h3>Nos plats surgelés</h3>
+            <p>Artisanal, pratique, et pensé pour l’équilibre.</p>
+          </div>
 
-              <div className="macros">
-                <div>
-                  <small>kcal</small>
-                  <div className="num">{p.kcal}</div>
+          <div className="grid">
+            {PLATS.map((p) => (
+              <article key={p.slug} className="card">
+                <div className="card-media">
+                  {/* Remplace /favicon.png par une vraie photo dans /public/images/... */}
+                  <Image
+                    src={p.visuel || "/favicon.png"}
+                    alt={p.nom}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 33vw"
+                  />
                 </div>
-                <div>
-                  <small>Prot.</small>
-                  <div className="num">{p.macros.P} g</div>
-                </div>
-                <div>
-                  <small>Gluc.</small>
-                  <div className="num">{p.macros.G} g</div>
-                </div>
-                <div>
-                  <small>Lip.</small>
-                  <div className="num">{p.macros.L} g</div>
-                </div>
-              </div>
 
-              <div className="cta">
-                <div className="price">{euro(p.prix)}</div>
-                <Link className="btn" href={p.href}>
-                  Voir la fiche
-                </Link>
-              </div>
-            </article>
-          ))}
+                <div className="card-body">
+                  <div className="topline">
+                    {p.surgele && <span className="pill pill-surg">Surgelé</span>}
+                    <span className="pill pill-keep">4 mois congélateur · 48 h frigo</span>
+                  </div>
 
-          {platsAffiches.length === 0 && (
-            <p className="empty">Aucun plat ne correspond à votre recherche.</p>
-          )}
+                  <h4 className="card-title">{p.nom}</h4>
+                  <p className="card-resume">{p.resume}</p>
+
+                  <div className="badges">
+                    {p.badges?.map((b) => (
+                      <span key={b} className="mini">{b}</span>
+                    ))}
+                  </div>
+
+                  <div className="cta">
+                    <div className="left">
+                      {"prix" in p && p.prix != null ? (
+                        <>
+                          <div className="price">
+                            {p.prix.toFixed(2).replace(".", ",")} €
+                          </div>
+                          <div className="ttc">TTC</div>
+                        </>
+                      ) : (
+                        <div className="price muted">Prix sur la fiche</div>
+                      )}
+                    </div>
+                    <Link href={`/plat/${p.slug}`} className="btn">
+                      Voir le plat
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </section>
 
-        {/* SURGÉLÉS – info qualité */}
-        <section className="frozen-note">
-          <h3>Pourquoi le surgelé ?</h3>
-          <p>
-            La surgélation <strong>préserve les qualités nutritionnelles</strong>{" "}
-            et la <strong>saveur</strong> des aliments en stoppant le
-            développement microbien. Nos plats surgelés se conservent{" "}
-            <strong>jusqu’à 4 mois au congélateur</strong>. Après
-            décongélation, consommez dans les <strong>48 h</strong> et{" "}
-            <u>ne pas recongeler</u>.
-          </p>
-        </section>
-
-        <footer className="foot">
-          © {new Date().getFullYear()} GreenHouse — Traiteur artisanal
+        {/* FOOTER */}
+        <footer className="footer">
+          <p>© {new Date().getFullYear()} GreenHouse — Traiteur artisanal</p>
         </footer>
       </main>
 
-      {/* STYLES */}
       <style jsx>{`
-        :root {
-          --ink: #081019;
-          --muted: #506070;
-          --card: #ffffff;
-          --ring: rgba(14, 122, 230, 0.18);
-          --brand1: #10b981; /* vert */
-          --brand2: #3b82f6; /* bleu */
-          --diet: #16a34a;
-          --gour: #ef4444;
-          --frozen: #0891b2;
+        :root{
+          --ink:#0c111d;
+          --muted:#556070;
+          --card:#ffffff;
+          --brand1:#13b66a;
+          --brand2:#2d7ae6;
+          --ring:rgba(19,182,106,.2);
+          --bg1:#e9fff3;
+          --bg2:#e8f1ff;
+          --pill:#0b5b4c;
         }
-        html,
-        body,
-        #__next {
-          height: 100%;
-        }
-        body {
-          margin: 0;
-          color: var(--ink);
-          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-            "Helvetica Neue", Arial;
-          background: #f8fbff;
-        }
+        html,body,#__next{height:100%}
+        body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--ink);background:#f7fbff}
 
-        /* Fond animé */
-        .page {
-          min-height: 100%;
-          position: relative;
-          overflow: hidden;
+        /* ===== Fond vivant (dégradés + léger mouvement) ===== */
+        .page{
+          min-height:100%;
+          position:relative;
+          overflow-x:hidden;
         }
         .page::before,
-        .page::after {
-          content: "";
-          position: absolute;
-          inset: -20% -10% auto -10%;
-          height: 60%;
-          background: radial-gradient(
-            60% 60% at 20% 20%,
-            rgba(16, 185, 129, 0.18),
-            transparent 70%
-          );
-          animation: float1 18s ease-in-out infinite;
-          z-index: -1;
+        .page::after{
+          content:"";
+          position:absolute; inset:-20% -10% auto -10%;
+          height:60vh;
+          background: radial-gradient(60% 60% at 20% 30%, var(--bg1), transparent 60%),
+                      radial-gradient(60% 60% at 80% 20%, var(--bg2), transparent 60%);
+          filter: blur(20px);
+          z-index:-2;
+          animation: floaty 18s ease-in-out infinite alternate;
+          opacity:.9;
         }
-        .page::after {
-          inset: auto -10% -20% -10%;
-          height: 70%;
-          background: radial-gradient(
-            65% 65% at 80% 80%,
-            rgba(59, 130, 246, 0.18),
-            transparent 70%
-          );
-          animation: float2 22s ease-in-out infinite;
+        .page::after{
+          inset:auto -10% -25% -10%;
+          height:55vh;
+          transform: rotate(180deg);
+          animation-duration: 22s;
+          opacity:.8;
         }
-        @keyframes float1 {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(18px);
-          }
-        }
-        @keyframes float2 {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-22px);
-          }
+        @keyframes floaty{
+          from{transform: translateY(-10px) scale(1.02)}
+          to{transform: translateY(10px) scale(1.04)}
         }
 
-        .hero {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 48px 20px 10px;
+        /* ===== Hero ===== */
+        .hero{max-width:1200px;margin:0 auto;padding:48px 20px 20px}
+        .brand{display:flex;align-items:center;gap:14px}
+        .logo{border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+        .title{
+          margin:0;
+          line-height:.9;
         }
-        .brand {
-          font-size: clamp(44px, 7.5vw, 88px);
-          line-height: 0.95;
-          margin: 0 0 8px;
+        .title span{
+          font-size: clamp(48px, 9vw, 108px);
+          font-weight: 900;
+          letter-spacing: .5px;
           background: linear-gradient(90deg, var(--brand1), var(--brand2));
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-          letter-spacing: 0.5px;
-          text-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+          -webkit-background-clip:text; background-clip:text; color:transparent;
+          text-shadow: 0 2px 20px rgba(45,122,230,.15);
         }
-        .slogan {
-          margin: 0;
-          font-size: clamp(18px, 2.6vw, 24px);
-        }
-        .intro {
-          margin: 8px 0 16px;
-          color: var(--muted);
-          font-size: 16px;
+        .slogan{
+          margin: 10px 0 0;
+          font-size: clamp(16px, 2.4vw, 24px);
+          color:var(--muted);
         }
 
-        .controls {
-          display: grid;
-          gap: 12px;
-          align-items: center;
-          grid-template-columns: 1fr;
+        /* ===== Bloc surgelés (pédagogie) ===== */
+        .surgele{max-width:1200px;margin:16px auto;padding:0 20px}
+        .surgele-card{
+          background:linear-gradient(180deg,#ffffff, #f4fbff);
+          border:1px solid rgba(0,0,0,.06);
+          border-radius:22px; padding:20px;
+          box-shadow:0 12px 30px rgba(0,0,0,.06);
         }
-        .chips {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 10px;
+        .surgele-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+        .surgele-card h2{margin:0;font-size:clamp(20px,3vw,28px)}
+        .lead{margin:10px 0 8px;color:#2a3545}
+        .bullets{display:grid;gap:6px;margin:8px 0 0;padding-left:0;list-style:none}
+        .pill{
+          display:inline-flex;align-items:center;gap:8px;
+          padding:6px 12px;border-radius:999px;font-weight:700;font-size:12px;
+          letter-spacing:.3px;border:1px solid rgba(0,0,0,.08);background:#fff;color:var(--pill)
         }
-        .chip {
-          border: 1px solid rgba(0, 0, 0, 0.08);
-          background: white;
-          padding: 8px 14px;
-          border-radius: 999px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: transform 0.12s ease, box-shadow 0.12s ease,
-            background 0.12s ease;
+        .pill-surg{background:rgba(45,122,230,.12);border-color:rgba(45,122,230,.25);color:#1f4fb9}
+        .pill-keep{background:rgba(19,182,106,.12);border-color:rgba(19,182,106,.25);color:#0e7a52}
+
+        /* ===== Grille de plats ===== */
+        .grid-wrap{max-width:1200px;margin:16px auto 40px;padding:0 20px}
+        .grid-head h3{margin:10px 0 0;font-size:clamp(22px,3.2vw,30px)}
+        .grid-head p{margin:4px 0 14px;color:var(--muted)}
+        .grid{
+          display:grid;gap:18px;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
         }
-        .chip.on {
-          border-color: transparent;
-          background: linear-gradient(
-            90deg,
-            rgba(16, 185, 129, 0.12),
-            rgba(59, 130, 246, 0.12)
-          );
-          box-shadow: 0 0 0 3px var(--ring) inset;
+        @media (max-width: 980px){ .grid{grid-template-columns: repeat(2, 1fr);} }
+        @media (max-width: 640px){ .grid{grid-template-columns: 1fr;} }
+
+        .card{
+          background:var(--card); border-radius:18px; overflow:hidden;
+          border:1px solid rgba(0,0,0,.06);
+          box-shadow:0 10px 30px rgba(0,0,0,.06);
+          display:flex; flex-direction:column;
         }
-        .chip:active {
-          transform: translateY(1px) scale(0.99);
+        .card-media{position:relative;aspect-ratio: 16/10; background:linear-gradient(90deg,#f2fff8,#eef4ff)}
+        .card-body{display:grid;gap:10px;padding:14px}
+        .topline{display:flex;flex-wrap:wrap;gap:8px}
+        .card-title{margin:0;font-size:clamp(16px,2.2vw,20px);line-height:1.25}
+        .card-resume{margin:0;color:var(--muted)}
+        .badges{display:flex;flex-wrap:wrap;gap:8px}
+        .mini{
+          font-size:12px;padding:4px 10px;border-radius:999px;
+          background:linear-gradient(180deg,#f6f9ff,#ffffff);
+          border:1px solid rgba(0,0,0,.06);
         }
-        .search {
-          width: 100%;
-          max-width: 520px;
-          border: 1px solid rgba(0, 0, 0, 0.08);
-          background: white;
-          height: 44px;
-          border-radius: 14px;
-          padding: 0 14px;
-          font-size: 16px;
-          outline: none;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        .cta{
+          margin-top:6px;
+          display:flex;align-items:center;justify-content:space-between;gap:12px
         }
-        .search:focus {
-          box-shadow: 0 0 0 4px var(--ring), 0 10px 30px rgba(0, 0, 0, 0.06);
+        .left{display:grid}
+        .price{font-weight:900;font-size:20px}
+        .price.muted{color:var(--muted);font-weight:600}
+        .ttc{font-size:12px;color:var(--muted)}
+        .btn{
+          padding:10px 14px;border-radius:12px;border:none;color:white;
+          background:linear-gradient(90deg,var(--brand1),var(--brand2));
+          text-decoration:none;font-weight:800;box-shadow:0 10px 25px rgba(45,122,230,.22);
         }
 
-        .infos {
-          max-width: 1100px;
-          margin: 10px auto 6px;
-          padding: 0 20px;
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 14px;
-        }
-        @media (max-width: 860px) {
-          .infos {
-            grid-template-columns: 1fr;
-          }
-        }
-        .info-card {
-          background: #ffffffaa;
-          backdrop-filter: blur(6px);
-          border: 1px solid rgba(0, 0, 0, 0.06);
-          border-radius: 16px;
-          padding: 14px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        }
-        .info-card h3 {
-          margin: 0 0 6px;
-        }
-        .info-card.pasta {
-          border-left: 6px solid var(--brand1);
-        }
-        .info-card.frozen {
-          border-left: 6px solid var(--frozen);
-        }
-
-        .grid {
-          max-width: 1100px;
-          margin: 16px auto 38px;
-          padding: 0 20px;
-          display: grid;
-          gap: 18px;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-        @media (max-width: 860px) {
-          .grid {
-            grid-template-columns: 1fr;
-          }
-        }
-
-        .card {
-          background: var(--card);
-          border-radius: 18px;
-          padding: 18px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06),
-            0 1px 0 rgba(255, 255, 255, 0.7) inset;
-          display: grid;
-          gap: 14px;
-        }
-        .badges {
-          display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
-        }
-        .badge {
-          display: inline-flex;
-          align-items: center;
-          padding: 4px 10px;
-          border-radius: 999px;
-          font-weight: 700;
-          font-size: 12px;
-          letter-spacing: 0.3px;
-          background: #eef5ff;
-          border: 1px solid rgba(0, 0, 0, 0.06);
-          color: #0b1020;
-        }
-        .badge.soft {
-          background: #f4f7fb;
-        }
-        .bd-diet {
-          background: rgba(22, 163, 74, 0.12);
-          border-color: rgba(22, 163, 74, 0.25);
-        }
-        .bd-gour {
-          background: rgba(239, 68, 68, 0.12);
-          border-color: rgba(239, 68, 68, 0.25);
-        }
-        .bd-frozen {
-          background: rgba(8, 145, 178, 0.12);
-          border-color: rgba(8, 145, 178, 0.25);
-        }
-
-        .title {
-          margin: 0;
-          font-size: clamp(18px, 2.3vw, 24px);
-          line-height: 1.2;
-        }
-        .resume {
-          margin: 0;
-          color: var(--muted);
-        }
-
-        .macros {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 8px;
-          background: linear-gradient(180deg, #fafcff, #f3f7ff);
-          border: 1px solid rgba(0, 0, 0, 0.05);
-          border-radius: 12px;
-          padding: 10px;
-        }
-        .macros small {
-          color: var(--muted);
-        }
-        .num {
-          font-weight: 800;
-          font-size: 15px;
-        }
-
-        .cta {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 12px;
-        }
-        .price {
-          font-size: 22px;
-          font-weight: 800;
-        }
-        .btn {
-          padding: 10px 16px;
-          border-radius: 12px;
-          border: none;
-          color: white;
-          font-weight: 700;
-          background: linear-gradient(90deg, var(--brand1), var(--brand2));
-          box-shadow: 0 10px 25px rgba(45, 122, 230, 0.22);
-          text-decoration: none;
-        }
-        .btn:active {
-          transform: translateY(1px);
-        }
-
-        .empty {
-          grid-column: 1 / -1;
-          color: var(--muted);
-          text-align: center;
-          padding: 30px 0;
-        }
-
-        .frozen-note {
-          max-width: 1100px;
-          margin: 0 auto 20px;
-          padding: 0 20px 20px;
-          color: var(--muted);
-        }
-        .frozen-note h3 {
-          color: var(--ink);
-        }
-
-        .foot {
-          text-align: center;
-          color: var(--muted);
-          padding: 28px 16px 40px;
-        }
+        /* ===== Footer ===== */
+        .footer{padding:28px 20px 40px;text-align:center;color:var(--muted)}
       `}</style>
     </>
   );
