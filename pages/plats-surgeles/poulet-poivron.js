@@ -1,172 +1,142 @@
 // pages/plats-surgeles/poulet-poivron.js
+import Head from "next/head";
 import { useMemo, useState } from "react";
 
-export default function PouletPoivron() {
-  // Portion & prix
-  const portionGrams = 600;   // ex : 200 pâtes + 200 poulet + 150 julienne + 50 sauce (à ajuster si besoin)
-  const price = 9.9;
+export default function PouletPoivronSurgele() {
+  const NOM = "Pâtes complètes — émincé de poulet, sauce poivron (maison)";
+  const PRIX = 9.9;
+  const POIDS = 600; // 200 pâtes, 150 poulet, 150 julienne, 100 sauce poivron
+  // Estimations validées ensemble
+  const KCAL = 689, P = 62, G = 86, L = 10, SEL = 2.5, SUCRES = 12, AGS = +(L * 0.3).toFixed(1);
 
-  // Nutrition (estimation cohérente ; tu peux ajuster si tu as tes valeurs exactes)
-  const kcalPortion = 620;
-  const lipidesPortion = 14;
-  const glucidesPortion = 82;
-  const proteinesPortion = 40;
-  const selPortion = 2.5;
+  const kcal100 = +(KCAL / (POIDS / 100)).toFixed(1);
+  const p100 = +(P / (POIDS / 100)).toFixed(1);
+  const g100 = +(G / (POIDS / 100)).toFixed(1);
+  const l100 = +(L / (POIDS / 100)).toFixed(1);
+  const sel100 = +(SEL / (POIDS / 100)).toFixed(1);
+  const sucres100 = +(SUCRES / (POIDS / 100)).toFixed(1);
 
-  // 100 g
-  const kcal100 = +(kcalPortion / (portionGrams / 100)).toFixed(1);
-  const lipides100 = +(lipidesPortion / (portionGrams / 100)).toFixed(1);
-  const glucides100 = +(glucidesPortion / (portionGrams / 100)).toFixed(1);
-  const proteines100 = +(proteinesPortion / (portionGrams / 100)).toFixed(1);
-  const sel100 = +(selPortion / (portionGrams / 100)).toFixed(1);
-
-  // Qté commande
   const [qty, setQty] = useState(1);
-  const nf = useMemo(() => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }), []);
+  const nf = useMemo(() => new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR"}),[]);
+  const totalPrice = nf.format(PRIX * qty);
 
   return (
-    <main className="wrap">
-      <header className="hero">
-        <h1 className="brand">Greenhouse</h1>
-        <p className="tagline">Traiteur — Diététique & Gourmand</p>
-      </header>
+    <>
+      <Head><title>{NOM} — GreenHouse</title></Head>
+      <main className="wrap">
+        <header className="hero">
+          <h1 className="brand">GreenHouse</h1>
+          <p className="slogan">Traiteur — Diététique & Gourmand</p>
+          <a href="/plats-surgeles" className="back">← Retour aux plats surgelés</a>
+        </header>
 
-      <section className="sheet">
-        <div className="sheet__head">
-          <h2>Pâtes complètes · émincé de poulet · julienne · sauce poivron maison</h2>
-          <p className="meta">
-            Portion : {portionGrams} g · <strong>Surgelé</strong> · prêt en <strong>20 min au four</strong>
-          </p>
-          <p className="conserv">
-            À conserver au congélateur (max 4 mois). Après décongélation : 48 h au réfrigérateur.
-          </p>
-        </div>
-
-        <div className="cols">
-          {/* Prix */}
-          <div className="pricecard">
-            <div className="label">Prix unitaire</div>
-            <div className="big">{nf.format(price)}</div>
-
-            <div className="qty">
-              <button onClick={()=>setQty(q=>Math.max(1,q-1))}>−</button>
-              <input type="number" min="1" value={qty} onChange={e=>setQty(Math.max(1, parseInt(e.target.value||"1",10)))} />
-              <button onClick={()=>setQty(q=>q+1)}>+</button>
+        <article className="card">
+          <div className="title-line">
+            <h2 className="title">{NOM}</h2>
+            <div className="badges">
+              <span className="bd bd-blue">Surgelé</span>
+              <span className="bd bd-green">Diète</span>
             </div>
-
-            <div className="total">
-              <span>Total ({qty} plat{qty>1?"s":""})</span>
-              <strong>{nf.format(price*qty)}</strong>
-            </div>
-
-            <button className="btn">Commander</button>
           </div>
 
-          {/* Ingrédients + Nutri */}
-          <div className="panels">
+          <p className="lead">
+            <strong>Pâtes complètes artisanales</strong> (œufs plein air), poulet tendre, julienne de légumes
+            et <strong>sauce poivron maison</strong> (poivron, ail, oignon, aromates). Profil protéiné et léger.
+          </p>
+
+          <section className="grid2">
             <div className="panel">
-              <h3>Ingrédients</h3>
+              <h3>Prix</h3>
+              <div className="price">{nf.format(PRIX)}</div>
+              <div className="qty">
+                <button onClick={()=>setQty(Math.max(1, qty-1))}>−</button>
+                <input type="number" min={1} value={qty} onChange={e=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
+                <button onClick={()=>setQty(qty+1)}>+</button>
+              </div>
+              <div className="total">Total ({qty} plat{qty>1?"s":""}) : <b>{totalPrice}</b></div>
+
+              <h4>Ingrédients</h4>
               <ul className="ing">
-                <li><span>Pâtes complètes artisanales</span><b>200 g</b></li>
-                <li><span>Émincé de poulet</span><b>200 g</b></li>
-                <li><span>Julienne de légumes</span><b>150 g</b></li>
-                <li><span>Sauce poivron maison (poivron, aromates, ail, oignon, sel, poivre)</span><b>50 g</b></li>
+                <li>Pâtes complètes artisanales (œufs plein air) — 200 g</li>
+                <li>Émincé de poulet — 150 g</li>
+                <li>Julienne de légumes — 150 g</li>
+                <li>Sauce poivron maison — 100 g</li>
+                <li>Aromates : ail, oignon, sel, poivre, herbes</li>
               </ul>
-              <p className="allergenes">Allergènes : gluten (blé). Peut contenir œufs selon la pâte.</p>
+              <p className="muted">Allergènes : <b>gluten</b> (blé), <b>œufs</b>.</p>
             </div>
 
             <div className="panel">
               <h3>Valeurs nutritionnelles</h3>
               <table className="nutri">
-                <thead>
-                  <tr><th>Valeurs</th><th>Pour 100 g</th><th>Par portion</th></tr>
-                </thead>
+                <thead><tr><th>Valeurs</th><th>Pour 100 g</th><th>Par portion ({POIDS} g)</th></tr></thead>
                 <tbody>
-                  <tr><td>Énergie</td><td>{kcal100} kcal</td><td>{kcalPortion} kcal</td></tr>
-                  <tr><td>Matières grasses</td><td>{lipides100} g</td><td>{lipidesPortion} g</td></tr>
-                  <tr><td>Glucides</td><td>{glucides100} g</td><td>{glucidesPortion} g</td></tr>
-                  <tr><td>Protéines</td><td>{proteines100} g</td><td>{proteinesPortion} g</td></tr>
-                  <tr><td>Sel</td><td>{sel100} g</td><td>{selPortion} g</td></tr>
+                  <tr><td>Énergie</td><td>{kcal100} kcal</td><td>{KCAL} kcal</td></tr>
+                  <tr><td>Matières grasses</td><td>{l100} g</td><td>{L} g</td></tr>
+                  <tr><td>Glucides</td><td>{g100} g</td><td>{G} g</td></tr>
+                  <tr><td>Protéines</td><td>{p100} g</td><td>{P} g</td></tr>
+                  <tr><td>Sel</td><td>{sel100} g</td><td>{SEL} g</td></tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-        </div>
-      </section>
 
+              <h4>Cuisson</h4>
+              <ul className="list">
+                <li>Four <b>150 °C</b> : <b>20 min</b></li>
+                <li>Micro-ondes : <b>8 min</b></li>
+                <li>Poêle : <b>10 min</b></li>
+              </ul>
+
+              <h4>Conservation</h4>
+              <ul className="list">
+                <li>Conserver au <b>congélateur</b> : maximum <b>4 mois</b></li>
+                <li>Après décongélation : <b>48 h</b> au réfrigérateur</li>
+                <li>Ne pas recongeler</li>
+              </ul>
+
+              <p className="note">
+                La surgélation protège naturellement les qualités nutritionnelles et la fraîcheur,
+                pour un plat pratique et sûr au quotidien.
+              </p>
+            </div>
+          </section>
+        </article>
+      </main>
       <style jsx>{styles}</style>
-    </main>
+    </>
   );
 }
 
 const styles = `
-:root{
-  --ink:#0b1020; --muted:#5a6475; --card:#fff;
-  --grad1:#0aa64c; --grad2:#2d7ae6; --ring:rgba(10,140,120,.25);
-  --bg1:#e8f7ff; --bg2:#dff8ee;
-}
-*{box-sizing:border-box}
-html,body,#__next{height:100%}
-.wrap{
-  min-height:100vh;
-  background:
-    radial-gradient(1000px 700px at -10% -10%, var(--bg2), transparent 60%),
-    radial-gradient(900px 600px at 110% -20%, var(--bg1), transparent 65%),
-    linear-gradient(180deg,#f5fbff 0%, #f7fff9 60%, #fdfefe 100%);
-  color:var(--ink);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-}
-.hero{padding:36px 20px 0; text-align:center}
-.brand{
-  margin:0;
-  font-size:clamp(44px,6.8vw,86px);
-  line-height:.95; letter-spacing:.5px;
-  background:linear-gradient(90deg,var(--grad1),var(--grad2));
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  text-shadow:0 10px 40px rgba(45,122,230,.15);
-}
-.tagline{margin:.25rem 0 1rem; font-size:clamp(16px,2.2vw,20px); color:var(--muted)}
-
-.sheet{max-width:1100px; margin:14px auto 60px; padding:0 20px;}
-.sheet__head h2{margin:.4rem 0 .2rem; font-size:clamp(22px,3vw,32px)}
-.meta{margin:0; color:#0f6b58; font-weight:600}
-.conserv{margin:.2rem 0 1rem; color:#245b50}
-
-.cols{display:grid; grid-template-columns:320px 1fr; gap:18px}
-@media (max-width:900px){ .cols{grid-template-columns:1fr} }
-
-.pricecard{
-  background:var(--card); border-radius:18px; padding:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.06), 0 1px 0 rgba(255,255,255,.7) inset;
-  border:1px solid rgba(0,0,0,.04);
-}
-.pricecard .label{font-size:12px; text-transform:uppercase; color:var(--muted)}
-.pricecard .big{font-size:34px; font-weight:900; margin-top:2px}
-.qty{display:flex; align-items:center; gap:8px; margin:12px 0}
-.qty button{width:36px; height:36px; border-radius:12px; border:1px solid rgba(0,0,0,.12); background:#fff}
-.qty input{width:70px; height:36px; text-align:center; border-radius:12px; border:1px solid rgba(0,0,0,.12)}
-.total{display:flex; align-items:center; justify-content:space-between; margin:8px 0 12px}
-.btn{
-  width:100%; height:44px; border:none; border-radius:12px; color:#fff; font-weight:800; cursor:pointer;
-  background:linear-gradient(90deg,var(--grad1),var(--grad2));
-  box-shadow:0 10px 25px rgba(45,122,230,.22);
-}
-
-.panels{display:grid; grid-template-columns:1fr 1fr; gap:18px}
-@media (max-width:900px){ .panels{grid-template-columns:1fr} }
-
-.panel{
-  background:var(--card); border-radius:18px; padding:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.06), 0 1px 0 rgba(255,255,255,.7) inset;
-  border:1px solid rgba(0,0,0,.04);
-}
-.panel h3{margin:.2rem 0 .6rem}
-.ing{list-style:none; padding:0; margin:0; display:grid; gap:8px}
-.ing li{display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:1px solid rgba(0,0,0,.06); border-radius:12px; background:linear-gradient(180deg,#fafcff,#f3f7ff)}
-.ing b{font-variant-numeric: tabular-nums}
-
-.nutri{width:100%; border-collapse:collapse}
-.nutri th,.nutri td{padding:10px 12px; text-align:left}
-.nutri thead tr{background:#eef3ff}
-.nutri tbody tr{border-top:1px solid rgba(0,0,0,.06)}
+/* mêmes styles que bolo */
+.wrap{padding:24px;background:radial-gradient(1200px 600px at -10% -10%,#e9fff7,transparent 60%),radial-gradient(1000px 700px at 110% -20%,#e8f3ff,transparent 65%),#f9fdfb}
+.hero{max-width:1100px;margin:0 auto 10px}
+.brand{font-size:clamp(42px,7vw,88px);margin:0;background:linear-gradient(90deg,#10b981,#2563eb);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:.95}
+.slogan{margin:6px 0 12px;color:#52606d}
+.back{color:#2563eb;text-decoration:none}
+.card{max-width:1100px;margin:10px auto 40px;background:white;border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+.title-line{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.title{margin:0;font-size:clamp(24px,3.2vw,36px)}
+.badges{display:flex;gap:8px}
+.bd{padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
+.bd-blue{background:#e0f2ff;border:1px solid #bee3ff}
+.bd-green{background:#e8fff6;border:1px solid #bdf5de}
+.lead{color:#2a3340}
+.grid2{display:grid;grid-template-columns:1fr 1.2fr;gap:16px;margin-top:12px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.panel{background:linear-gradient(180deg,#fbfdff,#f6faff);border:1px solid #eef2f7;border-radius:14px;padding:14px}
+.price{font-size:26px;font-weight:800;margin-bottom:8px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:38px;height:38px;border-radius:10px;border:1px solid #d7dce2;background:#fff}
+.qty input{width:70px;height:38px;text-align:center;border-radius:10px;border:1px solid #d7dce2}
+.total{margin-top:8px}
+h3{margin:8px 0 10px}
+h4{margin:14px 0 6px}
+.ing{margin:6px 0 0 18px}
+.muted{color:#6b7280}
+.nutri{width:100%;border-collapse:collapse;font-size:14px}
+.nutri th,.nutri td{border-top:1px solid #e8ecf2;padding:8px 10px}
+.nutri thead th{background:#f1f5fb}
+.sub{color:#64748b}
+.list{margin:6px 0 0 18px}
+.note{margin-top:8px;color:#475569}
 `;
