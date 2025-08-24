@@ -2,28 +2,25 @@ import Head from "next/head";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-export default function PlatBolo() {
+export default function PlatBoeufCarottesPuree() {
   // --------- Données (modifiables) ----------
-  const PORTION_GRAMS = 600;           // 200 pâtes + 150 bœuf + 150 carottes + 100 sauce
+  const PORTION_GRAMS = 500; // 200 bœuf + 150 carottes + 150 purée
   const PRICE_EUR = 9.9;
 
-  // Valeurs nutritionnelles PAR PORTION (≈)
+  // Estimations PAR PORTION (ajuste si besoin)
+  // (bœuf maigre cuit, carottes, purée légère)
   const NUTR_PORTION = {
-    kcal: 700,
-    lipides: 15.8,
-    glucides: 89,
-    proteines: 54.3,
-    sel: 3.0,
+    kcal: 560,
+    lipides: 20,
+    glucides: 34,
+    proteines: 57,
+    sel: 2.2,
   };
   // ------------------------------------------
 
-  const nf = useMemo(
-    () => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }),
-    []
-  );
+  const nf = useMemo(() => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }), []);
   const [qty, setQty] = useState(1);
 
-  // Dérivés 100 g
   const per100 = useMemo(() => {
     const f = PORTION_GRAMS / 100;
     const r = (v) => +(v / f).toFixed(1);
@@ -39,8 +36,8 @@ export default function PlatBolo() {
   return (
     <>
       <Head>
-        <title>Pâtes bolognaise — GreenHouse</title>
-        <meta name="description" content="Pâtes bolognaise maison au seigle, riche en goût." />
+        <title>Bœuf carottes & purée — GreenHouse</title>
+        <meta name="description" content="Bœuf bourguignon maigre, carottes fondantes, purée maison." />
       </Head>
 
       <main className="wrap">
@@ -51,7 +48,7 @@ export default function PlatBolo() {
         </header>
 
         <article className="sheet">
-          <h2 className="h">Pâtes bolognaise maison</h2>
+          <h2 className="h">Bœuf carottes & purée maison</h2>
           <div className="chips">
             <span className="chip chip--cold">Surgelé</span>
             <span className="chip chip--prot">Riche en protéines</span>
@@ -62,27 +59,25 @@ export default function PlatBolo() {
           </p>
 
           <p className="intro">
-            Une bolognaise authentique sublimée par des pâtes au seigle artisanales
-            (œufs plein air). La tendreté du bœuf, la douceur des carottes et la
-            fraîcheur de la tomate s’unissent pour un plat complet, réconfortant
-            et équilibré.
+            Morceaux de bœuf bourguignon <em>peu gras</em>, carottes fondantes et purée
+            de pommes de terre (variété spéciale purée). Assaisonné uniquement
+            d’<em>aromates</em> — pas de bouillon cube.
           </p>
 
           <div className="cols">
-            {/* Col prix / quantité */}
             <div className="card price">
               <div className="label">Prix unitaire</div>
               <div className="big">{nf.format(PRICE_EUR)}</div>
 
               <div className="qty">
-                <button onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Moins">−</button>
+                <button onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
                 <input
                   type="number"
                   min={1}
                   value={qty}
                   onChange={(e) => setQty(Math.max(1, parseInt(e.target.value || "1", 10)))}
                 />
-                <button onClick={() => setQty((q) => q + 1)} aria-label="Plus">+</button>
+                <button onClick={() => setQty((q) => q + 1)}>+</button>
               </div>
 
               <div className="total">
@@ -91,20 +86,16 @@ export default function PlatBolo() {
               </div>
             </div>
 
-            {/* Col ingrédients */}
             <div className="card">
               <h3 className="sub">Ingrédients</h3>
               <ul className="ing">
-                <li><span>Pâtes artisanales au seigle (œufs plein air)</span><b>200 g</b></li>
-                <li><span>Bœuf haché 5% MG</span><b>150 g</b></li>
+                <li><span>Bœuf bourguignon (morceaux maigres)</span><b>200 g</b></li>
                 <li><span>Carottes</span><b>150 g</b></li>
-                <li><span>Sauce tomate</span><b>100 g</b></li>
-                <li><span>Herbes/aromates (ail, poivre, basilic)</span><b>—</b></li>
+                <li><span>Purée de pommes de terre</span><b>150 g</b></li>
+                <li><span>Aromates (oignon, ail, herbes, sel, poivre)</span><b>—</b></li>
               </ul>
-              <p className="note">Allergènes : gluten (seigle, blé), œufs.</p>
             </div>
 
-            {/* Col nutrition */}
             <div className="card">
               <h3 className="sub">Valeurs nutritionnelles</h3>
               <div className="table">
@@ -146,6 +137,7 @@ export default function PlatBolo() {
 }
 
 const styles = `
+/* mêmes styles que les deux autres pages */
 .wrap{
   min-height:100%;
   background:
@@ -177,7 +169,6 @@ const styles = `
 .ing{list-style:none;padding:0;margin:0;display:grid;gap:8px}
 .ing li{display:flex;justify-content:space-between;gap:12px}
 .ing b{font-variant-numeric:tabular-nums}
-.note{margin:8px 0 0 0;color:#5a6678;font-size:14px}
 .table{overflow-x:auto;border-radius:12px;border:1px solid rgba(0,0,0,.06)}
 table{width:100%;border-collapse:separate;border-spacing:0}
 thead th{background:#f2f6ff;color:#334; text-align:left;padding:10px}
