@@ -1,0 +1,60 @@
+// pages/plats-surgeles/index.js
+import Head from "next/head";
+import Link from "next/link";
+
+export default function PlatsSurgeles() {
+  return (
+    <>
+      <Head>
+        <title>Plats surgelés — GreenHouse</title>
+        <meta name="description" content="Liste des plats surgelés GreenHouse." />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
+
+      <main className="wrap">
+        <header className="hdr">
+          <h1>Plats surgelés</h1>
+          <p>Nos recettes prêtes à stocker au congélateur — pratiques, savoureuses et équilibrées.</p>
+        </header>
+
+        <section className="list">
+          {/* Placeholders — Tu remplaceras par tes vraies cartes/fiches */}
+          <article className="it">
+            <h3>Pâtes bolognaise maison</h3>
+            <p>Équilibré · riche en protéines · {`≈`}700 kcal/portion</p>
+          </article>
+          <article className="it">
+            <h3>Pâtes complètes — émincé de poulet, julienne légumes, sauce poivron maison</h3>
+            <p>Diète · 9,90 €</p>
+          </article>
+          <article className="it">
+            <h3>Gratin de patates douces (diète)</h3>
+            <p>Données complètes à venir</p>
+          </article>
+          <article className="it">
+            <h3>Bœuf carottes — purée de pomme de terre</h3>
+            <p>Surgelé · fiche détaillée à venir</p>
+          </article>
+        </section>
+
+        <p className="back">
+          <Link href="/">← Retour à l’accueil</Link>
+        </p>
+      </main>
+
+      <style jsx>{`
+        .wrap { max-width: 1000px; margin: 0 auto; padding: 28px 20px 60px; }
+        .hdr h1 { margin: 0; font-size: clamp(28px, 4.5vw, 48px);
+          background: linear-gradient(90deg, #0aa64c, #2d7ae6);
+          -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hdr p { margin: 6px 0 16px; color: #5b6475; }
+        .list { display: grid; gap: 14px; }
+        .it { background: white; padding: 16px; border-radius: 14px; border: 1px solid rgba(0,0,0,0.06);
+          box-shadow: 0 8px 26px rgba(0,0,0,0.06); }
+        .it h3 { margin: 0 0 6px; }
+        .it p { margin: 0; color: #5b6475; }
+        .back { margin-top: 20px; }
+      `}</style>
+    </>
+  );
+}
