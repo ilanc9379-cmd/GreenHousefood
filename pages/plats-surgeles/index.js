@@ -1,101 +1,131 @@
 import Link from "next/link";
 
 export default function PlatsSurgeles() {
-  const plats = [
-    {
-      slug: "bolo",
-      titre: "Pâtes bolognaise maison",
-      desc: "Pâtes complètes artisanales, bœuf haché maigre, sauce tomate maison.",
-      prix: "9,90 €",
-    },
-    {
-      slug: "boeuf",
-      titre: "Bœuf carottes & purée",
-      desc: "Bœuf bourguignon maigre, carottes fondantes, purée maison légère.",
-      prix: "9,90 €",
-    },
-    {
-      slug: "poulet-poivron",
-      titre: "Pâtes complètes, émincé de poulet, sauce poivron maison",
-      desc: "Poulet tendre, pâtes complètes artisanales, sauce poivron maison.",
-      prix: "9,90 €",
-    },
-    {
-      slug: "poulet-pommes-haricots",
-      titre: "Cuisse de poulet rôtie, pommes de terre & haricots verts",
-      desc: "Plat complet, équilibré et savoureux.",
-      prix: "9,90 €",
-    },
-  ];
-
   return (
     <main className="container">
-      {/* HEADER DIRECTEMENT DANS LA PAGE */}
+      {/* HEADER */}
       <header className="gh-header">
         <h1 className="brand">GreenHouse</h1>
-        <p className="tag">
-          Plats surgelés — fraîcheur & nutriments préservés, praticité au quotidien.
-        </p>
+        <p className="tag">Plats surgelés — Équilibrés, gourmands et pratiques</p>
       </header>
 
-      <section className="grid">
-        {plats.map((plat) => (
-          <article key={plat.slug} className="card">
-            <h2>{plat.titre}</h2>
-            <p>{plat.desc}</p>
-            <p className="prix">{plat.prix}</p>
-            <Link href={`/plats-surgeles/${plat.slug}`}>Voir le plat</Link>
-          </article>
-        ))}
+      {/* LISTE DES PLATS */}
+      <section className="cards">
+        <article className="card">
+          <h2>Pâtes bolognaise maison</h2>
+          <p>Pâtes complètes artisanales, sauce tomate maison, bœuf maigre 5% MG.</p>
+          <Link href="/plats-surgeles/bolo" className="btn">
+            Voir le plat
+          </Link>
+        </article>
+
+        <article className="card alt">
+          <h2>Pâtes émincé poulet & poivron</h2>
+          <p>Pâtes complètes artisanales, sauce poivron maison, émincé de poulet tendre.</p>
+          <Link href="/plats-surgeles/poulet-poivron" className="btn">
+            Voir le plat
+          </Link>
+        </article>
+
+        <article className="card">
+          <h2>Bœuf carottes & purée</h2>
+          <p>Bœuf bourguignon maigre, carottes fondantes et purée légère.</p>
+          <Link href="/plats-surgeles/boeuf" className="btn">
+            Voir le plat
+          </Link>
+        </article>
+
+        <article className="card alt">
+          <h2>Pommes de terre rôties, cuisse de poulet & haricots verts</h2>
+          <p>Cuisse de poulet, pommes de terre rôties au four et haricots verts frais.</p>
+          <Link href="/plats-surgeles/poulet-pommes-haricots" className="btn">
+            Voir le plat
+          </Link>
+        </article>
       </section>
+
+      {/* FOOTER */}
+      <footer className="foot">
+        <p>© {new Date().getFullYear()} GreenHouse — Traiteur artisanal</p>
+      </footer>
 
       <style jsx>{`
         .container {
-          padding: 20px;
           font-family: Arial, sans-serif;
+          padding: 0 20px 40px;
+          background: #f9fbfa;
         }
+
         .gh-header {
           text-align: center;
-          margin-bottom: 32px;
+          padding: 50px 20px;
+          background: linear-gradient(120deg, #0bb57a, #2a7eea);
+          color: white;
+          border-radius: 0 0 30px 30px;
+          margin-bottom: 40px;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
         .brand {
           margin: 0;
+          font-size: clamp(42px, 8vw, 70px);
           font-weight: 900;
-          font-size: clamp(36px, 7vw, 56px);
-          line-height: 0.95;
-          letter-spacing: 0.5px;
-          background: linear-gradient(90deg, #0bb57a, #2a7eea);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
+          letter-spacing: 1px;
         }
         .tag {
-          margin-top: 6px;
-          color: #3c4a57;
-          font-weight: 600;
+          margin-top: 10px;
+          font-size: clamp(16px, 2.5vw, 22px);
+          font-weight: 500;
         }
-        .grid {
+
+        .cards {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 20px;
+          gap: 24px;
         }
         .card {
-          border: 1px solid #ddd;
-          padding: 16px;
-          border-radius: 10px;
           background: #fff;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          border-radius: 16px;
+          padding: 20px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .prix {
-          font-weight: bold;
+        .card.alt {
+          background: #eef9f4;
+        }
+        .card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        .card h2 {
+          margin: 0 0 8px;
+          font-size: 22px;
           color: #0a6b5a;
         }
-        a {
+        .card p {
+          color: #3c4a57;
+          margin-bottom: 14px;
+        }
+
+        .btn {
           display: inline-block;
-          margin-top: 8px;
-          color: #0a6b5a;
+          padding: 10px 18px;
+          border-radius: 12px;
+          font-weight: 700;
+          color: #fff;
           text-decoration: none;
-          font-weight: bold;
+          background: linear-gradient(90deg, #0bb57a, #2a7eea);
+          box-shadow: 0 4px 12px rgba(42, 126, 234, 0.3);
+          transition: all 0.25s ease;
+        }
+        .btn:hover {
+          filter: brightness(1.1);
+          box-shadow: 0 6px 18px rgba(11, 181, 122, 0.35);
+        }
+
+        .foot {
+          text-align: center;
+          margin-top: 40px;
+          font-size: 14px;
+          color: #6a737d;
         }
       `}</style>
     </main>
