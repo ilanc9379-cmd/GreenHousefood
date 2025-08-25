@@ -1,139 +1,123 @@
 // pages/plats-surgeles/boeuf.js
-import Head from "next/head";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 export default function BoeufCarottesPuree() {
-  const NOM = "Bœuf carottes & purée de pomme de terre";
-  const PRIX = 9.9;
-  const POIDS = 500; // 200 bœuf, 150 carottes, 150 purée
-  // Estimations cohérentes (à ajuster si besoin)
-  const KCAL = 610, P = 48, G = 55, L = 18, SEL = 2.2, SUCRES = 9, AGS = +(L * 0.35).toFixed(1);
+  const portion = 500; // g (affichage conforme à ton tableau)
+  const price = 9.9;
 
-  const kcal100 = +(KCAL / (POIDS / 100)).toFixed(1);
-  const p100 = +(P / (POIDS / 100)).toFixed(1);
-  const g100 = +(G / (POIDS / 100)).toFixed(1);
-  const l100 = +(L / (POIDS / 100)).toFixed(1);
-  const sel100 = +(SEL / (POIDS / 100)).toFixed(1);
+  // D'après ta capture/tableau
+  const n100 = { kcal: 122, fat: 3.6, carbs: 9.6, protein: 9.6, salt: 0.4 };
+  const nPortion = {
+    kcal: 610, fat: 18.1, carbs: 48, protein: 55, salt: 2.2
+  };
 
-  const [qty, setQty] = useState(1);
-  const nf = useMemo(() => new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR"}),[]);
-  const totalPrice = nf.format(PRIX * qty);
+  const [qty,setQty]=useState(1);
+  const nf = useMemo(()=>new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR"}),[]);
 
   return (
-    <>
-      <Head><title>{NOM} — GreenHouse</title></Head>
-      <main className="wrap">
-        <header className="hero">
-          <h1 className="brand">GreenHouse</h1>
-          <p className="slogan">Traiteur — Diététique & Gourmand</p>
-          <a href="/plats-surgeles" className="back">← Retour aux plats surgelés</a>
+    <main className="page">
+      <aside className="side">
+        <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
+        <h1 className="brand">Greenhouse</h1>
+        <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
+      </aside>
+
+      <section className="content">
+        <header className="header">
+          <h2 className="title">Bœuf carottes &amp; purée maison</h2>
+          <p className="meta"><span className="pill pill-freeze">Surgelé</span></p>
+          <p className="desc">
+            Portion : <strong>{portion} g</strong> · four <b>20 min</b> (150 °C) · micro-ondes <b>8 min</b> · poêle <b>10 min</b>.  
+            À conserver au congélateur (max 4 mois) · 48h au réfrigérateur après décongélation.
+          </p>
+          <p className="blurb">
+            Bœuf bourguignon (morceaux maigres), carottes fondantes et purée de pommes de terre maison.
+          </p>
         </header>
 
-        <article className="card">
-          <div className="title-line">
-            <h2 className="title">{NOM}</h2>
-            <div className="badges">
-              <span className="bd bd-blue">Surgelé</span>
-              <span className="bd bd-green">Diète</span>
-            </div>
-          </div>
+        <div className="grid">
+          <section className="card">
+            <h3>Ingrédients</h3>
+            <ul className="ing">
+              <li><b>200 g</b> — Bœuf (morceaux maigres)</li>
+              <li><b>150 g</b> — Carottes</li>
+              <li><b>150 g</b> — Purée de pommes de terre</li>
+              <li>Aromates — ail, oignon, sel, poivre</li>
+            </ul>
+            <p className="muted">Allergènes : —</p>
+          </section>
 
-          <p className="lead">
-            Bœuf bourguignon maigre mijoté, carottes fondantes, <strong>purée maison</strong> de pommes de terre.
-            Assaisonné aux aromates (ail, oignon, herbes, sel, poivre).
-          </p>
-
-          <section className="grid2">
-            <div className="panel">
-              <h3>Prix</h3>
-              <div className="price">{nf.format(PRIX)}</div>
-              <div className="qty">
-                <button onClick={()=>setQty(Math.max(1, qty-1))}>−</button>
-                <input type="number" min={1} value={qty} onChange={e=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
-                <button onClick={()=>setQty(qty+1)}>+</button>
-              </div>
-              <div className="total">Total ({qty} plat{qty>1?"s":""}) : <b>{totalPrice}</b></div>
-
-              <h4>Ingrédients</h4>
-              <ul className="ing">
-                <li>Bœuf bourguignon (morceaux maigres) — 200 g</li>
-                <li>Carottes — 150 g</li>
-                <li>Purée de pommes de terre — 150 g</li>
-                <li>Aromates : ail, oignon, sel, poivre, herbes</li>
-              </ul>
-              <p className="muted">Allergènes : —</p>
-            </div>
-
-            <div className="panel">
-              <h3>Valeurs nutritionnelles</h3>
-              <table className="nutri">
-                <thead><tr><th>Valeurs</th><th>Pour 100 g</th><th>Par portion ({POIDS} g)</th></tr></thead>
-                <tbody>
-                  <tr><td>Énergie</td><td>{kcal100} kcal</td><td>{KCAL} kcal</td></tr>
-                  <tr><td>Matières grasses</td><td>{l100} g</td><td>{L} g</td></tr>
-                  <tr><td>Glucides</td><td>{g100} g</td><td>{G} g</td></tr>
-                  <tr><td>Protéines</td><td>{p100} g</td><td>{P} g</td></tr>
-                  <tr><td>Sel</td><td>{sel100} g</td><td>{SEL} g</td></tr>
-                </tbody>
-              </table>
-
-              <h4>Cuisson</h4>
-              <ul className="list">
-                <li>Four <b>150 °C</b> : <b>20 min</b></li>
-                <li>Micro-ondes : <b>8 min</b></li>
-                <li>Poêle : <b>10 min</b></li>
-              </ul>
-
-              <h4>Conservation</h4>
-              <ul className="list">
-                <li>Conserver au <b>congélateur</b> : maximum <b>4 mois</b></li>
-                <li>Après décongélation : <b>48 h</b> au réfrigérateur</li>
-                <li>Ne pas recongeler</li>
-              </ul>
-
-              <p className="note">
-                La surgélation préserve fraîcheur et qualités nutritionnelles pour un plat prêt à réchauffer, sans compromis.
-              </p>
+          <section className="card">
+            <h3>Valeurs nutritionnelles</h3>
+            <div className="table">
+              <div className="thead"><div>Valeurs</div><div>Pour 100 g</div><div>Par portion</div></div>
+              <div className="row"><div>Énergie</div><div>{n100.kcal} kcal</div><div>{nPortion.kcal} kcal</div></div>
+              <div className="row"><div>Matières grasses</div><div>{n100.fat} g</div><div>{nPortion.fat} g</div></div>
+              <div className="row"><div>Glucides</div><div>{n100.carbs} g</div><div>{nPortion.carbs} g</div></div>
+              <div className="row"><div>Protéines</div><div>{n100.protein} g</div><div>{nPortion.protein} g</div></div>
+              <div className="row"><div>Sel</div><div>{n100.salt} g</div><div>{nPortion.salt} g</div></div>
             </div>
           </section>
-        </article>
-      </main>
+
+          <section className="card price">
+            <div className="label">Prix unitaire</div>
+            <div className="big">{nf.format(price)}</div>
+            <div className="qty">
+              <button onClick={()=>setQty(q=>Math.max(1,q-1))}>−</button>
+              <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
+              <button onClick={()=>setQty(q=>q+1)}>+</button>
+            </div>
+            <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
+            <div className="total">{nf.format(price*qty)}</div>
+            <button className="btn">Commander</button>
+          </section>
+        </div>
+
+        <section className="card foot">
+          <h3>Cuisson</h3>
+          <ul><li>Four <b>150 °C</b> : <b>20 min</b></li><li>Micro-ondes : <b>8 min</b></li><li>Poêle : <b>10 min</b></li></ul>
+          <h3 style={{marginTop:12}}>Conservation</h3>
+          <ul><li>Congélateur : <b>max 4 mois</b></li><li>Après décongélation : <b>48h</b> au réfrigérateur</li><li>Ne pas recongeler</li></ul>
+          <p className="note">La surgélation préserve fraîcheur et nutriments.</p>
+        </section>
+      </section>
+
       <style jsx>{styles}</style>
-    </>
+    </main>
   );
 }
 
 const styles = `
-/* mêmes styles que les autres pages */
-.wrap{padding:24px;background:radial-gradient(1200px 600px at -10% -10%,#e9fff7,transparent 60%),radial-gradient(1000px 700px at 110% -20%,#e8f3ff,transparent 65%),#f9fdfb}
-.hero{max-width:1100px;margin:0 auto 10px}
-.brand{font-size:clamp(42px,7vw,88px);margin:0;background:linear-gradient(90deg,#10b981,#2563eb);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:.95}
-.slogan{margin:6px 0 12px;color:#52606d}
-.back{color:#2563eb;text-decoration:none}
-.card{max-width:1100px;margin:10px auto 40px;background:white;border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
-.title-line{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.title{margin:0;font-size:clamp(24px,3.2vw,36px)}
-.badges{display:flex;gap:8px}
-.bd{padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
-.bd-blue{background:#e0f2ff;border:1px solid #bee3ff}
-.bd-green{background:#e8fff6;border:1px solid #bdf5de}
-.lead{color:#2a3340}
-.grid2{display:grid;grid-template-columns:1fr 1.2fr;gap:16px;margin-top:12px}
-@media(max-width:900px){.grid2{grid-template-columns:1fr}}
-.panel{background:linear-gradient(180deg,#fbfdff,#f6faff);border:1px solid #eef2f7;border-radius:14px;padding:14px}
-.price{font-size:26px;font-weight:800;margin-bottom:8px}
-.qty{display:flex;align-items:center;gap:8px}
-.qty button{width:38px;height:38px;border-radius:10px;border:1px solid #d7dce2;background:#fff}
-.qty input{width:70px;height:38px;text-align:center;border-radius:10px;border:1px solid #d7dce2}
-.total{margin-top:8px}
-h3{margin:8px 0 10px}
-h4{margin:14px 0 6px}
-.ing{margin:6px 0 0 18px}
-.muted{color:#6b7280}
-.nutri{width:100%;border-collapse:collapse;font-size:14px}
-.nutri th,.nutri td{border-top:1px solid #e8ecf2;padding:8px 10px}
-.nutri thead th{background:#f1f5fb}
-.sub{color:#64748b}
-.list{margin:6px 0 0 18px}
-.note{margin-top:8px;color:#475569}
+.page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
+.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
+.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
+.brand{margin:0;font-size:48px;line-height:0.9;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.tag{color:#246}
+.content{padding:24px;max-width:1100px}
+.header{margin-bottom:10px}
+.title{margin:0 0 6px;font-size:32px}
+.meta{display:flex;gap:8px;margin:6px 0 8px}
+.pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
+.pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
+.desc{margin:0 0 8px;color:#345}
+.blurb{margin:0 0 8px;color:#123;font-weight:500}
+.grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
+.card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
+.ing{margin:8px 0 10px;padding-left:16px}
+.ing li{margin:6px 0}
+.muted{color:#667}
+.table{display:grid;gap:6px}
+.thead,.row{display:grid;grid-template-columns:1.2fr 1fr 1fr;align-items:center}
+.thead{font-weight:700;background:#f3f7ff;border-radius:10px;padding:8px}
+.row{padding:6px 8px;border-bottom:1px solid #f0f2f7}
+.price .label{color:#678;margin-top:2px}
+.big{font-size:32px;font-weight:800}
+.qty{display:flex;align-items:center;gap:8px;margin:10px 0}
+.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd}
+.qty input{width:64px;height:36px;text-align:center;border-radius:10px;border:1px solid #ccd}
+.total{font-size:22px;font-weight:800;margin-bottom:8px}
+.btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
+.foot .note{margin-top:10px;color:#456}
+@media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
 `;
