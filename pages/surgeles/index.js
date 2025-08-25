@@ -1,15 +1,15 @@
-// pages/surgeles/index.js
+// pages/plats-surgeles/index.js
 import Head from "next/head";
 import Link from "next/link";
 
-export default function SurgelesIndex() {
+export default function PlatsSurgelesIndex() {
   return (
     <>
       <Head>
-        <title>Produits surgelés — GreenHouse</title>
+        <title>Plats surgelés — GreenHouse</title>
         <meta
           name="description"
-          content="GreenHouse — Pâtes artisanales & falafels surgelés. Qualité, goût et praticité."
+          content="GreenHouse — Plats surgelés artisanaux, équilibrés et savoureux."
         />
       </Head>
 
@@ -23,50 +23,78 @@ export default function SurgelesIndex() {
           {/* En-tête */}
           <header className="hero">
             <h1 className="brand">GreenHouse</h1>
-            <p className="sub">Produits surgelés — Pâtes artisanales &amp; falafels</p>
+            <p className="sub">Plats surgelés — Artisanaux, équilibrés & gourmands</p>
           </header>
 
-          {/* Pâtes */}
+          {/* Plat : Bolognaise */}
           <section className="card">
-            <h2 className="title">Pâtes artisanales (surgelées)</h2>
+            <h2 className="title">Pâtes bolognaise maison</h2>
             <p className="text">
-              Farines locales (seigle, complète, aromette) &amp; <b>œufs frais plein air</b>.
-              Surgelées pour une cuisson express et une qualité constante. <b>Cuisson&nbsp;:</b>{" "}
-              eau bouillante <b>1&nbsp;min&nbsp;30</b>.
+              Pâtes complètes artisanales, bœuf 5% MG, sauce tomate maison & aromates.
+              Surgelé, prêt en 20 min au four, 8 min au micro-ondes ou 10 min à la poêle.
             </p>
-
-            {/* Macros en boîtes */}
             <div className="pills">
-              <span className="pill">175 kcal / 100 g (cuit)</span>
-              <span className="pill">P&nbsp;6,4&nbsp;g</span>
-              <span className="pill">G&nbsp;34&nbsp;g</span>
-              <span className="pill">L&nbsp;1,9&nbsp;g</span>
+              <span className="pill">116,7 kcal / 100 g</span>
+              <span className="pill">P&nbsp;9 g</span>
+              <span className="pill">G&nbsp;14,8 g</span>
+              <span className="pill">L&nbsp;2,6 g</span>
             </div>
-
-            <Link href="/surgeles/pates" className="cta-link">
-              Voir les pâtes
+            <Link href="/plats-surgeles/bolo" className="cta-link">
+              Voir la fiche
             </Link>
           </section>
 
-          {/* Falafels */}
+          {/* Plat : Poulet poivron */}
           <section className="card">
-            <h2 className="title">Falafels artisanaux (surgelés)</h2>
+            <h2 className="title">Pâtes complètes & émincé de poulet, sauce poivron</h2>
             <p className="text">
-              Pois chiches réhydratés, herbes fraîches et épices. <b>Prix&nbsp;:</b>{" "}
-              10,00&nbsp;€ / kg. Surgelés pour garder le moelleux à cœur et le croustillant
-              après cuisson.
+              Pâtes complètes artisanales, poulet, julienne de légumes, sauce poivron maison.
+              Surgelé, prêt en 20 min au four, 8 min au micro-ondes ou 10 min à la poêle.
             </p>
-
-            {/* Macros en boîtes */}
             <div className="pills">
-              <span className="pill">184 kcal / 100 g</span>
-              <span className="pill">P&nbsp;7,6&nbsp;g</span>
-              <span className="pill">G&nbsp;20,1&nbsp;g</span>
-              <span className="pill">L&nbsp;7,4&nbsp;g</span>
+              <span className="pill">122 kcal / 100 g</span>
+              <span className="pill">P&nbsp;9,6 g</span>
+              <span className="pill">G&nbsp;18 g</span>
+              <span className="pill">L&nbsp;1,8 g</span>
             </div>
+            <Link href="/plats-surgeles/poulet-poivron" className="cta-link">
+              Voir la fiche
+            </Link>
+          </section>
 
-            <Link href="/surgeles/falafels" className="cta-link">
-              Voir les falafels
+          {/* Plat : Boeuf bourguignon */}
+          <section className="card">
+            <h2 className="title">Bœuf bourguignon</h2>
+            <p className="text">
+              Bœuf maigre mijoté, pommes de terre, carottes, sauce maison aux oignons & vin
+              rouge. Surgelé, prêt en 20 min au four, 8 min au micro-ondes ou 10 min à la poêle.
+            </p>
+            <div className="pills">
+              <span className="pill">122 kcal / 100 g</span>
+              <span className="pill">P&nbsp;9,6 g</span>
+              <span className="pill">G&nbsp;18 g</span>
+              <span className="pill">L&nbsp;1,8 g</span>
+            </div>
+            <Link href="/plats-surgeles/boeuf" className="cta-link">
+              Voir la fiche
+            </Link>
+          </section>
+
+          {/* Plat : Poulet pommes haricots */}
+          <section className="card">
+            <h2 className="title">Poulet, pommes de terre rôties & haricots verts</h2>
+            <p className="text">
+              Cuisse de poulet marinée, pommes de terre rôties, haricots verts frais.
+              Surgelé, prêt en 20 min au four, 8 min au micro-ondes ou 10 min à la poêle.
+            </p>
+            <div className="pills">
+              <span className="pill">128 kcal / 100 g</span>
+              <span className="pill">P&nbsp;10 g</span>
+              <span className="pill">G&nbsp;12 g</span>
+              <span className="pill">L&nbsp;3 g</span>
+            </div>
+            <Link href="/plats-surgeles/poulet-pommes-haricots" className="cta-link">
+              Voir la fiche
             </Link>
           </section>
         </div>
@@ -83,10 +111,7 @@ export default function SurgelesIndex() {
         }
         .page {
           min-height: 100vh;
-          background:
-            radial-gradient(900px 600px at -10% -10%, #eafff3, transparent 60%),
-            radial-gradient(900px 600px at 110% -20%, #e7f0ff, transparent 65%),
-            linear-gradient(180deg, #f8fffb 0%, #f7fbff 55%, #ffffff 100%);
+          background: linear-gradient(180deg, #f8fffb 0%, #f7fbff 55%, #ffffff 100%);
           color: var(--ink);
           font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
         }
@@ -124,7 +149,6 @@ export default function SurgelesIndex() {
         }
         .title { margin: 0 0 6px; }
         .text { margin: 0 0 10px; color: var(--muted); }
-
         .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 12px; }
         .pill {
           background: var(--soft);
@@ -135,7 +159,6 @@ export default function SurgelesIndex() {
           font-size: 13px;
           color: #1f3b7a;
         }
-
         .cta-link {
           display: inline-block;
           background: linear-gradient(90deg, var(--brand1), var(--brand2));
