@@ -1,58 +1,151 @@
+// pages/surgeles/index.js
+import Head from "next/head";
 import Link from "next/link";
 
-export default function ProduitsSurges() {
+export default function SurgelesIndex() {
   return (
-    <main className="container">
-      {/* HEADER */}
-      <header className="gh-header">
-        <h1 className="brand">GreenHouse</h1>
-        <p className="tag">Produits surgelés — Pâtes artisanales & falafels</p>
-      </header>
+    <>
+      <Head>
+        <title>Produits surgelés — GreenHouse</title>
+        <meta
+          name="description"
+          content="GreenHouse — Pâtes artisanales & falafels surgelés. Qualité, goût et praticité."
+        />
+      </Head>
 
-      {/* LISTE PRODUITS SURGELÉS */}
-      <section className="cards">
-        <article className="card">
-          <h2>Pâtes artisanales (surgelées)</h2>
-          <p>
-            Farines locales (seigle, complète, aromette) &amp;{" "}
-            <strong>œufs frais plein air</strong>. Surgelées pour une cuisson
-            express et une qualité constante. <strong>Cuisson</strong> : eau
-            bouillante <strong>1 min 30</strong>.
-          </p>
-          <Link href="/surgeles/pates" className="btn">Voir les pâtes</Link>
-        </article>
+      <main className="page">
+        <div className="wrap">
+          {/* Retour */}
+          <Link href="/" className="back">
+            ← Retour à l’accueil
+          </Link>
 
-        <article className="card alt">
-          <h2>Falafels artisanaux (surgelés)</h2>
-          <p>
-            Pois chiches réhydratés, herbes fraîches et épices.{" "}
-            <strong>Prix : 10,00 € / kg</strong>. Valeurs nutritionnelles
-            moyennes pour 100 g : ~184 kcal, L 7,4 g (AGS 0,8 g), G 20,1 g
-            (sucres 1,1 g), P 7,6 g, Sel 1,1 g.
-          </p>
-          <Link href="/surgeles/falafels" className="btn">Voir les falafels</Link>
-        </article>
-      </section>
+          {/* En-tête */}
+          <header className="hero">
+            <h1 className="brand">GreenHouse</h1>
+            <p className="sub">Produits surgelés — Pâtes artisanales &amp; falafels</p>
+          </header>
 
-      <footer className="foot">
-        <p>© {new Date().getFullYear()} GreenHouse — Traiteur artisanal</p>
-      </footer>
+          {/* Pâtes */}
+          <section className="card">
+            <h2 className="title">Pâtes artisanales (surgelées)</h2>
+            <p className="text">
+              Farines locales (seigle, complète, aromette) &amp; <b>œufs frais plein air</b>.
+              Surgelées pour une cuisson express et une qualité constante. <b>Cuisson&nbsp;:</b>{" "}
+              eau bouillante <b>1&nbsp;min&nbsp;30</b>.
+            </p>
+
+            {/* Macros en boîtes */}
+            <div className="pills">
+              <span className="pill">175 kcal / 100 g (cuit)</span>
+              <span className="pill">P&nbsp;6,4&nbsp;g</span>
+              <span className="pill">G&nbsp;34&nbsp;g</span>
+              <span className="pill">L&nbsp;1,9&nbsp;g</span>
+            </div>
+
+            <Link href="/surgeles/pates" className="cta-link">
+              Voir les pâtes
+            </Link>
+          </section>
+
+          {/* Falafels */}
+          <section className="card">
+            <h2 className="title">Falafels artisanaux (surgelés)</h2>
+            <p className="text">
+              Pois chiches réhydratés, herbes fraîches et épices. <b>Prix&nbsp;:</b>{" "}
+              10,00&nbsp;€ / kg. Surgelés pour garder le moelleux à cœur et le croustillant
+              après cuisson.
+            </p>
+
+            {/* Macros en boîtes */}
+            <div className="pills">
+              <span className="pill">184 kcal / 100 g</span>
+              <span className="pill">P&nbsp;7,6&nbsp;g</span>
+              <span className="pill">G&nbsp;20,1&nbsp;g</span>
+              <span className="pill">L&nbsp;7,4&nbsp;g</span>
+            </div>
+
+            <Link href="/surgeles/falafels" className="cta-link">
+              Voir les falafels
+            </Link>
+          </section>
+        </div>
+      </main>
 
       <style jsx>{`
-        .container { font-family: Arial, sans-serif; padding: 0 20px 40px; background: #f9fbfa; }
-        .gh-header { text-align: center; padding: 50px 20px; background: linear-gradient(120deg,#0bb57a,#2a7eea); color:#fff; border-radius:0 0 30px 30px; margin-bottom:40px; box-shadow:0 6px 20px rgba(0,0,0,.15); }
-        .brand { margin:0; font-size:clamp(42px,8vw,70px); font-weight:900; letter-spacing:1px; }
-        .tag { margin-top:10px; font-size:clamp(16px,2.5vw,22px); font-weight:500; }
-        .cards { display:grid; gap:24px; }
-        .card { background:#fff; border-radius:16px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,.08); transition:transform .2s, box-shadow .2s; }
-        .card.alt { background:#eef9f4; }
-        .card:hover { transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,.12); }
-        .card h2 { margin:0 0 8px; font-size:22px; color:#0a6b5a; }
-        .card p { color:#3c4a57; margin-bottom:14px; }
-        .btn { display:inline-block; padding:10px 18px; border-radius:12px; font-weight:700; color:#fff; text-decoration:none; background:linear-gradient(90deg,#0bb57a,#2a7eea); box-shadow:0 4px 12px rgba(42,126,234,.3); transition:all .25s; }
-        .btn:hover { filter:brightness(1.1); box-shadow:0 6px 18px rgba(11,181,122,.35); }
-        .foot { text-align:center; margin-top:40px; font-size:14px; color:#6a737d; }
+        :root {
+          --brand1: #0aa64c;
+          --brand2: #2d7ae6;
+          --ink: #0b1020;
+          --muted: #5f6b80;
+          --card: #ffffff;
+          --soft: #f6f9ff;
+        }
+        .page {
+          min-height: 100vh;
+          background:
+            radial-gradient(900px 600px at -10% -10%, #eafff3, transparent 60%),
+            radial-gradient(900px 600px at 110% -20%, #e7f0ff, transparent 65%),
+            linear-gradient(180deg, #f8fffb 0%, #f7fbff 55%, #ffffff 100%);
+          color: var(--ink);
+          font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        }
+        .wrap { max-width: 900px; margin: 0 auto; padding: 18px 16px 38px; }
+        .back {
+          display: inline-block;
+          margin-bottom: 10px;
+          color: #1a5fd1;
+          font-weight: 700;
+        }
+        .hero {
+          background: linear-gradient(135deg, rgba(10,166,76,.08), rgba(45,122,230,.08));
+          border-radius: 22px;
+          padding: 28px 22px;
+          margin-bottom: 18px;
+        }
+        .brand {
+          margin: 0;
+          font-size: clamp(44px, 9vw, 78px);
+          line-height: .92;
+          background: linear-gradient(90deg, var(--brand1), var(--brand2));
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          letter-spacing: .5px;
+        }
+        .sub { margin: 6px 0 0; color: var(--ink); opacity: .7; font-weight: 600; }
+
+        .card {
+          background: var(--card);
+          border-radius: 18px;
+          padding: 18px;
+          box-shadow: 0 10px 30px rgba(0,0,0,.06);
+          margin-top: 16px;
+        }
+        .title { margin: 0 0 6px; }
+        .text { margin: 0 0 10px; color: var(--muted); }
+
+        .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 12px; }
+        .pill {
+          background: var(--soft);
+          border: 1px solid #dce5f7;
+          border-radius: 999px;
+          padding: 6px 10px;
+          font-weight: 700;
+          font-size: 13px;
+          color: #1f3b7a;
+        }
+
+        .cta-link {
+          display: inline-block;
+          background: linear-gradient(90deg, var(--brand1), var(--brand2));
+          color: #fff;
+          padding: 10px 14px;
+          border-radius: 12px;
+          font-weight: 800;
+          box-shadow: 0 10px 24px rgba(45,122,230,.25);
+        }
       `}</style>
-    </main>
+    </>
   );
 }
