@@ -6,51 +6,19 @@ export default function PlatsFrais() {
       {/* HEADER */}
       <header className="gh-header">
         <h1 className="brand">GreenHouse</h1>
-        <p className="tag">
-          Traiteur artisanal — Des plats frais, équilibrés, sous atmosphère
-          modifiée pour préserver qualité et praticité.
-        </p>
-        <p className="sub">
-          Conservation au réfrigérateur : <strong>jusqu’à 5 jours</strong>.
-        </p>
-        <nav className="nav">
-          <Link href="/">← Retour à l’accueil</Link>
-          <span>·</span>
-          <Link href="/plats-surgeles">Plats surgelés</Link>
-          <span>·</span>
-          <Link href="/surgeles">Produits surgelés</Link>
-        </nav>
+        <p className="tag">Plats frais — Équilibrés, pratiques et savoureux</p>
       </header>
 
-      {/* SECTION CARTES */}
-      <section className="grid">
-        <article className="card coming">
-          <h2>Vitrine des plats frais</h2>
-          <p>
-            La sélection arrive très bientôt. Nous finalisons les fiches, macros
-            et allergènes.
-          </p>
-          <ul className="list">
-            <li>• Recettes équilibrées & de saison</li>
-            <li>• Sous atmosphère modifiée</li>
-            <li>• Conservation 5 jours au frais</li>
-          </ul>
-          <div className="cta-row">
-            <Link className="btn" href="/">Être averti bientôt</Link>
-          </div>
-        </article>
-
+      {/* LISTE / TEASERS */}
+      <section className="cards">
         <article className="card">
-          <h2>Besoin d’un plat frais spécifique ?</h2>
+          <h2>Notre gamme de plats frais arrive !</h2>
           <p>
-            On cuisine aussi <strong>à la demande</strong> pour entreprises,
-            sportifs, événements. Portions & macros personnalisées.
+            Des recettes maison, conditionnées sous atmosphère modifiée pour
+            préserver la qualité. <strong>Conservation 5 jours</strong> au
+            réfrigérateur.
           </p>
-          <div className="cta-row">
-            <a className="btn ghost" href="mailto:contact@greenhouse.example">
-              Nous écrire
-            </a>
-          </div>
+          <Link href="/" className="btn">Retour à l’accueil</Link>
         </article>
       </section>
 
@@ -59,36 +27,18 @@ export default function PlatsFrais() {
       </footer>
 
       <style jsx>{`
-        .container { padding: 20px; font-family: Arial, sans-serif; }
-        .gh-header { text-align: center; margin-bottom: 40px; }
-        .brand {
-          margin: 0; font-weight: 900; font-size: clamp(40px, 7vw, 64px); line-height: .95;
-          background: linear-gradient(90deg, #0bb57a, #2a7eea); -webkit-background-clip: text;
-          background-clip: text; color: transparent; letter-spacing: .5px;
-        }
-        .tag { margin-top: 10px; color: #3c4a57; font-weight: 600; font-size: clamp(16px, 2.5vw, 22px); }
-        .sub { margin: 4px 0 10px; color: #526072; }
-        .nav { display: flex; gap: 10px; justify-content: center; align-items: center; color: #0a6b5a; }
-        .nav a { color: #0a6b5a; text-decoration: none; font-weight: 600; }
-        .nav a:hover { text-decoration: underline; }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-        .card {
-          border: 1px solid #e6e8eb; padding: 20px; border-radius: 14px; background: #fff;
-          box-shadow: 0 2px 12px rgba(0,0,0,.06);
-        }
-        .card h2 { margin: 0 0 6px; color: #0a6b5a; }
-        .list { margin: 10px 0 0; padding-left: 0; list-style: none; color: #3c4a57; }
-        .cta-row { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
-        .btn {
-          display: inline-block; padding: 10px 16px; border-radius: 12px; font-weight: 700; text-decoration: none;
-          color: #fff; background: linear-gradient(90deg, #0bb57a, #2a7eea); box-shadow: 0 6px 18px rgba(42,126,234,.22);
-        }
-        .btn.ghost {
-          background: #fff; color: #0a6b5a; border: 1px solid #cfe7df; box-shadow: none;
-        }
-        .coming { background: linear-gradient(180deg, #f7fffb, #ffffff); }
-        .foot { text-align: center; margin-top: 40px; color: #6a737d; font-size: 14px; }
+        .container { font-family: Arial, sans-serif; padding: 0 20px 40px; background: #f9fbfa; }
+        .gh-header { text-align: center; padding: 50px 20px; background: linear-gradient(120deg,#0bb57a,#2a7eea); color:#fff; border-radius:0 0 30px 30px; margin-bottom:40px; box-shadow:0 6px 20px rgba(0,0,0,.15); }
+        .brand { margin:0; font-size:clamp(42px,8vw,70px); font-weight:900; letter-spacing:1px; }
+        .tag { margin-top:10px; font-size:clamp(16px,2.5vw,22px); font-weight:500; }
+        .cards { display:grid; gap:24px; }
+        .card { background:#fff; border-radius:16px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,.08); transition:transform .2s, box-shadow .2s; }
+        .card:hover { transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,.12); }
+        .card h2 { margin:0 0 8px; font-size:22px; color:#0a6b5a; }
+        .card p { color:#3c4a57; margin-bottom:14px; }
+        .btn { display:inline-block; padding:10px 18px; border-radius:12px; font-weight:700; color:#fff; text-decoration:none; background:linear-gradient(90deg,#0bb57a,#2a7eea); box-shadow:0 4px 12px rgba(42,126,234,.3); transition:all .25s; }
+        .btn:hover { filter:brightness(1.1); box-shadow:0 6px 18px rgba(11,181,122,.35); }
+        .foot { text-align:center; margin-top:40px; font-size:14px; color:#6a737d; }
       `}</style>
     </main>
   );
