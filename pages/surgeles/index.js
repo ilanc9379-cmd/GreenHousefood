@@ -1,70 +1,36 @@
 import Link from "next/link";
 
-export default function ProduitsSurgeles() {
+export default function ProduitsSurges() {
   return (
     <main className="container">
       {/* HEADER */}
       <header className="gh-header">
         <h1 className="brand">GreenHouse</h1>
-        <p className="tag">
-          Produits surgelés — Pratiques, bons, artisanaux. Surgelés pour
-          préserver les nutriments, la texture et le goût.
-        </p>
-        <p className="sub">
-          À conserver au congélateur. <strong>Cuisson express</strong> quand
-          vous voulez.
-        </p>
-        <nav className="nav">
-          <Link href="/">← Retour à l’accueil</Link>
-          <span>·</span>
-          <Link href="/plats-surgeles">Plats surgelés</Link>
-          <span>·</span>
-          <Link href="/plats-frais">Plats frais</Link>
-        </nav>
+        <p className="tag">Produits surgelés — Pâtes artisanales & falafels</p>
       </header>
 
-      {/* SECTION CARTES */}
-      <section className="grid">
-        {/* PÂTES */}
+      {/* LISTE PRODUITS SURGELÉS */}
+      <section className="cards">
         <article className="card">
-          <div className="badge">Surgelé</div>
-          <h2>Pâtes artisanales surgelées</h2>
+          <h2>Pâtes artisanales (surgelées)</h2>
           <p>
-            Œufs frais plein air & farines locales. Variétés :{" "}
-            <strong>Seigle</strong>, <strong>Complètes</strong>,{" "}
-            <strong>Aromette</strong>. Cuisson eau bouillante{" "}
-            <strong>1 min 30</strong>.
+            Farines locales (seigle, complète, aromette) &amp;{" "}
+            <strong>œufs frais plein air</strong>. Surgelées pour une cuisson
+            express et une qualité constante. <strong>Cuisson</strong> : eau
+            bouillante <strong>1 min 30</strong>.
           </p>
-          <ul className="list">
-            <li>• Conditionnement vrac ou portions</li>
-            <li>• À conserver au congélateur</li>
-            <li>• Allergènes : gluten, œufs</li>
-          </ul>
-          <div className="cta-row">
-            {/* À brancher vers ta page liste/fiche quand prête */}
-            <Link className="btn" href="/surgeles/pates">Voir les pâtes</Link>
-            <a className="btn ghost" href="mailto:contact@greenhouse.example">Commander</a>
-          </div>
+          <Link href="/surgeles/pates" className="btn">Voir les pâtes</Link>
         </article>
 
-        {/* FALAFELS */}
-        <article className="card">
-          <div className="badge">Surgelé</div>
-          <h2>Falafels artisanaux surgelés</h2>
+        <article className="card alt">
+          <h2>Falafels artisanaux (surgelés)</h2>
           <p>
-            Fabrication maison. Prix : <strong>10,00 € / kg</strong>. Cuisson{" "}
-            <strong>friteuse 3 min</strong> ou <strong>airfryer 15 min</strong>.
+            Pois chiches réhydratés, herbes fraîches et épices.{" "}
+            <strong>Prix : 10,00 € / kg</strong>. Valeurs nutritionnelles
+            moyennes pour 100 g : ~184 kcal, L 7,4 g (AGS 0,8 g), G 20,1 g
+            (sucres 1,1 g), P 7,6 g, Sel 1,1 g.
           </p>
-          <ul className="list">
-            <li>• Sans additifs, texture crousti-fondante</li>
-            <li>• À conserver au congélateur</li>
-            <li>• Valeurs nutritionnelles : indiquées par 100 g</li>
-          </ul>
-          <div className="cta-row">
-            {/* À brancher vers ta page fiche falafel quand prête */}
-            <Link className="btn" href="/surgeles/falafels">Voir les falafels</Link>
-            <a className="btn ghost" href="mailto:contact@greenhouse.example">Commander</a>
-          </div>
+          <Link href="/surgeles/falafels" className="btn">Voir les falafels</Link>
         </article>
       </section>
 
@@ -73,41 +39,19 @@ export default function ProduitsSurgeles() {
       </footer>
 
       <style jsx>{`
-        .container { padding: 20px; font-family: Arial, sans-serif; }
-        .gh-header { text-align: center; margin-bottom: 40px; }
-        .brand {
-          margin: 0; font-weight: 900; font-size: clamp(40px, 7vw, 64px); line-height: .95;
-          background: linear-gradient(90deg, #0bb57a, #2a7eea); -webkit-background-clip: text;
-          background-clip: text; color: transparent; letter-spacing: .5px;
-        }
-        .tag { margin-top: 10px; color: #3c4a57; font-weight: 600; font-size: clamp(16px, 2.5vw, 22px); }
-        .sub { margin: 4px 0 10px; color: #526072; }
-        .nav { display: flex; gap: 10px; justify-content: center; align-items: center; color: #0a6b5a; }
-        .nav a { color: #0a6b5a; text-decoration: none; font-weight: 600; }
-        .nav a:hover { text-decoration: underline; }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-        .card {
-          position: relative;
-          border: 1px solid #e6e8eb; padding: 20px; border-radius: 14px; background: #fff;
-          box-shadow: 0 2px 12px rgba(0,0,0,.06);
-        }
-        .badge {
-          position: absolute; top: 14px; right: 14px;
-          padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 800;
-          background: rgba(11, 181, 122, .12); color: #0a6b5a; border: 1px solid #bfe8d9;
-        }
-        .card h2 { margin: 0 0 8px; color: #0a6b5a; }
-        .list { margin: 10px 0 0; padding-left: 0; list-style: none; color: #3c4a57; }
-        .cta-row { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
-        .btn {
-          display: inline-block; padding: 10px 16px; border-radius: 12px; font-weight: 700; text-decoration: none;
-          color: #fff; background: linear-gradient(90deg, #0bb57a, #2a7eea); box-shadow: 0 6px 18px rgba(42,126,234,.22);
-        }
-        .btn.ghost {
-          background: #fff; color: #0a6b5a; border: 1px solid #cfe7df; box-shadow: none;
-        }
-        .foot { text-align: center; margin-top: 40px; color: #6a737d; font-size: 14px; }
+        .container { font-family: Arial, sans-serif; padding: 0 20px 40px; background: #f9fbfa; }
+        .gh-header { text-align: center; padding: 50px 20px; background: linear-gradient(120deg,#0bb57a,#2a7eea); color:#fff; border-radius:0 0 30px 30px; margin-bottom:40px; box-shadow:0 6px 20px rgba(0,0,0,.15); }
+        .brand { margin:0; font-size:clamp(42px,8vw,70px); font-weight:900; letter-spacing:1px; }
+        .tag { margin-top:10px; font-size:clamp(16px,2.5vw,22px); font-weight:500; }
+        .cards { display:grid; gap:24px; }
+        .card { background:#fff; border-radius:16px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,.08); transition:transform .2s, box-shadow .2s; }
+        .card.alt { background:#eef9f4; }
+        .card:hover { transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,.12); }
+        .card h2 { margin:0 0 8px; font-size:22px; color:#0a6b5a; }
+        .card p { color:#3c4a57; margin-bottom:14px; }
+        .btn { display:inline-block; padding:10px 18px; border-radius:12px; font-weight:700; color:#fff; text-decoration:none; background:linear-gradient(90deg,#0bb57a,#2a7eea); box-shadow:0 4px 12px rgba(42,126,234,.3); transition:all .25s; }
+        .btn:hover { filter:brightness(1.1); box-shadow:0 6px 18px rgba(11,181,122,.35); }
+        .foot { text-align:center; margin-top:40px; font-size:14px; color:#6a737d; }
       `}</style>
     </main>
   );
