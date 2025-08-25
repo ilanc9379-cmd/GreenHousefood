@@ -1,21 +1,32 @@
-import { useMemo, useState } from "react";
+import { useState, useMemo } from "react";
 
 export default function Pates() {
-  const PRIX_KG = 7.0; // € / kg
-  const [kg, setKg] = useState(1); // quantité en kilogrammes
+  const prixKg = 7.0;
 
-  const total = useMemo(() => +(kg * PRIX_KG).toFixed(2), [kg]);
+  const PASTAS = [
+    { id: "seigle", nom: "Pâtes au seigle" },
+    { id: "complete", nom: "Pâtes complètes" },
+    { id: "aromette", nom: "Pâtes aromette" },
+  ];
 
-  const dec = () => setKg((v) => Math.max(0.5, +(v - 0.5).toFixed(1)));
-  const inc = () => setKg((v) => +(v + 0.5).toFixed(1));
-  const onManual = (e) => {
-    const val = parseFloat(e.target.value.replace(",", "."));
-    if (!isNaN(val)) setKg(Math.max(0.5, Math.min(50, Math.round(val * 2) / 2)));
+  const [qty, setQty] = useState({ seigle: 1, complete: 1, aromette: 1 });
+
+  const total = useMemo(() => {
+    return Object.fromEntries(
+      Object.entries(qty).map(([k, v]) => [k, +(v * prixKg).toFixed(2)])
+    );
+  }, [qty]);
+
+  const changeQty = (id, delta) => {
+    setQty((prev) => ({
+      ...prev,
+      [id]: Math.max(0.5, +(prev[id] + delta).toFixed(1)),
+    }));
   };
 
   return (
     <main className="container">
-      {/* HEADER */}
+      {/* HERO */}
       <header className="gh-hero">
         <div className="hero-inner">
           <h1 className="brand">GreenHouse</h1>
@@ -25,78 +36,75 @@ export default function Pates() {
 
       {/* CONTENU */}
       <section className="card">
-        <h2>Gamme & infos</h2>
-        <p className="lead">
-          Pâtes **artisanales** fabriquées avec des **œufs frais plein air** et des **farines locales**, puis{" "}
-          <strong>surgelées</strong> pour préserver texture et saveurs.
+        <h2>Présentation</h2>
+        <p>
+          Nos pâtes sont réalisées avec de la farine locale et des œufs frais
+          plein air. Préparées de manière artisanale puis surgelées pour
+          préserver leur goût authentique et leur valeur nutritionnelle.
         </p>
 
-        <div className="grid-2">
-          <div>
-            <h3>Variétés disponibles</h3>
-            <ul className="list">
-              <li>Pâtes au <strong>seigle</strong></li>
-              <li>Pâtes <strong>complètes</strong></li>
-              <li>Pâtes <strong>aromette</strong></li>
-            </ul>
+        <h3>Conservation & cuisson</h3>
+        <ul>
+          <li>À conserver au congélateur jusqu’à 4 mois.</li>
+          <li>
+            Après décongélation, conserver au réfrigérateur et consommer sous 48
+            h.
+          </li>
+          <li>Ne pas recongeler un produit décongelé.</li>
+          <li>Cuisson : eau bouillante — 1 min 30.</li>
+        </ul>
 
-            <h3>Conservation</h3>
-            <p>
-              À conserver au congélateur (-18&nbsp;°C). <br />
-              Ne pas recongeler après décongélation.
-            </p>
+        <h3>Allergènes</h3>
+        <p>Œufs, gluten (blé, seigle, aromette selon la variété).</p>
 
-            <h3>Cuisson</h3>
-            <p>
-              <strong>1 min 30</strong> dans l’eau bouillante salée (sans décongélation).
-            </p>
+        <h3>Valeurs nutritionnelles (≈ pour 100 g de pâtes cuites)</h3>
+        <ul>
+          <li>Énergie : ~ 160 kcal</li>
+          <li>Glucides : ~ 32 g</li>
+          <li>Protéines : ~ 6 g</li>
+          <li>Lipides : ~ 2 g</li>
+          <li>Fibres : ~ 3 g</li>
+          <li>Sel : ~ 0,1 g</li>
+        </ul>
 
-            <h3>Allergènes</h3>
-            <p>Contient : gluten (blé), œufs.</p>
-          </div>
-
-          <div>
-            <h3>Valeurs nutritionnelles (pour 100 g)</h3>
-            <ul className="list">
-              <li>Énergie : ~ 288 kcal</li>
-              <li>Matières grasses : 3,5 g (dont saturées 1,1 g)</li>
-              <li>Glucides : 55 g (dont sucres 2 g)</li>
-              <li>Protéines : 11 g</li>
-              <li>Sel : 0,01 g</li>
-            </ul>
-
-            <div className="price-card">
-              <div className="price-head">Prix</div>
+        <h3>Commander</h3>
+        <div className="grid-3">
+          {PASTAS.map((p) => (
+            <div key={p.id} className="price-card">
+              <h4>{p.nom}</h4>
               <div className="price-row">
-                <span className="price-unit">{PRIX_KG.toFixed(2).replace(".", ",")} €</span>
-                <span className="price-unit-sub">/ kg</span>
+                <span className="price">{prixKg.toFixed(2)} €</span>
+                <span className="sub">/ kg</span>
               </div>
 
               <div className="qty">
-                <button className="btn-qty" onClick={dec} aria-label="Diminuer">−</button>
+                <button onClick={() => changeQty(p.id, -0.5)}>−</button>
                 <input
-                  className="qty-input"
                   type="number"
                   step="0.5"
                   min="0.5"
-                  max="50"
-                  value={kg}
-                  onChange={onManual}
-                  aria-label="Quantité en kilogrammes"
+                  value={qty[p.id]}
+                  onChange={(e) =>
+                    setQty((prev) => ({
+                      ...prev,
+                      [p.id]: Math.max(
+                        0.5,
+                        parseFloat(e.target.value.replace(",", ".")) || 0.5
+                      ),
+                    }))
+                  }
                 />
-                <button className="btn-qty" onClick={inc} aria-label="Augmenter">+</button>
-                <span className="qty-suffix">kg</span>
+                <button onClick={() => changeQty(p.id, 0.5)}>+</button>
+                <span>kg</span>
               </div>
 
               <div className="total">
-                <div>Total</div>
-                <div className="total-val">{total.toFixed(2).replace(".", ",")} €</div>
+                Total : {total[p.id].toFixed(2).replace(".", ",")} €
               </div>
 
               <button className="btn-cta">Commander</button>
-              <p className="help">Quantité minimale : 0,5&nbsp;kg · Pas : 0,5&nbsp;kg</p>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
@@ -105,121 +113,119 @@ export default function Pates() {
       </footer>
 
       <style jsx>{`
-        :root{
-          --ink:#0b1020;
-          --muted:#5a6170;
-          --card:#ffffff;
-          --ring:rgba(13,171,110,.25);
-          --brand1:#0aa64c;
-          --brand2:#2d7ae6;
-          --accent:#00b792;
-          --bg1:#e9fff7;
-          --bg2:#e8f1ff;
+        :root {
+          --brand1: #0aa64c;
+          --brand2: #2d7ae6;
+          --muted: #5a6170;
         }
-        .container{
-          color:var(--ink);
-          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-          margin:0; padding:0 20px 48px;
-          background:
-            radial-gradient(900px 600px at -10% -10%, var(--bg2), transparent 60%),
-            radial-gradient(900px 600px at 110% -20%, var(--bg1), transparent 65%),
-            linear-gradient(180deg, #f6fffb 0%, #f9fbff 60%, #ffffff 100%);
-          min-height:100vh;
+        .container {
+          font-family: system-ui, sans-serif;
+          padding: 0 20px 48px;
+          background: linear-gradient(180deg, #f6fffb, #f9fbff 60%, #ffffff);
+          min-height: 100vh;
+          color: #0b1020;
         }
-
-        /* HERO */
-        .gh-hero{
-          position:relative;
-          border-radius:0 0 28px 28px;
-          overflow:hidden;
-          margin:0 -20px 28px;
-          background: radial-gradient(1200px 400px at 10% -10%, rgba(13,171,110,.25), transparent 60%),
-                      radial-gradient(1200px 400px at 90% -20%, rgba(45,122,230,.25), transparent 60%),
-                      linear-gradient(120deg, #0bb57a 0%, #2a7eea 100%);
-        }
-        .hero-inner{ max-width:1100px; margin:0 auto; padding:42px 20px; text-align:center; }
-        .brand{
-          margin:0;
-          font-size: clamp(44px, 8vw, 92px);
-          line-height: .95;
-          letter-spacing:.5px;
+        .gh-hero {
+          text-align: center;
           background: linear-gradient(90deg, #00e08d, #5aa6ff);
-          -webkit-background-clip:text; background-clip:text; color:transparent;
-          text-shadow: 0 0 0 rgba(0,0,0,0);
-          filter: drop-shadow(0 10px 30px rgba(0,0,0,.18));
+          padding: 40px 20px;
+          border-radius: 0 0 28px 28px;
+          color: #fff;
         }
-        .tag{
-          color:#fff; margin:6px 0 0;
-          font-size: clamp(16px, 2.2vw, 22px);
-          opacity:.95; font-weight:600;
+        .brand {
+          font-size: clamp(44px, 8vw, 92px);
+          margin: 0;
+          background: linear-gradient(90deg, #00e08d, #5aa6ff);
+          -webkit-background-clip: text;
+          color: transparent;
         }
-
-        /* CARD */
-        .card{
-          max-width:1100px; margin:0 auto; background:var(--card);
-          border-radius:18px; padding:22px;
-          box-shadow: 0 10px 30px rgba(0,0,0,.06), 0 1px 0 rgba(255,255,255,.7) inset;
+        .tag {
+          font-size: 20px;
+          font-weight: 600;
+          margin-top: 8px;
         }
-        .lead{ color:var(--muted); margin-top:6px; }
-
-        .grid-2{
-          display:grid; gap:20px; margin-top:16px;
-          grid-template-columns: repeat(2, minmax(0,1fr));
+        .card {
+          max-width: 1100px;
+          margin: 20px auto;
+          background: white;
+          border-radius: 18px;
+          padding: 24px;
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
         }
-        @media (max-width: 860px){
-          .grid-2{ grid-template-columns: 1fr; }
+        h2 {
+          font-size: 28px;
+          margin-bottom: 10px;
         }
-        h2{ margin:0 0 6px; font-size:24px; }
-        h3{ margin:18px 0 8px; font-size:18px; }
-        .list{ padding-left:18px; margin:0; }
-        .list li{ margin:6px 0; }
-
-        /* PRICE CARD */
-        .price-card{
-          background: linear-gradient(180deg, #ffffff, #f6fbff);
-          border:1px solid rgba(0,0,0,.06);
-          border-radius:16px; padding:16px;
-          box-shadow: 0 8px 24px rgba(45,122,230,.12);
+        h3 {
+          margin-top: 18px;
         }
-        .price-head{ font-size:12px; text-transform:uppercase; letter-spacing:.3px; color:var(--muted); margin-bottom:4px; }
-        .price-row{ display:flex; align-items:flex-end; gap:8px; }
-        .price-unit{ font-size:28px; font-weight:800; }
-        .price-unit-sub{ color:var(--muted); margin-bottom:4px; }
-
-        .qty{
-          display:flex; align-items:center; gap:8px;
-          margin-top:14px;
+        .grid-3 {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          gap: 20px;
+          margin-top: 20px;
         }
-        .btn-qty{
-          width:40px; height:40px; border-radius:12px; border:1px solid rgba(0,0,0,.12);
-          background:#fff; cursor:pointer; font-size:20px; font-weight:700;
-          transition: transform .1s ease, box-shadow .1s ease;
+        .price-card {
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          border-radius: 14px;
+          padding: 16px;
+          background: #fdfefe;
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
         }
-        .btn-qty:active{ transform: translateY(1px) scale(.98); }
-        .qty-input{
-          width:90px; height:40px; border-radius:12px; border:1px solid rgba(0,0,0,.12);
-          text-align:center; font-size:16px;
-          box-shadow: 0 6px 16px rgba(0,0,0,.04) inset;
+        .price-row {
+          display: flex;
+          align-items: baseline;
+          gap: 6px;
+          margin: 10px 0;
         }
-        .qty-suffix{ color:var(--muted); font-weight:600; }
-
-        .total{
-          margin-top:10px; display:flex; align-items:center; justify-content:space-between;
-          padding:10px 12px; border:1px dashed rgba(0,0,0,.12); border-radius:12px;
-          background:#fff;
+        .price {
+          font-size: 22px;
+          font-weight: 700;
         }
-        .total-val{ font-size:22px; font-weight:800; }
-
-        .btn-cta{
-          width:100%; margin-top:14px; height:46px; border:none; border-radius:14px; color:#fff; font-weight:800; cursor:pointer;
+        .sub {
+          font-size: 14px;
+          color: var(--muted);
+        }
+        .qty {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin: 12px 0;
+        }
+        .qty button {
+          width: 36px;
+          height: 36px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          font-size: 18px;
+          cursor: pointer;
+        }
+        .qty input {
+          width: 70px;
+          text-align: center;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+          padding: 4px;
+        }
+        .total {
+          font-weight: 700;
+          margin: 10px 0;
+        }
+        .btn-cta {
           background: linear-gradient(90deg, var(--brand1), var(--brand2));
-          box-shadow: 0 10px 25px rgba(45,122,230,.22);
+          color: #fff;
+          border: none;
+          border-radius: 12px;
+          padding: 10px;
+          font-weight: 700;
+          cursor: pointer;
+          width: 100%;
         }
-        .btn-cta:active{ transform: translateY(1px); }
-        .help{ margin-top:8px; color:var(--muted); font-size:12px; text-align:center; }
-
-        /* FOOT */
-        .foot{ text-align:center; color:var(--muted); padding:28px 8px 10px; }
+        .foot {
+          text-align: center;
+          margin-top: 40px;
+          color: var(--muted);
+        }
       `}</style>
     </main>
   );
