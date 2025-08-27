@@ -3,59 +3,85 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 export default function PouletPommesHaricots() {
-  const portion = 520; // g environ
+  // ===== Données =====
+  const portion = 500; // g
   const price = 9.9;
 
-  // Estimation cohérente (à ajuster si besoin)
-  const nPortion = { kcal: 526, fat: 27.5, carbs: 39, protein: 36, salt: 2 };
+  // nutriments par portion (500 g)
+  const nPortion = {
+    kcal: 560,
+    fat: 20,
+    carbs: 35,
+    protein: 45,
+    salt: 2.2,
+  };
+  // par 100 g
   const n100 = {
-    kcal: +(nPortion.kcal / (portion/100)).toFixed(1),
-    fat: +(nPortion.fat / (portion/100)).toFixed(1),
-    carbs: +(nPortion.carbs / (portion/100)).toFixed(1),
-    protein: +(nPortion.protein / (portion/100)).toFixed(1),
-    salt: +(nPortion.salt / (portion/100)).toFixed(1),
+    kcal: (nPortion.kcal / (portion / 100)).toFixed(1),
+    fat: (nPortion.fat / (portion / 100)).toFixed(1),
+    carbs: (nPortion.carbs / (portion / 100)).toFixed(1),
+    protein: (nPortion.protein / (portion / 100)).toFixed(1),
+    salt: (nPortion.salt / (portion / 100)).toFixed(1),
   };
 
-  const [qty,setQty]=useState(1);
-  const nf = useMemo(()=>new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR"}),[]);
+  const [qty, setQty] = useState(1);
+  const nf = useMemo(
+    () => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }),
+    []
+  );
 
   return (
     <main className="page">
+      {/* Colonne gauche */}
       <aside className="side">
-        <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
+        <Link href="/plats-surgeles" className="back">
+          ← Retour aux plats surgelés
+        </Link>
         <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
+      {/* Contenu principal */}
       <section className="content">
         <header className="header">
-          <h2 className="title">Cuisse de poulet rôtie, pommes de terre &amp; haricots verts</h2>
-          <p className="meta"><span className="pill pill-freeze">Surgelé</span></p>
+          <h2 className="title">Cuisse de poulet rôtie, pommes de terre & haricots verts</h2>
+          <p className="meta">
+            <span className="pill pill-freeze">Surgelé</span>
+            <span className="pill">Source de protéines</span>
+          </p>
           <p className="desc">
-            Portion : <strong>{portion} g</strong> · four <b>20 min</b> (150 °C) · micro-ondes <b>8 min</b> · poêle <b>10 min</b>.  
-            À conserver au congélateur (max 4 mois) · 48h au réfrigérateur après décongélation.
+            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
+            À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
           <p className="blurb">
-            Pommes de terre rôties (ail, paprika), <strong>cuisse de poulet</strong> aux aromates (ail, oignon, paprika fumé, moutarde à l’ancienne) et haricots verts frais.
+            Une cuisse de poulet rôtie accompagnée de pommes de terre fondantes et de haricots verts croquants.
+            Un trio simple et savoureux, pensé pour un repas équilibré et rassasiant, à savourer sans compromis.
           </p>
         </header>
 
         <div className="grid">
+          {/* Ingrédients */}
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
-              <li><b>150 g</b> — Pommes de terre rôties (ail, paprika) + 5 g huile d’olive</li>
-              <li><b>250–300 g</b> — Cuisse de poulet (préparée, aromates + 1 càs huile)</li>
-              <li><b>150 g</b> — Haricots verts cuits à l’eau (ail, 1 càc huile)</li>
-              <li>Aromates : ail, oignon, paprika fumé, moutarde à l’ancienne, sel, poivre</li>
+              <li><b>200 g</b> — Cuisse de poulet rôtie</li>
+              <li><b>150 g</b> — Pommes de terre</li>
+              <li><b>150 g</b> — Haricots verts</li>
+              <li>Sel, poivre, herbes de Provence</li>
             </ul>
-            <p className="muted">Allergènes : <b>moutarde</b>.</p>
+            <p className="muted">Allergènes : aucun.</p>
           </section>
 
+          {/* Valeurs nutritionnelles */}
           <section className="card">
             <h3>Valeurs nutritionnelles</h3>
             <div className="table">
-              <div className="thead"><div>Valeurs</div><div>Pour 100 g</div><div>Par portion</div></div>
+              <div className="thead">
+                <div>Valeurs</div>
+                <div>Pour 100 g</div>
+                <div>Par portion</div>
+              </div>
               <div className="row"><div>Énergie</div><div>{n100.kcal} kcal</div><div>{nPortion.kcal} kcal</div></div>
               <div className="row"><div>Matières grasses</div><div>{n100.fat} g</div><div>{nPortion.fat} g</div></div>
               <div className="row"><div>Glucides</div><div>{n100.carbs} g</div><div>{nPortion.carbs} g</div></div>
@@ -64,26 +90,46 @@ export default function PouletPommesHaricots() {
             </div>
           </section>
 
+          {/* Prix */}
           <section className="card price">
             <div className="label">Prix unitaire</div>
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
-              <button onClick={()=>setQty(q=>Math.max(1,q-1))}>−</button>
-              <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
-              <button onClick={()=>setQty(q=>q+1)}>+</button>
+              <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
+              <input
+                type="number"
+                min={1}
+                value={qty}
+                onChange={(e) =>
+                  setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
+                }
+              />
+              <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
-            <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
-            <div className="total">{nf.format(price*qty)}</div>
+            <div className="label">Total ({qty} plat{qty > 1 ? "s" : ""})</div>
+            <div className="total">{nf.format(price * qty)}</div>
             <button className="btn">Commander</button>
           </section>
         </div>
 
+        {/* Cuisson & Conservation */}
         <section className="card foot">
           <h3>Cuisson</h3>
-          <ul><li>Four <b>150 °C</b> : <b>20 min</b></li><li>Micro-ondes : <b>8 min</b></li><li>Poêle : <b>10 min</b></li></ul>
-          <h3 style={{marginTop:12}}>Conservation</h3>
-          <ul><li>Congélateur : <b>max 4 mois</b></li><li>Après décongélation : <b>48h</b> au réfrigérateur</li><li>Ne pas recongeler</li></ul>
-          <p className="note">La surgélation préserve fraîcheur et nutriments.</p>
+          <ul>
+            <li>Four <b>150 °C</b> : <b>20 min</b></li>
+            <li>Micro-ondes : <b>8 min</b></li>
+            <li>Poêle : <b>10 min</b></li>
+          </ul>
+          <h3 style={{ marginTop: 12 }}>Conservation</h3>
+          <ul>
+            <li>Conserver au congélateur : <b>max 4 mois</b></li>
+            <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
+            <li>Ne pas recongeler un produit décongelé</li>
+          </ul>
+          <p className="note">
+            La surgélation conserve saveurs et nutriments : elle stoppe le temps pour préserver la fraîcheur
+            des ingrédients et la qualité nutritionnelle du repas.
+          </p>
         </section>
       </section>
 
@@ -96,11 +142,11 @@ const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
 .back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
-.brand{margin:0;font-size:48px;line-height:0.9;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.brand{margin:0;font-size:46px;line-height:1;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
-.title{margin:0 0 6px;font-size:32px}
+.title{margin:0 0 6px;font-size:30px}
 .meta{display:flex;gap:8px;margin:6px 0 8px}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
