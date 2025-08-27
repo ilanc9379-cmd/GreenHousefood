@@ -3,32 +3,16 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 export default function Bolo() {
-  // ===== Données =====
   const portion = 600; // g
   const price = 9.9;
 
   // nutriments par portion (600 g)
-  const nPortion = {
-    kcal: 700,
-    fat: 15.8,
-    carbs: 89,
-    protein: 54.3,
-    salt: 3,
-  };
+  const nPortion = { kcal: 700, fat: 15.8, carbs: 89, protein: 54.3, salt: 3 };
   // par 100 g
-  const n100 = {
-    kcal: 116.7,
-    fat: 2.6,
-    carbs: 14.8,
-    protein: 9,
-    salt: 0.5,
-  };
+  const n100 = { kcal: 116.7, fat: 2.6, carbs: 14.8, protein: 9, salt: 0.5 };
 
   const [qty, setQty] = useState(1);
-  const nf = useMemo(
-    () => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }),
-    []
-  );
+  const nf = useMemo(() => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }), []);
 
   return (
     <main className="page">
@@ -47,18 +31,17 @@ export default function Bolo() {
           </p>
           <p className="desc">
             Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
           <p className="blurb">
-            Une bolognaise authentique sublimée par des <strong>pâtes complètes artisanales</strong> (œufs
-            plein air). La tendreté du bœuf, la douceur des carottes et la fraîcheur de la sauce tomate
-            maison s’unissent pour un plat complet, réconfortant et équilibré.
+            Une bolognaise authentique sublimée par des <strong>pâtes complètes artisanales</strong> (œufs plein air).
+            La tendreté du bœuf, la douceur des carottes et la fraîcheur de la sauce tomate maison s’unissent pour un
+            plat complet, réconfortant et équilibré.
           </p>
         </header>
 
         <div className="grid">
-          {/* Ingrédients */}
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
@@ -71,15 +54,10 @@ export default function Bolo() {
             <p className="muted">Allergènes : gluten (blé), <b>œufs</b>.</p>
           </section>
 
-          {/* Valeurs nutritionnelles */}
           <section className="card">
             <h3>Valeurs nutritionnelles</h3>
             <div className="table">
-              <div className="thead">
-                <div>Valeurs</div>
-                <div>Pour 100 g</div>
-                <div>Par portion</div>
-              </div>
+              <div className="thead"><div>Valeurs</div><div>Pour 100 g</div><div>Par portion</div></div>
               <div className="row"><div>Énergie</div><div>{n100.kcal} kcal</div><div>{nPortion.kcal} kcal</div></div>
               <div className="row"><div>Matières grasses</div><div>{n100.fat} g</div><div>{nPortion.fat} g</div></div>
               <div className="row"><div>Glucides</div><div>{n100.carbs} g</div><div>{nPortion.carbs} g</div></div>
@@ -88,7 +66,6 @@ export default function Bolo() {
             </div>
           </section>
 
-          {/* Prix */}
           <section className="card price">
             <div className="label">Prix unitaire</div>
             <div className="big">{nf.format(price)}</div>
@@ -103,7 +80,6 @@ export default function Bolo() {
           </section>
         </div>
 
-        {/* Cuisson & Conservation */}
         <section className="card foot">
           <h3>Cuisson</h3>
           <ul>
@@ -118,8 +94,7 @@ export default function Bolo() {
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation préserve fraîcheur et qualités nutritionnelles : refroidir très vite évite la
-            dégradation des nutriments et garde la texture.
+            La surgélation capture la fraîcheur : le refroidissement rapide aide à préserver texture, goût et nutriments.
           </p>
         </section>
       </section>
@@ -130,15 +105,15 @@ export default function Bolo() {
 }
 
 const styles = `
-.page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
+.page{display:grid;grid-template-columns:300px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
-.back{display:inline-block;margin-bottom:12px;color:#0b6; text-decoration:none}
-.brand{margin:0;font-size:48px;line-height:0.9;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
+.brand{margin:0;font-size:52px;line-height:1;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.5px}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
 .title{margin:0 0 6px;font-size:32px}
-.meta{display:flex;gap:8px;margin:6px 0 8px}
+.meta{display:flex;gap:8px;margin:6px 0 8px;flex-wrap:wrap}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
 .desc{margin:0 0 8px;color:#345}
@@ -160,5 +135,5 @@ const styles = `
 .total{font-size:22px;font-weight:800;margin-bottom:8px}
 .btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
 .foot .note{margin-top:10px;color:#456}
-@media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
+@media(max-width:950px){ .page{grid-template-columns:1fr} .side{position:sticky;top:0} .grid{grid-template-columns:1fr} }
 `;
