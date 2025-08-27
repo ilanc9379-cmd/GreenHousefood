@@ -1,23 +1,27 @@
+// pages/plats-surgeles/boeuf-carottes-puree.js
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
 export default function BoeufCarottesPuree() {
-  const portion = 500; // g arrondi
+  // ===== Données =====
+  const portion = 500; // g (arrondi demandé)
   const price = 9.9;
 
+  // CIQUAL approx — par portion 500 g
   const nPortion = {
     kcal: 608,
     fat: 25,
     carbs: 39,
     protein: 44,
-    salt: 1.5,
+    salt: 2.0,
   };
+  // par 100 g
   const n100 = {
-    kcal: 122,
-    fat: 5,
-    carbs: 7.8,
-    protein: 8.8,
-    salt: 0.3,
+    kcal: +(nPortion.kcal / (portion / 100)).toFixed(1),
+    fat: +(nPortion.fat / (portion / 100)).toFixed(1),
+    carbs: +(nPortion.carbs / (portion / 100)).toFixed(1),
+    protein: +(nPortion.protein / (portion / 100)).toFixed(1),
+    salt: +(nPortion.salt / (portion / 100)).toFixed(2),
   };
 
   const [qty, setQty] = useState(1);
@@ -29,30 +33,29 @@ export default function BoeufCarottesPuree() {
   return (
     <main className="page">
       <aside className="side">
-        <Link href="/plats-surgeles" className="back">
-          ← Retour aux plats surgelés
+        <Link href="/plats-surgeles" legacyBehavior>
+          <a className="back">← Retour aux plats surgelés</a>
         </Link>
-        <h1 className="brand">Greenhouse</h1>
+        <h1 className="brand">Greenhous<span className="fixE">e</span></h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
       <section className="content">
         <header className="header">
-          <h2 className="title">Bœuf carottes & purée de pommes de terre</h2>
+          <h2 className="title">Bœuf carottes &amp; purée de pommes de terre</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
-            <span className="pill">Équilibré</span>
           </p>
           <p className="desc">
             Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
           <p className="blurb">
-            Un grand classique revisité : le fondant de la viande de bœuf, la douceur des carottes
-            et l’onctuosité de la purée de pommes de terre s’allient pour un repas complet et
-            réconfortant. Des saveurs simples, cuisinées maison, pour allier plaisir et équilibre.
+            Le fondant du <strong>bœuf mijoté</strong>, la douceur des <strong>carottes</strong> et
+            l’onctuosité d’une <strong>purée maison</strong> : un classique réconfortant,
+            équilibré et généreux, pensé pour une pause savoureuse sans compromis.
           </p>
         </header>
 
@@ -61,13 +64,13 @@ export default function BoeufCarottesPuree() {
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
-              <li><b>200 g</b> — Bœuf haché 5 % MG</li>
+              <li><b>200 g</b> — Bœuf (morceau peu gras)</li>
               <li><b>150 g</b> — Carottes</li>
-              <li><b>145 g</b> — Purée de pommes de terre</li>
+              <li><b>150 g</b> — Purée de pommes de terre</li>
               <li><b>5 g</b> — Huile d’olive</li>
-              <li>Aromates : ail, oignon, sel, poivre, herbes</li>
+              <li>Aromates : oignon, ail, poivre, herbes de Provence, sel</li>
             </ul>
-            <p className="muted">Allergènes : aucun.</p>
+            <p className="muted">Allergènes : aucun majeur ajouté (peut contenir traces selon atelier).</p>
           </section>
 
           {/* Valeurs nutritionnelles */}
@@ -93,7 +96,12 @@ export default function BoeufCarottesPuree() {
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
               <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
-              <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
+              <input
+                type="number"
+                min={1}
+                value={qty}
+                onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))}
+              />
               <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
             <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
@@ -117,8 +125,7 @@ export default function BoeufCarottesPuree() {
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation préserve fraîcheur et qualités nutritionnelles : refroidir très vite évite la
-            dégradation des nutriments et garde la texture.
+            La surgélation fige rapidement la fraîcheur, limitant la dégradation des textures et des nutriments.
           </p>
         </section>
       </section>
@@ -131,8 +138,10 @@ export default function BoeufCarottesPuree() {
 const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
-.back{display:inline-block;margin-bottom:12px;color:#0b6; text-decoration:none}
-.brand{margin:0;font-size:48px;line-height:0.9;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
+.brand{margin:0;display:inline-block;padding-right:6px;font-size:48px;line-height:0.9;
+  background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.fixE{display:inline-block}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
