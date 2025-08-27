@@ -1,174 +1,172 @@
 // pages/plats-surgeles/moussaka.js
-import { useState } from "react";
 import Link from "next/link";
+import { useMemo, useState } from "react";
 
 export default function Moussaka() {
-  const PRICE = 9.9;
-  const [qty, setQty] = useState(1);
-  const total = (PRICE * qty).toFixed(2).replace(".", ",");
+  // ===== Données =====
+  const portion = 600; // g
+  const price = 9.9;
 
-  const fmt = (n) => String(n).replace(".", ",");
+  // nutriments par portion (600 g) — estimations cohérentes avec ta fiche
+  const nPortion = {
+    kcal: 900,
+    fat: 30,        // g
+    carbs: 95,      // g
+    protein: 55,    // g
+    salt: 2,        // g (approx)
+  };
+  // par 100 g
+  const n100 = {
+    kcal: (nPortion.kcal / (portion / 100)).toFixed(1),
+    fat: (nPortion.fat / (portion / 100)).toFixed(1),
+    carbs: (nPortion.carbs / (portion / 100)).toFixed(1),
+    protein: (nPortion.protein / (portion / 100)).toFixed(1),
+    salt: (nPortion.salt / (portion / 100)).toFixed(1),
+  };
+
+  const [qty, setQty] = useState(1);
+  const nf = useMemo(
+    () => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }),
+    []
+  );
 
   return (
-    <div style={st.page}>
-      <header style={st.header}>
-        <div style={st.headerInner}>
-          <Link href="/plats-surgeles"><a style={st.back}>← Retour aux plats surgelés</a></Link>
-          <h1 style={st.brand}>Greenhouse</h1>
-          <p style={st.tagline}>Traiteur — Diététique & Gourmand</p>
-        </div>
-      </header>
+    <main className="page">
+      <aside className="side">
+        <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
+        <h1 className="brand">Greenhouse</h1>
+        <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
+      </aside>
 
-      <main style={st.wrap}>
-        {/* Colonne contenu (titre + description) */}
-        <section style={st.content}>
-          <h2 style={st.h2}>Moussaka revisitée</h2>
-
-          <div style={st.badgesRow}>
-            <span style={badge("Surgelé")}>Surgelé</span>
-          </div>
-
-          <p style={st.meta}>
-            Portion : <strong>600 g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·
-            <strong> 8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
+      <section className="content">
+        <header className="header">
+          <h2 className="title">Moussaka revisitée</h2>
+          <p className="meta">
+            <span className="pill pill-freeze">Surgelé</span>
+            <span className="pill">Plat complet</span>
+          </p>
+          <p className="desc">
+            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
-
-          <p style={st.blurb}>
-            Une moussaka revisitée, plus légère mais toujours généreuse : des aubergines fondantes,
-            une sauce tomate parfumée, du bœuf maigre et un riz complet pour la tenue.
+          <p className="blurb">
+            Une moussaka revisitée, plus légère mais toujours généreuse : des aubergines fondantes, 
+            une sauce tomate parfumée, du bœuf maigre et un riz complet pour la tenue. 
             Couronnée d’un peu de fromage gratiné, c’est un plat réconfortant, équilibré et rassasiant.
           </p>
+        </header>
 
+        <div className="grid">
           {/* Ingrédients */}
-          <div style={st.card}>
-            <h3 style={st.h3}>Ingrédients</h3>
-            <ul style={st.list}>
-              <li><strong>150 g</strong> — Aubergines</li>
-              <li><strong>150 g</strong> — Riz complet</li>
-              <li><strong>150 g</strong> — Bœuf haché 5% MG</li>
-              <li><strong>100 g</strong> — Tomates concassées</li>
-              <li><strong>50 g</strong> — Fromage râpé</li>
-              <li><strong>5 g</strong> — Huile d’olive</li>
-              <li>Ail, oignon, herbes de Provence, paprika · Sel, poivre</li>
+          <section className="card">
+            <h3>Ingrédients</h3>
+            <ul className="ing">
+              <li><b>150 g</b> — Aubergines</li>
+              <li><b>100 g</b> — Tomates concassées</li>
+              <li><b>150 g</b> — Bœuf haché 5% MG</li>
+              <li><b>150 g</b> — Riz complet</li>
+              <li><b>50 g</b> — Fromage râpé</li>
+              <li><b>5 g</b> — Huile d’olive</li>
+              <li>Ail, oignon, herbes de Provence, paprika</li>
+              <li>Sel, poivre</li>
             </ul>
-            <p style={st.allergens}><strong>Allergènes :</strong> lait (fromage).</p>
-          </div>
+            <p className="muted">Allergènes : <b>lait</b> (fromage).</p>
+          </section>
 
-          {/* Cuisson & conservation */}
-          <div style={st.card}>
-            <h3 style={st.h3}>Cuisson</h3>
-            <ul style={st.list}>
-              <li>Four <strong>150 °C</strong> : <strong>20 min</strong></li>
-              <li>Micro-ondes : <strong>8 min</strong></li>
-              <li>Poêle : <strong>10 min</strong></li>
-            </ul>
-            <h3 style={{...st.h3, marginTop: 16}}>Conservation</h3>
-            <ul style={st.list}>
-              <li>Conserver au congélateur : <strong>max 4 mois</strong></li>
-              <li>Après décongélation : <strong>48h</strong> au réfrigérateur</li>
-              <li>Ne pas recongeler un produit décongelé</li>
-            </ul>
-            <p style={st.note}>
-              La surgélation préserve fraîcheur et qualités nutritionnelles : refroidir très vite
-              évite la dégradation des nutriments et garde la texture.
-            </p>
-          </div>
+          {/* Valeurs nutritionnelles */}
+          <section className="card">
+            <h3>Valeurs nutritionnelles</h3>
+            <div className="table">
+              <div className="thead">
+                <div>Valeurs</div>
+                <div>Pour 100 g</div>
+                <div>Par portion</div>
+              </div>
+              <div className="row"><div>Énergie</div><div>{n100.kcal} kcal</div><div>{nPortion.kcal} kcal</div></div>
+              <div className="row"><div>Matières grasses</div><div>{n100.fat} g</div><div>{nPortion.fat} g</div></div>
+              <div className="row"><div>Glucides</div><div>{n100.carbs} g</div><div>{nPortion.carbs} g</div></div>
+              <div className="row"><div>Protéines</div><div>{n100.protein} g</div><div>{nPortion.protein} g</div></div>
+              <div className="row"><div>Sel</div><div>{n100.salt} g</div><div>{nPortion.salt} g</div></div>
+            </div>
+          </section>
+
+          {/* Prix */}
+          <section className="card price">
+            <div className="label">Prix unitaire</div>
+            <div className="big">{nf.format(price)}</div>
+            <div className="qty">
+              <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
+              <input
+                type="number"
+                min={1}
+                value={qty}
+                onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))}
+              />
+              <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
+            </div>
+            <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
+            <div className="total">{nf.format(price * qty)}</div>
+            <button className="btn">Commander</button>
+          </section>
+        </div>
+
+        {/* Cuisson & Conservation */}
+        <section className="card foot">
+          <h3>Cuisson</h3>
+          <ul>
+            <li>Four <b>150 °C</b> : <b>20 min</b></li>
+            <li>Micro-ondes : <b>8 min</b></li>
+            <li>Poêle : <b>10 min</b></li>
+          </ul>
+          <h3 style={{marginTop:12}}>Conservation</h3>
+          <ul>
+            <li>Conserver au congélateur : <b>max 4 mois</b></li>
+            <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
+            <li>Ne pas recongeler un produit décongelé</li>
+          </ul>
+          <p className="note">
+            La surgélation préserve fraîcheur et qualités nutritionnelles : refroidir très vite évite la
+            dégradation des nutriments et garde la texture.
+          </p>
         </section>
+      </section>
 
-        {/* Colonne droite : prix + valeurs */}
-        <aside style={st.sidebar}>
-          <div style={st.priceCard}>
-            <div style={st.priceLabel}>Prix unitaire</div>
-            <div style={st.priceVal}>9,90 €</div>
-            <div style={st.qtyRow}>
-              <button aria-label="moins" onClick={() => setQty(Math.max(1, qty - 1))} style={st.qtyBtn}>−</button>
-              <div style={st.qtyBox}>{qty}</div>
-              <button aria-label="plus" onClick={() => setQty(qty + 1)} style={st.qtyBtn}>+</button>
-            </div>
-            <div style={st.total}>
-              <div>Total ( {qty} {qty>1?"plats":"plat"} )</div>
-              <div style={st.totalVal}>{total} €</div>
-            </div>
-            <button style={st.cta}>Commander</button>
-          </div>
-
-          <div style={st.card}>
-            <h3 style={st.h3}>Valeurs nutritionnelles</h3>
-            <table style={st.table}>
-              <thead>
-                <tr>
-                  <th style={st.th}>Valeurs</th>
-                  <th style={st.th}>Pour 100 g</th>
-                  <th style={st.th}>Par portion</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style={st.td}>Énergie</td><td style={st.td}>{fmt(150)} kcal</td><td style={st.td}>{fmt(900)} kcal</td></tr>
-                <tr><td style={st.td}>Matières grasses</td><td style={st.td}>{fmt(5)} g</td><td style={st.td}>{fmt(30)} g</td></tr>
-                <tr><td style={st.td}>Glucides</td><td style={st.td}>{fmt(15.8)} g</td><td style={st.td}>{fmt(95)} g</td></tr>
-                <tr><td style={st.td}>Protéines</td><td style={st.td}>{fmt(9.2)} g</td><td style={st.td}>{fmt(55)} g</td></tr>
-                <tr><td style={st.td}>Sel</td><td style={st.td}>—</td><td style={st.td}>—</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </aside>
-      </main>
-    </div>
+      <style jsx>{styles}</style>
+    </main>
   );
 }
 
-/* Styles identiques à la bolo (avec fix pour le titre) */
-const st = {
-  page: { fontFamily:"Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif", color:"#0f172a", background:"#f7fafc" },
-  header: {
-    background:"linear-gradient(135deg,#22c55e,#3b82f6)",
-    color:"#fff", padding:"28px 16px 22px", overflow:"visible"
-  },
-  headerInner:{ maxWidth:1100, margin:"0 auto" },
-  back:{ display:"inline-block", marginBottom:8, color:"#eaffff", textDecoration:"none", fontWeight:700 },
-  brand:{
-    margin:"0 0 6px", lineHeight:1.05,
-    fontWeight:900, fontSize:"clamp(36px,7vw,64px)", paddingRight:6,
-    background:"linear-gradient(90deg,#ffffff,#dbeafe)", WebkitBackgroundClip:"text", color:"transparent",
-    wordBreak:"keep-all"
-  },
-  tagline:{ margin:0, opacity:.95, fontWeight:600 },
-
-  wrap:{ maxWidth:1100, margin:"20px auto 64px", padding:"0 16px",
-         display:"grid", gridTemplateColumns:"1fr 340px", gap:16 },
-  content:{ display:"grid", gap:16 },
-  h2:{ margin:"8px 0 6px", fontSize:36, lineHeight:1.1, fontWeight:900 },
-  badgesRow:{ display:"flex", gap:8, flexWrap:"wrap", margin:"6px 0 2px" },
-  meta:{ color:"#334155", fontSize:16 },
-  blurb:{ fontSize:18, lineHeight:1.55 },
-  card:{ background:"#fff", borderRadius:16, padding:16, boxShadow:"0 8px 22px rgba(15,23,42,.08)" },
-  cardSoft:{ background:"#f1f5f9", borderRadius:16, padding:16 },
-  h3:{ margin:"0 0 10px", fontSize:18, fontWeight:800 },
-  list:{ margin:0, paddingLeft:18, lineHeight:1.6 },
-  allergens:{ marginTop:10, color:"#475569" },
-  note:{ marginTop:12, color:"#334155" },
-
-  sidebar:{ display:"grid", gap:16 },
-  priceCard:{ background:"#fff", borderRadius:16, padding:16, boxShadow:"0 8px 22px rgba(15,23,42,.08)" },
-  priceLabel:{ fontSize:12, textTransform:"uppercase", color:"#64748b", fontWeight:800 },
-  priceVal:{ fontSize:34, fontWeight:900, marginTop:2 },
-  qtyRow:{ display:"flex", alignItems:"center", gap:8, margin:"10px 0" },
-  qtyBtn:{ width:44, height:44, borderRadius:12, border:"1px solid #e2e8f0", background:"#f8fafc", fontSize:22 },
-  qtyBox:{ width:64, height:44, display:"flex", alignItems:"center", justifyContent:"center",
-           borderRadius:12, border:"1px solid #e2e8f0", background:"#fff", fontWeight:800 },
-  total:{ display:"flex", alignItems:"center", justifyContent:"space-between", marginTop:6, fontWeight:700 },
-  totalVal:{ fontSize:22, fontWeight:900 },
-  cta:{ width:"100%", marginTop:10, background:"linear-gradient(135deg,#22c55e,#3b82f6)", color:"#fff",
-        border:"none", borderRadius:14, padding:"12px 16px", fontWeight:900, fontSize:16, boxShadow:"0 10px 24px rgba(59,130,246,.25)" },
-
-  table:{ width:"100%", borderCollapse:"collapse", overflow:"hidden", borderRadius:12 },
-  th:{ textAlign:"left", background:"#f1f5f9", padding:"10px 12px", borderBottom:"1px solid #e2e8f0", fontSize:14 },
-  td:{ padding:"10px 12px", borderBottom:"1px solid #eef2f7", fontSize:14 }
-};
-
-function badge(label){
-  const m = { "Surgelé": {bg:"#e6f7f1", fg:"#0c7a5f"} };
-  const {bg, fg} = m[label] || {bg:"#f1f5f9", fg:"#0f172a"};
-  return { background:bg, color:fg, borderRadius:999, padding:"6px 10px", fontWeight:800, fontSize:12 };
-}
+const styles = `
+.page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
+.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
+.back{display:inline-block;margin-bottom:12px;color:#0b6; text-decoration:none}
+.brand{margin:0;font-size:48px;line-height:0.9;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.tag{color:#246}
+.content{padding:24px;max-width:1100px}
+.header{margin-bottom:10px}
+.title{margin:0 0 6px;font-size:32px}
+.meta{display:flex;gap:8px;margin:6px 0 8px}
+.pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
+.pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
+.desc{margin:0 0 8px;color:#345}
+.blurb{margin:0 0 8px;color:#123;font-weight:500}
+.grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
+.card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
+.ing{margin:8px 0 10px;padding-left:16px}
+.ing li{margin:6px 0}
+.muted{color:#667}
+.table{display:grid;gap:6px}
+.thead,.row{display:grid;grid-template-columns:1.2fr 1fr 1fr;align-items:center}
+.thead{font-weight:700;background:#f3f7ff;border-radius:10px;padding:8px}
+.row{padding:6px 8px;border-bottom:1px solid #f0f2f7}
+.price .label{color:#678;margin-top:2px}
+.big{font-size:32px;font-weight:800}
+.qty{display:flex;align-items:center;gap:8px;margin:10px 0}
+.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd}
+.qty input{width:64px;height:36px;text-align:center;border-radius:10px;border:1px solid #ccd}
+.total{font-size:22px;font-weight:800;margin-bottom:8px}
+.btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
+.foot .note{margin-top:10px;color:#456}
+@media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
+`;
