@@ -4,16 +4,16 @@ import { useMemo, useState } from "react";
 
 export default function PouletPommesHaricots() {
   // ===== Données =====
-  const portion = 500; // g
+  const portion = 600; // g (cuisse + pommes de terre + haricots verts)
   const price = 9.9;
 
-  // nutriments par portion (500 g)
+  // nutriments par portion (≈ estimations validées plus haut)
   const nPortion = {
     kcal: 560,
     fat: 20,
     carbs: 35,
     protein: 45,
-    salt: 2.2,
+    salt: 2.0,
   };
   // par 100 g
   const n100 = {
@@ -47,16 +47,18 @@ export default function PouletPommesHaricots() {
           <h2 className="title">Cuisse de poulet rôtie, pommes de terre & haricots verts</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
-            <span className="pill">Source de protéines</span>
+            <span className="pill">Diète</span>
           </p>
           <p className="desc">
             Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
           <p className="blurb">
-            Une cuisse de poulet rôtie accompagnée de pommes de terre fondantes et de haricots verts croquants.
-            Un trio simple et savoureux, pensé pour un repas équilibré et rassasiant, à savourer sans compromis.
+            Une cuisse de poulet rôtie à cœur, peau dorée et viande juteuse, accompagnée de{" "}
+            pommes de terre fondantes et de <strong>haricots verts (150 g)</strong> croquants.
+            Assaisonné d’herbes et d’une pointe d’huile d’olive, ce classique maison marie simplicité,
+            protéines de qualité et vraie générosité.
           </p>
         </header>
 
@@ -65,12 +67,14 @@ export default function PouletPommesHaricots() {
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
-              <li><b>200 g</b> — Cuisse de poulet rôtie</li>
-              <li><b>150 g</b> — Pommes de terre</li>
+              <li><b>1</b> — Cuisse de poulet rôtie (désossée après cuisson)</li>
+              <li><b>~250 g</b> — Pommes de terre</li>
               <li><b>150 g</b> — Haricots verts</li>
-              <li>Sel, poivre, herbes de Provence</li>
+              <li>Aromates &amp; herbes (ail, oignon, poivre, herbes de Provence)</li>
+              <li><b>5 g</b> — Huile d’olive</li>
+              <li>Sel</li>
             </ul>
-            <p className="muted">Allergènes : aucun.</p>
+            <p className="muted">Allergènes : —</p>
           </section>
 
           {/* Valeurs nutritionnelles */}
@@ -127,8 +131,8 @@ export default function PouletPommesHaricots() {
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation conserve saveurs et nutriments : elle stoppe le temps pour préserver la fraîcheur
-            des ingrédients et la qualité nutritionnelle du repas.
+            La surgélation fige la qualité juste après cuisson, pour garder le moelleux du poulet
+            et la fraîcheur des légumes jusqu’au moment de déguster.
           </p>
         </section>
       </section>
