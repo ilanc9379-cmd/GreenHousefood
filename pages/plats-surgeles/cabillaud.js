@@ -1,265 +1,179 @@
-// pages/plats-surgeles/cabillaud.js
-import React, { useMemo, useState } from "react";
+// pages/plats-surgeles/riz-cabillaud.js
+import Link from "next/link";
+import { useMemo, useState } from "react";
 
-export default function CabillaudLegumesRiz() {
-  // ---------- Données plat ----------
-  const title = "Cabillaud aux petits légumes & riz complet";
-  const portionGrams = 665; // 200 + 120 + 100 + 80 + 80 + 80 + 5
+export default function RizCabillaud() {
+  // ===== Données =====
+  const portion = 600; // g
   const price = 9.9;
 
-  const ingredients = [
-    ["Riz complet", "200 g"],
-    ["Filet de cabillaud", "120 g"],
-    ["Carottes", "100 g"],
-    ["Oignon", "80 g"],
-    ["Poivron", "80 g"],
-    ["Petits pois", "80 g"],
-    ["Huile d’olive", "5 g"],
-    ["Ail, herbes, paprika, sel", "—"],
-  ];
+  // nutriments par portion (600 g)
+  const nPortion = {
+    kcal: 585,
+    fat: 13,
+    carbs: 78,
+    protein: 39,
+    salt: 2.0,
+  };
+  // par 100 g
+  const n100 = {
+    kcal: (nPortion.kcal / (portion / 100)).toFixed(1),
+    fat: (nPortion.fat / (portion / 100)).toFixed(1),
+    carbs: (nPortion.carbs / (portion / 100)).toFixed(1),
+    protein: (nPortion.protein / (portion / 100)).toFixed(1),
+    salt: (nPortion.salt / (portion / 100)).toFixed(1),
+  };
 
-  // ---------- Nutrition (approximations cohérentes) ----------
-  // Totaux par portion (~665 g)
-  const kcalPortion = 610;
-  const lipidesPortion = 12;   // g
-  const glucidesPortion = 88;  // g
-  const proteinesPortion = 42; // g
-
-  // Par 100 g
-  const factor = portionGrams / 100;
-  const kcal100 = +(kcalPortion / factor).toFixed(1);          // ≈ 91.7
-  const lipides100 = +(lipidesPortion / factor).toFixed(1);    // ≈ 1.8
-  const glucides100 = +(glucidesPortion / factor).toFixed(1);  // ≈ 13.2
-  const proteines100 = +(proteinesPortion / factor).toFixed(1);// ≈ 6.3
-
-  // ---------- Commande ----------
   const [qty, setQty] = useState(1);
   const nf = useMemo(
     () => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }),
     []
   );
-  const totalPrice = +(price * qty).toFixed(2);
 
   return (
-    <div className="page">
-      <header className="hero">
-        <a href="/plats-surgeles" className="back">← Retour aux plats surgelés</a>
-        <h1 className="brand">GreenHouse</h1>
-        <p className="tagline">Traiteur — Diététique & Gourmand</p>
-      </header>
+    <main className="page">
+      {/* Colonne gauche */}
+      <aside className="side">
+        <Link href="/plats-surgeles" className="back">
+          ← Retour aux plats surgelés
+        </Link>
+        <h1 className="brand">Greenhouse</h1>
+        <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
+      </aside>
 
-      <main className="wrap">
-        <h2 className="title">{title}</h2>
+      {/* Contenu principal */}
+      <section className="content">
+        <header className="header">
+          <h2 className="title">Riz complet aux petits légumes & cabillaud</h2>
+          <p className="meta">
+            <span className="pill pill-freeze">Surgelé</span>
+            <span className="pill">Diète</span>
+          </p>
+          <p className="desc">
+            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
+            À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
+          </p>
+          <p className="blurb">
+            Un bol complet et léger : <strong>riz complet</strong> fondant, filets de{" "}
+            <strong>cabillaud</strong> délicats et brunoise de légumes (carotte, poivron, oignon, petits
+            pois) relevés d’<em>herbes &amp; épices</em>. Un plat équilibré, riche en protéines, idéal
+            au quotidien.
+          </p>
+        </header>
 
-        <div className="badges">
-          <span className="badge badge-freeze">Surgelé</span>
-          <span className="badge badge-prot">Équilibré</span>
-        </div>
-
-        <p className="intro">
-          Portion : <strong>{portionGrams} g</strong> · prêt en <strong>20 min au four</strong> ·{" "}
-          <strong>8 min au micro-ondes</strong> · <strong>10 min à la poêle</strong>
-        </p>
-
-        <p className="desc">
-          Filet de cabillaud fondant, riz complet et mélange de légumes
-          (carottes, oignon, poivron, petits pois). Un plat sain, riche en fibres
-          et protéines, assaisonné d’ail, d’herbes de Provence et de paprika.
-        </p>
-
-        <section className="grid">
+        <div className="grid">
           {/* Ingrédients */}
-          <div className="card">
+          <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
-              {ingredients.map(([name, qty]) => (
-                <li key={name}>
-                  <span>{name}</span>
-                  <b>{qty}</b>
-                </li>
-              ))}
+              <li><b>200 g</b> — Riz complet cuit</li>
+              <li><b>120 g</b> — Filet de cabillaud</li>
+              <li><b>100 g</b> — Carottes</li>
+              <li><b>80 g</b> — Oignon</li>
+              <li><b>80 g</b> — Poivron</li>
+              <li><b>80 g</b> — Petits pois</li>
+              <li><b>5 g</b> — Huile d’olive</li>
+              <li>Aromates &amp; épices · Sel</li>
             </ul>
-            <p className="note">Allergènes : <b>poisson</b>.</p>
-          </div>
+            <p className="muted">Allergènes : — (poisson : cabillaud).</p>
+          </section>
 
-          {/* Nutrition */}
-          <div className="card">
+          {/* Valeurs nutritionnelles */}
+          <section className="card">
             <h3>Valeurs nutritionnelles</h3>
             <div className="table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Valeurs</th>
-                    <th>Pour 100 g</th>
-                    <th>Par portion ({portionGrams} g)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Énergie</td>
-                    <td>{kcal100} kcal</td>
-                    <td>{kcalPortion} kcal</td>
-                  </tr>
-                  <tr>
-                    <td>Matières grasses</td>
-                    <td>{lipides100} g</td>
-                    <td>{lipidesPortion} g</td>
-                  </tr>
-                  <tr>
-                    <td>Glucides</td>
-                    <td>{glucides100} g</td>
-                    <td>{glucidesPortion} g</td>
-                  </tr>
-                  <tr>
-                    <td>Protéines</td>
-                    <td>{proteines100} g</td>
-                    <td>{proteinesPortion} g</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="thead">
+                <div>Valeurs</div>
+                <div>Pour 100 g</div>
+                <div>Par portion</div>
+              </div>
+              <div className="row"><div>Énergie</div><div>{n100.kcal} kcal</div><div>{nPortion.kcal} kcal</div></div>
+              <div className="row"><div>Matières grasses</div><div>{n100.fat} g</div><div>{nPortion.fat} g</div></div>
+              <div className="row"><div>Glucides</div><div>{n100.carbs} g</div><div>{nPortion.carbs} g</div></div>
+              <div className="row"><div>Protéines</div><div>{n100.protein} g</div><div>{nPortion.protein} g</div></div>
+              <div className="row"><div>Sel</div><div>{n100.salt} g</div><div>{nPortion.salt} g</div></div>
             </div>
-          </div>
+          </section>
 
-          {/* Commande */}
-          <div className="card order">
-            <h3>Prix unitaire</h3>
-            <div className="price">{nf.format(price)}</div>
-
+          {/* Prix */}
+          <section className="card price">
+            <div className="label">Prix unitaire</div>
+            <div className="big">{nf.format(price)}</div>
             <div className="qty">
-              <button onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Moins">−</button>
+              <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
               <input
                 type="number"
                 min={1}
                 value={qty}
-                onChange={(e) => setQty(Math.max(1, parseInt(e.target.value || "1", 10)))}
+                onChange={(e) =>
+                  setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
+                }
               />
-              <button onClick={() => setQty((q) => q + 1)} aria-label="Plus">+</button>
+              <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
+            <div className="label">Total ({qty} plat{qty > 1 ? "s" : ""})</div>
+            <div className="total">{nf.format(price * qty)}</div>
+            <button className="btn">Commander</button>
+          </section>
+        </div>
 
-            <div className="total">
-              <div>Total ({qty} plat{qty > 1 ? "s" : ""})</div>
-              <b>{nf.format(totalPrice)}</b>
-            </div>
-
-            <button className="cta">Commander</button>
-          </div>
-
-          {/* Cuisson & conservation */}
-          <div className="card">
-            <h3>Cuisson</h3>
-            <ul className="bullets">
-              <li>Four : <b>150 °C</b>, <b>20 min</b>.</li>
-              <li>Micro-ondes : <b>8 min</b>.</li>
-              <li>Poêle : <b>10 min</b>.</li>
-            </ul>
-            <h3>Conservation</h3>
-            <ul className="bullets">
-              <li>Conserver <b>au congélateur</b> : maximum <b>4 mois</b>.</li>
-              <li>Après décongélation : <b>48 h au réfrigérateur</b>.</li>
-              <li>Ne pas recongeler un produit décongelé.</li>
-            </ul>
-            <p className="freeze-note">
-              La surgélation préservera fraîcheur, saveurs et qualités nutritionnelles
-              — idéal pour un plat prêt à réchauffer sans compromis.
-            </p>
-          </div>
+        {/* Cuisson & Conservation */}
+        <section className="card foot">
+          <h3>Cuisson</h3>
+          <ul>
+            <li>Four <b>150 °C</b> : <b>20 min</b></li>
+            <li>Micro-ondes : <b>8 min</b></li>
+            <li>Poêle : <b>10 min</b></li>
+          </ul>
+          <h3 style={{ marginTop: 12 }}>Conservation</h3>
+          <ul>
+            <li>Conserver au congélateur : <b>max 4 mois</b></li>
+            <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
+            <li>Ne pas recongeler un produit décongelé</li>
+          </ul>
+          <p className="note">
+            La surgélation capture la fraîcheur juste après cuisson : textures préservées, goût intact,
+            prêt à savourer quand vous l’êtes.
+          </p>
         </section>
-      </main>
+      </section>
 
-      <style jsx>{`
-        .page { min-height: 100vh; background: #f4f7fb; }
-        .hero {
-          padding: 28px 16px 8px;
-          background: linear-gradient(120deg, #e8f5ff, #e9fff5);
-        }
-        .back {
-          display: inline-block;
-          margin-bottom: 12px;
-          color: #0b6;
-          text-decoration: none;
-        }
-        .back:hover { text-decoration: underline; }
-        .brand {
-          margin: 0;
-          font-size: 40px;
-          line-height: 1.1;
-          font-weight: 800;
-          background: linear-gradient(90deg, #00c16a, #00a2ff);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-        }
-        .tagline { margin: 6px 0 0; color: #496; font-weight: 600; }
-        .wrap { max-width: 1050px; margin: 0 auto; padding: 20px 16px 40px; }
-        .title { font-size: 28px; margin: 14px 0 6px; }
-        .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
-        .badge {
-          display: inline-block; padding: 6px 10px; border-radius: 999px;
-          font-size: 13px; font-weight: 600; background: #eef3ff; color: #2643a2;
-        }
-        .badge-freeze { background: #e6fff3; color: #0a6c4a; }
-        .badge-prot { background: #fff3e8; color: #a25a1a; }
-        .intro { color: #475569; margin: 6px 0 10px; }
-        .desc { color: #334155; margin-bottom: 14px; }
-
-        .grid {
-          display: grid;
-          gap: 16px;
-          grid-template-columns: 1fr;
-        }
-        @media (min-width: 960px) {
-          .grid { grid-template-columns: 1.2fr 1.2fr 0.8fr; align-items: start; }
-          .order { grid-column: 3 / 4; grid-row: 1 / 3; }
-        }
-
-        .card {
-          background: #fff; border-radius: 18px; box-shadow: 0 8px 20px rgba(16,24,40,.06);
-          padding: 16px;
-        }
-        .card h3 { margin: 0 0 10px; font-size: 18px; }
-
-        .ing { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-        .ing li {
-          display: flex; justify-content: space-between; align-items: center;
-          background: #f8fafc; border-radius: 12px; padding: 10px 12px;
-        }
-        .ing b { font-variant-numeric: tabular-nums; }
-
-        .table {
-          overflow-x: auto; border-radius: 12px; border: 1px solid #e6eef6;
-        }
-        table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        thead th {
-          background: #f1f5f9; text-align: left; padding: 10px; color: #334155;
-        }
-        tbody td { padding: 10px; border-top: 1px solid #eef2f7; }
-
-        .order .price { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
-        .qty {
-          display: flex; gap: 8px; align-items: center; margin: 8px 0 10px;
-        }
-        .qty button {
-          width: 40px; height: 40px; border-radius: 10px; border: 1px solid #dbe4ee; background: #fff;
-          font-size: 22px; line-height: 1; cursor: pointer;
-        }
-        .qty input {
-          width: 70px; height: 40px; text-align: center; border-radius: 10px;
-          border: 1px solid #dbe4ee; font-size: 16px;
-        }
-        .total {
-          display: flex; justify-content: space-between; align-items: baseline;
-          margin-bottom: 10px; color: #334155;
-        }
-        .cta {
-          width: 100%; height: 46px; border: 0; border-radius: 12px; cursor: pointer;
-          font-weight: 700; color: #fff;
-          background: linear-gradient(90deg, #00b37a, #0084ff);
-        }
-        .bullets { margin: 6px 0 12px; padding-left: 18px; }
-        .freeze-note { margin: 2px 0 0; color: #475569; }
-
-        .note { color: #475569; margin-top: 8px; }
-      `}</style>
-    </div>
+      <style jsx>{styles}</style>
+    </main>
   );
 }
+
+const styles = `
+.page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
+.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
+.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
+.brand{margin:0;font-size:46px;line-height:1;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.tag{color:#246}
+.content{padding:24px;max-width:1100px}
+.header{margin-bottom:10px}
+.title{margin:0 0 6px;font-size:30px}
+.meta{display:flex;gap:8px;margin:6px 0 8px}
+.pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
+.pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
+.desc{margin:0 0 8px;color:#345}
+.blurb{margin:0 0 8px;color:#123;font-weight:500}
+.grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
+.card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
+.ing{margin:8px 0 10px;padding-left:16px}
+.ing li{margin:6px 0}
+.muted{color:#667}
+.table{display:grid;gap:6px}
+.thead,.row{display:grid;grid-template-columns:1.2fr 1fr 1fr;align-items:center}
+.thead{font-weight:700;background:#f3f7ff;border-radius:10px;padding:8px}
+.row{padding:6px 8px;border-bottom:1px solid #f0f2f7}
+.price .label{color:#678;margin-top:2px}
+.big{font-size:32px;font-weight:800}
+.qty{display:flex;align-items:center;gap:8px;margin:10px 0}
+.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd}
+.qty input{width:64px;height:36px;text-align:center;border-radius:10px;border:1px solid #ccd}
+.total{font-size:22px;font-weight:800;margin-bottom:8px}
+.btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
+.foot .note{margin-top:10px;color:#456}
+@media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
+`;
