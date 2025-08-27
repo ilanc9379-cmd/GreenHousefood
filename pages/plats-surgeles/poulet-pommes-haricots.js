@@ -1,27 +1,23 @@
-// pages/plats-surgeles/poulet-pommes-haricots.js
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
 export default function PouletPommesHaricots() {
-  // ===== Données =====
-  const portion = 600; // g (cuisse + pommes de terre + haricots verts)
+  const portion = 555; // g
   const price = 9.9;
 
-  // nutriments par portion (≈ estimations validées plus haut)
   const nPortion = {
-    kcal: 560,
-    fat: 20,
-    carbs: 35,
-    protein: 45,
-    salt: 2.0,
+    kcal: 765,
+    fat: 39,
+    carbs: 38,
+    protein: 65,
+    salt: 1.5,
   };
-  // par 100 g
   const n100 = {
-    kcal: (nPortion.kcal / (portion / 100)).toFixed(1),
-    fat: (nPortion.fat / (portion / 100)).toFixed(1),
-    carbs: (nPortion.carbs / (portion / 100)).toFixed(1),
-    protein: (nPortion.protein / (portion / 100)).toFixed(1),
-    salt: (nPortion.salt / (portion / 100)).toFixed(1),
+    kcal: 138,
+    fat: 6.9,
+    carbs: 6.8,
+    protein: 11.7,
+    salt: 0.27,
   };
 
   const [qty, setQty] = useState(1);
@@ -32,7 +28,6 @@ export default function PouletPommesHaricots() {
 
   return (
     <main className="page">
-      {/* Colonne gauche */}
       <aside className="side">
         <Link href="/plats-surgeles" className="back">
           ← Retour aux plats surgelés
@@ -41,24 +36,23 @@ export default function PouletPommesHaricots() {
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
-      {/* Contenu principal */}
       <section className="content">
         <header className="header">
           <h2 className="title">Cuisse de poulet rôtie, pommes de terre & haricots verts</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
+            <span className="pill">Riche en protéines</span>
           </p>
           <p className="desc">
             Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
           <p className="blurb">
-            Une cuisse de poulet rôtie à cœur, peau dorée et viande juteuse, accompagnée de{" "}
-            pommes de terre fondantes et de <strong>haricots verts (150 g)</strong> croquants.
-            Assaisonné d’herbes et d’une pointe d’huile d’olive, ce classique maison marie simplicité,
-            protéines de qualité et vraie générosité.
+            Une cuisse de poulet rôtie à la peau croustillante, accompagnée de pommes de terre
+            fondantes et de haricots verts croquants. Un trio simple et savoureux, relevé d’herbes de
+            Provence et d’un filet d’huile d’olive pour un repas équilibré et authentique.
           </p>
         </header>
 
@@ -67,14 +61,13 @@ export default function PouletPommesHaricots() {
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
-              <li><b>1</b> — Cuisse de poulet rôtie (désossée après cuisson)</li>
-              <li><b>~250 g</b> — Pommes de terre</li>
+              <li><b>250 g</b> — Cuisse de poulet rôtie</li>
+              <li><b>150 g</b> — Pommes de terre</li>
               <li><b>150 g</b> — Haricots verts</li>
-              <li>Aromates &amp; herbes (ail, oignon, poivre, herbes de Provence)</li>
               <li><b>5 g</b> — Huile d’olive</li>
-              <li>Sel</li>
+              <li>Aromates : oignon, ail, poivre, herbes de Provence, sel</li>
             </ul>
-            <p className="muted">Allergènes : —</p>
+            <p className="muted">Allergènes : aucun.</p>
           </section>
 
           {/* Valeurs nutritionnelles */}
@@ -100,17 +93,10 @@ export default function PouletPommesHaricots() {
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
               <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
-              <input
-                type="number"
-                min={1}
-                value={qty}
-                onChange={(e) =>
-                  setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
-                }
-              />
+              <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
               <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
-            <div className="label">Total ({qty} plat{qty > 1 ? "s" : ""})</div>
+            <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
             <div className="total">{nf.format(price * qty)}</div>
             <button className="btn">Commander</button>
           </section>
@@ -124,15 +110,15 @@ export default function PouletPommesHaricots() {
             <li>Micro-ondes : <b>8 min</b></li>
             <li>Poêle : <b>10 min</b></li>
           </ul>
-          <h3 style={{ marginTop: 12 }}>Conservation</h3>
+          <h3 style={{marginTop:12}}>Conservation</h3>
           <ul>
             <li>Conserver au congélateur : <b>max 4 mois</b></li>
             <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation fige la qualité juste après cuisson, pour garder le moelleux du poulet
-            et la fraîcheur des légumes jusqu’au moment de déguster.
+            La surgélation capture la qualité des aliments : les nutriments et les saveurs restent
+            intacts pour offrir un repas sain et gourmand à tout moment.
           </p>
         </section>
       </section>
@@ -146,11 +132,11 @@ const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
 .back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
-.brand{margin:0;font-size:46px;line-height:1;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.brand{margin:0;font-size:48px;line-height:1.1;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
-.title{margin:0 0 6px;font-size:30px}
+.title{margin:0 0 6px;font-size:32px}
 .meta{display:flex;gap:8px;margin:6px 0 8px}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
