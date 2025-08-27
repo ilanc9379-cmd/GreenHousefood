@@ -1,25 +1,25 @@
-// pages/plats-surgeles/moussaka.js
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
 export default function Moussaka() {
+  // ===== Données =====
   const portion = 600; // g
   const price = 9.9;
 
-  // ≈ valeurs pour une portion (600 g)
+  // Macros d'après CIQUAL (voir hypothèses dans le message)
   const nPortion = {
-    kcal: 900,
-    fat: 30,
-    carbs: 95,
-    protein: 55,
-    salt: 2.0,
+    kcal: 733,
+    fat: 31.0,
+    carbs: 45.5,
+    protein: 59.6,
+    salt: 1.5,
   };
   const n100 = {
-    kcal: (nPortion.kcal / (portion / 100)).toFixed(1),
-    fat: (nPortion.fat / (portion / 100)).toFixed(1),
-    carbs: (nPortion.carbs / (portion / 100)).toFixed(1),
-    protein: (nPortion.protein / (portion / 100)).toFixed(1),
-    salt: (nPortion.salt / (portion / 100)).toFixed(1),
+    kcal: 122,
+    fat: 5.2,
+    carbs: 7.6,
+    protein: 9.9,
+    salt: 0.25,
   };
 
   const [qty, setQty] = useState(1);
@@ -40,20 +40,20 @@ export default function Moussaka() {
 
       <section className="content">
         <header className="header">
-          <h2 className="title">Moussaka revisitée (aubergine, riz complet, bœuf 5%, tomate)</h2>
+          <h2 className="title">Moussaka revisitée</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
           </p>
           <p className="desc">
             Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
           <p className="blurb">
-            L’esprit de la moussaka, en version <em>équilibrée</em> : couches d’<strong>aubergine</strong>,
-            bœuf 5% fondant, <strong>riz complet</strong> pour la tenue, tomate parfumée, une touche de
-            fromage râpé — relevés de paprika et d’herbes de Provence. Confort et saveurs, sans compromis.
+            Une moussaka revisitée qui marie la douceur de l’aubergine, la richesse du bœuf maigre
+            et la légèreté du riz complet. Gratinée d’une touche d’emmental, relevée d’herbes et
+            d’épices méditerranéennes : un plat gourmand et équilibré.
           </p>
         </header>
 
@@ -66,11 +66,11 @@ export default function Moussaka() {
               <li><b>100 g</b> — Tomates concassées</li>
               <li><b>150 g</b> — Viande hachée 5% MG</li>
               <li><b>150 g</b> — Riz complet cuit</li>
-              <li><b>50 g</b> — Fromage râpé</li>
+              <li><b>50 g</b> — Emmental râpé</li>
               <li><b>5 g</b> — Huile d’olive</li>
-              <li>Oignon, ail, <em>paprika</em>, herbes de Provence, sel</li>
+              <li>Aromates : oignon, ail, paprika, herbes de Provence, sel</li>
             </ul>
-            <p className="muted">Allergènes : <b>lait</b>.</p>
+            <p className="muted">Allergènes : lait. (Traces de gluten possibles selon le riz/atelier.)</p>
           </section>
 
           {/* Valeurs nutritionnelles */}
@@ -100,13 +100,11 @@ export default function Moussaka() {
                 type="number"
                 min={1}
                 value={qty}
-                onChange={(e) =>
-                  setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
-                }
+                onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))}
               />
               <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
-            <div className="label">Total ({qty} plat{qty > 1 ? "s" : ""})</div>
+            <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
             <div className="total">{nf.format(price * qty)}</div>
             <button className="btn">Commander</button>
           </section>
@@ -120,15 +118,15 @@ export default function Moussaka() {
             <li>Micro-ondes : <b>8 min</b></li>
             <li>Poêle : <b>10 min</b></li>
           </ul>
-          <h3 style={{ marginTop: 12 }}>Conservation</h3>
+          <h3 style={{marginTop:12}}>Conservation</h3>
           <ul>
             <li>Conserver au congélateur : <b>max 4 mois</b></li>
             <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation préserve fraîcheur et qualités nutritionnelles : refroidi rapidement, le plat
-            garde ses textures et ses saveurs, prêt quand vous l’êtes.
+            La surgélation préserve fraîcheur et qualités nutritionnelles : le refroidissement rapide
+            limite l’oxydation et garde la texture des aliments.
           </p>
         </section>
       </section>
@@ -140,14 +138,13 @@ export default function Moussaka() {
 
 const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
-.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);overflow:visible}
-.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
-.brand{margin:0;font-size:46px;line-height:1;white-space:nowrap;padding-right:6px;
-  background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
+.back{display:inline-block;margin-bottom:12px;color:#0b6; text-decoration:none}
+.brand{margin:0;font-size:48px;line-height:1.1;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
-.title{margin:0 0 6px;font-size:30px}
+.title{margin:0 0 6px;font-size:32px}
 .meta{display:flex;gap:8px;margin:6px 0 8px}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
