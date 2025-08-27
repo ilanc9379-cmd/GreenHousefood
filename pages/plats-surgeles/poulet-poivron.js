@@ -1,4 +1,3 @@
-// pages/plats-surgeles/poulet-poivron.js
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -6,18 +5,19 @@ export default function PouletPoivron() {
   const portion = 600; // g
   const price = 9.9;
 
-  // Estimations validées précédemment
-  const nPortion = { kcal: 690, fat: 10, carbs: 86, protein: 62, salt: 2 };
+  // par portion (600 g) – d’après nos bases
+  const nPortion = { kcal: 689, fat: 10, carbs: 86, protein: 62, salt: 2.2 };
+  // par 100 g
   const n100 = {
-    kcal: +(nPortion.kcal / (portion/100)).toFixed(1),
-    fat: +(nPortion.fat / (portion/100)).toFixed(1),
-    carbs: +(nPortion.carbs / (portion/100)).toFixed(1),
-    protein: +(nPortion.protein / (portion/100)).toFixed(1),
-    salt: +(nPortion.salt / (portion/100)).toFixed(1),
+    kcal: +(nPortion.kcal / 6).toFixed(1),
+    fat: +(nPortion.fat / 6).toFixed(1),
+    carbs: +(nPortion.carbs / 6).toFixed(1),
+    protein: +(nPortion.protein / 6).toFixed(1),
+    salt: +(nPortion.salt / 6).toFixed(1),
   };
 
-  const [qty,setQty]=useState(1);
-  const nf = useMemo(()=>new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR"}),[]);
+  const [qty, setQty] = useState(1);
+  const nf = useMemo(() => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }), []);
 
   return (
     <main className="page">
@@ -29,18 +29,16 @@ export default function PouletPoivron() {
 
       <section className="content">
         <header className="header">
-          <h2 className="title">Pâtes complètes, émincé de poulet &amp; sauce poivron</h2>
+          <h2 className="title">Pâtes complètes — émincé de poulet &amp; sauce poivron (maison)</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
-            <span className="pill">Riche en protéines</span>
+            <span className="pill">Diète</span>
           </p>
           <p className="desc">
-            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> · <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.  
-            À conserver au congélateur (max 4 mois) · 48h au réfrigérateur après décongélation.
+            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> · <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>. À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
           <p className="blurb">
-            Pâtes complètes artisanales (œufs plein air), <strong>poulet tendre</strong>, julienne de légumes et{" "}
-            <strong>sauce poivron maison</strong> (poivron, ail, oignon, aromates).
+            Des <strong>pâtes complètes artisanales</strong> (œufs plein air) enrobées d’une <strong>sauce poivron maison</strong> — poivrons, aromates, ail, oignon — et d’un émincé de poulet fondant. Un plat équilibré, parfumé et rassasiant.
           </p>
         </header>
 
@@ -48,10 +46,10 @@ export default function PouletPoivron() {
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
-              <li><b>200 g</b> — Pâtes complètes artisanales (œufs plein air)</li>
-              <li><b>150 g</b> — Poulet émincé cuit</li>
-              <li><b>150 g</b> — Julienne de légumes</li>
-              <li><b>100 g</b> — Sauce poivron <b>maison</b></li>
+              <li><b>220 g</b> — Pâtes complètes artisanales (œufs plein air)</li>
+              <li><b>160 g</b> — Émincé de poulet</li>
+              <li><b>120 g</b> — Sauce poivron maison (poivron, ail, oignon, aromates, sel, poivre)</li>
+              <li><b>100 g</b> — Julienne de légumes</li>
             </ul>
             <p className="muted">Allergènes : gluten (blé), <b>œufs</b>.</p>
           </section>
@@ -72,22 +70,29 @@ export default function PouletPoivron() {
             <div className="label">Prix unitaire</div>
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
-              <button onClick={()=>setQty(q=>Math.max(1,q-1))}>−</button>
+              <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
               <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
-              <button onClick={()=>setQty(q=>q+1)}>+</button>
+              <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
             <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
-            <div className="total">{nf.format(price*qty)}</div>
+            <div className="total">{nf.format(price * qty)}</div>
             <button className="btn">Commander</button>
           </section>
         </div>
 
         <section className="card foot">
           <h3>Cuisson</h3>
-          <ul><li>Four <b>150 °C</b> : <b>20 min</b></li><li>Micro-ondes : <b>8 min</b></li><li>Poêle : <b>10 min</b></li></ul>
+          <ul>
+            <li>Four <b>150 °C</b> : <b>20 min</b></li>
+            <li>Micro-ondes : <b>8 min</b></li>
+            <li>Poêle : <b>10 min</b></li>
+          </ul>
           <h3 style={{marginTop:12}}>Conservation</h3>
-          <ul><li>Congélateur : <b>max 4 mois</b></li><li>Après décongélation : <b>48h</b> au réfrigérateur</li><li>Ne pas recongeler</li></ul>
-          <p className="note">La surgélation préserve fraîcheur et nutriments.</p>
+          <ul>
+            <li>Conserver au congélateur : <b>max 4 mois</b></li>
+            <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
+            <li>Ne pas recongeler un produit décongelé</li>
+          </ul>
         </section>
       </section>
 
@@ -97,11 +102,10 @@ export default function PouletPoivron() {
 }
 
 const styles = `
-${/* réutilise exactement le même CSS que bolo */""}
-.page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
-.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
-.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
-.brand{margin:0;font-size:48px;line-height:0.9;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.page{display:grid;grid-template-columns:300px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
+.side{box-sizing:border-box;padding:28px 22px;background:linear-gradient(180deg,#dff1ff,#e6fff7);overflow:visible}
+.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none;font-weight:700}
+.brand{margin:0;font-size:clamp(40px,5vw,52px);line-height:1.0;padding-right:6px;letter-spacing:.3px;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;display:inline-block}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
@@ -128,5 +132,6 @@ ${/* réutilise exactement le même CSS que bolo */""}
 .total{font-size:22px;font-weight:800;margin-bottom:8px}
 .btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
 .foot .note{margin-top:10px;color:#456}
-@media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
+@media(max-width:1050px){.page{grid-template-columns:260px 1fr}}
+@media(max-width:900px){.page{grid-template-columns:1fr}.side{position:sticky;top:0;z-index:1}.grid{grid-template-columns:1fr}}
 `;
