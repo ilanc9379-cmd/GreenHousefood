@@ -1,371 +1,220 @@
 // pages/plats-surgeles/curry-pois-chiches.js
 import Link from "next/link";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 
 export default function CurryPoisChiches() {
-  // Prix unitaire
-  const unitPrice = 9.9;
+  // ===== Données =====
+  const portion = 600; // g
+  const price = 9.9;
 
-  // Quantité
+  // nutriments par portion (600 g)
+  const nPortion = {
+    kcal: 520,
+    fat: 21,
+    carbs: 60,
+    protein: 20,
+    salt: 2.0,
+  };
+  // par 100 g
+  const n100 = {
+    kcal: +(nPortion.kcal / (portion / 100)).toFixed(1),
+    fat: +(nPortion.fat / (portion / 100)).toFixed(1),
+    carbs: +(nPortion.carbs / (portion / 100)).toFixed(1),
+    protein: +(nPortion.protein / (portion / 100)).toFixed(1),
+    salt: +(nPortion.salt / (portion / 100)).toFixed(1),
+  };
+
   const [qty, setQty] = useState(1);
-  const total = useMemo(() => (qty * unitPrice).toFixed(2), [qty]);
-
-  // Nutrition pour 1 portion (≈500 g)
-  const perPortion = {
-    energie: 520, // kcal
-    lipides: 21,
-    satures: 8,
-    glucides: 60,
-    sucres: 8,
-    proteines: 20,
-    fibres: 14,
-    sel: 1.0,
-  };
-
-  // Nutrition pour 100 g (dérivé)
-  const per100 = {
-    energie: Math.round(perPortion.energie / 5),
-    lipides: +(perPortion.lipides / 5).toFixed(1),
-    satures: +(perPortion.satures / 5).toFixed(1),
-    glucides: +(perPortion.glucides / 5).toFixed(1),
-    sucres: +(perPortion.sucres / 5).toFixed(1),
-    proteines: +(perPortion.proteines / 5).toFixed(1),
-    fibres: +(perPortion.fibres / 5).toFixed(1),
-    sel: +(perPortion.sel / 5).toFixed(1),
-  };
+  const nf = useMemo(
+    () =>
+      new Intl.NumberFormat("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      }),
+    []
+  );
 
   return (
-    <div style={styles.page}>
-      {/* Bandeau gradient + slogan */}
-      <header style={styles.header}>
-        <div style={styles.headerInner}>
-          <Link href="/plats-surgeles">
-            <a aria-label="Retour à la liste" style={styles.back}>
-              ← Retour
-            </a>
-          </Link>
-          <h1 style={styles.brand}>GreenHouse</h1>
-          <p style={styles.tagline}>Traiteur — Diététique & Gourmand</p>
-        </div>
-      </header>
+    <main className="page">
+      <aside className="side">
+        <Link href="/plats-surgeles" className="back">
+          ← Retour aux plats surgelés
+        </Link>
+        <h1 className="brand">Greenhouse</h1>
+        <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
+      </aside>
 
-      <main style={styles.container}>
-        {/* Titre + badges + accroche */}
-        <section style={styles.hero}>
-          <h2 style={styles.title}>Curry de pois chiches</h2>
-          <div style={styles.badges}>
-            <span style={{ ...badge, background: "#e6f7f1", color: "#0c7a5f" }}>
-              Surgelé
-            </span>
-            <span style={{ ...badge, background: "#eaf0ff", color: "#3650ff" }}>
-              Végétarien
-            </span>
-            <span style={{ ...badge, background: "#fff4e6", color: "#b35a00" }}>
-              Diète
-            </span>
-          </div>
-          <p style={styles.lead}>
-            Portion : <strong>500 g</strong> • Riche en fibres et protéines
-            végétales. Saveurs douces et parfumées.
+      <section className="content">
+        <header className="header">
+          <h2 className="title">Curry de pois chiches</h2>
+          <p className="meta">
+            <span className="pill pill-freeze">Surgelé</span>
+            <span className="pill">Diète</span>
+            <span className="pill">Végétarien</span>
           </p>
-          <p style={styles.subLead}>
-            La surgélation préserve fraîcheur et qualités nutritionnelles pour
-            un plat prêt à réchauffer en quelques minutes.
+          <p className="desc">
+            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au{" "}
+            <em>four</em> · <strong>8 min</strong> au <em>micro-ondes</em> ·{" "}
+            <strong>10 min</strong> à la <em>poêle</em>. À conserver au congélateur (max 4 mois).
+            Après décongélation : 48h au réfrigérateur.
           </p>
-        </section>
+          <p className="blurb">
+            Un curry doux et parfumé où les <strong>pois chiches</strong> mijotent avec des{" "}
+            <strong>petits légumes</strong> et un mélange d’<strong>épices</strong> équilibré.
+            Réconfortant, riche en fibres et naturellement protéiné : l’allié idéal d’un repas
+            sain et savoureux.
+          </p>
+        </header>
 
-        {/* Grille : Nutriments / Ingrédients / Prix */}
-        <section style={styles.grid}>
-          {/* NUTRITION */}
-          <div style={styles.card}>
-            <h3 style={styles.cardTitle}>Valeurs nutritionnelles</h3>
-            <div style={styles.tableWrapper}>
-              <table style={styles.table}>
-                <thead>
-                  <tr>
-                    <th style={styles.th}>Valeurs</th>
-                    <th style={styles.th}>Pour 100 g</th>
-                    <th style={styles.th}>Par portion</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style={styles.td}>Énergie</td>
-                    <td style={styles.td}>{per100.energie} kcal</td>
-                    <td style={styles.td}>{perPortion.energie} kcal</td>
-                  </tr>
-                  <tr>
-                    <td style={styles.td}>Matières grasses</td>
-                    <td style={styles.td}>{per100.lipides} g</td>
-                    <td style={styles.td}>{perPortion.lipides} g</td>
-                  </tr>
-                  <tr>
-                    <td style={styles.td}>dont acides saturés</td>
-                    <td style={styles.td}>{per100.satures} g</td>
-                    <td style={styles.td}>{perPortion.satures} g</td>
-                  </tr>
-                  <tr>
-                    <td style={styles.td}>Glucides</td>
-                    <td style={styles.td}>{per100.glucides} g</td>
-                    <td style={styles.td}>{perPortion.glucides} g</td>
-                  </tr>
-                  <tr>
-                    <td style={styles.td}>dont sucres</td>
-                    <td style={styles.td}>{per100.sucres} g</td>
-                    <td style={styles.td}>{perPortion.sucres} g</td>
-                  </tr>
-                  <tr>
-                    <td style={styles.td}>Protéines</td>
-                    <td style={styles.td}>{per100.proteines} g</td>
-                    <td style={styles.td}>{perPortion.proteines} g</td>
-                  </tr>
-                  <tr>
-                    <td style={styles.td}>Fibres</td>
-                    <td style={styles.td}>{per100.fibres} g</td>
-                    <td style={styles.td}>{perPortion.fibres} g</td>
-                  </tr>
-                  <tr>
-                    <td style={styles.td}>Sel</td>
-                    <td style={styles.td}>{per100.sel} g</td>
-                    <td style={styles.td}>{perPortion.sel} g</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* INGRÉDIENTS */}
-          <div style={styles.card}>
-            <h3 style={styles.cardTitle}>Ingrédients</h3>
-            <ul style={styles.pills}>
-              <li style={pill}>Pois chiches cuits — 200 g</li>
-              <li style={pill}>Lait de coco — 120 ml</li>
-              <li style={pill}>Sauce tomate — 120 ml</li>
-              <li style={pill}>Tomates cerises — 50 g</li>
-              <li style={pill}>Épinards frais — 50 g</li>
-              <li style={pill}>Oignon — 1 petit</li>
-              <li style={pill}>Ail — 1 gousse</li>
-              <li style={pill}>Persil frais — 10 g</li>
-              <li style={pill}>Huile d’olive — 7 g</li>
-              <li style={pill}>Curry — 2 cc</li>
-              <li style={pill}>Garam masala — 1 cc</li>
-              <li style={pill}>Sel, poivre</li>
-              <li style={pill}>Jus de ½ citron</li>
+        <div className="grid">
+          {/* Ingrédients */}
+          <section className="card">
+            <h3>Ingrédients</h3>
+            <ul className="ing">
+              <li><b>250 g</b> — Pois chiches cuits</li>
+              <li><b>200 g</b> — Légumes (carottes, poivrons, oignons)</li>
+              <li><b>100 g</b> — Coulis de tomate</li>
+              <li><b>50 g</b> — Fond de sauce (eau + aromates)</li>
+              <li>Huile d’olive, curry doux, curcuma, ail, sel, poivre</li>
             </ul>
+            <p className="muted">Allergènes : — (peut contenir des traces selon matières premières).</p>
+          </section>
 
-            <div style={styles.infoBlock}>
-              <h4 style={styles.smallTitle}>Cuisson après surgélation</h4>
-              <ul style={styles.list}>
-                <li>Four : 20 min à 150&nbsp;°C</li>
-                <li>Micro-ondes : 8 min</li>
-                <li>Poêle : 10 min</li>
-              </ul>
-            </div>
-
-            <div style={styles.infoBlock}>
-              <h4 style={styles.smallTitle}>Conservation</h4>
-              <ul style={styles.list}>
-                <li>Au congélateur : maximum 4 mois</li>
-                <li>Après décongélation : 48 h au réfrigérateur</li>
-                <li>Ne pas recongeler un produit décongelé</li>
-              </ul>
-            </div>
-
-            <div style={styles.infoBlock}>
-              <h4 style={styles.smallTitle}>Allergènes</h4>
-              <p style={{ margin: 0 }}>
-                Peut contenir des traces de <strong>gluten</strong> et de{" "}
-                <strong>fruits à coque</strong>.
-              </p>
-            </div>
-          </div>
-
-          {/* PRIX / COMMANDE */}
-          <div style={styles.card}>
-            <h3 style={styles.cardTitle}>Prix unitaire</h3>
-            <div style={styles.priceRow}>
-              <div style={styles.price}>
-                <span style={styles.priceValue}>9,90&nbsp;€</span>
+          {/* Valeurs nutritionnelles */}
+          <section className="card">
+            <h3>Valeurs nutritionnelles</h3>
+            <div className="table">
+              <div className="thead">
+                <div>Valeurs</div>
+                <div>Pour 100 g</div>
+                <div>Par portion</div>
               </div>
-              <div style={styles.qtyBox}>
-                <button
-                  onClick={() => setQty((q) => Math.max(1, q - 1))}
-                  style={styles.qtyBtn}
-                  aria-label="Diminuer"
-                >
-                  –
-                </button>
-                <input
-                  aria-label="Quantité"
-                  value={qty}
-                  onChange={(e) =>
-                    setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
-                  }
-                  style={styles.qtyInput}
-                />
-                <button
-                  onClick={() => setQty((q) => q + 1)}
-                  style={styles.qtyBtn}
-                  aria-label="Augmenter"
-                >
-                  +
-                </button>
+              <div className="row">
+                <div>Énergie</div>
+                <div>{n100.kcal} kcal</div>
+                <div>{nPortion.kcal} kcal</div>
+              </div>
+              <div className="row">
+                <div>Matières grasses</div>
+                <div>{n100.fat} g</div>
+                <div>{nPortion.fat} g</div>
+              </div>
+              <div className="row">
+                <div>Glucides</div>
+                <div>{n100.carbs} g</div>
+                <div>{nPortion.carbs} g</div>
+              </div>
+              <div className="row">
+                <div>Protéines</div>
+                <div>{n100.protein} g</div>
+                <div>{nPortion.protein} g</div>
+              </div>
+              <div className="row">
+                <div>Sel</div>
+                <div>{n100.salt} g</div>
+                <div>{nPortion.salt} g</div>
               </div>
             </div>
+          </section>
 
-            <div style={styles.totalRow}>
-              <span>Total ({qty} {qty > 1 ? "plats" : "plat"})</span>
-              <strong>{total} €</strong>
+          {/* Prix */}
+          <section className="card price">
+            <div className="label">Prix unitaire</div>
+            <div className="big">{nf.format(price)}</div>
+            <div className="qty">
+              <button
+                aria-label="moins"
+                onClick={() => setQty((q) => Math.max(1, q - 1))}
+              >
+                −
+              </button>
+              <input
+                type="number"
+                min={1}
+                value={qty}
+                onChange={(e) =>
+                  setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
+                }
+              />
+              <button aria-label="plus" onClick={() => setQty((q) => q + 1)}>
+                +
+              </button>
             </div>
-
-            <button style={styles.cta}>Commander</button>
-          </div>
-        </section>
-
-        {/* Lien retour bas de page */}
-        <div style={{ marginTop: 24 }}>
-          <Link href="/plats-surgeles">
-            <a style={styles.backLink}>← Retour à la liste des plats surgelés</a>
-          </Link>
+            <div className="label">
+              Total ({qty} plat{qty > 1 ? "s" : ""})
+            </div>
+            <div className="total">{nf.format(price * qty)}</div>
+            <button className="btn">Commander</button>
+          </section>
         </div>
-      </main>
-    </div>
+
+        {/* Cuisson & Conservation */}
+        <section className="card foot">
+          <h3>Cuisson</h3>
+          <ul>
+            <li>
+              Four <b>150 °C</b> : <b>20 min</b>
+            </li>
+            <li>
+              Micro-ondes : <b>8 min</b>
+            </li>
+            <li>
+              Poêle : <b>10 min</b>
+            </li>
+          </ul>
+          <h3 style={{ marginTop: 12 }}>Conservation</h3>
+          <ul>
+            <li>
+              Conserver au congélateur : <b>max 4 mois</b>
+            </li>
+            <li>
+              Après décongélation : <b>48h</b> au réfrigérateur
+            </li>
+            <li>Ne pas recongeler un produit décongelé</li>
+          </ul>
+          <p className="note">
+            La surgélation rapide aide à préserver la texture, les saveurs et les nutriments,
+            pour un plat prêt à réchauffer sans compromis.
+          </p>
+        </section>
+      </section>
+
+      <style jsx>{styles}</style>
+    </main>
   );
 }
 
-/* ---------------- STYLES ---------------- */
-const styles = {
-  page: { fontFamily: "Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif", color: "#0f172a" },
-  header: {
-    background: "linear-gradient(135deg,#2dd4bf,#60a5fa)",
-    color: "white",
-    padding: "28px 16px",
-  },
-  headerInner: { maxWidth: 980, margin: "0 auto" },
-  brand: { margin: 0, fontSize: 40, letterSpacing: 0.2, fontWeight: 800 },
-  tagline: { margin: "6px 0 0", opacity: 0.95, fontWeight: 600 },
-  back: {
-    display: "inline-block",
-    marginBottom: 10,
-    background: "rgba(255,255,255,0.18)",
-    padding: "6px 10px",
-    borderRadius: 8,
-    color: "white",
-    textDecoration: "none",
-    fontWeight: 600,
-  },
-  container: { maxWidth: 980, margin: "20px auto 60px", padding: "0 16px" },
-  hero: { marginBottom: 18 },
-  title: { margin: "0 0 8px", fontSize: 34, fontWeight: 800 },
-  badges: { display: "flex", gap: 10, flexWrap: "wrap", margin: "8px 0 10px" },
-  lead: { margin: "0 0 4px", fontWeight: 600 },
-  subLead: { margin: 0, color: "#334155" },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "1.2fr 1.1fr 0.8fr",
-    gap: 16,
-  },
-  card: {
-    background: "white",
-    borderRadius: 14,
-    boxShadow: "0 8px 24px rgba(15, 23, 42, 0.08)",
-    padding: 16,
-  },
-  cardTitle: { margin: "4px 0 12px", fontSize: 18, fontWeight: 800, color: "#0b1220" },
-  tableWrapper: { overflowX: "auto" },
-  table: { width: "100%", borderCollapse: "separate", borderSpacing: 0, fontSize: 14 },
-  th: {
-    textAlign: "left",
-    background: "#f1f5f9",
-    padding: "10px 12px",
-    position: "sticky",
-    top: 0,
-    fontWeight: 800,
-  },
-  td: { padding: "10px 12px", borderTop: "1px solid #e2e8f0" },
-  pills: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: 8,
-    listStyle: "none",
-    padding: 0,
-    margin: 0,
-  },
-  infoBlock: {
-    marginTop: 14,
-    background: "#f8fafc",
-    border: "1px solid #e2e8f0",
-    borderRadius: 12,
-    padding: 12,
-  },
-  smallTitle: { margin: "0 0 6px", fontSize: 14, fontWeight: 800, color: "#0b1220" },
-  list: { margin: 0, paddingLeft: 18 },
-  priceRow: {
-    display: "flex",
-    alignItems: "center",
-    gap: 12,
-    marginBottom: 10,
-  },
-  price: { background: "#f1f5f9", padding: "10px 12px", borderRadius: 12 },
-  priceValue: { fontSize: 26, fontWeight: 900 },
-  qtyBox: { display: "flex", alignItems: "center", gap: 8 },
-  qtyBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
-    border: "1px solid #e2e8f0",
-    background: "white",
-    fontSize: 18,
-    cursor: "pointer",
-  },
-  qtyInput: {
-    width: 48,
-    height: 36,
-    borderRadius: 10,
-    border: "1px solid #e2e8f0",
-    textAlign: "center",
-    fontWeight: 700,
-  },
-  totalRow: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    background: "#f8fafc",
-    border: "1px solid #e2e8f0",
-    borderRadius: 12,
-    padding: "10px 12px",
-    marginBottom: 12,
-  },
-  cta: {
-    width: "100%",
-    padding: "12px 14px",
-    borderRadius: 12,
-    border: "none",
-    fontWeight: 800,
-    color: "white",
-    background:
-      "linear-gradient(135deg, rgba(16,185,129,1) 0%, rgba(59,130,246,1) 100%)",
-    cursor: "pointer",
-  },
-  backLink: {
-    textDecoration: "none",
-    fontWeight: 700,
-    color: "#0ea5e9",
-  },
-};
-
-// Badges & Pills shared
-const badge = {
-  fontWeight: 800,
-  padding: "6px 10px",
-  borderRadius: 999,
-  fontSize: 12,
-};
-
-const pill = {
-  padding: "10px 12px",
-  background: "#ffffff",
-  border: "1px solid #e2e8f0",
-  borderRadius: 12,
-  boxShadow: "0 2px 8px rgba(15,23,42,0.03)",
-};
+const styles = `
+.page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
+.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);overflow:visible}
+.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
+.brand{margin:0;font-size:46px;line-height:1;white-space:nowrap;padding-right:6px;
+  background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.tag{color:#246}
+.content{padding:24px;max-width:1100px}
+.header{margin-bottom:10px}
+.title{margin:0 0 6px;font-size:30px}
+.meta{display:flex;gap:8px;margin:6px 0 8px}
+.pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
+.pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
+.desc{margin:0 0 8px;color:#345}
+.blurb{margin:0 0 8px;color:#123;font-weight:500}
+.grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
+.card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
+.ing{margin:8px 0 10px;padding-left:16px}
+.ing li{margin:6px 0}
+.muted{color:#667}
+.table{display:grid;gap:6px}
+.thead,.row{display:grid;grid-template-columns:1.2fr 1fr 1fr;align-items:center}
+.thead{font-weight:700;background:#f3f7ff;border-radius:10px;padding:8px}
+.row{padding:6px 8px;border-bottom:1px solid #f0f2f7}
+.price .label{color:#678;margin-top:2px}
+.big{font-size:32px;font-weight:800}
+.qty{display:flex;align-items:center;gap:8px;margin:10px 0}
+.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd}
+.qty input{width:64px;height:36px;text-align:center;border-radius:10px;border:1px solid #ccd}
+.total{font-size:22px;font-weight:800;margin-bottom:8px}
+.btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
+.foot .note{margin-top:10px;color:#456}
+@media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
+`;
