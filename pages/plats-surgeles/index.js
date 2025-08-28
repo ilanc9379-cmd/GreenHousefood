@@ -1,8 +1,8 @@
 // pages/plats-surgeles/index.js
 import Link from "next/link";
-import Image from "next/image";
 
 export default function PlatsSurgelesIndex() {
+  // Catalogue plats surgelés
   const plats = [
     {
       title: "Pâtes bolognaise maison",
@@ -10,7 +10,7 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 700, P: 54.3, G: 89, L: 15.8 },
-      image: "/pates-bolo.png",
+      image: "/bolo.png",
     },
     {
       title: "Pâtes complètes — émincé de poulet & sauce poivron (maison)",
@@ -26,7 +26,7 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 610, P: 48, G: 48, L: 18 },
-      image: "/boeuf-carottes.png",
+      image: "/boeuf.png",
     },
     {
       title: "Cuisse de poulet rôtie, pommes de terre & haricots verts",
@@ -54,11 +54,11 @@ export default function PlatsSurgelesIndex() {
     },
     {
       title: "Pâtes aromettes — poulet crémeux & brocolis",
-      slug: "pates-poulet-brocolis",
+      slug: "pates-aromettes-poulet-cremeux-brocolis",
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 705, P: 49, G: 77, L: 22 },
-      image: "/pates-poulet-brocolis.png",
+      image: "/pates-aromettes.png",
     },
     {
       title: "Curry de pois chiches",
@@ -69,7 +69,7 @@ export default function PlatsSurgelesIndex() {
       image: "/curry-pois-chiches.png",
     },
     {
-      title: "Falafels & purée de patate douce",
+      title: "Falafels artisanaux & purée de patate douce",
       slug: "falafel-patate-douce",
       price: 9.9,
       badges: ["Surgelé", "Diète", "Végétarien"],
@@ -89,8 +89,7 @@ export default function PlatsSurgelesIndex() {
           </Link>
           <h1 style={styles.brand}>GreenHouse</h1>
           <p style={styles.tagline}>
-            Plats surgelés — Cuisinés artisanalement pour allier goût, équilibre
-            et praticité.
+            Plats surgelés — Cuisinés artisanalement pour allier goût, équilibre et praticité.
           </p>
         </div>
       </header>
@@ -99,16 +98,17 @@ export default function PlatsSurgelesIndex() {
         <div style={styles.cards}>
           {plats.map((p) => (
             <article key={p.slug} style={styles.card}>
-              <div style={styles.photo}>
-                <Image
-                  src={p.image}
-                  alt={p.title}
-                  fill
-                  sizes="(max-width: 950px) 100vw, 400px"
-                />
-              </div>
+              {/* Image */}
+              {p.image && (
+                <div style={styles.imgWrap}>
+                  <img src={p.image} alt={p.title} style={styles.img} />
+                </div>
+              )}
+
+              {/* Titre */}
               <h2 style={styles.title}>{p.title}</h2>
 
+              {/* Badges */}
               <div style={styles.badges}>
                 {p.badges.map((b) => (
                   <span key={b} style={badge(b)}>
@@ -117,6 +117,7 @@ export default function PlatsSurgelesIndex() {
                 ))}
               </div>
 
+              {/* Macros */}
               <div style={styles.macros}>
                 <span style={chip}>⚡ {p.macros.kcal} kcal</span>
                 <span style={chip}>🥩 P&nbsp;{p.macros.P} g</span>
@@ -124,6 +125,7 @@ export default function PlatsSurgelesIndex() {
                 <span style={chip}>🫒 L&nbsp;{p.macros.L} g</span>
               </div>
 
+              {/* Footer */}
               <div style={styles.footerRow}>
                 <div style={styles.price}>
                   <small style={{ color: "#64748b", fontWeight: 700 }}>
@@ -159,7 +161,16 @@ const styles = {
     boxShadow: "0 10px 30px rgba(37,99,235,.20)",
   },
   headerInner: { maxWidth: 1100, margin: "0 auto" },
-  brand: { margin: 0, fontSize: 42, letterSpacing: 0.2, fontWeight: 800 },
+  brand: {
+    margin: 0,
+    fontSize: 42,
+    letterSpacing: 0.2,
+    fontWeight: 800,
+    background: "linear-gradient(90deg,#0aa64c,#2d7ae6)",
+    WebkitBackgroundClip: "text",
+    backgroundClip: "text",
+    color: "transparent",
+  },
   tagline: { margin: "8px 0 0", opacity: 0.95, fontWeight: 600 },
   back: {
     display: "inline-block",
@@ -186,16 +197,9 @@ const styles = {
     flexDirection: "column",
     gap: 10,
   },
-  photo: {
-    position: "relative",
-    width: "100%",
-    aspectRatio: "16/9",
-    maxHeight: "180px",
-    overflow: "hidden",
-    borderRadius: 12,
-    marginBottom: 8,
-  },
-  title: { margin: 0, fontSize: 18, fontWeight: 800, lineHeight: 1.25 },
+  imgWrap: { width: "100%", maxHeight: 180, overflow: "hidden", borderRadius: 12 },
+  img: { width: "100%", height: "100%", objectFit: "cover" },
+  title: { margin: "10px 0 6px", fontSize: 18, fontWeight: 800, lineHeight: 1.25 },
   badges: { display: "flex", gap: 8, flexWrap: "wrap" },
   macros: { display: "flex", gap: 8, flexWrap: "wrap", marginTop: 2 },
   footerRow: {
@@ -204,15 +208,10 @@ const styles = {
     alignItems: "center",
     justifyContent: "space-between",
   },
-  price: {
-    background: "#f1f5f9",
-    borderRadius: 12,
-    padding: "8px 12px",
-  },
+  price: { background: "#f1f5f9", borderRadius: 12, padding: "8px 12px" },
   priceValue: { fontSize: 22, fontWeight: 900 },
   link: {
-    background:
-      "linear-gradient(135deg, rgba(16,185,129,1) 0%, rgba(59,130,246,1) 100%)",
+    background: "linear-gradient(135deg,#10b981,#3b82f6)",
     color: "white",
     textDecoration: "none",
     padding: "10px 14px",
