@@ -1,28 +1,14 @@
-// pages/plats-surgeles/boeuf-carottes-puree.js
+// pages/plats-surgeles/boeuf-carottes.js
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-export default function BoeufCarottesPuree() {
-  // ===== Données =====
-  const portion = 500; // g (arrondi demandé)
+export default function BoeufCarottes() {
+  const portion = 600; // g
   const price = 9.9;
 
-  // CIQUAL approx — par portion 500 g
-  const nPortion = {
-    kcal: 608,
-    fat: 25,
-    carbs: 39,
-    protein: 44,
-    salt: 2.0,
-  };
-  // par 100 g
-  const n100 = {
-    kcal: +(nPortion.kcal / (portion / 100)).toFixed(1),
-    fat: +(nPortion.fat / (portion / 100)).toFixed(1),
-    carbs: +(nPortion.carbs / (portion / 100)).toFixed(1),
-    protein: +(nPortion.protein / (portion / 100)).toFixed(1),
-    salt: +(nPortion.salt / (portion / 100)).toFixed(2),
-  };
+  // macros par portion (adapter si besoin)
+  const nPortion = { kcal: 610, fat: 18, carbs: 48, protein: 48, salt: 2.2 };
+  const n100 = { kcal: 102, fat: 3, carbs: 8, protein: 8, salt: 0.4 };
 
   const [qty, setQty] = useState(1);
   const nf = useMemo(
@@ -33,29 +19,36 @@ export default function BoeufCarottesPuree() {
   return (
     <main className="page">
       <aside className="side">
-        <Link href="/plats-surgeles" legacyBehavior>
-          <a className="back">← Retour aux plats surgelés</a>
-        </Link>
-        <h1 className="brand">Greenhous<span className="fixE">e</span></h1>
+        <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
+        <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
       <section className="content">
+        {/* PHOTO */}
+        <div style={{ marginBottom: 16 }}>
+          <img
+            src="/boeuf-carottes.png" //  <<< mets l'image dans /public avec ce nom
+            alt="Bœuf carottes & purée"
+            style={{ width: "100%", maxHeight: 380, objectFit: "cover", borderRadius: 18, boxShadow: "0 10px 28px rgba(0,0,0,.12)" }}
+          />
+        </div>
+
         <header className="header">
-          <h2 className="title">Bœuf carottes &amp; purée de pommes de terre</h2>
+          <h2 className="title">Bœuf carottes &amp; purée</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
           </p>
           <p className="desc">
             Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
           <p className="blurb">
-            Le fondant du <strong>bœuf mijoté</strong>, la douceur des <strong>carottes</strong> et
-            l’onctuosité d’une <strong>purée maison</strong> : un classique réconfortant,
-            équilibré et généreux, pensé pour une pause savoureuse sans compromis.
+            Des morceaux de bœuf bourguignon fondants, mijotés avec des carottes,
+            relevés d’ail, d’oignon et d’herbes. Servis avec une purée légère de
+            pomme de terre, c’est un plat réconfortant, généreux et équilibré.
           </p>
         </header>
 
@@ -64,13 +57,12 @@ export default function BoeufCarottesPuree() {
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
-              <li><b>200 g</b> — Bœuf (morceau peu gras)</li>
+              <li><b>250 g</b> — Cuisse / bœuf bourguignon (morceaux maigres)</li>
+              <li><b>150 g</b> — Pomme de terre (purée maison)</li>
               <li><b>150 g</b> — Carottes</li>
-              <li><b>150 g</b> — Purée de pommes de terre</li>
               <li><b>5 g</b> — Huile d’olive</li>
               <li>Aromates : oignon, ail, poivre, herbes de Provence, sel</li>
             </ul>
-            <p className="muted">Allergènes : aucun majeur ajouté (peut contenir traces selon atelier).</p>
           </section>
 
           {/* Valeurs nutritionnelles */}
@@ -96,12 +88,7 @@ export default function BoeufCarottesPuree() {
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
               <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
-              <input
-                type="number"
-                min={1}
-                value={qty}
-                onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))}
-              />
+              <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
               <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
             <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
@@ -125,7 +112,8 @@ export default function BoeufCarottesPuree() {
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation fige rapidement la fraîcheur, limitant la dégradation des textures et des nutriments.
+            La surgélation préserve fraîcheur et qualités nutritionnelles : refroidir très vite évite la
+            dégradation des nutriments et garde la texture.
           </p>
         </section>
       </section>
@@ -139,9 +127,7 @@ const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
 .back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
-.brand{margin:0;display:inline-block;padding-right:6px;font-size:48px;line-height:0.9;
-  background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
-.fixE{display:inline-block}
+.brand{margin:0;font-size:48px;line-height:0.9;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
@@ -155,7 +141,6 @@ const styles = `
 .card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
 .ing{margin:8px 0 10px;padding-left:16px}
 .ing li{margin:6px 0}
-.muted{color:#667}
 .table{display:grid;gap:6px}
 .thead,.row{display:grid;grid-template-columns:1.2fr 1fr 1fr;align-items:center}
 .thead{font-weight:700;background:#f3f7ff;border-radius:10px;padding:8px}
