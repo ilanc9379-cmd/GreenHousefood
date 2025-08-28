@@ -3,11 +3,10 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 export default function Bolo() {
-  // ===== Données =====
   const portion = 600; // g
   const price = 9.9;
 
-  // nutriments par portion (600 g)
+  // Valeurs nutritionnelles par portion (600 g)
   const nPortion = {
     kcal: 700,
     fat: 15.8,
@@ -15,13 +14,14 @@ export default function Bolo() {
     protein: 54.3,
     salt: 3,
   };
-  // par 100 g
+
+  // Valeurs pour 100 g
   const n100 = {
-    kcal: 116.7,
-    fat: 2.6,
-    carbs: 14.8,
-    protein: 9,
-    salt: 0.5,
+    kcal: Math.round(nPortion.kcal / (portion / 100)),
+    fat: +(nPortion.fat / (portion / 100)).toFixed(1),
+    carbs: +(nPortion.carbs / (portion / 100)).toFixed(1),
+    protein: +(nPortion.protein / (portion / 100)).toFixed(1),
+    salt: +(nPortion.salt / (portion / 100)).toFixed(1),
   };
 
   const [qty, setQty] = useState(1);
@@ -32,39 +32,47 @@ export default function Bolo() {
 
   return (
     <main className="page">
+      {/* Sidebar */}
       <aside className="side">
-        <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
+        <Link href="/plats-surgeles" className="back">
+          ← Retour aux plats surgelés
+        </Link>
         <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
+      {/* Contenu */}
       <section className="content">
         <header className="header">
           <h2 className="title">Pâtes bolognaise maison</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
-            <span className="pill">Riche en protéines</span>
-          </p>
-          <p className="desc">
-            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
-            À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
 
-          {/* PHOTO */}
+          <p className="desc">
+            Portion : <strong>{portion} g</strong> · prêt en{" "}
+            <strong>20 min</strong> au <em>four</em> ·{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> ·{" "}
+            <strong>10 min</strong> à la <em>poêle</em>. À conserver au
+            congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
+          </p>
+
+          {/* IMAGE */}
           <div className="heroImgWrap">
             <img
-              src="/images/bolo.png"
-              alt="Pâtes bolognaise maison — rigatoni complets"
+              src="/bolo.png"
+              alt="Pâtes bolognaise maison (rigatoni complets, sauce tomate, bœuf, carottes)"
               className="heroImg"
             />
           </div>
 
           <p className="blurb">
-            Une bolognaise authentique sublimée par des <strong>pâtes complètes artisanales</strong> (œufs
-            plein air). La tendreté du bœuf, la douceur des carottes et la fraîcheur de la sauce tomate
-            maison s’unissent pour un plat complet, réconfortant et équilibré.
+            Une bolognaise authentique sublimée par des{" "}
+            <strong>pâtes complètes artisanales</strong> (œufs plein air). La
+            tendreté du bœuf, la douceur des carottes et la fraîcheur de la{" "}
+            <strong>sauce tomate maison</strong> s’unissent pour un plat
+            complet, réconfortant et équilibré.
           </p>
         </header>
 
@@ -73,10 +81,18 @@ export default function Bolo() {
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
-              <li><b>200 g</b> — Pâtes complètes artisanales (œufs plein air)</li>
-              <li><b>150 g</b> — Bœuf haché 5% MG</li>
-              <li><b>150 g</b> — Carottes</li>
-              <li><b>100 g</b> — Sauce tomate maison</li>
+              <li>
+                <b>200 g</b> — Pâtes complètes artisanales (œufs plein air)
+              </li>
+              <li>
+                <b>150 g</b> — Bœuf haché 5% MG
+              </li>
+              <li>
+                <b>150 g</b> — Carottes
+              </li>
+              <li>
+                <b>100 g</b> — Sauce tomate maison
+              </li>
               <li>Herbes/aromates (ail, poivre, basilic)</li>
             </ul>
             <p className="muted">Allergènes : gluten (blé), <b>œufs</b>.</p>
@@ -91,11 +107,31 @@ export default function Bolo() {
                 <div>Pour 100 g</div>
                 <div>Par portion</div>
               </div>
-              <div className="row"><div>Énergie</div><div>{n100.kcal} kcal</div><div>{nPortion.kcal} kcal</div></div>
-              <div className="row"><div>Matières grasses</div><div>{n100.fat} g</div><div>{nPortion.fat} g</div></div>
-              <div className="row"><div>Glucides</div><div>{n100.carbs} g</div><div>{nPortion.carbs} g</div></div>
-              <div className="row"><div>Protéines</div><div>{n100.protein} g</div><div>{nPortion.protein} g</div></div>
-              <div className="row"><div>Sel</div><div>{n100.salt} g</div><div>{nPortion.salt} g</div></div>
+              <div className="row">
+                <div>Énergie</div>
+                <div>{n100.kcal} kcal</div>
+                <div>{nPortion.kcal} kcal</div>
+              </div>
+              <div className="row">
+                <div>Matières grasses</div>
+                <div>{n100.fat} g</div>
+                <div>{nPortion.fat} g</div>
+              </div>
+              <div className="row">
+                <div>Glucides</div>
+                <div>{n100.carbs} g</div>
+                <div>{nPortion.carbs} g</div>
+              </div>
+              <div className="row">
+                <div>Protéines</div>
+                <div>{n100.protein} g</div>
+                <div>{nPortion.protein} g</div>
+              </div>
+              <div className="row">
+                <div>Sel</div>
+                <div>{n100.salt} g</div>
+                <div>{nPortion.salt} g</div>
+              </div>
             </div>
           </section>
 
@@ -104,11 +140,27 @@ export default function Bolo() {
             <div className="label">Prix unitaire</div>
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
-              <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
-              <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
-              <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
+              <button
+                aria-label="moins"
+                onClick={() => setQty((q) => Math.max(1, q - 1))}
+              >
+                −
+              </button>
+              <input
+                type="number"
+                min={1}
+                value={qty}
+                onChange={(e) =>
+                  setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
+                }
+              />
+              <button aria-label="plus" onClick={() => setQty((q) => q + 1)}>
+                +
+              </button>
             </div>
-            <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
+            <div className="label">
+              Total ({qty} plat{qty > 1 ? "s" : ""})
+            </div>
             <div className="total">{nf.format(price * qty)}</div>
             <button className="btn">Commander</button>
           </section>
@@ -118,19 +170,30 @@ export default function Bolo() {
         <section className="card foot">
           <h3>Cuisson</h3>
           <ul>
-            <li>Four <b>150 °C</b> : <b>20 min</b></li>
-            <li>Micro-ondes : <b>8 min</b></li>
-            <li>Poêle : <b>10 min</b></li>
+            <li>
+              Four <b>150 °C</b> : <b>20 min</b>
+            </li>
+            <li>
+              Micro-ondes : <b>8 min</b>
+            </li>
+            <li>
+              Poêle : <b>10 min</b>
+            </li>
           </ul>
-          <h3 style={{marginTop:12}}>Conservation</h3>
+          <h3 style={{ marginTop: 12 }}>Conservation</h3>
           <ul>
-            <li>Conserver au congélateur : <b>max 4 mois</b></li>
-            <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
+            <li>
+              Conserver au congélateur : <b>max 4 mois</b>
+            </li>
+            <li>
+              Après décongélation : <b>48h</b> au réfrigérateur
+            </li>
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation préserve fraîcheur et qualités nutritionnelles : refroidir vite évite la
-            dégradation des nutriments et garde la texture.
+            La surgélation préserve fraîcheur et qualités nutritionnelles : le
+            refroidissement rapide évite la dégradation des nutriments et garde
+            la texture.
           </p>
         </section>
       </section>
