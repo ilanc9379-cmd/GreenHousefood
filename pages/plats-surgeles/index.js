@@ -18,11 +18,12 @@ export default function PlatsSurgelesIndex() {
       macros: { kcal: 689, P: 62, G: 86, L: 10 },
     },
     {
-      title: "Bœuf carottes & purée de pommes de terre",
-      slug: "boeuf-carottes-puree", // ⟵ IMPORTANT
+      title: "Bœuf carottes & purée de pomme de terre",
+      slug: "boeuf-carottes",
       price: 9.9,
       badges: ["Surgelé", "Diète"],
-      macros: { kcal: 608, P: 44, G: 39, L: 25 },
+      macros: { kcal: 610, P: 48, G: 48, L: 18 },
+      image: "/boeuf-carottes.png", //  <<< mets l'image dans /public avec ce nom
     },
     {
       title: "Cuisse de poulet rôtie, pommes de terre & haricots verts",
@@ -36,7 +37,7 @@ export default function PlatsSurgelesIndex() {
       slug: "moussaka",
       price: 9.9,
       badges: ["Surgelé", "Diète"],
-      macros: { kcal: 750, P: 38, G: 66, L: 35 }, // maj estimées
+      macros: { kcal: 900, P: 55, G: 95, L: 30 },
     },
     {
       title: "Riz complet aux petits légumes & cabillaud",
@@ -53,18 +54,18 @@ export default function PlatsSurgelesIndex() {
       macros: { kcal: 705, P: 49, G: 77, L: 22 },
     },
     {
-      title: "Curry de pois chiches (végé)",
+      title: "Curry de pois chiches",
       slug: "curry-pois-chiches",
       price: 9.9,
       badges: ["Surgelé", "Diète", "Végétarien"],
       macros: { kcal: 520, P: 20, G: 60, L: 21 },
     },
     {
-      title: "Falafel maison & purée de patate douce",
+      title: "Falafels & purée de patate douce, sauce tahini",
       slug: "falafel-patate-douce",
       price: 9.9,
       badges: ["Surgelé", "Diète", "Végétarien"],
-      macros: { kcal: 560, P: 21, G: 64, L: 22 }, // exemple
+      macros: { kcal: 640, P: 21, G: 78, L: 24 },
     },
   ];
 
@@ -72,7 +73,7 @@ export default function PlatsSurgelesIndex() {
     <div style={styles.page}>
       <header style={styles.header}>
         <div style={styles.headerInner}>
-          <Link href="/" legacyBehavior>
+          <Link href="/">
             <a aria-label="Retour à l'accueil" style={styles.back}>← Retour à l’accueil</a>
           </Link>
           <h1 style={styles.brand}>GreenHouse</h1>
@@ -86,6 +87,20 @@ export default function PlatsSurgelesIndex() {
         <div style={styles.cards}>
           {plats.map((p) => (
             <article key={p.slug} style={styles.card}>
+              {p.image && (
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  style={{
+                    width: "100%",
+                    height: 160,
+                    objectFit: "cover",
+                    borderRadius: 12,
+                    marginBottom: 10,
+                  }}
+                />
+              )}
+
               <h2 style={styles.title}>{p.title}</h2>
 
               <div style={styles.badges}>
@@ -96,9 +111,9 @@ export default function PlatsSurgelesIndex() {
 
               <div style={styles.macros}>
                 <span style={chip}>⚡ {p.macros.kcal} kcal</span>
-                <span style={chip}>🥩 P&nbsp;{p.macros.P} g</span>
-                <span style={chip}>🍝 G&nbsp;{p.macros.G} g</span>
-                <span style={chip}>🫒 L&nbsp;{p.macros.L} g</span>
+                <span style={chip}>🥩 P {p.macros.P} g</span>
+                <span style={chip}>🍝 G {p.macros.G} g</span>
+                <span style={chip}>🫒 L {p.macros.L} g</span>
               </div>
 
               <div style={styles.footerRow}>
@@ -106,7 +121,7 @@ export default function PlatsSurgelesIndex() {
                   <small style={{ color: "#64748b", fontWeight: 700 }}>Prix</small>
                   <div style={styles.priceValue}>9,90 €</div>
                 </div>
-                <Link href={`/plats-surgeles/${p.slug}`} legacyBehavior>
+                <Link href={`/plats-surgeles/${p.slug}`}>
                   <a style={styles.link}>Voir le détail →</a>
                 </Link>
               </div>
@@ -118,7 +133,7 @@ export default function PlatsSurgelesIndex() {
   );
 }
 
-/* --- styles --- */
+/* --------- styles --------- */
 const styles = {
   page: {
     fontFamily:
@@ -199,9 +214,9 @@ const chip = {
 
 const badge = (label) => {
   const map = {
-    Surgelé: { bg: "#e6f7f1", fg: "#0c7a5f" },
-    Diète: { bg: "#fff4e6", fg: "#b35a00" },
-    Végétarien: { bg: "#eaf0ff", fg: "#3650ff" },
+    "Surgelé": { bg: "#e6f7f1", fg: "#0c7a5f" },
+    "Diète": { bg: "#fff4e6", fg: "#b35a00" },
+    "Végétarien": { bg: "#eaf0ff", fg: "#3650ff" },
   };
   const { bg, fg } = map[label] || { bg: "#f1f5f9", fg: "#0f172a" };
   return {
