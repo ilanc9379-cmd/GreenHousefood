@@ -1,23 +1,27 @@
+// pages/plats-surgeles/poulet-pommes-haricots.js
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
 export default function PouletPommesHaricots() {
-  const portion = 555; // g
+  const portion = 500; // g arrondi
   const price = 9.9;
 
+  // Valeurs nutritionnelles par portion
   const nPortion = {
-    kcal: 765,
-    fat: 39,
-    carbs: 38,
-    protein: 65,
-    salt: 1.5,
+    kcal: 560,
+    fat: 20,
+    carbs: 35,
+    protein: 45,
+    salt: 2,
   };
+
+  // Valeurs pour 100 g
   const n100 = {
-    kcal: 138,
-    fat: 6.9,
-    carbs: 6.8,
-    protein: 11.7,
-    salt: 0.27,
+    kcal: Math.round(nPortion.kcal / (portion / 100)),
+    fat: +(nPortion.fat / (portion / 100)).toFixed(1),
+    carbs: +(nPortion.carbs / (portion / 100)).toFixed(1),
+    protein: +(nPortion.protein / (portion / 100)).toFixed(1),
+    salt: +(nPortion.salt / (portion / 100)).toFixed(1),
   };
 
   const [qty, setQty] = useState(1);
@@ -28,6 +32,7 @@ export default function PouletPommesHaricots() {
 
   return (
     <main className="page">
+      {/* Sidebar */}
       <aside className="side">
         <Link href="/plats-surgeles" className="back">
           ← Retour aux plats surgelés
@@ -36,23 +41,38 @@ export default function PouletPommesHaricots() {
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
+      {/* Contenu */}
       <section className="content">
         <header className="header">
-          <h2 className="title">Cuisse de poulet rôtie, pommes de terre & haricots verts</h2>
+          <h2 className="title">
+            Cuisse de poulet rôtie, pommes de terre & haricots verts
+          </h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
-            <span className="pill">Riche en protéines</span>
           </p>
           <p className="desc">
-            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
-            À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
+            Portion : <strong>{portion} g</strong> · prêt en{" "}
+            <strong>20 min</strong> au <em>four</em> ·{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> ·{" "}
+            <strong>10 min</strong> à la <em>poêle</em>. À conserver
+            au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
+
+          {/* IMAGE */}
+          <div className="heroImgWrap">
+            <img
+              src="/poulet-pommes-haricots.png"
+              alt="Cuisse de poulet rôtie avec pommes de terre et haricots verts"
+              className="heroImg"
+            />
+          </div>
+
           <p className="blurb">
-            Une cuisse de poulet rôtie à la peau croustillante, accompagnée de pommes de terre
-            fondantes et de haricots verts croquants. Un trio simple et savoureux, relevé d’herbes de
-            Provence et d’un filet d’huile d’olive pour un repas équilibré et authentique.
+            Une cuisse de <strong>poulet rôtie</strong> savoureuse, accompagnée
+            de <strong>pommes de terre fondantes</strong> et de{" "}
+            <strong>haricots verts</strong> croquants. Un repas simple,
+            équilibré et réconfortant, idéal pour un déjeuner ou un dîner sain.
           </p>
         </header>
 
@@ -65,7 +85,7 @@ export default function PouletPommesHaricots() {
               <li><b>150 g</b> — Pommes de terre</li>
               <li><b>150 g</b> — Haricots verts</li>
               <li><b>5 g</b> — Huile d’olive</li>
-              <li>Aromates : oignon, ail, poivre, herbes de Provence, sel</li>
+              <li>Oignon, ail, herbes de Provence, sel, poivre</li>
             </ul>
             <p className="muted">Allergènes : aucun.</p>
           </section>
@@ -93,10 +113,15 @@ export default function PouletPommesHaricots() {
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
               <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
-              <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
+              <input
+                type="number"
+                min={1}
+                value={qty}
+                onChange={(e) => setQty(Math.max(1, parseInt(e.target.value || "1", 10)))}
+              />
               <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
-            <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
+            <div className="label">Total ({qty} plat{qty > 1 ? "s" : ""})</div>
             <div className="total">{nf.format(price * qty)}</div>
             <button className="btn">Commander</button>
           </section>
@@ -110,15 +135,16 @@ export default function PouletPommesHaricots() {
             <li>Micro-ondes : <b>8 min</b></li>
             <li>Poêle : <b>10 min</b></li>
           </ul>
-          <h3 style={{marginTop:12}}>Conservation</h3>
+          <h3 style={{ marginTop: 12 }}>Conservation</h3>
           <ul>
             <li>Conserver au congélateur : <b>max 4 mois</b></li>
             <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation capture la qualité des aliments : les nutriments et les saveurs restent
-            intacts pour offrir un repas sain et gourmand à tout moment.
+            La surgélation préserve fraîcheur et qualités nutritionnelles : le
+            refroidissement rapide évite la dégradation des nutriments et garde
+            la texture.
           </p>
         </section>
       </section>
@@ -131,8 +157,8 @@ export default function PouletPommesHaricots() {
 const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
-.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
-.brand{margin:0;font-size:48px;line-height:1.1;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none;font-weight:700}
+.brand{margin:0;font-size:48px;line-height:1.04;padding-bottom:4px;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.2px}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
@@ -140,8 +166,10 @@ const styles = `
 .meta{display:flex;gap:8px;margin:6px 0 8px}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
-.desc{margin:0 0 8px;color:#345}
-.blurb{margin:0 0 8px;color:#123;font-weight:500}
+.desc{margin:8px 0;color:#345}
+.heroImgWrap{margin:10px 0 8px}
+.heroImg{width:100%;max-height:260px;object-fit:cover;border-radius:16px;box-shadow:0 8px 24px rgba(15,23,42,0.12)}
+.blurb{margin:6px 0 8px;color:#123;font-weight:500}
 .grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
 .card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
 .ing{margin:8px 0 10px;padding-left:16px}
@@ -154,7 +182,7 @@ const styles = `
 .price .label{color:#678;margin-top:2px}
 .big{font-size:32px;font-weight:800}
 .qty{display:flex;align-items:center;gap:8px;margin:10px 0}
-.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd}
+.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd;font-size:18px}
 .qty input{width:64px;height:36px;text-align:center;border-radius:10px;border:1px solid #ccd}
 .total{font-size:22px;font-weight:800;margin-bottom:8px}
 .btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
