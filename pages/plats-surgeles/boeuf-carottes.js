@@ -1,54 +1,73 @@
-// pages/plats-surgeles/boeuf-carottes.js
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
 export default function BoeufCarottes() {
-  const portion = 600; // g
+  // ===== Données =====
+  const portion = 500; // g arrondi
   const price = 9.9;
 
-  // macros par portion (adapter si besoin)
-  const nPortion = { kcal: 610, fat: 18, carbs: 48, protein: 48, salt: 2.2 };
-  const n100 = { kcal: 102, fat: 3, carbs: 8, protein: 8, salt: 0.4 };
+  // nutriments par portion (500 g)
+  const nPortion = {
+    kcal: 610,
+    fat: 18,
+    carbs: 48,
+    protein: 48,
+    salt: 2.5,
+  };
+  // par 100 g
+  const n100 = {
+    kcal: (nPortion.kcal / (portion / 100)).toFixed(1),
+    fat: (nPortion.fat / (portion / 100)).toFixed(1),
+    carbs: (nPortion.carbs / (portion / 100)).toFixed(1),
+    protein: (nPortion.protein / (portion / 100)).toFixed(1),
+    salt: (nPortion.salt / (portion / 100)).toFixed(1),
+  };
 
   const [qty, setQty] = useState(1);
   const nf = useMemo(
-    () => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }),
+    () =>
+      new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }),
     []
   );
 
   return (
     <main className="page">
+      {/* Sidebar */}
       <aside className="side">
-        <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
+        <Link href="/plats-surgeles" className="back">
+          ← Retour aux plats surgelés
+        </Link>
         <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
+      {/* Content */}
       <section className="content">
-        {/* PHOTO */}
-        <div style={{ marginBottom: 16 }}>
-          <img
-            src="/boeuf-carottes.png" //  <<< mets l'image dans /public avec ce nom
-            alt="Bœuf carottes & purée"
-            style={{ width: "100%", maxHeight: 380, objectFit: "cover", borderRadius: 18, boxShadow: "0 10px 28px rgba(0,0,0,.12)" }}
-          />
-        </div>
-
         <header className="header">
-          <h2 className="title">Bœuf carottes &amp; purée</h2>
+          <h2 className="title">Bœuf carottes & purée de pomme de terre</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
-            <span className="pill">Diète</span>
+            <span className="pill">Riche en protéines</span>
           </p>
+
+          {/* Image */}
+          <div className="imgWrap">
+            <img src="/boeuf.png" alt="Bœuf carottes & purée" />
+          </div>
+
           <p className="desc">
-            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
-            À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
+            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au{" "}
+            <em>four</em> · <strong>8 min</strong> au <em>micro-ondes</em> ·{" "}
+            <strong>10 min</strong> à la <em>poêle</em>. <br />
+            À conserver au congélateur (max 4 mois). Après décongélation : 48h au
+            réfrigérateur.
           </p>
+
           <p className="blurb">
-            Des morceaux de bœuf bourguignon fondants, mijotés avec des carottes,
-            relevés d’ail, d’oignon et d’herbes. Servis avec une purée légère de
-            pomme de terre, c’est un plat réconfortant, généreux et équilibré.
+            Un grand classique de la cuisine française revisité en version équilibrée.
+            Des morceaux de bœuf mijotés avec des carottes fondantes, accompagnés d’une
+            purée de pommes de terre maison : un plat réconfortant et riche en saveurs,
+            idéal pour un repas sain et gourmand.
           </p>
         </header>
 
@@ -57,12 +76,21 @@ export default function BoeufCarottes() {
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
-              <li><b>250 g</b> — Cuisse / bœuf bourguignon (morceaux maigres)</li>
-              <li><b>150 g</b> — Pomme de terre (purée maison)</li>
-              <li><b>150 g</b> — Carottes</li>
-              <li><b>5 g</b> — Huile d’olive</li>
-              <li>Aromates : oignon, ail, poivre, herbes de Provence, sel</li>
+              <li>
+                <b>200 g</b> — Bœuf morceaux maigres
+              </li>
+              <li>
+                <b>150 g</b> — Carottes
+              </li>
+              <li>
+                <b>150 g</b> — Purée de pommes de terre
+              </li>
+              <li>Ail, oignon, herbes de Provence, sel, poivre</li>
+              <li>
+                <b>5 g</b> — Huile d’olive
+              </li>
             </ul>
+            <p className="muted">Allergènes : aucun.</p>
           </section>
 
           {/* Valeurs nutritionnelles */}
@@ -74,11 +102,31 @@ export default function BoeufCarottes() {
                 <div>Pour 100 g</div>
                 <div>Par portion</div>
               </div>
-              <div className="row"><div>Énergie</div><div>{n100.kcal} kcal</div><div>{nPortion.kcal} kcal</div></div>
-              <div className="row"><div>Matières grasses</div><div>{n100.fat} g</div><div>{nPortion.fat} g</div></div>
-              <div className="row"><div>Glucides</div><div>{n100.carbs} g</div><div>{nPortion.carbs} g</div></div>
-              <div className="row"><div>Protéines</div><div>{n100.protein} g</div><div>{nPortion.protein} g</div></div>
-              <div className="row"><div>Sel</div><div>{n100.salt} g</div><div>{nPortion.salt} g</div></div>
+              <div className="row">
+                <div>Énergie</div>
+                <div>{n100.kcal} kcal</div>
+                <div>{nPortion.kcal} kcal</div>
+              </div>
+              <div className="row">
+                <div>Matières grasses</div>
+                <div>{n100.fat} g</div>
+                <div>{nPortion.fat} g</div>
+              </div>
+              <div className="row">
+                <div>Glucides</div>
+                <div>{n100.carbs} g</div>
+                <div>{nPortion.carbs} g</div>
+              </div>
+              <div className="row">
+                <div>Protéines</div>
+                <div>{n100.protein} g</div>
+                <div>{nPortion.protein} g</div>
+              </div>
+              <div className="row">
+                <div>Sel</div>
+                <div>{n100.salt} g</div>
+                <div>{nPortion.salt} g</div>
+              </div>
             </div>
           </section>
 
@@ -87,11 +135,27 @@ export default function BoeufCarottes() {
             <div className="label">Prix unitaire</div>
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
-              <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
-              <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
-              <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
+              <button
+                aria-label="moins"
+                onClick={() => setQty((q) => Math.max(1, q - 1))}
+              >
+                −
+              </button>
+              <input
+                type="number"
+                min={1}
+                value={qty}
+                onChange={(e) =>
+                  setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
+                }
+              />
+              <button aria-label="plus" onClick={() => setQty((q) => q + 1)}>
+                +
+              </button>
             </div>
-            <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
+            <div className="label">
+              Total ({qty} plat{qty > 1 ? "s" : ""})
+            </div>
             <div className="total">{nf.format(price * qty)}</div>
             <button className="btn">Commander</button>
           </section>
@@ -101,19 +165,29 @@ export default function BoeufCarottes() {
         <section className="card foot">
           <h3>Cuisson</h3>
           <ul>
-            <li>Four <b>150 °C</b> : <b>20 min</b></li>
-            <li>Micro-ondes : <b>8 min</b></li>
-            <li>Poêle : <b>10 min</b></li>
+            <li>
+              Four <b>150 °C</b> : <b>20 min</b>
+            </li>
+            <li>
+              Micro-ondes : <b>8 min</b>
+            </li>
+            <li>
+              Poêle : <b>10 min</b>
+            </li>
           </ul>
-          <h3 style={{marginTop:12}}>Conservation</h3>
+          <h3 style={{ marginTop: 12 }}>Conservation</h3>
           <ul>
-            <li>Conserver au congélateur : <b>max 4 mois</b></li>
-            <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
+            <li>
+              Conserver au congélateur : <b>max 4 mois</b>
+            </li>
+            <li>
+              Après décongélation : <b>48h</b> au réfrigérateur
+            </li>
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation préserve fraîcheur et qualités nutritionnelles : refroidir très vite évite la
-            dégradation des nutriments et garde la texture.
+            La surgélation préserve fraîcheur et qualités nutritionnelles : refroidir très
+            vite évite la dégradation des nutriments et garde la texture.
           </p>
         </section>
       </section>
@@ -126,7 +200,7 @@ export default function BoeufCarottes() {
 const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
-.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
+.back{display:inline-block;margin-bottom:12px;color:#0b6; text-decoration:none}
 .brand{margin:0;font-size:48px;line-height:0.9;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
@@ -135,12 +209,15 @@ const styles = `
 .meta{display:flex;gap:8px;margin:6px 0 8px}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
+.imgWrap{margin:12px 0;border-radius:16px;overflow:hidden}
+.imgWrap img{width:100%;height:auto;display:block}
 .desc{margin:0 0 8px;color:#345}
 .blurb{margin:0 0 8px;color:#123;font-weight:500}
 .grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
 .card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
 .ing{margin:8px 0 10px;padding-left:16px}
 .ing li{margin:6px 0}
+.muted{color:#667}
 .table{display:grid;gap:6px}
 .thead,.row{display:grid;grid-template-columns:1.2fr 1fr 1fr;align-items:center}
 .thead{font-weight:700;background:#f3f7ff;border-radius:10px;padding:8px}
