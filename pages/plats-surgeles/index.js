@@ -10,7 +10,7 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 700, P: 54.3, G: 89, L: 15.8 },
-      image: "/images/plats/bolo.png",
+      img: "/pates-bolo.png", // placé dans /public
     },
     {
       title: "Pâtes complètes — émincé de poulet & sauce poivron (maison)",
@@ -18,7 +18,7 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 689, P: 62, G: 86, L: 10 },
-      image: "/images/plats/poulet-poivron.png",
+      img: "/poulet-poivron.png", // placé dans /public
     },
     {
       title: "Bœuf carottes & purée de pomme de terre",
@@ -26,7 +26,7 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 610, P: 48, G: 48, L: 18 },
-      image: "/images/plats/boeuf-carrettes-puree.png", // mets ton vrai nom de fichier
+      img: "/boeuf-carottes.png", // placé dans /public
     },
     {
       title: "Cuisse de poulet rôtie, pommes de terre & haricots verts",
@@ -34,15 +34,15 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 560, P: 45, G: 35, L: 20 },
-      image: "/images/plats/poulet-pommes-haricots.png",
+      // img: "/poulet-pommes-haricots.png"
     },
     {
-      title: "Moussaka revisitée",
+      title: "Moussaka revisitée (aubergine, riz complet, bœuf 5%, tomate)",
       slug: "moussaka",
       price: 9.9,
       badges: ["Surgelé", "Diète"],
-      macros: { kcal: 900, P: 55, G: 95, L: 30 }, // estim. (tu peux ajuster)
-      image: "/images/plats/moussaka.png",
+      macros: { kcal: 900, P: 55, G: 95, L: 30 },
+      // img: "/moussaka.png"
     },
     {
       title: "Riz complet aux petits légumes & cabillaud",
@@ -50,31 +50,31 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 585, P: 39, G: 78, L: 13 },
-      image: "/images/plats/riz-cabillaud.png",
+      // img: "/riz-cabillaud.png"
     },
     {
       title: "Pâtes aromettes — poulet crémeux & brocolis",
-      slug: "pates-aromettes-poulet-cremeux-brocolis",
+      slug: "pates-poulet-brocolis",
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 705, P: 49, G: 77, L: 22 },
-      image: "/images/plats/pates-aromettes-poulet-cremeux-brocolis.png",
+      // img: "/pates-poulet-brocolis.png"
     },
     {
-      title: "Curry de pois chiches (végé)",
+      title: "Curry de pois chiches (Végé)",
       slug: "curry-pois-chiches",
       price: 9.9,
       badges: ["Surgelé", "Diète", "Végétarien"],
       macros: { kcal: 520, P: 20, G: 60, L: 21 },
-      image: "/images/plats/curry-pois-chiches.png",
+      // img: "/curry-pois-chiches.png"
     },
     {
-      title: "Falafels & purée de patate douce",
+      title: "Falafels & purée de patate douce, haricots verts & sauce tahini",
       slug: "falafel-patate-douce",
       price: 9.9,
       badges: ["Surgelé", "Diète", "Végétarien"],
-      macros: { kcal: 640, P: 24, G: 84, L: 20 }, // estim. (ajuste si besoin)
-      image: "/images/plats/falafel-patate-douce.png",
+      macros: { kcal: 640, P: 22, G: 78, L: 24 },
+      // img: "/falafel-patate-douce.png"
     },
   ];
 
@@ -83,13 +83,11 @@ export default function PlatsSurgelesIndex() {
       <header style={styles.header}>
         <div style={styles.headerInner}>
           <Link href="/">
-            <a aria-label="Retour à l'accueil" style={styles.back}>
-              ← Accueil
-            </a>
+            <a aria-label="Retour à l'accueil" style={styles.back}>← Retour à l’accueil</a>
           </Link>
-          <h1 style={styles.brand}>Green<span style={styles.brandAccent}>House</span></h1>
+          <h1 style={styles.brand}>GreenHouse</h1>
           <p style={styles.tagline}>
-            Plats surgelés — cuisinés artisanalement pour allier goût, équilibre et praticité.
+            Plats surgelés — Cuisinés artisanalement pour allier goût, équilibre et praticité.
           </p>
         </div>
       </header>
@@ -98,23 +96,26 @@ export default function PlatsSurgelesIndex() {
         <div style={styles.cards}>
           {plats.map((p) => (
             <article key={p.slug} style={styles.card}>
-              <div style={styles.imageWrap}>
-                <Image
-                  src={p.image}
-                  alt={p.title}
-                  width={560}
-                  height={360}
-                  style={{ borderRadius: 14, objectFit: "cover" }}
-                />
-              </div>
+              {/* Image (si fournie) */}
+              {p.img ? (
+                <div style={styles.thumbWrap}>
+                  <Image
+                    src={p.img}
+                    alt={p.title}
+                    width={900}
+                    height={540}
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+              ) : (
+                <div style={styles.thumbPlaceholder} aria-hidden />
+              )}
 
               <h2 style={styles.title}>{p.title}</h2>
 
               <div style={styles.badges}>
                 {p.badges.map((b) => (
-                  <span key={b} style={badge(b)}>
-                    {b}
-                  </span>
+                  <span key={b} style={badge(b)}>{b}</span>
                 ))}
               </div>
 
@@ -126,12 +127,12 @@ export default function PlatsSurgelesIndex() {
               </div>
 
               <div style={styles.footerRow}>
-                <div style={styles.priceBox}>
-                  <div style={styles.priceLabel}>Prix</div>
+                <div style={styles.price}>
+                  <small style={{ color: "#64748b", fontWeight: 700 }}>Prix</small>
                   <div style={styles.priceValue}>9,90 €</div>
                 </div>
                 <Link href={`/plats-surgeles/${p.slug}`}>
-                  <a style={styles.cta}>Voir le détail →</a>
+                  <a style={styles.link}>Voir le détail →</a>
                 </Link>
               </div>
             </article>
@@ -148,31 +149,18 @@ const styles = {
     fontFamily:
       "Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif",
     color: "#0f172a",
-    background:
-      "radial-gradient(1000px 700px at -10% -10%, #dff8ee 0%, transparent 60%), radial-gradient(900px 600px at 110% -20%, #e8f7ff 0%, transparent 65%), linear-gradient(180deg, #f5fbff 0%, #f7fff9 60%, #fdfefe 100%)",
+    background: "#f7fafc",
     minHeight: "100vh",
   },
   header: {
-    background:
-      "linear-gradient(135deg, rgba(16,185,129,1) 0%, rgba(59,130,246,1) 100%)",
+    background: "linear-gradient(135deg,#2dd4bf,#60a5fa)",
     color: "white",
     padding: "28px 16px",
     boxShadow: "0 10px 30px rgba(37,99,235,.20)",
   },
   headerInner: { maxWidth: 1100, margin: "0 auto" },
-  brand: {
-    margin: 0,
-    fontSize: 48,
-    lineHeight: 0.95,
-    fontWeight: 900,
-    background: "linear-gradient(90deg,#0aa64c,#2d7ae6)",
-    WebkitBackgroundClip: "text",
-    backgroundClip: "text",
-    color: "transparent",
-    letterSpacing: 0.5,
-  },
-  brandAccent: { WebkitTextStroke: "0px transparent" }, // évite la coupure du "E"
-  tagline: { margin: "8px 0 0", opacity: 0.96, fontWeight: 600 },
+  brand: { margin: 0, fontSize: 42, letterSpacing: 0.2, fontWeight: 800 },
+  tagline: { margin: "8px 0 0", opacity: 0.95, fontWeight: 600 },
   back: {
     display: "inline-block",
     marginBottom: 10,
@@ -186,44 +174,46 @@ const styles = {
   container: { maxWidth: 1100, margin: "24px auto 64px", padding: "0 16px" },
   cards: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    gap: 18,
+    gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
+    gap: 16,
   },
   card: {
     background: "white",
-    borderRadius: 18,
-    padding: 14,
+    borderRadius: 16,
+    padding: 16,
     boxShadow: "0 8px 24px rgba(15,23,42,0.08)",
     display: "flex",
     flexDirection: "column",
     gap: 10,
-    transition: "transform .12s ease, box-shadow .12s ease",
   },
-  imageWrap: { borderRadius: 14, overflow: "hidden" },
-  title: { margin: "4px 0 2px", fontSize: 18, fontWeight: 900, lineHeight: 1.25 },
+  thumbWrap: {
+    overflow: "hidden",
+    borderRadius: 12,
+    aspectRatio: "16/9",
+    background: "#eef2ff",
+  },
+  thumbPlaceholder: {
+    borderRadius: 12,
+    aspectRatio: "16/9",
+    background:
+      "linear-gradient(135deg, rgba(226,232,240,.8), rgba(203,213,225,.8))",
+  },
+  title: { margin: "4px 0 0", fontSize: 18, fontWeight: 800, lineHeight: 1.25 },
   badges: { display: "flex", gap: 8, flexWrap: "wrap" },
-  macros: {
-    display: "flex",
-    gap: 8,
-    flexWrap: "wrap",
-    marginTop: 2,
-  },
+  macros: { display: "flex", gap: 8, flexWrap: "wrap", marginTop: 2 },
   footerRow: {
     marginTop: "auto",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: 10,
   },
-  priceBox: {
+  price: {
     background: "#f1f5f9",
     borderRadius: 12,
     padding: "8px 12px",
-    minWidth: 120,
   },
-  priceLabel: { color: "#64748b", fontWeight: 700, fontSize: 12, textTransform: "uppercase", letterSpacing: ".5px" },
   priceValue: { fontSize: 22, fontWeight: 900 },
-  cta: {
+  link: {
     background:
       "linear-gradient(135deg, rgba(16,185,129,1) 0%, rgba(59,130,246,1) 100%)",
     color: "white",
