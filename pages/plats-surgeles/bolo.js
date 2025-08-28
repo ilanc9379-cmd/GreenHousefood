@@ -1,6 +1,5 @@
 // pages/plats-surgeles/bolo.js
 import Link from "next/link";
-import Image from "next/image";
 import { useMemo, useState } from "react";
 
 export default function Bolo() {
@@ -37,40 +36,26 @@ export default function Bolo() {
         <Link href="/plats-surgeles" className="back">
           ← Retour aux plats surgelés
         </Link>
-        <h1 className="brand">
-          Greenhouse<span className="brandFix"> </span>
-        </h1>
+        <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
       <section className="content">
-        {/* Image du plat */}
-        <div className="heroImage">
-          <Image
-            src="/images/plats/bolo.png"
-            alt="Pâtes bolognaise maison"
-            width={1280}
-            height={760}
-            priority
-          />
-        </div>
-
         <header className="header">
           <h2 className="title">Pâtes bolognaise maison</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Riche en protéines</span>
-            <span className="pill pill-diet">Diète</span>
           </p>
           <p className="desc">
             Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
-            À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>. À conserver
+            au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
           <p className="blurb">
-            Une bolognaise authentique sublimée par des <strong>pâtes complètes artisanales</strong> (œufs
-            plein air). La tendreté du bœuf, la douceur des carottes et la fraîcheur de la sauce tomate
-            maison s’unissent pour un plat complet, réconfortant et équilibré.
+            Une bolognaise authentique sublimée par des <strong>pâtes complètes artisanales</strong> (œufs plein air).
+            La tendreté du bœuf, la douceur des carottes et la fraîcheur de la sauce tomate maison s’unissent pour un
+            plat complet, réconfortant et équilibré.
           </p>
         </header>
 
@@ -186,8 +171,8 @@ export default function Bolo() {
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation préserve fraîcheur et qualités nutritionnelles : le refroidissement rapide limite
-            la dégradation des nutriments et aide à garder la texture.
+            La surgélation préserve fraîcheur et qualités nutritionnelles : refroidir très vite évite la dégradation des
+            nutriments et garde la texture.
           </p>
         </section>
       </section>
@@ -197,65 +182,41 @@ export default function Bolo() {
   );
 }
 
-/* ================== STYLES ================== */
 const styles = `
 .page{
   display:grid;
-  grid-template-columns:280px 1fr;
+  grid-template-columns:260px 1fr;
   min-height:100vh;
   background:linear-gradient(180deg,#eaf7ff,#f7fffb);
 }
 .side{
   padding:24px 18px;
   background:linear-gradient(180deg,#dff1ff,#e6fff7);
-  position:sticky;
-  top:0;
-  align-self:start;
-  height:100%;
 }
 .back{
   display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none;font-weight:700
 }
 .brand{
   margin:0;
-  display:inline-block;
-  font-size:52px;
-  line-height:1.05;         /* évite la coupure du “E” */
-  white-space:nowrap;        /* garde le mot entier */
+  font-size:48px;
+  line-height:1.04;          /* <-- évite le E coupé */
+  padding-bottom:4px;        /* <-- petite marge anti-clip */
   background:linear-gradient(90deg,#0aa64c,#2d7ae6);
   -webkit-background-clip:text;background-clip:text;color:transparent;
   font-weight:900;
-  padding-right:2px;         /* marge pour ne pas rogner la dernière lettre */
+  letter-spacing:.2px;
 }
-.brandFix{ display:inline-block; width:2px; } /* garde un petit espace de sécu */
-
-.tag{color:#246;margin-top:4px}
-.content{padding:24px;max-width:1100px;margin:0 auto}
-.header{margin:14px 0 10px}
+.tag{color:#246}
+.content{padding:24px;max-width:1100px}
+.header{margin-bottom:10px}
 .title{margin:0 0 6px;font-size:32px}
-.meta{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 8px}
+.meta{display:flex;gap:8px;margin:6px 0 8px}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
-.pill-diet{background:#fff4e6;border-color:#ffd7a3}
 .desc{margin:0 0 8px;color:#345}
 .blurb{margin:0 0 8px;color:#123;font-weight:500}
-
-.heroImage{
-  overflow:hidden;border-radius:18px;
-  box-shadow:0 12px 30px rgba(0,0,0,.08);
-}
-.heroImage :global(img){ width:100%; height:auto; object-fit:cover; display:block; }
-
-.grid{
-  display:grid;
-  grid-template-columns:2fr 2fr 1.2fr;
-  gap:16px;
-  margin-top:16px;
-}
-.card{
-  background:#fff;border-radius:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px
-}
+.grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
+.card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
 .ing{margin:8px 0 10px;padding-left:16px}
 .ing li{margin:6px 0}
 .muted{color:#667}
@@ -263,20 +224,17 @@ const styles = `
 .thead,.row{display:grid;grid-template-columns:1.2fr 1fr 1fr;align-items:center}
 .thead{font-weight:700;background:#f3f7ff;border-radius:10px;padding:8px}
 .row{padding:6px 8px;border-bottom:1px solid #f0f2f7}
-
 .price .label{color:#678;margin-top:2px}
 .big{font-size:32px;font-weight:800}
 .qty{display:flex;align-items:center;gap:8px;margin:10px 0}
-.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd;background:#fff;cursor:pointer}
+.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd;font-size:18px}
 .qty input{width:64px;height:36px;text-align:center;border-radius:10px;border:1px solid #ccd}
 .total{font-size:22px;font-weight:800;margin-bottom:8px}
-.btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6);cursor:pointer}
-
+.btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
 .foot .note{margin-top:10px;color:#456}
-
-@media(max-width:1050px){
+@media(max-width:950px){
   .page{grid-template-columns:1fr}
-  .side{position:relative}
+  .side{position:sticky;top:0}
   .grid{grid-template-columns:1fr}
 }
 `;
