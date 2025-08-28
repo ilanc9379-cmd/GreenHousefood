@@ -13,15 +13,15 @@ export default function PouletPoivron() {
     fat: 10,
     carbs: 86,
     protein: 62,
-    salt: 2.0,
+    salt: 2.5,
   };
   // par 100 g
   const n100 = {
-    kcal: (nPortion.kcal / (portion / 100)).toFixed(1),
-    fat: (nPortion.fat / (portion / 100)).toFixed(1),
-    carbs: (nPortion.carbs / (portion / 100)).toFixed(1),
-    protein: (nPortion.protein / (portion / 100)).toFixed(1),
-    salt: (nPortion.salt / (portion / 100)).toFixed(1),
+    kcal: Math.round(nPortion.kcal / (portion / 100)),
+    fat: +(nPortion.fat / (portion / 100)).toFixed(1),
+    carbs: +(nPortion.carbs / (portion / 100)).toFixed(1),
+    protein: +(nPortion.protein / (portion / 100)).toFixed(1),
+    salt: +(nPortion.salt / (portion / 100)).toFixed(1),
   };
 
   const [qty, setQty] = useState(1);
@@ -32,7 +32,6 @@ export default function PouletPoivron() {
 
   return (
     <main className="page">
-      {/* Colonne gauche */}
       <aside className="side">
         <Link href="/plats-surgeles" className="back">
           ← Retour aux plats surgelés
@@ -41,23 +40,37 @@ export default function PouletPoivron() {
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
-      {/* Contenu principal */}
       <section className="content">
         <header className="header">
-          <h2 className="title">Pâtes complètes — émincé de poulet & sauce poivron (maison)</h2>
+          <h2 className="title">
+            Pâtes complètes — émincé de poulet & sauce poivron (maison)
+          </h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
           </p>
           <p className="desc">
-            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
-            À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
+            Portion : <strong>{portion} g</strong> · prêt en{" "}
+            <strong>20 min</strong> au <em>four</em> ·{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> ·{" "}
+            <strong>10 min</strong> à la <em>poêle</em>. À conserver
+            au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
+
+          {/* PHOTO */}
+          <div className="heroImgWrap">
+            <img
+              src="/images/poulet-poivron.png"
+              alt="Pâtes complètes au poulet et sauce poivron maison"
+              className="heroImg"
+            />
+          </div>
+
           <p className="blurb">
-            Des <strong>pâtes complètes artisanales</strong> (œufs plein air), un <strong>poulet</strong> tendre
-            et une <strong>sauce poivron maison</strong> (poivron, aromates, ail, oignon, sel, poivre) :
-            une assiette généreuse, colorée et <em>équilibrée</em>, idéale pour l’énergie sans lourdeur.
+            Des <strong>pâtes complètes artisanales</strong> (œufs plein air),
+            accompagnées d’un émincé de poulet tendre et d’une{" "}
+            <strong>sauce poivron maison</strong> aux aromates, ail et oignon.
+            Un plat équilibré, parfumé et riche en protéines.
           </p>
         </header>
 
@@ -67,10 +80,9 @@ export default function PouletPoivron() {
             <h3>Ingrédients</h3>
             <ul className="ing">
               <li><b>200 g</b> — Pâtes complètes artisanales (œufs plein air)</li>
-              <li><b>150 g</b> — Émincé de poulet</li>
+              <li><b>180 g</b> — Poulet émincé (cuit)</li>
               <li><b>150 g</b> — Julienne de légumes</li>
-              <li><b>100 g</b> — Sauce poivron maison</li>
-              <li>Aromates &amp; épices · Sel, poivre</li>
+              <li><b>70 g</b> — Sauce poivron maison (poivron, ail, oignon, aromates, sel, poivre)</li>
             </ul>
             <p className="muted">Allergènes : gluten (blé), <b>œufs</b>.</p>
           </section>
@@ -97,7 +109,7 @@ export default function PouletPoivron() {
             <div className="label">Prix unitaire</div>
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
-              <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
+              <button aria-label="moins" onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
               <input
                 type="number"
                 min={1}
@@ -106,7 +118,7 @@ export default function PouletPoivron() {
                   setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
                 }
               />
-              <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
+              <button aria-label="plus" onClick={() => setQty((q) => q + 1)}>+</button>
             </div>
             <div className="label">Total ({qty} plat{qty > 1 ? "s" : ""})</div>
             <div className="total">{nf.format(price * qty)}</div>
@@ -129,8 +141,9 @@ export default function PouletPoivron() {
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation capture la fraîcheur juste après cuisson : textures préservées, goût intact,
-            prêt à savourer quand vous l’êtes.
+            La surgélation préserve fraîcheur et qualités nutritionnelles : le
+            refroidissement rapide évite la dégradation des nutriments et garde
+            la texture.
           </p>
         </section>
       </section>
@@ -142,19 +155,20 @@ export default function PouletPoivron() {
 
 const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
-.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);overflow:visible}
-.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
-.brand{margin:0;font-size:46px;line-height:1;white-space:nowrap;padding-right:6px;
-  background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
+.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none;font-weight:700}
+.brand{margin:0;font-size:48px;line-height:1.04;padding-bottom:4px;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.2px}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
-.title{margin:0 0 6px;font-size:30px}
+.title{margin:0 0 6px;font-size:32px}
 .meta{display:flex;gap:8px;margin:6px 0 8px}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
-.desc{margin:0 0 8px;color:#345}
-.blurb{margin:0 0 8px;color:#123;font-weight:500}
+.desc{margin:8px 0;color:#345}
+.heroImgWrap{margin:10px 0 8px}
+.heroImg{width:100%;max-height:260px;object-fit:cover;border-radius:16px;box-shadow:0 8px 24px rgba(15,23,42,0.12)}
+.blurb{margin:6px 0 8px;color:#123;font-weight:500}
 .grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
 .card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
 .ing{margin:8px 0 10px;padding-left:16px}
@@ -167,7 +181,7 @@ const styles = `
 .price .label{color:#678;margin-top:2px}
 .big{font-size:32px;font-weight:800}
 .qty{display:flex;align-items:center;gap:8px;margin:10px 0}
-.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd}
+.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd;font-size:18px}
 .qty input{width:64px;height:36px;text-align:center;border-radius:10px;border:1px solid #ccd}
 .total{font-size:22px;font-weight:800;margin-bottom:8px}
 .btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
