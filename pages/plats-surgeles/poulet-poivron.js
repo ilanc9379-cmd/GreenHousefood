@@ -3,11 +3,10 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 export default function PouletPoivron() {
-  // ===== Données =====
   const portion = 600; // g
   const price = 9.9;
 
-  // nutriments par portion (600 g)
+  // Valeurs nutritionnelles par portion
   const nPortion = {
     kcal: 689,
     fat: 10,
@@ -15,7 +14,8 @@ export default function PouletPoivron() {
     protein: 62,
     salt: 2.5,
   };
-  // par 100 g
+
+  // Pour 100 g
   const n100 = {
     kcal: Math.round(nPortion.kcal / (portion / 100)),
     fat: +(nPortion.fat / (portion / 100)).toFixed(1),
@@ -32,6 +32,7 @@ export default function PouletPoivron() {
 
   return (
     <main className="page">
+      {/* Sidebar */}
       <aside className="side">
         <Link href="/plats-surgeles" className="back">
           ← Retour aux plats surgelés
@@ -40,37 +41,37 @@ export default function PouletPoivron() {
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
+      {/* Contenu */}
       <section className="content">
         <header className="header">
-          <h2 className="title">
-            Pâtes complètes — émincé de poulet & sauce poivron (maison)
-          </h2>
+          <h2 className="title">Pâtes complètes — émincé de poulet & sauce poivron maison</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
           </p>
+
           <p className="desc">
             Portion : <strong>{portion} g</strong> · prêt en{" "}
             <strong>20 min</strong> au <em>four</em> ·{" "}
             <strong>8 min</strong> au <em>micro-ondes</em> ·{" "}
-            <strong>10 min</strong> à la <em>poêle</em>. À conserver
-            au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
+            <strong>10 min</strong> à la <em>poêle</em>. À conserver au
+            congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
 
-          {/* PHOTO */}
+          {/* IMAGE */}
           <div className="heroImgWrap">
             <img
-              src="/images/poulet-poivron.png"
-              alt="Pâtes complètes au poulet et sauce poivron maison"
+              src="/poulet-poivron.png"
+              alt="Pâtes complètes au poulet émincé et sauce poivron maison"
               className="heroImg"
             />
           </div>
 
           <p className="blurb">
-            Des <strong>pâtes complètes artisanales</strong> (œufs plein air),
-            accompagnées d’un émincé de poulet tendre et d’une{" "}
-            <strong>sauce poivron maison</strong> aux aromates, ail et oignon.
-            Un plat équilibré, parfumé et riche en protéines.
+            Des <strong>pâtes complètes artisanales</strong> (œufs plein air) accompagnées d’un{" "}
+            <strong>émincé de poulet tendre</strong> et d’une{" "}
+            <strong>sauce poivron maison</strong> parfumée à l’ail et à l’oignon.
+            Un plat diététique et gourmand, équilibré et riche en protéines.
           </p>
         </header>
 
@@ -80,9 +81,9 @@ export default function PouletPoivron() {
             <h3>Ingrédients</h3>
             <ul className="ing">
               <li><b>200 g</b> — Pâtes complètes artisanales (œufs plein air)</li>
-              <li><b>180 g</b> — Poulet émincé (cuit)</li>
-              <li><b>150 g</b> — Julienne de légumes</li>
-              <li><b>70 g</b> — Sauce poivron maison (poivron, ail, oignon, aromates, sel, poivre)</li>
+              <li><b>150 g</b> — Poulet émincé</li>
+              <li><b>150 g</b> — Sauce poivron maison (poivrons, ail, oignons, herbes, sel, poivre)</li>
+              <li>Épices, herbes de Provence</li>
             </ul>
             <p className="muted">Allergènes : gluten (blé), <b>œufs</b>.</p>
           </section>
@@ -109,18 +110,11 @@ export default function PouletPoivron() {
             <div className="label">Prix unitaire</div>
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
-              <button aria-label="moins" onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
-              <input
-                type="number"
-                min={1}
-                value={qty}
-                onChange={(e) =>
-                  setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
-                }
-              />
-              <button aria-label="plus" onClick={() => setQty((q) => q + 1)}>+</button>
+              <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
+              <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
+              <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
-            <div className="label">Total ({qty} plat{qty > 1 ? "s" : ""})</div>
+            <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
             <div className="total">{nf.format(price * qty)}</div>
             <button className="btn">Commander</button>
           </section>
@@ -134,16 +128,15 @@ export default function PouletPoivron() {
             <li>Micro-ondes : <b>8 min</b></li>
             <li>Poêle : <b>10 min</b></li>
           </ul>
-          <h3 style={{ marginTop: 12 }}>Conservation</h3>
+          <h3 style={{marginTop:12}}>Conservation</h3>
           <ul>
             <li>Conserver au congélateur : <b>max 4 mois</b></li>
             <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation préserve fraîcheur et qualités nutritionnelles : le
-            refroidissement rapide évite la dégradation des nutriments et garde
-            la texture.
+            La surgélation préserve la fraîcheur et les qualités nutritionnelles : refroidir
+            rapidement les plats permet de conserver les nutriments et la texture.
           </p>
         </section>
       </section>
