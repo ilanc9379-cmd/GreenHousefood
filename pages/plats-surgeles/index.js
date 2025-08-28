@@ -10,7 +10,7 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 700, P: 54.3, G: 89, L: 15.8 },
-      img: "/pates-bolo.png", // placé dans /public
+      image: "/pates-bolo.png",
     },
     {
       title: "Pâtes complètes — émincé de poulet & sauce poivron (maison)",
@@ -18,7 +18,7 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 689, P: 62, G: 86, L: 10 },
-      img: "/poulet-poivron.png", // placé dans /public
+      image: "/poulet-poivron.png",
     },
     {
       title: "Bœuf carottes & purée de pomme de terre",
@@ -26,7 +26,7 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 610, P: 48, G: 48, L: 18 },
-      img: "/boeuf-carottes.png", // placé dans /public
+      image: "/boeuf-carottes.png",
     },
     {
       title: "Cuisse de poulet rôtie, pommes de terre & haricots verts",
@@ -34,7 +34,7 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 560, P: 45, G: 35, L: 20 },
-      // img: "/poulet-pommes-haricots.png"
+      image: "/poulet-pommes-haricots.png",
     },
     {
       title: "Moussaka revisitée (aubergine, riz complet, bœuf 5%, tomate)",
@@ -42,7 +42,7 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 900, P: 55, G: 95, L: 30 },
-      // img: "/moussaka.png"
+      image: "/moussaka.png",
     },
     {
       title: "Riz complet aux petits légumes & cabillaud",
@@ -50,7 +50,7 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 585, P: 39, G: 78, L: 13 },
-      // img: "/riz-cabillaud.png"
+      image: "/riz-cabillaud.png",
     },
     {
       title: "Pâtes aromettes — poulet crémeux & brocolis",
@@ -58,23 +58,23 @@ export default function PlatsSurgelesIndex() {
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 705, P: 49, G: 77, L: 22 },
-      // img: "/pates-poulet-brocolis.png"
+      image: "/pates-poulet-brocolis.png",
     },
     {
-      title: "Curry de pois chiches (Végé)",
+      title: "Curry de pois chiches",
       slug: "curry-pois-chiches",
       price: 9.9,
       badges: ["Surgelé", "Diète", "Végétarien"],
       macros: { kcal: 520, P: 20, G: 60, L: 21 },
-      // img: "/curry-pois-chiches.png"
+      image: "/curry-pois-chiches.png",
     },
     {
-      title: "Falafels & purée de patate douce, haricots verts & sauce tahini",
+      title: "Falafels & purée de patate douce",
       slug: "falafel-patate-douce",
       price: 9.9,
       badges: ["Surgelé", "Diète", "Végétarien"],
-      macros: { kcal: 640, P: 22, G: 78, L: 24 },
-      // img: "/falafel-patate-douce.png"
+      macros: { kcal: 540, P: 22, G: 72, L: 15 },
+      image: "/falafel-patate-douce.png",
     },
   ];
 
@@ -83,11 +83,14 @@ export default function PlatsSurgelesIndex() {
       <header style={styles.header}>
         <div style={styles.headerInner}>
           <Link href="/">
-            <a aria-label="Retour à l'accueil" style={styles.back}>← Retour à l’accueil</a>
+            <a aria-label="Retour à l'accueil" style={styles.back}>
+              ← Retour à l’accueil
+            </a>
           </Link>
           <h1 style={styles.brand}>GreenHouse</h1>
           <p style={styles.tagline}>
-            Plats surgelés — Cuisinés artisanalement pour allier goût, équilibre et praticité.
+            Plats surgelés — Cuisinés artisanalement pour allier goût, équilibre
+            et praticité.
           </p>
         </div>
       </header>
@@ -96,26 +99,21 @@ export default function PlatsSurgelesIndex() {
         <div style={styles.cards}>
           {plats.map((p) => (
             <article key={p.slug} style={styles.card}>
-              {/* Image (si fournie) */}
-              {p.img ? (
-                <div style={styles.thumbWrap}>
-                  <Image
-                    src={p.img}
-                    alt={p.title}
-                    width={900}
-                    height={540}
-                    style={{ objectFit: "cover" }}
-                  />
-                </div>
-              ) : (
-                <div style={styles.thumbPlaceholder} aria-hidden />
-              )}
-
+              <div style={styles.photo}>
+                <Image
+                  src={p.image}
+                  alt={p.title}
+                  fill
+                  sizes="(max-width: 950px) 100vw, 400px"
+                />
+              </div>
               <h2 style={styles.title}>{p.title}</h2>
 
               <div style={styles.badges}>
                 {p.badges.map((b) => (
-                  <span key={b} style={badge(b)}>{b}</span>
+                  <span key={b} style={badge(b)}>
+                    {b}
+                  </span>
                 ))}
               </div>
 
@@ -128,8 +126,10 @@ export default function PlatsSurgelesIndex() {
 
               <div style={styles.footerRow}>
                 <div style={styles.price}>
-                  <small style={{ color: "#64748b", fontWeight: 700 }}>Prix</small>
-                  <div style={styles.priceValue}>9,90 €</div>
+                  <small style={{ color: "#64748b", fontWeight: 700 }}>
+                    Prix
+                  </small>
+                  <div style={styles.priceValue}>{p.price.toFixed(2)} €</div>
                 </div>
                 <Link href={`/plats-surgeles/${p.slug}`}>
                   <a style={styles.link}>Voir le détail →</a>
@@ -186,19 +186,16 @@ const styles = {
     flexDirection: "column",
     gap: 10,
   },
-  thumbWrap: {
+  photo: {
+    position: "relative",
+    width: "100%",
+    aspectRatio: "16/9",
+    maxHeight: "180px",
     overflow: "hidden",
     borderRadius: 12,
-    aspectRatio: "16/9",
-    background: "#eef2ff",
+    marginBottom: 8,
   },
-  thumbPlaceholder: {
-    borderRadius: 12,
-    aspectRatio: "16/9",
-    background:
-      "linear-gradient(135deg, rgba(226,232,240,.8), rgba(203,213,225,.8))",
-  },
-  title: { margin: "4px 0 0", fontSize: 18, fontWeight: 800, lineHeight: 1.25 },
+  title: { margin: 0, fontSize: 18, fontWeight: 800, lineHeight: 1.25 },
   badges: { display: "flex", gap: 8, flexWrap: "wrap" },
   macros: { display: "flex", gap: 8, flexWrap: "wrap", marginTop: 2 },
   footerRow: {
@@ -236,9 +233,9 @@ const chip = {
 
 const badge = (label) => {
   const map = {
-    Surgelé: { bg: "#e6f7f1", fg: "#0c7a5f" },
-    Diète: { bg: "#fff4e6", fg: "#b35a00" },
-    Végétarien: { bg: "#eaf0ff", fg: "#3650ff" },
+    "Surgelé": { bg: "#e6f7f1", fg: "#0c7a5f" },
+    "Diète": { bg: "#fff4e6", fg: "#b35a00" },
+    "Végétarien": { bg: "#eaf0ff", fg: "#3650ff" },
   };
   const { bg, fg } = map[label] || { bg: "#f1f5f9", fg: "#0f172a" };
   return {
