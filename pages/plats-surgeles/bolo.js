@@ -34,8 +34,8 @@ export default function Bolo() {
     <main className="page">
       {/* Sidebar */}
       <aside className="side">
-        <Link href="/plats-surgeles" className="back">
-          ← Retour aux plats surgelés
+        <Link href="/plats-surgeles">
+          <a className="back">← Retour aux plats surgelés</a>
         </Link>
         <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
@@ -62,8 +62,9 @@ export default function Bolo() {
           <div className="heroImgWrap">
             <img
               src="/bolo.png"
-              alt="Pâtes bolognaise maison (rigatoni complets, sauce tomate, bœuf, carottes)"
+              alt="Pâtes bolognaise maison (rigatoni complets, sauce tomate maison, bœuf, carottes)"
               className="heroImg"
+              loading="eager"
             />
           </div>
 
@@ -207,7 +208,15 @@ const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
 .back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none;font-weight:700}
-.brand{margin:0;font-size:48px;line-height:1.04;padding-bottom:4px;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.2px}
+.brand{
+  margin:0;
+  font-size:48px;
+  line-height:1;            /* évite la coupe du E */
+  padding-right:6px;        /* évite la coupe à droite */
+  background:linear-gradient(90deg,#0aa64c,#2d7ae6);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  font-weight:900;letter-spacing:.2px
+}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
