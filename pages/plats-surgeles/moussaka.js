@@ -1,3 +1,4 @@
+// pages/plats-surgeles/moussaka.js
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -6,20 +7,15 @@ export default function Moussaka() {
   const portion = 600; // g
   const price = 9.9;
 
-  // Macros d'après CIQUAL (voir hypothèses dans le message)
-  const nPortion = {
-    kcal: 733,
-    fat: 31.0,
-    carbs: 45.5,
-    protein: 59.6,
-    salt: 1.5,
-  };
+  // Nutriments par portion (600 g) — estimations cohérentes CIQUAL
+  const nPortion = { kcal: 900, fat: 30, carbs: 95, protein: 55, salt: 2.0 };
+  // Par 100 g
   const n100 = {
-    kcal: 122,
-    fat: 5.2,
-    carbs: 7.6,
-    protein: 9.9,
-    salt: 0.25,
+    kcal: (900 / 6).toFixed(0),       // 150
+    fat: (30 / 6).toFixed(1),         // 5.0
+    carbs: (95 / 6).toFixed(1),       // 15.8
+    protein: (55 / 6).toFixed(1),     // 9.2
+    salt: (2.0 / 6).toFixed(2),       // 0.33
   };
 
   const [qty, setQty] = useState(1);
@@ -31,9 +27,7 @@ export default function Moussaka() {
   return (
     <main className="page">
       <aside className="side">
-        <Link href="/plats-surgeles" className="back">
-          ← Retour aux plats surgelés
-        </Link>
+        <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
         <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
@@ -50,10 +44,20 @@ export default function Moussaka() {
             <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
+
+          {/* Image — même rendu que bolo */}
+          <figure className="hero">
+            <img
+              src="/moussaka.png"
+              alt="Moussaka revisitée — aubergines, bœuf maigre, riz complet, sauce tomate"
+              loading="eager"
+            />
+          </figure>
+
           <p className="blurb">
-            Une moussaka revisitée qui marie la douceur de l’aubergine, la richesse du bœuf maigre
-            et la légèreté du riz complet. Gratinée d’une touche d’emmental, relevée d’herbes et
-            d’épices méditerranéennes : un plat gourmand et équilibré.
+            Une moussaka revisitée, plus légère mais toujours généreuse : des aubergines fondantes,
+            une sauce tomate parfumée, du bœuf maigre et un riz complet pour la tenue.
+            Couronnée d’un peu de fromage gratiné, c’est un plat réconfortant, équilibré et rassasiant.
           </p>
         </header>
 
@@ -62,15 +66,16 @@ export default function Moussaka() {
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
-              <li><b>150 g</b> — Aubergine</li>
+              <li><b>150 g</b> — Aubergines</li>
+              <li><b>150 g</b> — Riz complet</li>
+              <li><b>150 g</b> — Bœuf haché 5% MG</li>
               <li><b>100 g</b> — Tomates concassées</li>
-              <li><b>150 g</b> — Viande hachée 5% MG</li>
-              <li><b>150 g</b> — Riz complet cuit</li>
-              <li><b>50 g</b> — Emmental râpé</li>
+              <li><b>50 g</b> — Fromage râpé</li>
               <li><b>5 g</b> — Huile d’olive</li>
-              <li>Aromates : oignon, ail, paprika, herbes de Provence, sel</li>
+              <li>Ail, oignon, herbes de Provence, paprika</li>
+              <li>Sel, poivre</li>
             </ul>
-            <p className="muted">Allergènes : lait. (Traces de gluten possibles selon le riz/atelier.)</p>
+            <p className="muted">Allergènes : lait (fromage).</p>
           </section>
 
           {/* Valeurs nutritionnelles */}
@@ -125,8 +130,8 @@ export default function Moussaka() {
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation préserve fraîcheur et qualités nutritionnelles : le refroidissement rapide
-            limite l’oxydation et garde la texture des aliments.
+            La surgélation préserve fraîcheur et qualités nutritionnelles :
+            refroidir très vite évite la dégradation des nutriments et garde la texture.
           </p>
         </section>
       </section>
@@ -136,19 +141,23 @@ export default function Moussaka() {
   );
 }
 
+/* === Styles identiques à ceux de bolo/boeuf (avec padding-bottom sur .brand) === */
 const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
-.back{display:inline-block;margin-bottom:12px;color:#0b6; text-decoration:none}
-.brand{margin:0;font-size:48px;line-height:1.1;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
+.brand{margin:0;font-size:48px;line-height:0.9;padding-bottom:2px;
+  background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
 .title{margin:0 0 6px;font-size:32px}
-.meta{display:flex;gap:8px;margin:6px 0 8px}
+.meta{display:flex;gap:8px;margin:6px 0 8px;flex-wrap:wrap}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
 .desc{margin:0 0 8px;color:#345}
+.hero{margin:8px 0 10px}
+.hero img{width:100%;display:block;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.06)}
 .blurb{margin:0 0 8px;color:#123;font-weight:500}
 .grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
 .card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
@@ -169,3 +178,4 @@ const styles = `
 .foot .note{margin-top:10px;color:#456}
 @media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
 `;
+```0
