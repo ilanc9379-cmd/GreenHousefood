@@ -1,26 +1,27 @@
-// pages/plats-surgeles/falafel-puree.js
+// pages/plats-surgeles/falafel-patate-douce.js
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-export default function FalafelPuree() {
+export default function FalafelPatateDouce() {
   // ===== Données =====
-  const portion = 550; // g
+  const portion = 500; // g
   const price = 9.9;
 
-  // nutriments par portion (≈ estimés)
+  // nutriments par portion (≈ basé sur recette falafels + purée + sauce)
   const nPortion = {
-    kcal: 640,
-    fat: 18,
-    carbs: 75,
+    kcal: 610,
+    fat: 20,
+    carbs: 72,
     protein: 22,
     salt: 2.5,
   };
+  // par 100 g
   const n100 = {
-    kcal: +(nPortion.kcal / (portion / 100)).toFixed(1),
-    fat: +(nPortion.fat / (portion / 100)).toFixed(1),
-    carbs: +(nPortion.carbs / (portion / 100)).toFixed(1),
-    protein: +(nPortion.protein / (portion / 100)).toFixed(1),
-    salt: +(nPortion.salt / (portion / 100)).toFixed(1),
+    kcal: +(nPortion.kcal / (portion / 100)).toFixed(1),     // ≈ 122
+    fat: +(nPortion.fat / (portion / 100)).toFixed(1),       // ≈ 4.0
+    carbs: +(nPortion.carbs / (portion / 100)).toFixed(1),   // ≈ 14.4
+    protein: +(nPortion.protein / (portion / 100)).toFixed(1), // ≈ 4.4
+    salt: +(nPortion.salt / (portion / 100)).toFixed(2),     // ≈ 0.5
   };
 
   const [qty, setQty] = useState(1);
@@ -39,22 +40,30 @@ export default function FalafelPuree() {
 
       <section className="content">
         <header className="header">
-          <h2 className="title">Falafels & purée de patate douce</h2>
+          <h2 className="title">Falafels artisanaux &amp; purée de patate douce</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
             <span className="pill">Végétarien</span>
           </p>
           <p className="desc">
-            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au four ·{" "}
-            <strong>8 min</strong> au micro-ondes · <strong>10 min</strong> à la poêle.
+            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
           <p className="blurb">
-            Un plat complet et parfumé : <strong>falafels artisanaux</strong> dorés, accompagnés d’une
-            <strong>purée onctueuse de patate douce</strong>, relevée de légumes de saison et d’une
-            sauce légère. Une alliance saine, gourmande et rassasiante.
+            Des <strong>falafels artisanaux</strong> aux pois chiches, parfumés au sésame, servis avec
+            une purée onctueuse de patates douces et une touche de sauce légère. Une alternative saine,
+            végétarienne et pleine de saveurs.
           </p>
+
+          {/* Image du plat */}
+          <figure className="heroImg">
+            <img
+              src="/falafel-patate-douce.png"
+              alt="Falafels & purée de patate douce"
+            />
+          </figure>
         </header>
 
         <div className="grid">
@@ -62,15 +71,13 @@ export default function FalafelPuree() {
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
-              <li><b>200 g</b> — Falafels artisanaux (pois chiches, herbes, sésame)</li>
-              <li><b>180 g</b> — Purée de patate douce</li>
-              <li><b>120 g</b> — Légumes variés (carottes, courgettes…)</li>
-              <li><b>50 g</b> — Sauce légère tomate & épices</li>
-              <li>Sel, poivre, aromates</li>
+              <li><b>200 g</b> — Purée de patate douce</li>
+              <li><b>200 g</b> — Falafels artisanaux (pois chiches, sésame, ail frais, oignon frais, persil, coriandre, épices, bicarbonate)</li>
+              <li><b>100 g</b> — Légume vert selon saison (ex : haricots verts)</li>
+              <li>Sauce légère au yaourt ou fromage blanc</li>
+              <li>Sel, poivre, paprika doux</li>
             </ul>
-            <p className="muted">
-              Allergènes : gluten (traces possibles), <b>sésame</b>.
-            </p>
+            <p className="muted">Allergènes : sésame · traces possibles de gluten et fruits à coque.</p>
           </section>
 
           {/* Valeurs nutritionnelles */}
@@ -96,7 +103,12 @@ export default function FalafelPuree() {
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
               <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
-              <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
+              <input
+                type="number"
+                min={1}
+                value={qty}
+                onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))}
+              />
               <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
             <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
@@ -109,7 +121,7 @@ export default function FalafelPuree() {
         <section className="card foot">
           <h3>Cuisson</h3>
           <ul>
-            <li>Four 150 °C : <b>20 min</b></li>
+            <li>Four <b>150 °C</b> : <b>20 min</b></li>
             <li>Micro-ondes : <b>8 min</b></li>
             <li>Poêle : <b>10 min</b></li>
           </ul>
@@ -120,8 +132,8 @@ export default function FalafelPuree() {
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation conserve les qualités nutritionnelles et les saveurs : un plat
-            toujours prêt, comme fait maison.
+            La surgélation permet de conserver toute la saveur et les nutriments des ingrédients,
+            garantissant un plat gourmand et pratique au quotidien.
           </p>
         </section>
       </section>
@@ -135,16 +147,18 @@ const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
 .back{display:inline-block;margin-bottom:12px;color:#0b6; text-decoration:none}
-.brand{margin:0;font-size:46px;line-height:1;white-space:nowrap;padding-right:6px;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.brand{margin:0;font-size:48px;line-height:0.95;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.2px}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
-.title{margin:0 0 6px;font-size:30px}
-.meta{display:flex;gap:8px;margin:6px 0 8px}
+.title{margin:0 0 6px;font-size:32px}
+.meta{display:flex;gap:8px;margin:6px 0 8px;flex-wrap:wrap}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
 .desc{margin:0 0 8px;color:#345}
-.blurb{margin:0 0 8px;color:#123;font-weight:500}
+.blurb{margin:0 0 10px;color:#123;font-weight:500}
+.heroImg{margin:8px 0 4px}
+.heroImg img{width:100%;max-width:520px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
 .grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
 .card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
 .ing{margin:8px 0 10px;padding-left:16px}
