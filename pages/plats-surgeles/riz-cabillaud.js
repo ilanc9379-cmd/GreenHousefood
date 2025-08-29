@@ -7,21 +7,15 @@ export default function RizCabillaud() {
   const portion = 600; // g
   const price = 9.9;
 
-  // nutriments par portion (600 g)
-  const nPortion = {
-    kcal: 585,
-    fat: 13,
-    carbs: 78,
-    protein: 39,
-    salt: 2.0,
-  };
-  // par 100 g
+  // Nutriments par portion (600 g) — d'après nos calculs précédents
+  const nPortion = { kcal: 585, fat: 13, carbs: 78, protein: 39, salt: 1.8 };
+  // Par 100 g
   const n100 = {
-    kcal: (nPortion.kcal / (portion / 100)).toFixed(1),
-    fat: (nPortion.fat / (portion / 100)).toFixed(1),
-    carbs: (nPortion.carbs / (portion / 100)).toFixed(1),
-    protein: (nPortion.protein / (portion / 100)).toFixed(1),
-    salt: (nPortion.salt / (portion / 100)).toFixed(1),
+    kcal: (585 / 6).toFixed(0),       // 98
+    fat: (13 / 6).toFixed(1),         // 2.2
+    carbs: (78 / 6).toFixed(1),       // 13.0
+    protein: (39 / 6).toFixed(1),     // 6.5
+    salt: (1.8 / 6).toFixed(2),       // 0.30
   };
 
   const [qty, setQty] = useState(1);
@@ -32,33 +26,38 @@ export default function RizCabillaud() {
 
   return (
     <main className="page">
-      {/* Colonne gauche */}
       <aside className="side">
-        <Link href="/plats-surgeles" className="back">
-          ← Retour aux plats surgelés
-        </Link>
+        <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
         <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
-      {/* Contenu principal */}
       <section className="content">
         <header className="header">
-          <h2 className="title">Riz complet aux petits légumes & cabillaud</h2>
+          <h2 className="title">Riz complet aux petits légumes &amp; cabillaud</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
           </p>
           <p className="desc">
             Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
+
+          {/* Image (même rendu que bolo) */}
+          <figure className="hero">
+            <img
+              src="/riz-cabillaud.png"
+              alt="Riz complet aux petits légumes et filet de cabillaud"
+              loading="eager"
+            />
+          </figure>
+
           <p className="blurb">
-            Un bol complet et léger : <strong>riz complet</strong> fondant, filets de{" "}
-            <strong>cabillaud</strong> délicats et brunoise de légumes (carotte, poivron, oignon, petits
-            pois) relevés d’<em>herbes &amp; épices</em>. Un plat équilibré, riche en protéines, idéal
-            au quotidien.
+            Un plat sain et parfumé : du riz complet moelleux, un filet de cabillaud délicat
+            et des petits légumes fondants. Assaisonné d’herbes et d’épices douces, c’est un
+            repas léger, équilibré et plein de fraîcheur.
           </p>
         </header>
 
@@ -67,16 +66,16 @@ export default function RizCabillaud() {
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
-              <li><b>200 g</b> — Riz complet cuit</li>
+              <li><b>200 g</b> — Riz complet</li>
               <li><b>120 g</b> — Filet de cabillaud</li>
               <li><b>100 g</b> — Carottes</li>
               <li><b>80 g</b> — Oignon</li>
               <li><b>80 g</b> — Poivron</li>
               <li><b>80 g</b> — Petits pois</li>
               <li><b>5 g</b> — Huile d’olive</li>
-              <li>Aromates &amp; épices · Sel</li>
+              <li>Sel, aromates/épices</li>
             </ul>
-            <p className="muted">Allergènes : — (poisson : cabillaud).</p>
+            <p className="muted">Allergènes : poisson.</p>
           </section>
 
           {/* Valeurs nutritionnelles */}
@@ -106,13 +105,11 @@ export default function RizCabillaud() {
                 type="number"
                 min={1}
                 value={qty}
-                onChange={(e) =>
-                  setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
-                }
+                onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))}
               />
               <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
-            <div className="label">Total ({qty} plat{qty > 1 ? "s" : ""})</div>
+            <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
             <div className="total">{nf.format(price * qty)}</div>
             <button className="btn">Commander</button>
           </section>
@@ -126,15 +123,15 @@ export default function RizCabillaud() {
             <li>Micro-ondes : <b>8 min</b></li>
             <li>Poêle : <b>10 min</b></li>
           </ul>
-          <h3 style={{ marginTop: 12 }}>Conservation</h3>
+          <h3 style={{marginTop:12}}>Conservation</h3>
           <ul>
             <li>Conserver au congélateur : <b>max 4 mois</b></li>
             <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation capture la fraîcheur juste après cuisson : textures préservées, goût intact,
-            prêt à savourer quand vous l’êtes.
+            La surgélation préserve fraîcheur et qualités nutritionnelles :
+            refroidir très vite évite la dégradation des nutriments et garde la texture.
           </p>
         </section>
       </section>
@@ -144,19 +141,23 @@ export default function RizCabillaud() {
   );
 }
 
+/* === Styles (identiques à ceux de bolo, avec padding-bottom pour le 'E') === */
 const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
 .back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
-.brand{margin:0;font-size:46px;line-height:1;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.brand{margin:0;font-size:48px;line-height:0.9;padding-bottom:2px;
+  background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
-.title{margin:0 0 6px;font-size:30px}
-.meta{display:flex;gap:8px;margin:6px 0 8px}
+.title{margin:0 0 6px;font-size:32px}
+.meta{display:flex;gap:8px;margin:6px 0 8px;flex-wrap:wrap}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
 .desc{margin:0 0 8px;color:#345}
+.hero{margin:8px 0 10px}
+.hero img{width:100%;display:block;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.06)}
 .blurb{margin:0 0 8px;color:#123;font-weight:500}
 .grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
 .card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
@@ -177,3 +178,4 @@ const styles = `
 .foot .note{margin-top:10px;color:#456}
 @media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
 `;
+```0
