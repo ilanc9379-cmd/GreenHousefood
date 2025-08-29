@@ -1,25 +1,19 @@
-// pages/plats-surgeles/pates-aromettes-poulet-cremeux-brocolis.js
+// pages/plats-surgeles/pates-poulet-brocolis.js
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-export default function PouletBrocolis() {
+export default function PatesPouletBrocolis() {
   const portion = 600; // g
   const price = 9.9;
 
-  // ≈ valeurs nutritionnelles
-  const nPortion = {
-    kcal: 705,
-    fat: 22,
-    carbs: 77,
-    protein: 49,
-    salt: 2.0,
-  };
+  // Macros estimées (ton calcul précédent)
+  const nPortion = { kcal: 705, fat: 22, carbs: 77, protein: 49, salt: 2.2 };
   const n100 = {
-    kcal: (nPortion.kcal / (portion / 100)).toFixed(1),
-    fat: (nPortion.fat / (portion / 100)).toFixed(1),
-    carbs: (nPortion.carbs / (portion / 100)).toFixed(1),
-    protein: (nPortion.protein / (portion / 100)).toFixed(1),
-    salt: (nPortion.salt / (portion / 100)).toFixed(1),
+    kcal: (705 / 6).toFixed(0),       // 118
+    fat: (22 / 6).toFixed(1),         // 3.7
+    carbs: (77 / 6).toFixed(1),       // 12.8
+    protein: (49 / 6).toFixed(1),     // 8.2
+    salt: (2.2 / 6).toFixed(2),       // 0.37
   };
 
   const [qty, setQty] = useState(1);
@@ -31,29 +25,37 @@ export default function PouletBrocolis() {
   return (
     <main className="page">
       <aside className="side">
-        <Link href="/plats-surgeles" className="back">
-          ← Retour aux plats surgelés
-        </Link>
+        <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
         <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
       <section className="content">
         <header className="header">
-          <h2 className="title">Pâtes aromettes — poulet crémeux & brocolis</h2>
+          <h2 className="title">Pâtes aromettes — poulet crémeux &amp; brocolis</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
           </p>
           <p className="desc">
             Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
+
+          {/* Image */}
+          <figure className="hero">
+            <img
+              src="/pates-poulet-brocolis.png"
+              alt="Pâtes aromettes au poulet crémeux et brocolis"
+              loading="eager"
+            />
+          </figure>
+
           <p className="blurb">
-            La douceur des <strong>pâtes aromettes artisanales</strong> (œufs plein air), l’onctuosité d’une
-            <strong> sauce crémeuse</strong> et la fraîcheur des <strong>brocolis</strong> cuits juste comme il
-            faut. Un plat réconfortant qui marie gourmandise et équilibre, parfait pour se faire plaisir tout en restant léger.
+            Un plat généreux et équilibré : des <strong>pâtes artisanales aromettes</strong>, 
+            du poulet tendre, une sauce crémeuse légère et des brocolis croquants.
+            Une recette gourmande et saine qui allie protéines, fibres et plaisir.
           </p>
         </header>
 
@@ -63,12 +65,13 @@ export default function PouletBrocolis() {
             <h3>Ingrédients</h3>
             <ul className="ing">
               <li><b>200 g</b> — Pâtes aromettes artisanales (œufs plein air)</li>
-              <li><b>150 g</b> — Émincé de poulet</li>
-              <li><b>150 g</b> — Brocolis</li>
-              <li><b>100 g</b> — Sauce crème légère</li>
-              <li>Sel, poivre, aromates</li>
+              <li><b>150 g</b> — Poulet émincé</li>
+              <li><b>100 g</b> — Brocolis</li>
+              <li><b>80 g</b> — Sauce crémeuse légère</li>
+              <li><b>50 g</b> — Carottes</li>
+              <li>Huile d’olive, sel, poivre, aromates</li>
             </ul>
-            <p className="muted">Allergènes : gluten (blé), <b>œufs</b>, <b>lait</b>.</p>
+            <p className="muted">Allergènes : gluten (blé), œufs, lait (crème).</p>
           </section>
 
           {/* Valeurs nutritionnelles */}
@@ -98,13 +101,11 @@ export default function PouletBrocolis() {
                 type="number"
                 min={1}
                 value={qty}
-                onChange={(e) =>
-                  setQty(Math.max(1, parseInt(e.target.value || "1", 10)))
-                }
+                onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))}
               />
               <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
-            <div className="label">Total ({qty} plat{qty > 1 ? "s" : ""})</div>
+            <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
             <div className="total">{nf.format(price * qty)}</div>
             <button className="btn">Commander</button>
           </section>
@@ -118,15 +119,15 @@ export default function PouletBrocolis() {
             <li>Micro-ondes : <b>8 min</b></li>
             <li>Poêle : <b>10 min</b></li>
           </ul>
-          <h3 style={{ marginTop: 12 }}>Conservation</h3>
+          <h3 style={{marginTop:12}}>Conservation</h3>
           <ul>
             <li>Conserver au congélateur : <b>max 4 mois</b></li>
             <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            Surgelé rapidement pour préserver textures et nutriments, ce plat garde toute sa fraîcheur
-            jusqu’à votre table.
+            La surgélation préserve fraîcheur et qualités nutritionnelles :
+            refroidir très vite évite la dégradation des nutriments et garde la texture.
           </p>
         </section>
       </section>
@@ -138,18 +139,20 @@ export default function PouletBrocolis() {
 
 const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
-.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);overflow:visible}
+.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
 .back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
-.brand{margin:0;font-size:46px;line-height:1;white-space:nowrap;padding-right:6px;
+.brand{margin:0;font-size:48px;line-height:0.9;padding-bottom:2px;
   background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
-.title{margin:0 0 6px;font-size:30px}
-.meta{display:flex;gap:8px;margin:6px 0 8px}
+.title{margin:0 0 6px;font-size:32px}
+.meta{display:flex;gap:8px;margin:6px 0 8px;flex-wrap:wrap}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
 .desc{margin:0 0 8px;color:#345}
+.hero{margin:8px 0 10px}
+.hero img{width:100%;display:block;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.06)}
 .blurb{margin:0 0 8px;color:#123;font-weight:500}
 .grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
 .card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
