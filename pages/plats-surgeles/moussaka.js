@@ -178,4 +178,3 @@ const styles = `
 .foot .note{margin-top:10px;color:#456}
 @media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
 `;
-```0
