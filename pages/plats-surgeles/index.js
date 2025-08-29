@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 export default function PlatsSurgelesIndex() {
-  // Catalogue plats surgelés
+  // --------- CATALOGUE (9 plats) ----------
   const plats = [
     {
       title: "Pâtes bolognaise maison",
@@ -54,11 +54,11 @@ export default function PlatsSurgelesIndex() {
     },
     {
       title: "Pâtes aromettes — poulet crémeux & brocolis",
-      slug: "pates-aromettes-poulet-cremeux-brocolis",
+      slug: "pates-poulet-brocolis",
       price: 9.9,
       badges: ["Surgelé", "Diète"],
       macros: { kcal: 705, P: 49, G: 77, L: 22 },
-      image: "/pates-aromettes.png",
+      image: "/pates-poulet-brocolis.png",
     },
     {
       title: "Curry de pois chiches",
@@ -87,7 +87,7 @@ export default function PlatsSurgelesIndex() {
               ← Retour à l’accueil
             </a>
           </Link>
-          <h1 style={styles.brand}>GreenHouse</h1>
+          <h1 style={styles.brand}>Greenhouse</h1>
           <p style={styles.tagline}>
             Plats surgelés — Cuisinés artisanalement pour allier goût, équilibre et praticité.
           </p>
@@ -165,11 +165,12 @@ const styles = {
     margin: 0,
     fontSize: 42,
     letterSpacing: 0.2,
-    fontWeight: 800,
+    fontWeight: 900,
     background: "linear-gradient(90deg,#0aa64c,#2d7ae6)",
     WebkitBackgroundClip: "text",
     backgroundClip: "text",
     color: "transparent",
+    textTransform: "capitalize",
   },
   tagline: { margin: "8px 0 0", opacity: 0.95, fontWeight: 600 },
   back: {
@@ -197,7 +198,13 @@ const styles = {
     flexDirection: "column",
     gap: 10,
   },
-  imgWrap: { width: "100%", maxHeight: 180, overflow: "hidden", borderRadius: 12 },
+  // même cadrage et hauteur que la carte "Bœuf carottes"
+  imgWrap: {
+    width: "100%",
+    maxHeight: 180,
+    overflow: "hidden",
+    borderRadius: 12,
+  },
   img: { width: "100%", height: "100%", objectFit: "cover" },
   title: { margin: "10px 0 6px", fontSize: 18, fontWeight: 800, lineHeight: 1.25 },
   badges: { display: "flex", gap: 8, flexWrap: "wrap" },
@@ -232,9 +239,9 @@ const chip = {
 
 const badge = (label) => {
   const map = {
-    "Surgelé": { bg: "#e6f7f1", fg: "#0c7a5f" },
-    "Diète": { bg: "#fff4e6", fg: "#b35a00" },
-    "Végétarien": { bg: "#eaf0ff", fg: "#3650ff" },
+    Surgelé: { bg: "#e6f7f1", fg: "#0c7a5f" },
+    Diète: { bg: "#fff4e6", fg: "#b35a00" },
+    Végétarien: { bg: "#eaf0ff", fg: "#3650ff" },
   };
   const { bg, fg } = map[label] || { bg: "#f1f5f9", fg: "#0f172a" };
   return {
