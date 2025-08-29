@@ -8,21 +8,9 @@ export default function BoeufCarottes() {
   const price = 9.9;
 
   // nutriments par portion (500 g)
-  const nPortion = {
-    kcal: 610,
-    fat: 18,
-    carbs: 48,
-    protein: 48,
-    salt: 2.2,
-  };
-  // par 100 g (≈ portion / 5)
-  const n100 = {
-    kcal: 122,
-    fat: 3.6,
-    carbs: 9.6,
-    protein: 9.6,
-    salt: 0.44,
-  };
+  const nPortion = { kcal: 610, fat: 18, carbs: 48, protein: 48, salt: 2.2 };
+  // par 100 g
+  const n100 = { kcal: 122, fat: 3.6, carbs: 9.6, protein: 9.6, salt: 0.44 };
 
   const [qty, setQty] = useState(1);
   const nf = useMemo(
@@ -32,7 +20,6 @@ export default function BoeufCarottes() {
 
   return (
     <main className="page">
-      {/* Bandeau latéral identique à bolo */}
       <aside className="side">
         <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
         <h1 className="brand">Greenhouse</h1>
@@ -40,7 +27,6 @@ export default function BoeufCarottes() {
       </aside>
 
       <section className="content">
-        {/* En-tête + description (même structure que bolo) */}
         <header className="header">
           <h2 className="title">Bœuf carottes &amp; purée de pomme de terre</h2>
           <p className="meta">
@@ -50,11 +36,11 @@ export default function BoeufCarottes() {
           </p>
           <p className="desc">
             Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
 
-          {/* Image PLACÉE ici comme la bolo */}
+          {/* Image — mêmes classes et style que la bolo */}
           <figure className="hero">
             <img
               src="/boeuf.png"
@@ -64,8 +50,9 @@ export default function BoeufCarottes() {
           </figure>
 
           <p className="blurb">
-            Des morceaux de bœuf mijotés doucement avec des carottes et des aromates, servis avec une
-            purée de pommes de terre onctueuse. Un grand classique réconfortant, équilibré et plein de saveurs.
+            Des morceaux de bœuf mijotés doucement avec des carottes et des aromates,
+            servis avec une purée de pommes de terre onctueuse. Un grand classique
+            réconfortant, équilibré et plein de saveurs.
           </p>
         </header>
 
@@ -135,8 +122,8 @@ export default function BoeufCarottes() {
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation préserve fraîcheur et qualités nutritionnelles : refroidir très vite évite la
-            dégradation des nutriments et garde la texture.
+            La surgélation préserve fraîcheur et qualités nutritionnelles :
+            refroidir très vite évite la dégradation des nutriments et garde la texture.
           </p>
         </section>
       </section>
@@ -146,18 +133,13 @@ export default function BoeufCarottes() {
   );
 }
 
+/* === EXACTEMENT les mêmes styles que `bolo.js` (E visible grâce au padding-bottom) === */
 const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
-.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
-.brand{
-  margin:0;
-  font-size:48px;
-  line-height:0.9;
-  padding-bottom:2px; /* évite que le E final soit coupé */
-  background:linear-gradient(90deg,#0aa64c,#2d7ae6);
-  -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900
-}
+.back{display:inline-block;margin-bottom:12px;color:#0b6; text-decoration:none}
+.brand{margin:0;font-size:48px;line-height:0.9;padding-bottom:2px;
+  background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
@@ -165,8 +147,8 @@ const styles = `
 .meta{display:flex;gap:8px;margin:6px 0 8px;flex-wrap:wrap}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
-.desc{margin:0 0 10px;color:#345}
-.hero{margin:0 0 10px}
+.desc{margin:0 0 8px;color:#345}
+.hero{margin:8px 0 10px}
 .hero img{width:100%;display:block;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.06)}
 .blurb{margin:0 0 8px;color:#123;font-weight:500}
 .grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
@@ -188,4 +170,3 @@ const styles = `
 .foot .note{margin-top:10px;color:#456}
 @media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
 `;
-```0
