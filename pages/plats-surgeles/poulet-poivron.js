@@ -6,15 +6,8 @@ export default function PouletPoivron() {
   const portion = 600; // g
   const price = 9.9;
 
-  // Valeurs nutritionnelles par portion
-  const nPortion = {
-    kcal: 689,
-    fat: 10,
-    carbs: 86,
-    protein: 62,
-    salt: 2.5,
-  };
-
+  // Valeurs nutritionnelles par portion (600 g)
+  const nPortion = { kcal: 689, fat: 10, carbs: 86, protein: 62, salt: 2.5 };
   // Pour 100 g
   const n100 = {
     kcal: Math.round(nPortion.kcal / (portion / 100)),
@@ -34,8 +27,8 @@ export default function PouletPoivron() {
     <main className="page">
       {/* Sidebar */}
       <aside className="side">
-        <Link href="/plats-surgeles" className="back">
-          ← Retour aux plats surgelés
+        <Link href="/plats-surgeles">
+          <a className="back">← Retour aux plats surgelés</a>
         </Link>
         <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
@@ -44,18 +37,16 @@ export default function PouletPoivron() {
       {/* Contenu */}
       <section className="content">
         <header className="header">
-          <h2 className="title">Pâtes complètes — émincé de poulet & sauce poivron maison</h2>
+          <h2 className="title">Pâtes complètes — émincé de poulet &amp; sauce poivron (maison)</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
           </p>
 
           <p className="desc">
-            Portion : <strong>{portion} g</strong> · prêt en{" "}
-            <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> ·{" "}
-            <strong>10 min</strong> à la <em>poêle</em>. À conserver au
-            congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
+            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
+            À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
 
           {/* IMAGE */}
@@ -64,14 +55,14 @@ export default function PouletPoivron() {
               src="/poulet-poivron.png"
               alt="Pâtes complètes au poulet émincé et sauce poivron maison"
               className="heroImg"
+              loading="eager"
             />
           </div>
 
           <p className="blurb">
             Des <strong>pâtes complètes artisanales</strong> (œufs plein air) accompagnées d’un{" "}
-            <strong>émincé de poulet tendre</strong> et d’une{" "}
-            <strong>sauce poivron maison</strong> parfumée à l’ail et à l’oignon.
-            Un plat diététique et gourmand, équilibré et riche en protéines.
+            <strong>émincé de poulet</strong> tendre et d’une <strong>sauce poivron maison</strong>
+            parfumée à l’ail et à l’oignon. Un plat diététique et gourmand, équilibré et riche en protéines.
           </p>
         </header>
 
@@ -82,7 +73,7 @@ export default function PouletPoivron() {
             <ul className="ing">
               <li><b>200 g</b> — Pâtes complètes artisanales (œufs plein air)</li>
               <li><b>150 g</b> — Poulet émincé</li>
-              <li><b>150 g</b> — Sauce poivron maison (poivrons, ail, oignons, herbes, sel, poivre)</li>
+              <li><b>150 g</b> — Sauce poivron maison (poivrons, ail, oignon, herbes, sel, poivre)</li>
               <li>Épices, herbes de Provence</li>
             </ul>
             <p className="muted">Allergènes : gluten (blé), <b>œufs</b>.</p>
@@ -111,7 +102,12 @@ export default function PouletPoivron() {
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
               <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
-              <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
+              <input
+                type="number"
+                min={1}
+                value={qty}
+                onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))}
+              />
               <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
             </div>
             <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
@@ -135,8 +131,8 @@ export default function PouletPoivron() {
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation préserve la fraîcheur et les qualités nutritionnelles : refroidir
-            rapidement les plats permet de conserver les nutriments et la texture.
+            La surgélation préserve fraîcheur et qualités nutritionnelles :
+            le refroidissement rapide évite la dégradation des nutriments et garde la texture.
           </p>
         </section>
       </section>
@@ -150,12 +146,16 @@ const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
 .back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none;font-weight:700}
-.brand{margin:0;font-size:48px;line-height:1.04;padding-bottom:4px;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.2px}
+.brand{
+  margin:0;font-size:48px;line-height:1;padding-right:6px;
+  background:linear-gradient(90deg,#0aa64c,#2d7ae6);
+  -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.2px
+}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
 .title{margin:0 0 6px;font-size:32px}
-.meta{display:flex;gap:8px;margin:6px 0 8px}
+.meta{display:flex;gap:8px;margin:6px 0 8px;flex-wrap:wrap}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
 .desc{margin:8px 0;color:#345}
@@ -181,3 +181,4 @@ const styles = `
 .foot .note{margin-top:10px;color:#456}
 @media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
 `;
+```0
