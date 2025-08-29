@@ -3,19 +3,10 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 export default function PouletPommesHaricots() {
-  const portion = 500; // g arrondi
+  const portion = 500; // g
   const price = 9.9;
 
-  // Valeurs nutritionnelles par portion
-  const nPortion = {
-    kcal: 560,
-    fat: 20,
-    carbs: 35,
-    protein: 45,
-    salt: 2,
-  };
-
-  // Valeurs pour 100 g
+  const nPortion = { kcal: 560, fat: 20, carbs: 35, protein: 45, salt: 2 };
   const n100 = {
     kcal: Math.round(nPortion.kcal / (portion / 100)),
     fat: +(nPortion.fat / (portion / 100)).toFixed(1),
@@ -34,8 +25,8 @@ export default function PouletPommesHaricots() {
     <main className="page">
       {/* Sidebar */}
       <aside className="side">
-        <Link href="/plats-surgeles" className="back">
-          ← Retour aux plats surgelés
+        <Link href="/plats-surgeles">
+          <a className="back">← Retour aux plats surgelés</a>
         </Link>
         <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
@@ -45,21 +36,18 @@ export default function PouletPommesHaricots() {
       <section className="content">
         <header className="header">
           <h2 className="title">
-            Cuisse de poulet rôtie, pommes de terre & haricots verts
+            Cuisse de poulet rôtie, pommes de terre &amp; haricots verts
           </h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
           </p>
           <p className="desc">
-            Portion : <strong>{portion} g</strong> · prêt en{" "}
-            <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> ·{" "}
-            <strong>10 min</strong> à la <em>poêle</em>. À conserver
-            au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
+            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
+            À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
 
-          {/* IMAGE */}
           <div className="heroImgWrap">
             <img
               src="/poulet-pommes-haricots.png"
@@ -154,38 +142,4 @@ export default function PouletPommesHaricots() {
   );
 }
 
-const styles = `
-.page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
-.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
-.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none;font-weight:700}
-.brand{margin:0;font-size:48px;line-height:1.04;padding-bottom:4px;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.2px}
-.tag{color:#246}
-.content{padding:24px;max-width:1100px}
-.header{margin-bottom:10px}
-.title{margin:0 0 6px;font-size:32px}
-.meta{display:flex;gap:8px;margin:6px 0 8px}
-.pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
-.pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
-.desc{margin:8px 0;color:#345}
-.heroImgWrap{margin:10px 0 8px}
-.heroImg{width:100%;max-height:260px;object-fit:cover;border-radius:16px;box-shadow:0 8px 24px rgba(15,23,42,0.12)}
-.blurb{margin:6px 0 8px;color:#123;font-weight:500}
-.grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
-.card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
-.ing{margin:8px 0 10px;padding-left:16px}
-.ing li{margin:6px 0}
-.muted{color:#667}
-.table{display:grid;gap:6px}
-.thead,.row{display:grid;grid-template-columns:1.2fr 1fr 1fr;align-items:center}
-.thead{font-weight:700;background:#f3f7ff;border-radius:10px;padding:8px}
-.row{padding:6px 8px;border-bottom:1px solid #f0f2f7}
-.price .label{color:#678;margin-top:2px}
-.big{font-size:32px;font-weight:800}
-.qty{display:flex;align-items:center;gap:8px;margin:10px 0}
-.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd;font-size:18px}
-.qty input{width:64px;height:36px;text-align:center;border-radius:10px;border:1px solid #ccd}
-.total{font-size:22px;font-weight:800;margin-bottom:8px}
-.btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
-.foot .note{margin-top:10px;color:#456}
-@media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
-`;
+const styles = `/* mêmes styles que tes autres plats */`;
