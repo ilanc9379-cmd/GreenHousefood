@@ -7,14 +7,8 @@ export default function CurryPoisChiches() {
   const portion = 600; // g
   const price = 9.9;
 
-  // nutriments par portion (≈ d'après ta carte / nos estimations cohérentes)
-  const nPortion = {
-    kcal: 520,
-    fat: 21,
-    carbs: 60,
-    protein: 20,
-    salt: 2.0,
-  };
+  // nutriments par portion (≈ conformes à ta carte)
+  const nPortion = { kcal: 520, fat: 21, carbs: 60, protein: 20, salt: 2.0 };
   // par 100 g
   const n100 = {
     kcal: +(nPortion.kcal / (portion / 100)).toFixed(1),     // ≈ 86.7
@@ -32,12 +26,16 @@ export default function CurryPoisChiches() {
 
   return (
     <main className="page">
+      {/* Sidebar */}
       <aside className="side">
-        <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
+        <Link href="/plats-surgeles">
+          <a className="back">← Retour aux plats surgelés</a>
+        </Link>
         <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
+      {/* Contenu */}
       <section className="content">
         <header className="header">
           <h2 className="title">Curry de pois chiches</h2>
@@ -47,23 +45,28 @@ export default function CurryPoisChiches() {
             <span className="pill">Végétarien</span>
           </p>
           <p className="desc">
-            Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
-            À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
+            Portion : <strong>{portion} g</strong> · prêt en{" "}
+            <strong>20 min</strong> au <em>four</em> ·{" "}
+            <strong>8 min</strong> au <em>micro-ondes</em> ·{" "}
+            <strong>10 min</strong> à la <em>poêle</em>. À conserver au
+            congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
+
+          {/* IMAGE — même wrapper que bolo */}
+          <div className="heroImgWrap">
+            <img
+              src="/curry-pois-chiches.png"
+              alt="Curry de pois chiches — oignon, tomate et épices"
+              className="heroImg"
+              loading="eager"
+            />
+          </div>
+
           <p className="blurb">
             Des <strong>pois chiches fondants</strong> mijotés dans un curry parfumé — oignon, tomate,
             ail et épices — pour un plat végétarien complet, chaleureux et équilibré, riche en fibres et
             en protéines végétales.
           </p>
-
-          {/* Image du plat */}
-          <figure className="heroImg">
-            <img
-              src="/curry-pois-chiches.png"
-              alt="Curry de pois chiches"
-            />
-          </figure>
         </header>
 
         <div className="grid">
@@ -72,9 +75,9 @@ export default function CurryPoisChiches() {
             <h3>Ingrédients</h3>
             <ul className="ing">
               <li><b>300 g</b> — Pois chiches cuits</li>
-              <li><b>200 g</b> — Concassée de tomates &amp; dés de tomates</li>
+              <li><b>200 g</b> — Tomates concassées / dés de tomate</li>
               <li><b>80 g</b> — Oignon</li>
-              <li><b>20 g</b> — Poivron (optionnel selon lot)</li>
+              <li><b>20 g</b> — Poivron (selon lot)</li>
               <li><b>5 g</b> — Huile d’olive</li>
               <li>Ail, mélange curry, paprika doux, coriandre, sel, poivre</li>
             </ul>
@@ -133,7 +136,8 @@ export default function CurryPoisChiches() {
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
           <p className="note">
-            La surgélation préserve textures et nutriments grâce à un refroidissement rapide : le goût reste au rendez-vous jusqu’au service.
+            La surgélation préserve textures et nutriments grâce à un refroidissement rapide :
+            le goût reste au rendez-vous jusqu’au service.
           </p>
         </section>
       </section>
@@ -143,11 +147,20 @@ export default function CurryPoisChiches() {
   );
 }
 
+/* === Styles identiques à bolo.js (avec fix du “E” de Greenhouse) === */
 const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
-.back{display:inline-block;margin-bottom:12px;color:#0b6; text-decoration:none}
-.brand{margin:0;font-size:48px;line-height:0.95;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.2px}
+.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none;font-weight:700}
+.brand{
+  margin:0;
+  font-size:48px;
+  line-height:1;            /* évite la coupe du E */
+  padding-right:6px;        /* évite la coupe à droite */
+  background:linear-gradient(90deg,#0aa64c,#2d7ae6);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  font-weight:900;letter-spacing:.2px
+}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
@@ -155,10 +168,10 @@ const styles = `
 .meta{display:flex;gap:8px;margin:6px 0 8px;flex-wrap:wrap}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
-.desc{margin:0 0 8px;color:#345}
-.blurb{margin:0 0 10px;color:#123;font-weight:500}
-.heroImg{margin:8px 0 4px}
-.heroImg img{width:100%;max-width:520px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+.desc{margin:8px 0;color:#345}
+.heroImgWrap{margin:10px 0 8px}
+.heroImg{width:100%;max-height:260px;object-fit:cover;border-radius:16px;box-shadow:0 8px 24px rgba(15,23,42,0.12)}
+.blurb{margin:6px 0 8px;color:#123;font-weight:500}
 .grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
 .card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
 .ing{margin:8px 0 10px;padding-left:16px}
@@ -171,7 +184,7 @@ const styles = `
 .price .label{color:#678;margin-top:2px}
 .big{font-size:32px;font-weight:800}
 .qty{display:flex;align-items:center;gap:8px;margin:10px 0}
-.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd}
+.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd;font-size:18px}
 .qty input{width:64px;height:36px;text-align:center;border-radius:10px;border:1px solid #ccd}
 .total{font-size:22px;font-weight:800;margin-bottom:8px}
 .btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
