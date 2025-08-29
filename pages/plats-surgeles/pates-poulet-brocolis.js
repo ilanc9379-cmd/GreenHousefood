@@ -6,14 +6,14 @@ export default function PatesPouletBrocolis() {
   const portion = 600; // g
   const price = 9.9;
 
-  // Macros estimées (ton calcul précédent)
+  // Macros estimées (cohérentes avec tes précédents calculs)
   const nPortion = { kcal: 705, fat: 22, carbs: 77, protein: 49, salt: 2.2 };
   const n100 = {
-    kcal: (705 / 6).toFixed(0),       // 118
-    fat: (22 / 6).toFixed(1),         // 3.7
-    carbs: (77 / 6).toFixed(1),       // 12.8
-    protein: (49 / 6).toFixed(1),     // 8.2
-    salt: (2.2 / 6).toFixed(2),       // 0.37
+    kcal: (nPortion.kcal / (portion / 100)).toFixed(0),     // ≈118
+    fat: (nPortion.fat / (portion / 100)).toFixed(1),       // ≈3.7
+    carbs: (nPortion.carbs / (portion / 100)).toFixed(1),   // ≈12.8
+    protein: (nPortion.protein / (portion / 100)).toFixed(1), // ≈8.2
+    salt: (nPortion.salt / (portion / 100)).toFixed(2),     // ≈0.37
   };
 
   const [qty, setQty] = useState(1);
@@ -24,12 +24,16 @@ export default function PatesPouletBrocolis() {
 
   return (
     <main className="page">
+      {/* Sidebar */}
       <aside className="side">
-        <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
+        <Link href="/plats-surgeles">
+          <a className="back">← Retour aux plats surgelés</a>
+        </Link>
         <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
+      {/* Contenu */}
       <section className="content">
         <header className="header">
           <h2 className="title">Pâtes aromettes — poulet crémeux &amp; brocolis</h2>
@@ -39,21 +43,22 @@ export default function PatesPouletBrocolis() {
           </p>
           <p className="desc">
             Portion : <strong>{portion} g</strong> · prêt en <strong>20 min</strong> au <em>four</em> ·{" "}
-            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.
+            <strong>8 min</strong> au <em>micro-ondes</em> · <strong>10 min</strong> à la <em>poêle</em>.{" "}
             À conserver au congélateur (max 4 mois). Après décongélation : 48h au réfrigérateur.
           </p>
 
-          {/* Image */}
-          <figure className="hero">
+          {/* Image — même wrapper que bolo */}
+          <div className="heroImgWrap">
             <img
               src="/pates-poulet-brocolis.png"
               alt="Pâtes aromettes au poulet crémeux et brocolis"
+              className="heroImg"
               loading="eager"
             />
-          </figure>
+          </div>
 
           <p className="blurb">
-            Un plat généreux et équilibré : des <strong>pâtes artisanales aromettes</strong>, 
+            Un plat généreux et équilibré : des <strong>pâtes artisanales aromettes</strong>,
             du poulet tendre, une sauce crémeuse légère et des brocolis croquants.
             Une recette gourmande et saine qui allie protéines, fibres et plaisir.
           </p>
@@ -71,7 +76,7 @@ export default function PatesPouletBrocolis() {
               <li><b>50 g</b> — Carottes</li>
               <li>Huile d’olive, sel, poivre, aromates</li>
             </ul>
-            <p className="muted">Allergènes : gluten (blé), œufs, lait (crème).</p>
+            <p className="muted">Allergènes : gluten (blé), <b>œufs</b>, lait (crème).</p>
           </section>
 
           {/* Valeurs nutritionnelles */}
@@ -127,7 +132,7 @@ export default function PatesPouletBrocolis() {
           </ul>
           <p className="note">
             La surgélation préserve fraîcheur et qualités nutritionnelles :
-            refroidir très vite évite la dégradation des nutriments et garde la texture.
+            le refroidissement rapide évite la dégradation des nutriments et garde la texture.
           </p>
         </section>
       </section>
@@ -140,9 +145,12 @@ export default function PatesPouletBrocolis() {
 const styles = `
 .page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
 .side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
-.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none}
-.brand{margin:0;font-size:48px;line-height:0.9;padding-bottom:2px;
-  background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none;font-weight:700}
+.brand{
+  margin:0;font-size:48px;line-height:1;padding-right:6px;
+  background:linear-gradient(90deg,#0aa64c,#2d7ae6);
+  -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.2px
+}
 .tag{color:#246}
 .content{padding:24px;max-width:1100px}
 .header{margin-bottom:10px}
@@ -150,10 +158,10 @@ const styles = `
 .meta{display:flex;gap:8px;margin:6px 0 8px;flex-wrap:wrap}
 .pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
 .pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
-.desc{margin:0 0 8px;color:#345}
-.hero{margin:8px 0 10px}
-.hero img{width:100%;display:block;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.06)}
-.blurb{margin:0 0 8px;color:#123;font-weight:500}
+.desc{margin:8px 0;color:#345}
+.heroImgWrap{margin:10px 0 8px}
+.heroImg{width:100%;max-height:260px;object-fit:cover;border-radius:16px;box-shadow:0 8px 24px rgba(15,23,42,0.12)}
+.blurb{margin:6px 0 8px;color:#123;font-weight:500}
 .grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
 .card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
 .ing{margin:8px 0 10px;padding-left:16px}
@@ -166,7 +174,7 @@ const styles = `
 .price .label{color:#678;margin-top:2px}
 .big{font-size:32px;font-weight:800}
 .qty{display:flex;align-items:center;gap:8px;margin:10px 0}
-.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd}
+.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd;font-size:18px}
 .qty input{width:64px;height:36px;text-align:center;border-radius:10px;border:1px solid #ccd}
 .total{font-size:22px;font-weight:800;margin-bottom:8px}
 .btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
