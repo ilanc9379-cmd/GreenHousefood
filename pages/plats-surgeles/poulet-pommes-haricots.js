@@ -16,28 +16,19 @@ export default function PouletPommesHaricots() {
   };
 
   const [qty, setQty] = useState(1);
-  const nf = useMemo(
-    () => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }),
-    []
-  );
+  const nf = useMemo(() => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }), []);
 
   return (
     <main className="page">
-      {/* Sidebar */}
       <aside className="side">
-        <Link href="/plats-surgeles">
-          <a className="back">← Retour aux plats surgelés</a>
-        </Link>
+        <Link href="/plats-surgeles" className="back">← Retour aux plats surgelés</Link>
         <h1 className="brand">Greenhouse</h1>
         <p className="tag">Traiteur — Diététique &amp; Gourmand</p>
       </aside>
 
-      {/* Contenu */}
       <section className="content">
         <header className="header">
-          <h2 className="title">
-            Cuisse de poulet rôtie, pommes de terre &amp; haricots verts
-          </h2>
+          <h2 className="title">Cuisse de poulet rôtie, pommes de terre &amp; haricots verts</h2>
           <p className="meta">
             <span className="pill pill-freeze">Surgelé</span>
             <span className="pill">Diète</span>
@@ -49,23 +40,16 @@ export default function PouletPommesHaricots() {
           </p>
 
           <div className="heroImgWrap">
-            <img
-              src="/poulet-pommes-haricots.png"
-              alt="Cuisse de poulet rôtie avec pommes de terre et haricots verts"
-              className="heroImg"
-            />
+            <img src="/poulet-pommes-haricots.png" alt="Cuisse de poulet rôtie avec pommes de terre et haricots verts" className="heroImg" />
           </div>
 
           <p className="blurb">
-            Une cuisse de <strong>poulet rôtie</strong> savoureuse, accompagnée
-            de <strong>pommes de terre fondantes</strong> et de{" "}
-            <strong>haricots verts</strong> croquants. Un repas simple,
-            équilibré et réconfortant, idéal pour un déjeuner ou un dîner sain.
+            Une cuisse de <strong>poulet rôtie</strong> savoureuse, des <strong>pommes de terre fondantes</strong>
+            et des <strong>haricots verts</strong> croquants. Simple, équilibré et réconfortant.
           </p>
         </header>
 
         <div className="grid">
-          {/* Ingrédients */}
           <section className="card">
             <h3>Ingrédients</h3>
             <ul className="ing">
@@ -78,15 +62,10 @@ export default function PouletPommesHaricots() {
             <p className="muted">Allergènes : aucun.</p>
           </section>
 
-          {/* Valeurs nutritionnelles */}
           <section className="card">
             <h3>Valeurs nutritionnelles</h3>
             <div className="table">
-              <div className="thead">
-                <div>Valeurs</div>
-                <div>Pour 100 g</div>
-                <div>Par portion</div>
-              </div>
+              <div className="thead"><div>Valeurs</div><div>Pour 100 g</div><div>Par portion</div></div>
               <div className="row"><div>Énergie</div><div>{n100.kcal} kcal</div><div>{nPortion.kcal} kcal</div></div>
               <div className="row"><div>Matières grasses</div><div>{n100.fat} g</div><div>{nPortion.fat} g</div></div>
               <div className="row"><div>Glucides</div><div>{n100.carbs} g</div><div>{nPortion.carbs} g</div></div>
@@ -95,27 +74,20 @@ export default function PouletPommesHaricots() {
             </div>
           </section>
 
-          {/* Prix */}
           <section className="card price">
             <div className="label">Prix unitaire</div>
             <div className="big">{nf.format(price)}</div>
             <div className="qty">
-              <button aria-label="moins" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
-              <input
-                type="number"
-                min={1}
-                value={qty}
-                onChange={(e) => setQty(Math.max(1, parseInt(e.target.value || "1", 10)))}
-              />
-              <button aria-label="plus" onClick={() => setQty(q => q + 1)}>+</button>
+              <button aria-label="moins" onClick={()=>setQty(q=>Math.max(1,q-1))}>−</button>
+              <input type="number" min={1} value={qty} onChange={(e)=>setQty(Math.max(1,parseInt(e.target.value||"1",10)))} />
+              <button aria-label="plus" onClick={()=>setQty(q=>q+1)}>+</button>
             </div>
-            <div className="label">Total ({qty} plat{qty > 1 ? "s" : ""})</div>
-            <div className="total">{nf.format(price * qty)}</div>
+            <div className="label">Total ({qty} plat{qty>1?"s":""})</div>
+            <div className="total">{nf.format(price*qty)}</div>
             <button className="btn">Commander</button>
           </section>
         </div>
 
-        {/* Cuisson & Conservation */}
         <section className="card foot">
           <h3>Cuisson</h3>
           <ul>
@@ -123,17 +95,13 @@ export default function PouletPommesHaricots() {
             <li>Micro-ondes : <b>8 min</b></li>
             <li>Poêle : <b>10 min</b></li>
           </ul>
-          <h3 style={{ marginTop: 12 }}>Conservation</h3>
+          <h3 style={{marginTop:12}}>Conservation</h3>
           <ul>
             <li>Conserver au congélateur : <b>max 4 mois</b></li>
             <li>Après décongélation : <b>48h</b> au réfrigérateur</li>
             <li>Ne pas recongeler un produit décongelé</li>
           </ul>
-          <p className="note">
-            La surgélation préserve fraîcheur et qualités nutritionnelles : le
-            refroidissement rapide évite la dégradation des nutriments et garde
-            la texture.
-          </p>
+          <p className="note">La surgélation préserve fraîcheur et qualités nutritionnelles.</p>
         </section>
       </section>
 
@@ -142,5 +110,38 @@ export default function PouletPommesHaricots() {
   );
 }
 
-const styles = `/* mêmes styles que tes autres plats */`;
+const styles = `
+.page{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:linear-gradient(180deg,#eaf7ff,#f7fffb);}
+.side{padding:24px 18px;background:linear-gradient(180deg,#dff1ff,#e6fff7);}
+.back{display:inline-block;margin-bottom:12px;color:#0b6;text-decoration:none;font-weight:700}
+.brand{margin:0;font-size:48px;line-height:1.04;padding-bottom:4px;background:linear-gradient(90deg,#0aa64c,#2d7ae6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.2px}
+.tag{color:#246}
+.content{padding:24px;max-width:1100px}
+.header{margin-bottom:10px}
+.title{margin:0 0 6px;font-size:32px}
+.meta{display:flex;gap:8px;margin:6px 0 8px}
+.pill{padding:4px 10px;border-radius:999px;background:#eef5ff;border:1px solid rgba(0,0,0,.06);font-weight:700;font-size:12px}
+.pill-freeze{background:rgba(26,168,123,.12);border-color:rgba(26,168,123,.25)}
+.desc{margin:8px 0;color:#345}
+.heroImgWrap{margin:10px 0 8px}
+.heroImg{width:100%;max-height:260px;object-fit:cover;border-radius:16px;box-shadow:0 8px 24px rgba(15,23,42,0.12)}
+.blurb{margin:6px 0 8px;color:#123;font-weight:500}
+.grid{display:grid;grid-template-columns:2fr 2fr 1.2fr;gap:16px}
+.card{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:16px}
+.ing{margin:8px 0 10px;padding-left:16px}
+.ing li{margin:6px 0}
+.muted{color:#667}
+.table{display:grid;gap:6px}
+.thead,.row{display:grid;grid-template-columns:1.2fr 1fr 1fr;align-items:center}
+.thead{font-weight:700;background:#f3f7ff;border-radius:10px;padding:8px}
+.row{padding:6px 8px;border-bottom:1px solid #f0f2f7}
+.price .label{color:#678;margin-top:2px}
+.big{font-size:32px;font-weight:800}
+.qty{display:flex;align-items:center;gap:8px;margin:10px 0}
+.qty button{width:36px;height:36px;border-radius:10px;border:1px solid #ccd;font-size:18px}
+.qty input{width:64px;height:36px;text-align:center;border-radius:10px;border:1px solid #ccd}
+.total{font-size:22px;font-weight:800;margin-bottom:8px}
+.btn{width:100%;border:none;border-radius:12px;padding:12px 14px;color:#fff;font-weight:800;background:linear-gradient(90deg,#0aa64c,#2d7ae6)}
+.foot .note{margin-top:10px;color:#456}
+@media(max-width:950px){.page{grid-template-columns:1fr}.side{position:sticky;top:0}.grid{grid-template-columns:1fr}}
 `;
