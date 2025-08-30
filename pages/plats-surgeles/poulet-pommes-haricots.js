@@ -143,3 +143,4 @@ export default function PouletPommesHaricots() {
 }
 
 const styles = `/* mêmes styles que tes autres plats */`;
+`;
